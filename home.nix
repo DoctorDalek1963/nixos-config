@@ -25,6 +25,9 @@ in {
   # environment.
   home.packages = with pkgs; [
     just
+    rustup
+    fd
+    sd
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -32,14 +35,12 @@ in {
   home.file = {
     ".git-prompt.sh".source = ./files/.git-prompt.sh;
     "${homedir}/.cargo/clippy.conf".source = ./files/clippy.conf;
-    "${homedir}/.config/ripgrep/config".source = ./files/ripgrep-config;
   };
 
   home.sessionVariables = {
     EXTENDED_PS1 = 1;
     GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
     JILL_INSTALL_DIR = "${homedir}/.local/misc/julia-versions";
-    RIPGREP_CONFIG_PATH = "${homedir}/.config/ripgrep/config";
   };
 
   targets.genericLinux.enable = true;
@@ -94,6 +95,17 @@ in {
       };
     };
 
+    ripgrep = {
+      enable = true;
+      arguments = [
+        "--max-columns=150"
+        "--max-columns-preview"
+        "--glob=!.git/*"
+        "--smart-case"
+      ];
+    };
+
+    # Neovim
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -101,6 +113,7 @@ in {
       vimAlias = true;
     };
 
+    # Shell
     bash = {
       enable = true;
       enableCompletion = true;
@@ -181,11 +194,13 @@ in {
         grephist = "cat ~/.bash_history | grep --";
       };
       bashrcExtra = ''
-        source ${homedir}/.profile
+        trySource() {
+            if [ -f "$1" ]; then
+                . "$1"
+            fi
+        }
 
-        if [ -f "${homedir}/.nix-profile/etc/profile.d/nix.sh" ]; then
-            source "${homedir}/.nix-profile/etc/profile.d/nix.sh"
-        fi
+        trySource "${homedir}/.cargo/env"
 
         bind -s 'set completion-ignore-case on'
 
@@ -214,7 +229,7 @@ in {
             fi
 
             if [ $EXTENDED_PS1 -ne 0 ]; then
-                if [ ! -f ${homedir}/.git-prompt.sh ]; then
+                if [ ! -f "${homedir}/.git-prompt.sh" ]; then
                     echo "${homedir}/.git-prompt.sh not found!"
                 fi
 
@@ -225,7 +240,7 @@ in {
                 GIT_PS1_SHOWUPSTREAM="auto"
                 GIT_PS1_HIDE_IF_PWD_IGNORED=true
 
-                source ${homedir}/.git-prompt.sh
+                trySource "${homedir}/.git-prompt.sh"
 
                 if [ "$color_prompt" = yes ]; then
                     PS1="$PS1\[\033[01;31m\]$(__git_ps1 " [%s]")\[\033[00m\]"
