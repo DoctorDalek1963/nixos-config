@@ -60,7 +60,6 @@ in {
 
     neovim = {
       enable = true;
-      #package = unstable.legacyPackages.x86_64-linux.neovim;
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
