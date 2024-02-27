@@ -1,9 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, unstable, ... }:
 
 let 
-  homedir = "/home/dyson";
+  username = "dyson";
+  homedir = "/home/${username}";
 in {
-  home.username = "dyson";
+  home.username = username;
   home.homeDirectory = homedir;
 
   # This value determines the Home Manager release that your configuration is
@@ -14,6 +15,11 @@ in {
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -54,6 +60,7 @@ in {
 
     neovim = {
       enable = true;
+      #package = unstable.legacyPackages.x86_64-linux.neovim;
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
