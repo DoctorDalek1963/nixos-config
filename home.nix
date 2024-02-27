@@ -1,6 +1,9 @@
-{ config, pkgs, unstable, ... }:
-
-let 
+{
+  config,
+  pkgs,
+  #unstable,
+  ...
+}: let
   username = "dyson";
   homedir = "/home/${username}";
 in {
@@ -18,7 +21,7 @@ in {
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = ["nix-command" "flakes"];
   };
 
   # The home.packages option allows you to install Nix packages into your
@@ -28,6 +31,10 @@ in {
     rustup
     fd
     sd
+
+    pre-commit
+    alejandra
+    deadnix
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
