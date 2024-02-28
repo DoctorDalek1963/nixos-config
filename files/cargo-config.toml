@@ -1,0 +1,19 @@
+[alias]
+a = "add"
+b = "build"
+br = "build --release"
+c = "check"
+i = "install"
+n = "new"
+r = "run"
+rr = "run --release"
+t = "test"
+tr = "test --release"
+up = "update"
+
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/clang"
+rustflags = ["-Clink-arg=-fuse-ld=/home/dyson/.local/bin/mold"]
+
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
