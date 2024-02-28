@@ -11,12 +11,16 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  outputs = { self, nixpkgs, unstable, home-manager, ... }@inputs:
-  let
+  outputs = {
+    #self,
+    nixpkgs,
+    unstable,
+    home-manager,
+    ...
+  } @ inputs: let
     system = "x86_64-linux";
-    overlays = [ inputs.neovim-nightly-overlay.overlay ];
-  in
-  {
+    overlays = [inputs.neovim-nightly-overlay.overlay];
+  in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
@@ -24,9 +28,9 @@
         pkgs = import nixpkgs {
           inherit system;
           inherit overlays;
-          config = { allow-unfree = true; };
+          config = {allow-unfree = true;};
         };
-        extraSpecialArgs = { inherit unstable; };
+        extraSpecialArgs = {inherit unstable;};
         modules = [
           ./home.nix
         ];
