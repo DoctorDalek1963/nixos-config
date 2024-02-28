@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -16,6 +20,7 @@
     nixpkgs,
     unstable,
     home-manager,
+    nixvim,
     ...
   } @ inputs: let
     system = "x86_64-linux";
@@ -27,12 +32,16 @@
       dyson = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
-          inherit overlays;
+          inherit overlays; # Comment this out to use stable neovim again
           config = {allow-unfree = true;};
         };
-        extraSpecialArgs = {inherit unstable;};
+        extraSpecialArgs = {
+          inherit unstable;
+          inherit nixvim;
+        };
         modules = [
           ./home.nix
+          nixvim.homeManagerModules.nixvim
         ];
       };
     };

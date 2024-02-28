@@ -7,6 +7,10 @@
   username = "dyson";
   homedir = "/home/${username}";
 in {
+  imports = [
+    ./neovim.nix
+  ];
+
   home.username = username;
   home.homeDirectory = homedir;
 
@@ -24,8 +28,6 @@ in {
     settings.experimental-features = ["nix-command" "flakes"];
   };
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
     just
     rustup
@@ -37,8 +39,6 @@ in {
     deadnix
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
   home.file = {
     ".git-prompt.sh".source = ./files/.git-prompt.sh;
     "${homedir}/.cargo/clippy.conf".source = ./files/clippy.conf;
@@ -112,14 +112,6 @@ in {
         "--glob=!.git/*"
         "--smart-case"
       ];
-    };
-
-    # Neovim
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
     };
 
     # Shell
