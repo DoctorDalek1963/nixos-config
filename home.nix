@@ -8,7 +8,7 @@
   homedir = "/home/${username}";
 in {
   imports = [
-    ./neovim.nix
+    ./neovim/default.nix
   ];
 
   home.username = username;
