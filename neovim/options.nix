@@ -50,7 +50,17 @@
     # Only allow the mouse in normal mode
     mouse = "n";
   };
-  pluginOptions = {};
+  pluginOptions = {
+    # Backups can mess with LSPs
+    backup = false;
+    writebackup = false;
+
+    # Faster updates make gitgutter work better
+    updatetime = 100;
+
+    # Always draw the sign column
+    signcolumn = "yes";
+  };
 in {
   programs.nixvim.options = baseOptions // pluginOptions;
 }

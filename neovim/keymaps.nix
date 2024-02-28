@@ -172,6 +172,13 @@
       mode = "n";
     }
 
+    # Turn off highlighting after a search
+    {
+      key = "<leader>n";
+      action = "<cmd>nohlsearch<cr>";
+      mode = "n";
+    }
+
     # Toggle spell check
     {
       key = "<leader>s";

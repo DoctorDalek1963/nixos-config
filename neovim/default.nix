@@ -1,6 +1,7 @@
 {...}: {
   imports = [
     ./autoCmdGroups.nix
+    ./globals.nix
     ./keymaps.nix
     ./options.nix
   ];
@@ -13,10 +14,7 @@
 
     clipboard.register = "unnamedplus";
 
-    globals = {
-      mapleader = "\\";
-      maplocalleader = "\\";
-    };
+    colorschemes.onedark.enable = true;
 
     userCommands = {
       Rmsp = {
