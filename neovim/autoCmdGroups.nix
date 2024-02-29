@@ -49,12 +49,12 @@
           pattern = "markdown";
           command = "setlocal textwidth=0 formatoptions=q";
         }
-        #{
-        #desc = "Enable Goyo";
-        #event = "FileType";
-        #pattern = "markdown";
-        #command = "Goyo 80";
-        #}
+        {
+          desc = "Enable Goyo";
+          event = "FileType";
+          pattern = "markdown";
+          command = "Goyo 80";
+        }
         #{
         #desc = "Enable SoftPencil";
         #event = "FileType";
@@ -86,14 +86,13 @@
       ];
     }
     {
-      group = "resume_cursor_position";
+      group = "update_git_ps1_status";
       commands = [
         {
-          # Adapted from https://stackoverflow.com/a/3699926/12985838
-          desc = "Resume cursor position, expand folds up to cursor line, and centre cursor line on the screen";
-          event = "BufReadPost";
+          desc = "Update the git_ps1_status global variable by calling UpdateGitPS1Status()";
+          event = ["BufEnter" "BufWritePost"];
           pattern = "*";
-          command = ''if line("'\"") > 0 && line ("'\"") <= line("$") | exe "normal g'\"" | exe "normal zv" | exe "normal zz" | endif'';
+          command = "call UpdateGitPS1Status()";
         }
       ];
     }
