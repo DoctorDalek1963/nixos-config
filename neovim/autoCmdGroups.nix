@@ -51,8 +51,8 @@
         }
         {
           desc = "Enable Goyo";
-          event = "FileType";
-          pattern = "markdown";
+          event = "BufEnter";
+          pattern = "*.md";
           command = "Goyo 80";
         }
         #{

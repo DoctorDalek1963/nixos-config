@@ -236,6 +236,19 @@
       mode = "n";
       options.silent = true;
     }
+
+    # Toggle inlay hints
+    {
+      key = "<leader>i";
+      action = ''
+        function()
+          vim.lsp.inlay_hint.enable(vim.fn.bufnr(), not vim.lsp.inlay_hint.is_enabled())
+        end
+      '';
+      lua = true;
+      mode = "n";
+      options.silent = true;
+    }
   ];
   pluginKeymaps = [];
 in {
