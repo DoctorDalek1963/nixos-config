@@ -2,6 +2,7 @@
   imports = [
     ./cmp.nix
     ./lightline.nix
+    ./lsp.nix
   ];
 
   programs.nixvim.plugins = {

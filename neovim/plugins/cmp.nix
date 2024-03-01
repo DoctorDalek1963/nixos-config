@@ -8,15 +8,19 @@
       # Load snippets from friendly-snippets
       fromVscode = [{}];
     };
+
     cmp_luasnip.enable = true;
+    cmp-nvim-lsp.enable = true;
 
     nvim-cmp = {
       enable = true;
 
       autoEnableSources = false;
       sources = [
-        #{ name = "nvim_lsp"; }
+        {name = "nvim_lsp";}
         {name = "luasnip";}
+        {name = "path";}
+        {name = "buffer";}
       ];
 
       snippet.expand = "luasnip";

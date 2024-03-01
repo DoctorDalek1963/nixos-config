@@ -222,6 +222,20 @@
       action = "ggVG";
       mode = "n";
     }
+
+    # Toggle virtual text
+    {
+      key = "<leader>v";
+      action = ''
+        function()
+          local vt = vim.diagnostic.config().virtual_text
+          vim.diagnostic.config({ virtual_text = not vt })
+        end
+      '';
+      lua = true;
+      mode = "n";
+      options.silent = true;
+    }
   ];
   pluginKeymaps = [];
 in {
