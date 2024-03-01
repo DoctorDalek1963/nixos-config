@@ -28,7 +28,7 @@
 
     # Folds
     foldenable = true;
-    foldmethod = "indent";
+    #foldmethod = "indent"; # Disabled because we're using treesitter
     foldlevelstart = 999;
 
     # Indents

@@ -4,7 +4,7 @@
     ./globals.nix
     ./keymaps.nix
     ./options.nix
-    ./plugins.nix
+    ./plugins/default.nix
   ];
 
   programs.nixvim = {
