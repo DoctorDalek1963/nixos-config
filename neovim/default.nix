@@ -15,17 +15,41 @@
 
     clipboard.register = "unnamedplus";
 
-    colorschemes.onedark.enable = true;
+    colorschemes.catppuccin = {
+      enable = true;
+      flavour = "macchiato";
+      background = {
+        light = "latte";
+        dark = "macchiato";
+      };
+      dimInactive = {
+        enabled = true;
+        percentage = 0.15;
+      };
+      integrations = {
+        cmp = true;
+        gitgutter = true;
+        rainbow_delimiters = true;
+        treesitter = true;
+        treesitter_context = true;
+        dap = {
+          enabled = true;
+          enable_ui = true;
+        };
+        indent_blankline = {
+          enabled = true;
+          colored_indent_levels = true;
+        };
+        native_lsp.enabled = true;
+        telescope.enabled = true;
+      };
+    };
 
     userCommands = {
       Rmsp = {
         desc = "Remove all trailing spaces";
         command = "execute '%s/\\s\\+$//e'";
       };
-    };
-
-    highlight = {
-      CocHintSign.link = "Comment";
     };
 
     extraConfigVim = ''
@@ -58,6 +82,28 @@
       function! GitPS1Status()
           return g:git_ps1_status
       endfunction
+    '';
+
+    extraConfigLua = ''
+      do
+        local _border = "rounded"
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+          vim.lsp.handlers.hover, {
+            border = _border
+          }
+        )
+
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+          vim.lsp.handlers.signature_help, {
+            border = _border
+          }
+        )
+
+        vim.diagnostic.config{
+          float = {border = _border}
+        }
+      end
     '';
   };
 }
