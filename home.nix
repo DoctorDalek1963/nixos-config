@@ -8,6 +8,7 @@
 }: let
   username = "dyson";
   homedir = "/home/${username}";
+  my-nixvim = nixvim-flake.packages.${system}.default;
 in {
   home = {
     inherit username;
@@ -23,7 +24,7 @@ in {
     stateVersion = "23.11"; # Please read the comment before changing.
 
     packages = with pkgs; [
-      nixvim-flake.packages.${system}.default
+      my-nixvim
 
       just
       rustup
@@ -44,6 +45,7 @@ in {
     };
 
     sessionVariables = {
+      EDITOR = "${my-nixvim}/bin/nvim";
       EXTENDED_PS1 = 1;
       GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
       JILL_INSTALL_DIR = "${homedir}/.local/misc/julia-versions";
@@ -150,7 +152,7 @@ in {
         j = "just";
         p = "python";
         t = "touch";
-        v = "nvim";
+        v = "${my-nixvim}/bin/nvim";
         x = "exit";
 
         # Two letters
@@ -329,7 +331,7 @@ in {
 
         # Create executable file and open it with vim
         vex() {
-            vim "$1"
+            ${my-nixvim}/bin/nvim "$1"
             if [ -f "$1" ]; then
                 chmod +x "$1"
             fi
@@ -417,7 +419,7 @@ in {
         };
       };
       extraConfig = {
-        core.editor = "${pkgs.neovim}/bin/nvim";
+        core.editor = "${my-nixvim}/bin/nvim";
         diff.colorMoved = "default";
         init.defaultBranch = "main";
         pull = {
