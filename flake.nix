@@ -2,18 +2,13 @@
   description = "DoctorDalek1963's home-manager flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    nixvim = {
-      #url = "github:nix-community/nixvim/nixos-23.11";
-      url = "github:DoctorDalek1963/nixvim";
-      #inputs.nixpkgs.follows = "unstable";
-    };
+    nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
   };
 
   outputs = {
@@ -21,11 +16,10 @@
     nixpkgs,
     #unstable,
     home-manager,
-    nixvim,
+    nixvim-flake,
     ...
-  } @ inputs: let
+  }: let
     system = "x86_64-linux";
-    overlays = [inputs.neovim-nightly-overlay.overlay];
   in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
 
@@ -33,16 +27,15 @@
       dyson = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
-          inherit overlays; # Comment this out to use stable neovim again
           config = {allow-unfree = true;};
         };
         extraSpecialArgs = {
           #inherit unstable;
-          inherit nixvim;
+          inherit nixvim-flake;
+          inherit system;
         };
         modules = [
           ./home.nix
-          nixvim.homeManagerModules.nixvim
         ];
       };
     };

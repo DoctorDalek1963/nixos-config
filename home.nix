@@ -2,15 +2,13 @@
   config,
   pkgs,
   #unstable,
+  nixvim-flake,
+  system,
   ...
 }: let
   username = "dyson";
   homedir = "/home/${username}";
 in {
-  imports = [
-    ./neovim/default.nix
-  ];
-
   home.username = username;
   home.homeDirectory = homedir;
 
@@ -29,6 +27,8 @@ in {
   };
 
   home.packages = with pkgs; [
+    nixvim-flake.packages.${system}.default
+
     just
     rustup
     fd
@@ -157,6 +157,8 @@ in {
         ps = "ps auxf";
         rm = "rm -v";
         rs = "evcxr";
+
+        nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
 
         ipy = "python -m IPython";
         jnb = "jupyter notebook";
