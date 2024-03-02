@@ -19,4 +19,12 @@ repos:
     rev: v1.2.1
     hooks:
       - id: deadnix
-        stages: [commit]
+
+  - repo: local
+    hooks:
+      - id: statix-check
+        name: statix check
+        entry: statix check
+        language: system
+        files: '.*\.nix$'
+        pass_filenames: false

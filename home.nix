@@ -9,47 +9,50 @@
   username = "dyson";
   homedir = "/home/${username}";
 in {
-  home.username = username;
-  home.homeDirectory = homedir;
+  home = {
+    inherit username;
+    homeDirectory = homedir;
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+    # This value determines the Home Manager release that your configuration is
+    # compatible with. This helps avoid breakage when a new Home Manager release
+    # introduces backwards incompatible changes.
+    #
+    # You should not change this value, even if you update Home Manager. If you do
+    # want to update the value, then make sure to first check the Home Manager
+    # release notes.
+    stateVersion = "23.11"; # Please read the comment before changing.
+
+    packages = with pkgs; [
+      nixvim-flake.packages.${system}.default
+
+      just
+      rustup
+      fd
+      sd
+
+      pre-commit
+      alejandra
+      deadnix
+      statix
+    ];
+
+    file = {
+      ".git-prompt.sh".source = ./files/.git-prompt.sh;
+      "${homedir}/.cargo/clippy.conf".source = ./files/clippy.conf;
+      "${homedir}/.cargo/config.toml".source = ./files/cargo-config.toml;
+      "${homedir}/.config/fd/ignore".source = ./files/fd-ignore;
+    };
+
+    sessionVariables = {
+      EXTENDED_PS1 = 1;
+      GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
+      JILL_INSTALL_DIR = "${homedir}/.local/misc/julia-versions";
+    };
+  };
 
   nix = {
     package = pkgs.nix;
     settings.experimental-features = ["nix-command" "flakes"];
-  };
-
-  home.packages = with pkgs; [
-    nixvim-flake.packages.${system}.default
-
-    just
-    rustup
-    fd
-    sd
-
-    pre-commit
-    alejandra
-    deadnix
-  ];
-
-  home.file = {
-    ".git-prompt.sh".source = ./files/.git-prompt.sh;
-    "${homedir}/.cargo/clippy.conf".source = ./files/clippy.conf;
-    "${homedir}/.cargo/config.toml".source = ./files/cargo-config.toml;
-    "${homedir}/.config/fd/ignore".source = ./files/fd-ignore;
-  };
-
-  home.sessionVariables = {
-    EXTENDED_PS1 = 1;
-    GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
-    JILL_INSTALL_DIR = "${homedir}/.local/misc/julia-versions";
   };
 
   targets.genericLinux.enable = true;
