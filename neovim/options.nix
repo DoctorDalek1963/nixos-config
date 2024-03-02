@@ -11,6 +11,7 @@
     hlsearch = true;
     incsearch = true;
 
+    # Highlight the line where the cursor is
     cursorline = true;
 
     # Show spaces and tabs
@@ -51,6 +52,10 @@
     mouse = "n";
   };
   pluginOptions = {
+    # Make lightline look better
+    laststatus = 2;
+    showmode = false;
+
     # Backups can mess with LSPs
     backup = false;
     writebackup = false;
