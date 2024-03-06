@@ -38,10 +38,15 @@ in {
     ];
 
     file = {
-      ".git-prompt.sh".source = ../files/.git-prompt.sh;
-      "${homedir}/.cargo/clippy.conf".source = ../files/clippy.conf;
-      "${homedir}/.cargo/config.toml".source = ../files/cargo-config.toml;
-      "${homedir}/.config/fd/ignore".source = ../files/fd-ignore;
+      ".cargo/clippy.conf".source = ../files/clippy.conf;
+      ".cargo/config.toml".source = ../files/cargo-config.toml;
+      ".config/fd/ignore".source = ../files/fd-ignore;
+      ".git-prompt.sh".source = "${pkgs.fetchgit {
+        url = "https://github.com/git/git";
+        rev = "fc134b41ce2ee7b2a98a988db6eeb109e11a2831";
+        hash = "sha256-DG9GQdFHAmxLjpVo9knFwtEQWUdfMc1G5IC1ezp7cVk=";
+        sparseCheckout = ["contrib/completion/git-prompt.sh"];
+      }}/contrib/completion/git-prompt.sh";
     };
 
     sessionVariables = {
