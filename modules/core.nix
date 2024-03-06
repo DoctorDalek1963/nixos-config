@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   #unstable,
   nixvim-flake,
   system,
@@ -48,6 +49,18 @@ in {
       EDITOR = "${my-nixvim}/bin/nvim";
       EXTENDED_PS1 = 1;
     };
+  };
+
+  nixpkgs.config = {
+    # These are lists of allowed unfree and insecure packages respectively.
+    # They are allowed on any host (since this is core.nix), but they're
+    # only actually installed by certain modules.
+
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["obsidian"];
+
+    permittedInsecurePackages = [
+      "electron-25.9.0" # Needed by obsidian
+    ];
   };
 
   nix = {

@@ -16,10 +16,13 @@ in {
   home.packages = with pkgs; [
     customPython
 
+    customTexlive
+
+    # Uni notes
+    obsidian
+
     # Sage math
     sageWithDoc
-
-    customTexlive
 
     # GUI TikZ editor
     tikzit

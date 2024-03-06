@@ -22,12 +22,10 @@
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config = {allow-unfree = true;};
     };
     extraSpecialArgs = {
       #inherit unstable;
-      inherit nixvim-flake;
-      inherit system;
+      inherit nixvim-flake system;
     };
   in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
