@@ -40,7 +40,12 @@ in {
     file = {
       ".cargo/clippy.conf".source = ../files/clippy.conf;
       ".cargo/config.toml".source = ../files/cargo-config.toml;
-      ".config/fd/ignore".source = ../files/fd-ignore;
+      ".config/fd/ignore".text = ''
+        .git/*
+        .cache/*
+        OneDrive/*
+        *.pyc
+      '';
       ".git-prompt.sh".source = "${pkgs.fetchgit {
         url = "https://github.com/git/git";
         rev = "fc134b41ce2ee7b2a98a988db6eeb109e11a2831";
