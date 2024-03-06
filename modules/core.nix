@@ -25,21 +25,11 @@ in {
 
     packages = with pkgs; [
       my-nixvim
-
-      just
-      rustup
       fd
       sd
-
-      pre-commit
-      alejandra
-      deadnix
-      statix
     ];
 
     file = {
-      ".cargo/clippy.conf".source = ../files/clippy.conf;
-      ".cargo/config.toml".source = ../files/cargo-config.toml;
       ".config/fd/ignore".text = ''
         .git/*
         .cache/*
@@ -57,8 +47,6 @@ in {
     sessionVariables = {
       EDITOR = "${my-nixvim}/bin/nvim";
       EXTENDED_PS1 = 1;
-      GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
-      JILL_INSTALL_DIR = "${homedir}/.local/misc/julia-versions";
     };
   };
 

@@ -37,12 +37,17 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/gaming.nix
+          ./modules/maths.nix
+          ./modules/programming.nix
         ];
       };
       "dyson@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/maths.nix
+          ./modules/programming.nix
         ];
       };
     };
