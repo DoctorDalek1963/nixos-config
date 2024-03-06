@@ -38,10 +38,10 @@ in {
     ];
 
     file = {
-      ".git-prompt.sh".source = ./files/.git-prompt.sh;
-      "${homedir}/.cargo/clippy.conf".source = ./files/clippy.conf;
-      "${homedir}/.cargo/config.toml".source = ./files/cargo-config.toml;
-      "${homedir}/.config/fd/ignore".source = ./files/fd-ignore;
+      ".git-prompt.sh".source = ../files/.git-prompt.sh;
+      "${homedir}/.cargo/clippy.conf".source = ../files/clippy.conf;
+      "${homedir}/.cargo/config.toml".source = ../files/cargo-config.toml;
+      "${homedir}/.config/fd/ignore".source = ../files/fd-ignore;
     };
 
     sessionVariables = {

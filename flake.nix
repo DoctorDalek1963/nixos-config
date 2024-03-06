@@ -20,22 +20,29 @@
     ...
   }: let
     system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config = {allow-unfree = true;};
+    };
+    extraSpecialArgs = {
+      #inherit unstable;
+      inherit nixvim-flake;
+      inherit system;
+    };
   in {
     defaultPackage.${system} = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
-      dyson = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          inherit system;
-          config = {allow-unfree = true;};
-        };
-        extraSpecialArgs = {
-          #inherit unstable;
-          inherit nixvim-flake;
-          inherit system;
-        };
+      "dyson@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs extraSpecialArgs;
         modules = [
-          ./home.nix
+          ./modules/core.nix
+        ];
+      };
+      "dyson@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs extraSpecialArgs;
+        modules = [
+          ./modules/core.nix
         ];
       };
     };
