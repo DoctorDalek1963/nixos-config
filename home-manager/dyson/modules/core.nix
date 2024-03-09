@@ -169,7 +169,7 @@ in {
         c = "cat";
         g = "git";
         j = "just";
-        p = "python";
+        p = "python3";
         t = "touch";
         v = "${my-nixvim}/bin/nvim";
         x = "exit";
@@ -184,12 +184,12 @@ in {
 
         nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
 
-        ipy = "python -m IPython";
+        ipy = "python3 -m IPython";
         jnb = "jupyter notebook";
         pnb = "julia -e 'import Pluto; Pluto.run()'";
-        pip = "python -m pip";
-        pup = "python -m pip install --upgrade pip";
-        pmhttp = "python -m http.server";
+        pip = "python3 -m pip";
+        pup = "python3 -m pip install --upgrade pip";
+        pmhttp = "python3 -m http.server";
         clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
 
         clip = "xclip -selection c";
