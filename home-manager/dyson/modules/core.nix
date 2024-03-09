@@ -39,10 +39,11 @@ in {
         OneDrive/*
         *.pyc
       '';
-      ".git-prompt.sh".source = "${pkgs.fetchgit {
-        url = "https://github.com/git/git";
+      ".git-prompt.sh".source = "${pkgs.fetchFromGitHub {
+        owner = "git";
+        repo = "git";
         rev = "fc134b41ce2ee7b2a98a988db6eeb109e11a2831";
-        hash = "sha256-DG9GQdFHAmxLjpVo9knFwtEQWUdfMc1G5IC1ezp7cVk=";
+        hash = "sha256-vL2zpDQJ7vJBrBflPqPUMPFP+tu8K79LbojtUGzFUMw=";
         sparseCheckout = ["contrib/completion/git-prompt.sh"];
       }}/contrib/completion/git-prompt.sh";
     };
