@@ -1,6 +1,6 @@
 {lib, ...}: let
   machineMap = {
-    "2f159b72-02e6-144b-b995-1ac97eb03bd1" = ./machines/vbox.nix;
+    "4539ca6a-89e3-354d-aa67-c8501883e47e" = ./machines/vbox.nix;
   };
   machine =
     machineMap

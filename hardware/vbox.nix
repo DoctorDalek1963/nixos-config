@@ -4,18 +4,25 @@
       availableKernelModules = ["ata_piix" "ohci_pci" "sd_mod" "sr_mod"];
       kernelModules = [];
     };
+
     kernelModules = [];
     extraModulePackages = [];
+
+    loader.grub = {
+      enable = true;
+      useOSProber = true;
+      device = "/dev/sda";
+    };
   };
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/0003df8f-16c1-400c-8794-7877a0a53a06";
+      device = "/dev/disk/by-uuid/c2459017-b98c-4f91-9b42-ca472d5f4368";
       fsType = "ext4";
     };
 
     "home" = {
-      device = "/dev/disk/by-uuid/3da0adf9-ee25-4e2f-8cce-399a3524ebbf";
+      device = "/dev/disk/by-uuid/6566c69a-e1cb-468e-a73f-fd5ab689b38f";
       fsType = "ext4";
     };
   };

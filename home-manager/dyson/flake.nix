@@ -48,6 +48,13 @@
           ./modules/programming.nix
         ];
       };
+      "dyson@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs extraSpecialArgs;
+        modules = [
+          ./modules/core.nix
+          ./modules/programming.nix
+        ];
+      };
     };
   };
 }

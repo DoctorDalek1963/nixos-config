@@ -26,8 +26,10 @@ in {
 
     packages = with pkgs; [
       my-nixvim
+
       fd
       sd
+      vim
     ];
 
     file = {

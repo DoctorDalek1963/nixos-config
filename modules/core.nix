@@ -14,11 +14,6 @@
   # Allow unfree packages (drivers and hardware stuff)
   nixpkgs.config.allowUnfree = true;
 
-  boot.loader.grub = {
-    enable = true;
-    useOSProber = true;
-  };
-
   networking = {
     firewall.enable = true;
     networkmanager.enable = true;
@@ -65,7 +60,9 @@
 
       # Use British keyboard in graphical sessions
       layout = "gb";
-      xkbVariant = "";
+      # Use caps lock as escape, always use num lock, terminate the X server
+      # with ctrl + alt + backspace, and use the menu key as the compose key
+      xkb.options = "caps:escape,numpad:mac,terminate:ctrl_alt_bksp,compose:menu";
     };
   };
 
@@ -78,9 +75,9 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [
+    git
     vim
     wget
-    git
   ];
 
   users.users.dyson = {
