@@ -159,6 +159,11 @@ in {
         la = "ls -a";
         lh = "ls -lah";
 
+        # NixOS management
+        cdnc = "cd /etc/nixos";
+        cdhm = "cd /etc/nixos/home-manager/${username}";
+        home-manager = "nix run /etc/nixos/home-manager/${username} -- --flake /etc/nixos/home-manager/${username}";
+
         # Single letters
         b = "bat";
         c = "cat";
