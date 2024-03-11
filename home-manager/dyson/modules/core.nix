@@ -29,6 +29,7 @@ in {
 
       fd
       sd
+      tldr
       vim
     ];
 
