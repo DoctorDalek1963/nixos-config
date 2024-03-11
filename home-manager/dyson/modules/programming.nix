@@ -1,6 +1,8 @@
 {pkgs, ...}: {
   home = {
     packages = with pkgs; [
+      gh
+
       # Build tools & automation
       just
       pre-commit
