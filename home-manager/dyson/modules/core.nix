@@ -13,6 +13,15 @@
 in {
   fonts.fontconfig.enable = true;
 
+  xdg.configFile = {
+    "fd/ignore".text = ''
+      .git/*
+      .cache/*
+      OneDrive/*
+      *.pyc
+    '';
+  };
+
   home = {
     inherit username;
     homeDirectory = homedir;
@@ -38,12 +47,6 @@ in {
     ];
 
     file = {
-      ".config/fd/ignore".text = ''
-        .git/*
-        .cache/*
-        OneDrive/*
-        *.pyc
-      '';
       ".git-prompt.sh".source = "${pkgs.fetchFromGitHub {
         owner = "git";
         repo = "git";
@@ -51,6 +54,15 @@ in {
         hash = "sha256-vL2zpDQJ7vJBrBflPqPUMPFP+tu8K79LbojtUGzFUMw=";
         sparseCheckout = ["contrib/completion/git-prompt.sh"];
       }}/contrib/completion/git-prompt.sh";
+      ".inputrc".text = ''
+        $include /etc/inputrc
+        "\C-H": backward-kill-word
+      '';
+      ".XCompose".text = ''
+        include "%L"
+        <Multi_key> <b> <c> : "∵" # because
+        <Multi_key> <t> <f> : "∴" # therefore
+      '';
     };
 
     sessionVariables = {
