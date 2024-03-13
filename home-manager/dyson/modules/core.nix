@@ -39,6 +39,7 @@ in {
       my-nixvim
 
       fd
+      sad
       sd
       tldr
       vim
