@@ -54,10 +54,6 @@
     xserver = {
       enable = true;
 
-      # Enable GNOME system-wide
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-
       # Use British keyboard in graphical sessions
       layout = "gb";
       # Use caps lock as escape, always use num lock, terminate the X server

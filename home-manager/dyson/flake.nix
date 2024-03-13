@@ -52,6 +52,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/gnome/default.nix
           ./modules/programming.nix
         ];
       };
