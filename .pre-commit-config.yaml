@@ -1,3 +1,7 @@
+# NOTE: This file must be installed with `pre-commit install --hook-type pre-commit --hook-type pre-push`
+
+default_stages: [pre-commit]
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
@@ -28,3 +32,19 @@ repos:
         language: system
         files: '.*\.nix$'
         pass_filenames: false
+
+      - id: nixos-flake-check
+        name: nixos flake check
+        entry: nix flake check
+        language: system
+        files: '.*\.(nix|lock)$'
+        pass_filenames: false
+        stages: [pre-push]
+
+      - id: hm-flake-check
+        name: home-manager flake check
+        entry: bash -c 'for user in ./home-manager/*; do nix flake check "$user"; done'
+        language: system
+        files: '.*\.(nix|lock)$'
+        pass_filenames: false
+        stages: [pre-push]
