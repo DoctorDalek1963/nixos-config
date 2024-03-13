@@ -53,12 +53,8 @@
 
     xserver = {
       enable = true;
-
       # Use British keyboard in graphical sessions
       layout = "gb";
-      # Use caps lock as escape, always use num lock, terminate the X server
-      # with ctrl + alt + backspace, and use the menu key as the compose key
-      xkb.options = "caps:escape,numpad:mac,terminate:ctrl_alt_bksp,compose:menu";
     };
   };
 
