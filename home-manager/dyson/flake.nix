@@ -28,7 +28,7 @@
       inherit nixvim-flake system;
     };
   in {
-    defaultPackage.${system} = home-manager.defaultPackage.${system};
+    packages.${system}.default = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
       "dyson@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
