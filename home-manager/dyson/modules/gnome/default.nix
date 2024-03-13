@@ -1,4 +1,4 @@
-# This config was heavy inspired by this article:
+# This config was heavily inspired by this article:
 # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
 {pkgs, ...}: {
   imports = [./dconf.nix ./extensions.nix];
@@ -14,13 +14,8 @@
     enable = true;
 
     iconTheme = {
-      name = "Vimix-dark";
+      name = "Vimix-Amethyst-dark";
       package = pkgs.vimix-icon-theme;
-    };
-
-    theme = {
-      name = "Vimix-dark-amethyst";
-      package = pkgs.vimix-gtk-themes;
     };
 
     cursorTheme = {

@@ -4,7 +4,6 @@
       appindicator
       caffeine
       clipboard-indicator
-      # clock-override
       dash-to-dock
       # TODO: Enable date-menu-formatter when it's updated to GNOME 45
       lock-keys
