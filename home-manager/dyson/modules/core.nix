@@ -11,17 +11,6 @@
   homedir = "/home/${username}";
   my-nixvim = nixvim-flake.packages.${system}.default;
 in {
-  fonts.fontconfig.enable = true;
-
-  xdg.configFile = {
-    "fd/ignore".text = ''
-      .git/*
-      .cache/*
-      OneDrive/*
-      *.pyc
-    '';
-  };
-
   home = {
     inherit username;
     homeDirectory = homedir;
@@ -90,6 +79,17 @@ in {
   };
 
   targets.genericLinux.enable = true;
+
+  fonts.fontconfig.enable = true;
+
+  xdg.configFile = {
+    "fd/ignore".text = ''
+      .git/*
+      .cache/*
+      OneDrive/*
+      *.pyc
+    '';
+  };
 
   programs = {
     home-manager.enable = true;
