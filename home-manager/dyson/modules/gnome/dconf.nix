@@ -40,8 +40,7 @@ with lib.hm.gvariant; {
       color-scheme = "prefer-dark";
       cursor-theme = "Vimix-white-cursors";
       font-hinting = "slight";
-      gtk-theme = "Vimix-dark-amethyst";
-      icon-theme = "Vimix-dark";
+      icon-theme = "Vimix-Amethyst-dark";
       locate-pointer = false;
       toolkit-accessibility = false;
     };

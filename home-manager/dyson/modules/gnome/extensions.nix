@@ -98,9 +98,7 @@
     };
 
     "org/gnome/shell/extensions/nightthemeswitcher/shell-variants" = {
-      day = "vimix-light-doder";
-      enabled = true;
-      night = "vimix-dark-doder";
+      enabled = false;
     };
 
     "org/gnome/shell/extensions/nightthemeswitcher/time" = {
