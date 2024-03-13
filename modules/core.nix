@@ -67,9 +67,9 @@
   security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [
+    busybox
     git
     vim
-    wget
   ];
 
   users.users.dyson = {
