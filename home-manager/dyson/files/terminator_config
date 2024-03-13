@@ -1,0 +1,52 @@
+[global_config]
+  handle_size = 5
+  always_split_with_profile = True
+[keybindings]
+[profiles]
+  [[default]]
+    audible_bell = True
+    font = Hack Nerd Font Mono 10
+    foreground_color = "#ffffff"
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
+    bold_is_bright = True
+  [[transparent]]
+    audible_bell = True
+    background_darkness = 0.8
+    background_type = transparent
+    font = Hack Nerd Font Mono 12
+    foreground_color = "#ffffff"
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
+    bold_is_bright = True
+  [[white]]
+    audible_bell = True
+    background_color = "#ffffff"
+    font = Hack Nerd Font Mono 12
+    foreground_color = "#000000"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_infinite = True
+    use_system_font = False
+    bold_is_bright = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 257:122
+      maximised = False
+      fullscreen = False
+      size = 1105, 645
+      last_active_term = 28a660ed-cd85-45b9-908c-7fa368e26171
+      last_active_window = True
+    [[[terminal1]]]
+      type = Terminal
+      parent = window0
+      order = 0
+      profile = default
+      uuid = 28a660ed-cd85-45b9-908c-7fa368e26171
+[plugins]

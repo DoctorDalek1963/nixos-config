@@ -11,6 +11,8 @@
   homedir = "/home/${username}";
   my-nixvim = nixvim-flake.packages.${system}.default;
 in {
+  fonts.fontconfig.enable = true;
+
   home = {
     inherit username;
     homeDirectory = homedir;
@@ -31,6 +33,8 @@ in {
       sd
       tldr
       vim
+
+      (nerdfonts.override {fonts = ["Hack"];})
     ];
 
     file = {

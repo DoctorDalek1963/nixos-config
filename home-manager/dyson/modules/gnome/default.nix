@@ -8,6 +8,8 @@
     terminator
   ];
 
+  xdg.configFile."terminator/config".source = ../../files/terminator_config;
+
   dconf.enable = true;
 
   gtk = {
