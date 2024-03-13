@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   nix = {
     # Enable flakes
-    extraOptions = "experimental-features = nix-command flakes";
+    settings.experimental-features = ["nix-command" "flakes"];
 
     # Garbage collect old packages every week
     gc = {
