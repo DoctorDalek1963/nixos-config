@@ -42,6 +42,7 @@ with lib.hm.gvariant; {
       font-hinting = "slight";
       icon-theme = "Vimix-Amethyst-dark";
       locate-pointer = false;
+      monospace-font-name = "Hack Nerd Font 10";
       toolkit-accessibility = false;
     };
 
