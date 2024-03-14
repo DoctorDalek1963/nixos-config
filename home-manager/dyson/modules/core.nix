@@ -5,10 +5,10 @@
   #unstable,
   nixvim-flake,
   system,
+  username,
+  homedir,
   ...
 }: let
-  username = "dyson";
-  homedir = "/home/${username}";
   my-nixvim = nixvim-flake.packages.${system}.default;
 in {
   home = {
@@ -30,6 +30,7 @@ in {
       fd
       sad
       sd
+      sops
       tldr
       vim
 
@@ -61,6 +62,15 @@ in {
     };
   };
 
+  xdg.configFile = {
+    "fd/ignore".text = ''
+      .git/*
+      .cache/*
+      OneDrive/*
+      *.pyc
+    '';
+  };
+
   nixpkgs.config = {
     # These are lists of allowed unfree and insecure packages respectively.
     # They are allowed on any host (since this is core.nix), but they're
@@ -81,15 +91,6 @@ in {
   targets.genericLinux.enable = true;
 
   fonts.fontconfig.enable = true;
-
-  xdg.configFile = {
-    "fd/ignore".text = ''
-      .git/*
-      .cache/*
-      OneDrive/*
-      *.pyc
-    '';
-  };
 
   programs = {
     home-manager.enable = true;
