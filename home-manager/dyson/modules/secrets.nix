@@ -43,6 +43,7 @@
         path = "${homedir}/.ssh/git_main_signing.pub";
         mode = "0644";
       };
+      "ssh/id_ed25519/passphrase" = {};
       "ssh/id_ed25519/private" = {
         path = "${homedir}/.ssh/id_ed25519";
         mode = "0600";
