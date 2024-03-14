@@ -36,6 +36,15 @@
         path = "${homedir}/.ssh/github_main.pub";
         mode = "0644";
       };
+      "ssh/git_main_signing/passphrase" = {};
+      "ssh/git_main_signing/private" = {
+        path = "${homedir}/.ssh/git_main_signing";
+        mode = "0600";
+      };
+      "ssh/git_main_signing/public" = {
+        path = "${homedir}/.ssh/git_main_signing.pub";
+        mode = "0644";
+      };
       "ssh/id_ed25519/private" = {
         path = "${homedir}/.ssh/id_ed25519";
         mode = "0600";

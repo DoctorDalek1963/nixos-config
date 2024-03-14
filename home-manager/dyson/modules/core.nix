@@ -446,7 +446,7 @@ in {
         uncommit = "reset --soft HEAD~1";
       };
       signing = {
-        key = "F1C0D1EBB627CF58";
+        key = "${homedir}/.ssh/git_main_signing";
         signByDefault = true;
       };
       delta = {
@@ -461,7 +461,10 @@ in {
       extraConfig = {
         core.editor = "${my-nixvim}/bin/nvim";
         diff.colorMoved = "default";
+        fetch.prune = true;
+        gpg.format = "ssh";
         init.defaultBranch = "main";
+        merge.ff = false;
         pull = {
           rebase = false;
           ff = "only";
@@ -471,8 +474,6 @@ in {
           autoSetupRemote = true;
           default = "current";
         };
-        fetch.prune = true;
-        merge.ff = false;
       };
     };
   };
