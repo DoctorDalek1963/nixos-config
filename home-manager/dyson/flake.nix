@@ -42,7 +42,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
-          ./modules/secrets.nix
+          ./modules/secrets/provisioning.nix
           ./modules/gaming.nix
           ./modules/maths.nix
           ./modules/programming.nix

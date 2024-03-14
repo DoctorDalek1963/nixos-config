@@ -1,16 +1,23 @@
 {
-  sops-nix,
+  pkgs,
   config,
+  sops-nix,
   homedir,
   ...
 }: {
   imports = [sops-nix.homeManagerModules.sops];
 
+  home.packages = with pkgs; [
+    age
+    openssh
+    sops
+  ];
+
   # See https://github.com/Mic92/sops-nix#use-with-home-manager
   home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] "systemctl start --user sops-nix";
 
   sops = {
-    defaultSopsFile = ./../secrets/secrets.yaml;
+    defaultSopsFile = ../../secrets/secrets.yaml;
     age = {
       keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       generateKey = false;
