@@ -5,9 +5,9 @@
       caffeine
       clipboard-indicator
       dash-to-dock
-      # TODO: Enable date-menu-formatter when it's updated to GNOME 45
       lock-keys
       night-theme-switcher
+      panel-date-format
       # TODO: Self-package thanatophobia for GNOME 45
     ])
     ++ (with pkgs; [
@@ -37,9 +37,9 @@
         "caffeine@patapon.info"
         "clipboard-indicator@tudmotu.com"
         "dash-to-dock@micxgx.gmail.com"
-        # "date-menu-formatter@marcinjakubowski.github.com"
         "lockkeys@vaina.lt"
         "nightthemeswitcher@romainvigier.fr"
+        "panel-date-format@keiii.github.com"
         # "thanatophobia@yatx.one"
       ];
     };
@@ -54,10 +54,6 @@
       cache-only-favorites = true;
       enable-keybindings = false;
     };
-
-    # "org/gnome/shell/extensions/clock_override" = {
-    #   override-string = "%l:%M:%S %p, %A %e %B 12,0%y";
-    # };
 
     "org/gnome/shell/extensions/dash-to-dock" = {
       apply-custom-theme = false;
@@ -106,6 +102,10 @@
       nightthemeswitcher-ondemand-keybinding = ["<Shift><Super>t"];
       schedule-sunset = 18.25;
       schedule-sunrise = 6.5;
+    };
+
+    "org/gnome/shell/extensions/panel-date-format" = {
+      format = "%l:%M:%S %p, %A %e %B 12,0%y";
     };
 
     # "org/gnome/shell/extensions/thanatophobia" = {
