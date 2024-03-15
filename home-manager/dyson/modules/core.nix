@@ -236,7 +236,7 @@ in {
         gpall = "git-all push";
 
         # Search long-form history
-        grephist = "cat ~/.bash_history | grep --";
+        rghist = "cat ~/.bash_history | rg --";
       };
       bashrcExtra = ''
         trySource() {
@@ -334,6 +334,19 @@ in {
             fi
         }
         export PROMPT_COMMAND=buildPrompt
+
+        # An easily grepable ps
+        psg() {
+          if [ "$1" != "" ]; then
+            procs=$(\ps auxf)
+            # This just prints the first line of output - the headers of the table
+            echo "$procs" | head -n 1
+            # This runs ps, filters out this specific grep command, and then greps for whatever I pass as args
+            echo "$procs" | rg -v rg | rg $@
+          else
+            echo "Please supply something to grep for."
+          fi
+        }
 
         # This is a function because if it's an alias, the curl command gets
         # evaluated when the file is sourced rather than when the alias is run
