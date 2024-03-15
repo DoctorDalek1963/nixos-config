@@ -30,7 +30,6 @@ in {
       fd
       sad
       sd
-      sops
       tldr
       vim
 
