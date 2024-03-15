@@ -378,11 +378,11 @@ in {
 
         # Easily copy a file
         cclip() {
-            cat "$1" | clip
+            cat "$1" | xclip -selection c
         }
 
         clipo() {
-            echo "$(clip -o)"
+            echo "$(xclip -selection c -o)"
         }
 
         # Decode base 64
