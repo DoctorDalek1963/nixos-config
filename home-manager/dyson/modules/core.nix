@@ -229,11 +229,11 @@ in {
         gfpl = "git fetch && git pull";
         gl = "git log";
 
-        gstall = "python ~/repos/git_all.py status";
-        gfall = "python ~/repos/git_all.py fetch";
-        gplall = "python ~/repos/git_all.py pull";
-        gfplall = "python ~/repos/git_all.py fetch && python ~/repos/git_all.py pull";
-        gpall = "python ~/repos/git_all.py push";
+        gstall = "git-all status";
+        gfall = "git-all fetch";
+        gplall = "git-all pull";
+        gfplall = "git-all fetch && git-all pull";
+        gpall = "git-all push";
 
         # Search long-form history
         grephist = "cat ~/.bash_history | grep --";

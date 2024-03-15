@@ -1,23 +1,32 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  git-all = pkgs.stdenv.mkDerivation {
+    name = "git-all";
+    propagatedBuildInputs = [(pkgs.python3.withPackages (p: [p.rich]))];
+    dontUnpack = true;
+    installPhase = "install -Dm755 ${../files/scripts/git_all.py} $out/bin/git-all";
+  };
+in {
   home = {
-    packages = with pkgs; [
-      gh
+    packages =
+      (with pkgs; [
+        gh
 
-      # Build tools & automation
-      just
-      pre-commit
+        # Build tools & automation
+        just
+        pre-commit
 
-      # Haskell
-      ghc
+        # Haskell
+        ghc
 
-      # Nix
-      alejandra
-      deadnix
-      statix
+        # Nix
+        alejandra
+        deadnix
+        statix
 
-      # Rust
-      rustup
-    ];
+        # Rust
+        rustup
+      ])
+      ++ [git-all];
 
     sessionVariables.GCC_COLORS = "error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01";
 
