@@ -31,8 +31,9 @@
     };
     extraSpecialArgs = {
       #inherit unstable;
-      inherit nixvim-flake sops-nix system username;
+      inherit sops-nix system username;
       homedir = "/home/${username}";
+      my-nixvim = nixvim-flake.packages.${system}.default;
     };
   in {
     packages.${system}.default = home-manager.defaultPackage.${system};
@@ -42,6 +43,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/shells/bash.nix
           ./modules/secrets/provisioning.nix
           ./modules/gaming.nix
           ./modules/maths.nix
@@ -52,6 +54,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/shells/bash.nix
           ./modules/secrets/provisioning.nix.nix
           ./modules/secrets/gnome-keyring.nix
           ./modules/gnome/default.nix
@@ -63,6 +66,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/shells/bash.nix
           ./modules/secrets/provisioning.nix
           ./modules/secrets/gnome-keyring.nix
           ./modules/gnome/default.nix
