@@ -46,8 +46,11 @@
 
     "org/gnome/shell/extensions/caffeine" = {
       countdown-timer = 0;
-      show-indicator = "only-active";
-      toggle-state = false;
+      duration-timer = 2;
+      enable-fullscreen = false;
+      show-indicator = "always";
+      show-notifications = false;
+      toggle-state = true;
     };
 
     "org/gnome/shell/extensions/clipboard-indicator" = {
