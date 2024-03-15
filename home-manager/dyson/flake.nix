@@ -52,7 +52,9 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
-          ./modules/secrets.nix
+          ./modules/secrets/provisioning.nix.nix
+          ./modules/secrets/gnome-keyring.nix
+          ./modules/gnome/default.nix
           ./modules/maths.nix
           ./modules/programming.nix
         ];
@@ -61,7 +63,8 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
-          ./modules/secrets.nix
+          ./modules/secrets/provisioning.nix
+          ./modules/secrets/gnome-keyring.nix
           ./modules/gnome/default.nix
           ./modules/programming.nix
         ];
