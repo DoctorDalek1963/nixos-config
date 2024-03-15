@@ -85,8 +85,11 @@ in {
       night = "Vimix-white-cursors";
     };
 
+    # This should only affect legacy GTK apps. If it starts to break things, just disable it
     "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
-      enabled = false;
+      day = "vimix-doder";
+      enabled = true;
+      night = "vimix-dark-doder";
     };
 
     "org/gnome/shell/extensions/nightthemeswitcher/icon-variants" = {
