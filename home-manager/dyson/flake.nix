@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -17,41 +21,47 @@
     #unstable,
     home-manager,
     nixvim-flake,
+    sops-nix,
     ...
   }: let
     system = "x86_64-linux";
+    username = "dyson";
     pkgs = import nixpkgs {
       inherit system;
     };
     extraSpecialArgs = {
       #inherit unstable;
-      inherit nixvim-flake system;
+      inherit nixvim-flake sops-nix system username;
+      homedir = "/home/${username}";
     };
   in {
     packages.${system}.default = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
-      "dyson@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
+      "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/secrets/provisioning.nix
           ./modules/gaming.nix
           ./modules/maths.nix
           ./modules/programming.nix
         ];
       };
-      "dyson@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
+      "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/secrets.nix
           ./modules/maths.nix
           ./modules/programming.nix
         ];
       };
-      "dyson@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
+      "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           ./modules/core.nix
+          ./modules/secrets.nix
           ./modules/gnome/default.nix
           ./modules/programming.nix
         ];

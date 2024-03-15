@@ -5,10 +5,10 @@
   #unstable,
   nixvim-flake,
   system,
+  username,
+  homedir,
   ...
 }: let
-  username = "dyson";
-  homedir = "/home/${username}";
   my-nixvim = nixvim-flake.packages.${system}.default;
 in {
   home = {
@@ -30,6 +30,7 @@ in {
       fd
       sad
       sd
+      sops
       tldr
       vim
 
@@ -61,6 +62,15 @@ in {
     };
   };
 
+  xdg.configFile = {
+    "fd/ignore".text = ''
+      .git/*
+      .cache/*
+      OneDrive/*
+      *.pyc
+    '';
+  };
+
   nixpkgs.config = {
     # These are lists of allowed unfree and insecure packages respectively.
     # They are allowed on any host (since this is core.nix), but they're
@@ -81,15 +91,6 @@ in {
   targets.genericLinux.enable = true;
 
   fonts.fontconfig.enable = true;
-
-  xdg.configFile = {
-    "fd/ignore".text = ''
-      .git/*
-      .cache/*
-      OneDrive/*
-      *.pyc
-    '';
-  };
 
   programs = {
     home-manager.enable = true;
@@ -458,7 +459,7 @@ in {
         uncommit = "reset --soft HEAD~1";
       };
       signing = {
-        key = "F1C0D1EBB627CF58";
+        key = "${homedir}/.ssh/git_main_signing";
         signByDefault = true;
       };
       delta = {
@@ -473,7 +474,10 @@ in {
       extraConfig = {
         core.editor = "${my-nixvim}/bin/nvim";
         diff.colorMoved = "default";
+        fetch.prune = true;
+        gpg.format = "ssh";
         init.defaultBranch = "main";
+        merge.ff = false;
         pull = {
           rebase = false;
           ff = "only";
@@ -483,8 +487,6 @@ in {
           autoSetupRemote = true;
           default = "current";
         };
-        fetch.prune = true;
-        merge.ff = false;
       };
     };
   };
