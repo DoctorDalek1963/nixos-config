@@ -14,7 +14,9 @@
   ];
 
   # See https://github.com/Mic92/sops-nix#use-with-home-manager
-  home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] "systemctl start --user sops-nix";
+  home.activation.setupEtc = config.lib.dag.entryAfter ["writeBoundary"] ''
+    /run/current-system/sw/bin/systemctl start --user sops-nix
+  '';
 
   sops = {
     defaultSopsFile = ../../secrets/secrets.yaml;
