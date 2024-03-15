@@ -1,9 +1,7 @@
-1. Use sops-nix for secrets management
-2. Install lean4, weylus, and Zotero in maths module
-3. Setup Firefox with profile
-4. Install `gh` in programming module
-5. Setup `rclone`
-6. Setup AutoKey
-7. Use Catppuccin theme for bat, btop, and delta
-8. Misc: Discord, VLC, Zoom
-9. Install `git_all.py` (Setup proper Python interpreter? Use nix to package?)
+1. Install lean4, weylus, and Zotero in maths module
+2. Setup Firefox with profile
+3. Install `gh` in programming module
+4. Setup `rclone`
+5. Setup AutoKey
+6. Use Catppuccin theme for bat, btop, and delta
+7. Misc: Discord, VLC, Zoom
