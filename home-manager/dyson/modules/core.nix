@@ -24,6 +24,7 @@
     packages = with pkgs; [
       my-nixvim
 
+      delta # Needed for git
       fd
       sad
       sd

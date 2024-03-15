@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  my-nixvim,
+  ...
+}: let
   git-all = pkgs.stdenv.mkDerivation {
     name = "git-all";
     propagatedBuildInputs = [(pkgs.python3.withPackages (p: [p.rich]))];
@@ -9,8 +13,6 @@ in {
   home = {
     packages =
       (with pkgs; [
-        gh
-
         # Build tools & automation
         just
         pre-commit
@@ -33,6 +35,16 @@ in {
     file = {
       ".cargo/clippy.conf".source = ../files/clippy.conf;
       ".cargo/config.toml".source = ../files/cargo-config.toml;
+    };
+  };
+
+  programs.gh = {
+    enable = true;
+    settings = {
+      git_protocol = "ssh";
+      editor = "${my-nixvim}/bin/nvim";
+      prompt = "enabled";
+      pager = "${pkgs.delta}/bin/delta";
     };
   };
 }

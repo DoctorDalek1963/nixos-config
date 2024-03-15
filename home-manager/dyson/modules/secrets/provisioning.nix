@@ -26,6 +26,10 @@
     };
 
     secrets = {
+      "gh/hosts" = {
+        path = "${config.xdg.configHome}/gh/hosts.yml";
+        mode = "0600";
+      };
       "ssh/authorized_keys" = {
         path = "${homedir}/.ssh/authorized_keys";
         mode = "0600";
