@@ -1,7 +1,7 @@
 # This config was heavily inspired by this article:
 # https://hoverbear.org/blog/declarative-gnome-configuration-in-nixos/
 {pkgs, ...}: {
-  imports = [./dconf.nix ./extensions.nix];
+  imports = [./dconf.nix ./extensions/default.nix];
 
   home.packages = with pkgs; [
     gnome.gnome-tweaks

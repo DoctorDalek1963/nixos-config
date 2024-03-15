@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  thanatophobia = pkgs.callPackage ./thanatophobia.nix {};
+in {
   home.packages =
     (with pkgs.gnomeExtensions; [
       appindicator
@@ -8,8 +10,8 @@
       lock-keys
       night-theme-switcher
       panel-date-format
-      # TODO: Self-package thanatophobia for GNOME 45
     ])
+    ++ [thanatophobia]
     ++ (with pkgs; [
       vimix-cursors
       vimix-gtk-themes
@@ -40,17 +42,14 @@
         "lockkeys@vaina.lt"
         "nightthemeswitcher@romainvigier.fr"
         "panel-date-format@keiii.github.com"
-        # "thanatophobia@yatx.one"
+        "thanatophobia@yatx.one"
       ];
     };
 
     "org/gnome/shell/extensions/caffeine" = {
       countdown-timer = 0;
-      duration-timer = 2;
-      enable-fullscreen = false;
-      show-indicator = "always";
-      show-notifications = false;
-      toggle-state = true;
+      show-indicator = "only-active";
+      toggle-state = false;
     };
 
     "org/gnome/shell/extensions/clipboard-indicator" = {
@@ -111,17 +110,17 @@
       format = "%l:%M:%S %p, %A %e %B 12,0%y";
     };
 
-    # "org/gnome/shell/extensions/thanatophobia" = {
-    #   countdown = 0;
-    #   country = "GBR";
-    #   day = 19;
-    #   hour = 3;
-    #   minute = 1;
-    #   month = 3;
-    #   rounding = 7;
-    #   sex = 1;
-    #   year = 2005;
-    # };
+    "org/gnome/shell/extensions/thanatophobia" = {
+      countdown = 0;
+      country = "GBR";
+      day = 19;
+      hour = 3;
+      minute = 1;
+      month = 3;
+      rounding = 7;
+      sex = 1;
+      year = 2005;
+    };
 
     "org/gnome/shell/extensions/user-theme" = {
       name = "vimix-dark-doder";
