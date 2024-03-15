@@ -8,7 +8,7 @@ This is my configuration for all my NixOS machines. Installation should be fairl
 2. Install `git` and enable flakes on the new machine.
 3. Keep the `hardware-configuration.nix` file somewhere safe for now.
 4. Clear `/etc/nixos` and clone this repo in its place. You probably want to change the permissions so that root access isn't needed.
-5. Run `git remote rm origin && git remote add origin github-dd:DoctorDalek1963/nixos-config` to enable git pushing later.
+5. Run `git remote rm origin && git remote add origin github-dd:DoctorDalek1963/nixos-config.git` to enable git pushing later.
 6. Add your desired hostname to `flake.nix`, following the examples of the other hosts there.
 7. Create a corresponding file in `machines/` for your new machine, following the examples of the other machine configs.
 8. Move `hardware-configuration.nix` to `hardware/`.
