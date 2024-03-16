@@ -6,9 +6,9 @@
 }: {
   programs.firefox = {
     enable = true;
+    enableGnomeExtensions = true;
     profiles.dyson = {
       id = 0;
-      enableGnomeExtensions = true;
       # TODO: Extensions: Refined GitHub preferences are in about:addons
       settings = {
         "browser.bookmarks.showMobileBookmarks" = true;
