@@ -1,4 +1,5 @@
 {
+  pkgs,
   homedir,
   hostname,
   username,
@@ -6,7 +7,9 @@
 }: {
   programs.firefox = {
     enable = true;
-    enableGnomeExtensions = true;
+    package = pkgs.firefox.override {
+      cfg.enableGnomeExtensions = true;
+    };
     profiles.dyson = {
       id = 0;
       # TODO: Extensions: Refined GitHub preferences are in about:addons
