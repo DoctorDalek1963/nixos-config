@@ -14,6 +14,7 @@
     };
     profiles.dyson = {
       id = 0;
+      # TODO: Allow unfree extensions
       extensions = with firefox-addons.packages.${system}; [
         # Privacy
         duckduckgo-privacy-essentials
