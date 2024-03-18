@@ -26,6 +26,7 @@
     };
 
     secrets = {
+      "firefox/extensions/refined_github/personal_access_token" = {};
       "gh/hosts" = {
         path = "${config.xdg.configHome}/gh/hosts.yml";
         mode = "0600";

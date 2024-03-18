@@ -77,8 +77,6 @@
     isNormalUser = true;
     description = "Dyson";
     extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-      firefox
-    ];
+    packages = [];
   };
 }
