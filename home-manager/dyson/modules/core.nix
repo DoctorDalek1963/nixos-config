@@ -73,7 +73,8 @@
     # They are allowed on any host (since this is core.nix), but they're
     # only actually installed by certain modules.
 
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["obsidian"];
+    # TODO: Why does firefox-addons not respect this? Even if allowUnfree = true, it still complains
+    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["obsidian" "tampermonkey"];
 
     permittedInsecurePackages = [
       "electron-25.9.0" # Needed by obsidian

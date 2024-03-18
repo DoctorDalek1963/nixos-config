@@ -2,7 +2,9 @@
   pkgs,
   homedir,
   hostname,
+  system,
   username,
+  firefox-addons,
   ...
 }: {
   programs.firefox = {
@@ -12,7 +14,34 @@
     };
     profiles.dyson = {
       id = 0;
-      # TODO: Extensions: Refined GitHub preferences are in about:addons
+      extensions = with firefox-addons.packages.${system}; [
+        # Privacy
+        duckduckgo-privacy-essentials
+        privacy-badger
+        ublock-origin
+
+        # Programming
+        github-file-icons
+        refined-github
+        rust-search-extension
+        # tampermonkey # Unfree
+
+        # YouTube
+        dearrow
+        # enhancer-for-youtube # Unfree
+        leechblock-ng
+        return-youtube-dislikes
+        sponsorblock
+
+        # Misc
+        darkreader
+        # dashlane # Unfree
+        wayback-machine
+
+        # Not yet packages
+        # Zotero Connector
+        # Who Wrote That?
+      ];
       settings = {
         "browser.bookmarks.showMobileBookmarks" = true;
         "browser.contentblocking.category" = "strict"; # Block cookies
