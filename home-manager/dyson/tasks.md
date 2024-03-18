@@ -6,3 +6,4 @@
 6. Misc: Discord, VLC, Zoom
 7. Setup online accounts with GNOME
 8. Set scrolling direction for different machines (invert touchpad scrolling?)
+9. Rest of dotfiles (.ghci, init.sage, ...)

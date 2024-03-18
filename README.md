@@ -17,3 +17,15 @@ This is my configuration for all my NixOS machines. Installation should be fairl
 10. Copy your `age` private key into `/home/dyson/.config/sops/age/keys.txt`. The key is available on Dashlane if you can't copy it from another computer.
 11. Run `nix run /etc/nixos/home-manager/dyson -- --flake /etc/nixos/home-manager/dyson switch` to setup home-manager.
 12. Reboot the system, and everything should be setup!
+
+## Post-installation config
+
+Some things are very difficult or impossible to configure declaratively.
+
+You'll have login to your Google account with GNOME to access Google Calendar. You might be able to do this normally through the settings, but you might need to run `WEBKIT_FORCE_SANDBOX=0 gnome-control-center online-accounts` to open the settings.
+
+The first time you use an SSH key, GNOME Keyring will prompt you for the passphrase. These will be available in `/run/user/<uid>/secrets/ssh/<key_name>/passphrase`.
+
+You'll have to login to Firefox to enable Firefox Sync. The device name should already be set up.
+
+Firefox add-ons need to be manually configured. Refined GitHub needs a token, which is available in `/run/user/1000/secrets/firefox/extensions/refined_github/personal_access_token`. I won't enumerate all of my add-on settings here, but I'd recommend copying them from another machine.
