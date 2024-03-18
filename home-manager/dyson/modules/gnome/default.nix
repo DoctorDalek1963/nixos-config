@@ -15,16 +15,6 @@
   gtk = {
     enable = true;
 
-    iconTheme = {
-      name = "Vimix-Amethyst-dark";
-      package = pkgs.vimix-icon-theme;
-    };
-
-    cursorTheme = {
-      name = "Vimix-white-cursors";
-      package = pkgs.vimix-cursors;
-    };
-
     gtk3.extraConfig = {
       Settings = ''
         gtk-application-prefer-dark-theme=1

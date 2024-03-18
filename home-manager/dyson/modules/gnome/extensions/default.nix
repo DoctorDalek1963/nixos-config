@@ -14,8 +14,16 @@ in {
     ++ [thanatophobia]
     ++ (with pkgs; [
       vimix-cursors
-      vimix-gtk-themes
-      vimix-icon-theme
+      vimix-gtk-themes.override
+      {
+        colorVariants = ["standard" "light" "dark"];
+        sizeVariants = ["standard"]; # TODO: Switch to "compact" for laptops
+        themeVariants = ["amethyst"];
+      }
+      vimix-icon-theme.override
+      {
+        colorVariants = ["Amethyst"];
+      }
     ]);
 
   dconf.settings = {
@@ -87,9 +95,9 @@ in {
 
     # This should only affect legacy GTK apps. If it starts to break things, just disable it
     "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
-      day = "vimix-doder";
+      day = "vimix-amethyst";
       enabled = true;
-      night = "vimix-dark-doder";
+      night = "vimix-dark-amethyst";
     };
 
     "org/gnome/shell/extensions/nightthemeswitcher/icon-variants" = {
@@ -126,7 +134,7 @@ in {
     };
 
     "org/gnome/shell/extensions/user-theme" = {
-      name = "vimix-dark-doder";
+      name = "vimix-dark-amethyst";
     };
   };
 }
