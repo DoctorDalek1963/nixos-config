@@ -61,6 +61,15 @@ in {
       tldr = defaultTrue;
       vim = defaultTrue;
     };
+
+    secrets = defaultTrue;
+
+    # Desktop environments
+    desktopEnvironments = {
+      gnome = {
+        enable = defaultFalse;
+      };
+    };
   };
 
   config = let

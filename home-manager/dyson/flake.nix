@@ -50,7 +50,6 @@
               hostname = "Sasha-Ubuntu";
             };
           }
-          ./modules/secrets/provisioning.nix
           ./modules/gaming.nix
           ./modules/maths.nix
           ./modules/programming.nix
@@ -67,8 +66,6 @@
               hostname = "Harold-NixOS";
             };
           }
-          ./modules/secrets/provisioning.nix.nix
-          ./modules/secrets/gnome-keyring.nix
           ./modules/gnome/default.nix
           ./modules/firefox.nix
           ./modules/maths.nix
@@ -84,10 +81,11 @@
             setup = {
               inherit username;
               hostname = "VirtualBox-NixOS";
+              desktopEnvironments.gnome = {
+                enable = true;
+              };
             };
           }
-          ./modules/secrets/provisioning.nix
-          ./modules/secrets/gnome-keyring.nix
           ./modules/gnome/default.nix
           ./modules/firefox.nix
           ./modules/programming.nix
