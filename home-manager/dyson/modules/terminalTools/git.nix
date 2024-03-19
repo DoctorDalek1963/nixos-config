@@ -1,6 +1,7 @@
 {
+  pkgs,
   config,
-  inputs,
+  my-nixvim,
   ...
 }: {
   programs.git = {
@@ -49,27 +50,25 @@
         line-numbers = true;
       };
     };
-    extraConfig =
-      {
-        diff.colorMoved = "default";
-        fetch.prune = true;
-        gpg.format = "ssh";
-        init.defaultBranch = "main";
-        merge.ff = false;
-        pull = {
-          rebase = false;
-          ff = "only";
-        };
-        push = {
-          followTags = true;
-          autoSetupRemote = true;
-          default = "current";
-        };
-      }
-      // (
+    extraConfig = {
+      core.editor =
         if config.setup.terminalTools.nvim
-        then {core.editor = "${inputs.my-nixvim}/bin/nvim";}
-        else {}
-      );
+        then "${my-nixvim}/bin/nvim"
+        else "${pkgs.nvim}/bin/nvim";
+      diff.colorMoved = "default";
+      fetch.prune = true;
+      gpg.format = "ssh";
+      init.defaultBranch = "main";
+      merge.ff = false;
+      pull = {
+        rebase = false;
+        ff = "only";
+      };
+      push = {
+        followTags = true;
+        autoSetupRemote = true;
+        default = "current";
+      };
+    };
   };
 }

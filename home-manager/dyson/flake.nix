@@ -32,7 +32,7 @@
       inherit system;
     };
     extraSpecialArgs = {
-      inherit system;
+      inherit system inputs;
       my-nixvim = inputs.nixvim-flake.packages.${system}.default;
     };
   in {
@@ -43,6 +43,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./setup.nix
+          ./import-all.nix
           {
             setup = {
               inherit username;
@@ -59,6 +60,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./setup.nix
+          ./import-all.nix
           {
             setup = {
               inherit username;
@@ -77,6 +79,7 @@
         inherit pkgs extraSpecialArgs;
         modules = [
           ./setup.nix
+          ./import-all.nix
           {
             setup = {
               inherit username;

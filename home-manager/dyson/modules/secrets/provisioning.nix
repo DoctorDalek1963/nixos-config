@@ -1,11 +1,12 @@
 {
   pkgs,
   config,
-  sops-nix,
-  homedir,
+  inputs,
   ...
-}: {
-  imports = [sops-nix.homeManagerModules.sops];
+}: let
+  homedir = config.home.homeDirectory;
+in {
+  imports = [inputs.sops-nix.homeManagerModules.sops];
 
   home.packages = with pkgs; [
     age
