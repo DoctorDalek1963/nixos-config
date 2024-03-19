@@ -14,16 +14,16 @@ in {
     ++ [thanatophobia]
     ++ (with pkgs; [
       vimix-cursors
-      vimix-gtk-themes.override
-      {
-        colorVariants = ["standard" "light" "dark"];
-        sizeVariants = ["standard"]; # TODO: Switch to "compact" for laptops
-        themeVariants = ["amethyst"];
-      }
-      vimix-icon-theme.override
-      {
-        colorVariants = ["Amethyst"];
-      }
+      (vimix-gtk-themes.override
+        {
+          colorVariants = ["standard" "light" "dark"];
+          sizeVariants = ["standard"]; # TODO: Switch to "compact" for laptops
+          themeVariants = ["amethyst"];
+        })
+      (vimix-icon-theme.override
+        {
+          colorVariants = ["Amethyst"];
+        })
     ]);
 
   dconf.settings = {
