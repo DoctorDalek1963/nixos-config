@@ -8,6 +8,7 @@ with lib; let
   cfg = config.setup;
 
   available-shells = ["bash"];
+  inherit (config.consts.lib) optItemList;
 
   defaultTrue = mkOption {
     default = true;
@@ -17,11 +18,6 @@ with lib; let
     default = false;
     type = types.bool;
   };
-
-  optItemList = opt: item:
-    if opt
-    then [item]
-    else [];
 in {
   options.setup = {
     # General stuff
@@ -97,6 +93,17 @@ in {
       rust = defaultFalse;
 
       nix = defaultTrue;
+    };
+
+    maths = {
+      enable = defaultFalse;
+
+      sage = defaultTrue;
+      tikzit = defaultTrue;
+      texlive = mkOption {
+        type = types.nullOr types.package;
+        default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
+      };
     };
 
     # Miscellaneous programs

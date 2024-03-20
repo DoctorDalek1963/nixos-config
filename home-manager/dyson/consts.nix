@@ -9,6 +9,15 @@
 with lib; {
   # Here we can define constant values that can be referenced from any other files
   options.consts = {
+    lib = {
+      optItemList = mkOption {
+        default = opt: item:
+          if opt
+          then [item]
+          else [];
+      };
+    };
+
     nvim = mkOption {
       type = types.submodule {
         options = {

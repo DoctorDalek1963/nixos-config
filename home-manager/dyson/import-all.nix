@@ -33,6 +33,8 @@
     ./modules/programming/python.nix
     ./modules/programming/rust.nix
 
+    ./modules/maths/default.nix
+
     # Misc programs
     ./modules/miscPrograms/discord.nix
   ];

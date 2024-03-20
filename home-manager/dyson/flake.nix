@@ -49,7 +49,6 @@
             };
           }
           ./modules/gaming.nix
-          ./modules/maths.nix
         ];
       };
       "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
@@ -63,7 +62,6 @@
             };
           }
           ./modules/firefox.nix
-          ./modules/maths.nix
         ];
       };
       "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
