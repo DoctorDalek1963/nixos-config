@@ -108,6 +108,8 @@ in {
       };
     };
 
+    gaming = defaultFalse;
+
     # Miscellaneous programs
     miscPrograms = {
       discord = defaultFalse; # Handled custom

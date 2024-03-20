@@ -35,6 +35,8 @@
 
     ./modules/maths/default.nix
 
+    ./modules/gaming.nix
+
     # Misc programs
     ./modules/miscPrograms/discord.nix
   ];
