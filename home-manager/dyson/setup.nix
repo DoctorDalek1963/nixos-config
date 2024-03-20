@@ -99,9 +99,12 @@ in {
 
       sage = defaultTrue;
       tikzit = defaultTrue;
-      texlive = mkOption {
-        type = types.nullOr types.package;
-        default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
+      texlive = {
+        enable = defaultTrue;
+        pkg = mkOption {
+          type = types.package;
+          default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
+        };
       };
     };
 

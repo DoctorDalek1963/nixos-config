@@ -13,9 +13,9 @@ in {
     home.packages =
       optItemList cfg.tikzit pkgs.tikzit
       ++ (
-        if builtins.isNull cfg.texlive
-        then []
-        else [cfg.texlive]
+        if cfg.texlive.enable
+        then [cfg.texlive.pkg]
+        else []
       );
   };
 }
