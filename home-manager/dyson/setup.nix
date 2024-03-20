@@ -83,6 +83,19 @@ in {
       };
     };
 
+    programming = {
+      miscTools = {
+        git-all = defaultTrue;
+        gh = defaultTrue;
+        just = defaultTrue;
+        pre-commit = defaultTrue;
+      };
+
+      haskell = defaultFalse;
+      nix = defaultTrue;
+      rust = defaultFalse;
+    };
+
     # Miscellaneous programs
     miscPrograms = {
       discord = defaultFalse; # Handled custom

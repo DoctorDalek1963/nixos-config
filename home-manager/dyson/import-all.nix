@@ -25,6 +25,12 @@
     # Each default.nix file here also imports any other necessary nix files
     ./modules/desktopEnvironments/gnome/default.nix
 
+    # Programming
+    ./modules/programming/miscTools.nix
+    ./modules/programming/haskell.nix
+    ./modules/programming/nix.nix
+    ./modules/programming/rust.nix
+
     # Misc programs
     ./modules/miscPrograms/discord.nix
   ];
