@@ -28,7 +28,9 @@
     # Programming
     ./modules/programming/miscTools.nix
     ./modules/programming/haskell.nix
+    ./modules/programming/julia.nix
     ./modules/programming/nix.nix
+    ./modules/programming/python.nix
     ./modules/programming/rust.nix
 
     # Misc programs
