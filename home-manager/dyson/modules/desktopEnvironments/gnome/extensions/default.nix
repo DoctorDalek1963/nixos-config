@@ -9,6 +9,8 @@
   ];
 
   gnomeCfg = config.setup.desktopEnvironments.gnome;
+  inherit (config.setup) isLaptop;
+
   theme =
     if gnomeCfg.theme == "vimix-amethyst"
     then {
@@ -17,7 +19,13 @@
         (vimix-gtk-themes.override
           {
             colorVariants = ["standard" "light" "dark"];
-            sizeVariants = ["standard"]; # TODO: Switch to "compact" for laptops
+            sizeVariants = [
+              (
+                if isLaptop
+                then "compact"
+                else "standard"
+              )
+            ];
             themeVariants = ["amethyst"];
           })
         (vimix-icon-theme.override
@@ -29,15 +37,24 @@
         light = "Vimix-cursors";
         dark = "Vimix-white-cursors";
       };
-      gtk = {
-        light = "vimix-amethyst";
-        dark = "vimix-dark-amethyst";
-      };
+      gtk =
+        if isLaptop
+        then {
+          light = "vimix-compact-amethyst";
+          dark = "vimix-dark-compact-amethyst";
+        }
+        else {
+          light = "vimix-amethyst";
+          dark = "vimix-dark-amethyst";
+        };
       icons = {
         light = "Vimix-Amethyst";
         dark = "Vimix-Amethyst-dark";
       };
-      user-theme = "vimix-dark-amethyst";
+      user-theme =
+        if isLaptop
+        then "vimix-dark-compact-amethyst"
+        else "vimix-dark-amethyst";
     }
     else abort "Unsupported GNOME theme: ${gnomeCfg.theme}";
 in {
