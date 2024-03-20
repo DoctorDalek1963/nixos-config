@@ -66,7 +66,6 @@
               hostname = "Harold-NixOS";
             };
           }
-          ./modules/gnome/default.nix
           ./modules/firefox.nix
           ./modules/maths.nix
           ./modules/programming.nix
@@ -83,10 +82,11 @@
               hostname = "VirtualBox-NixOS";
               desktopEnvironments.gnome = {
                 enable = true;
+                theme = "vimix-amethyst";
+                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
             };
           }
-          ./modules/gnome/default.nix
           ./modules/firefox.nix
           ./modules/programming.nix
         ];

@@ -68,6 +68,18 @@ in {
     desktopEnvironments = {
       gnome = {
         enable = defaultFalse;
+        enableExtensions = defaultTrue;
+        theme = mkOption {
+          type = types.enum ["vimix-amethyst"];
+        };
+        background = mkOption {
+          type = types.either types.path (types.submodule {
+            options = {
+              light = mkOption {type = types.path;};
+              dark = mkOption {type = types.path;};
+            };
+          });
+        };
       };
     };
   };

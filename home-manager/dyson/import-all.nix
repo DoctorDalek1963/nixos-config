@@ -17,6 +17,10 @@
     # Secrets
     ./modules/secrets/provisioning.nix
     ./modules/secrets/gnome-keyring.nix
+
+    # Desktop environments
+    # Each default.nix file here also imports any other necessary nix files
+    ./modules/desktopEnvironments/gnome/default.nix
   ];
   other-modules = [inputs.sops-nix.homeManagerModules.sops];
 in {
