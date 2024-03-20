@@ -2,16 +2,12 @@
   pkgs,
   lib,
   config,
-  my-nixvim,
   ...
 }: let
   bash-enabled = builtins.elem "bash" config.setup.shells;
   inherit (config.setup) username;
   homedir = config.home.homeDirectory;
-  nvim-path =
-    if config.setup.terminalTools.nvim
-    then "${my-nixvim}/bin/nvim"
-    else "${pkgs.neovim}/bin/nvim";
+  nvim-path = config.consts.nvim.path;
 in {
   config = lib.mkIf bash-enabled {
     home = {

@@ -1,13 +1,14 @@
 {
   lib,
   config,
-  my-nixvim,
   ...
-}: {
-  config = lib.mkIf config.setup.terminalTools.nvim {
+}: let
+  inherit (config.consts) nvim;
+in {
+  config = lib.mkIf config.setup.terminalTools.nvimCustom {
     home = {
-      packages = [my-nixvim];
-      sessionVariables.EDITOR = "${my-nixvim}/bin/nvim";
+      packages = [nvim.pkg];
+      sessionVariables.EDITOR = nvim.path;
     };
   };
 }

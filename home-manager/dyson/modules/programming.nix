@@ -1,6 +1,6 @@
 {
   pkgs,
-  my-nixvim,
+  config,
   ...
 }: let
   git-all = pkgs.stdenv.mkDerivation {
@@ -42,7 +42,7 @@ in {
     enable = true;
     settings = {
       git_protocol = "ssh";
-      editor = "${my-nixvim}/bin/nvim";
+      editor = config.consts.nvim.path;
       prompt = "enabled";
       pager = "${pkgs.delta}/bin/delta";
     };

@@ -1,5 +1,8 @@
 {inputs, ...}: let
   files = [
+    ./setup.nix
+    ./consts.nix
+
     ./modules/core.nix
 
     # Shells

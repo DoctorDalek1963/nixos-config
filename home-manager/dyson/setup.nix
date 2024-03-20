@@ -52,7 +52,7 @@ in {
       delta = defaultTrue;
       fd = defaultTrue;
       git = defaultTrue;
-      nvim = defaultTrue;
+      nvimCustom = defaultTrue;
       ripgrep = defaultTrue;
 
       # Just install the packages

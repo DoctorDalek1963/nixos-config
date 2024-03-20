@@ -1,9 +1,4 @@
-{
-  pkgs,
-  config,
-  my-nixvim,
-  ...
-}: {
+{config, ...}: {
   programs.git = {
     enable = config.setup.terminalTools.git;
     userName = "DoctorDalek1963";
@@ -51,10 +46,7 @@
       };
     };
     extraConfig = {
-      core.editor =
-        if config.setup.terminalTools.nvim
-        then "${my-nixvim}/bin/nvim"
-        else "${pkgs.nvim}/bin/nvim";
+      core.editor = config.consts.nvim.path;
       diff.colorMoved = "default";
       fetch.prune = true;
       gpg.format = "ssh";

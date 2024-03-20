@@ -33,7 +33,6 @@
     };
     extraSpecialArgs = {
       inherit system inputs;
-      my-nixvim = inputs.nixvim-flake.packages.${system}.default;
     };
   in {
     packages.${system}.default = home-manager.defaultPackage.${system};
@@ -42,7 +41,6 @@
       "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./setup.nix
           ./import-all.nix
           {
             setup = {
@@ -58,7 +56,6 @@
       "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./setup.nix
           ./import-all.nix
           {
             setup = {
@@ -74,7 +71,6 @@
       "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./setup.nix
           ./import-all.nix
           {
             setup = {
