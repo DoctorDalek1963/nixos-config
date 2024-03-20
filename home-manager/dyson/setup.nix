@@ -82,18 +82,34 @@ in {
         };
       };
     };
+
+    # Miscellaneous programs
+    miscPrograms = {
+      discord = defaultFalse; # Handled custom
+      obsidian = defaultFalse;
+      vlc = defaultTrue;
+      zoom = defaultFalse;
+    };
   };
 
   config = let
+    tt = cfg.terminalTools;
     terminalToolsPkgs =
-      optItemList cfg.terminalTools.sad pkgs.sad
-      ++ optItemList cfg.terminalTools.sd pkgs.sd
-      ++ optItemList cfg.terminalTools.tldr pkgs.tldr
-      ++ optItemList cfg.terminalTools.vim pkgs.vim;
+      optItemList tt.sad pkgs.sad
+      ++ optItemList tt.sd pkgs.sd
+      ++ optItemList tt.tldr pkgs.tldr
+      ++ optItemList tt.vim pkgs.vim;
+
+    mp = cfg.miscPrograms;
+    miscProgramsPkgs =
+      optItemList mp.obsidian pkgs.obsidian
+      ++ optItemList mp.vlc pkgs.vlc
+      ++ optItemList mp.zoom pkgs.zoom-us;
   in {
     # TODO: Do something with defaultShell
     home.packages =
       terminalToolsPkgs
+      ++ miscProgramsPkgs
       ++ optItemList cfg.hasDvdDrive pkgs.handbrake;
   };
 }

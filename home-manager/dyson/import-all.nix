@@ -24,6 +24,9 @@
     # Desktop environments
     # Each default.nix file here also imports any other necessary nix files
     ./modules/desktopEnvironments/gnome/default.nix
+
+    # Misc programs
+    ./modules/miscPrograms/discord.nix
   ];
   other-modules = [inputs.sops-nix.homeManagerModules.sops];
 in {
