@@ -6,9 +6,8 @@
 }:
 with lib; let
   cfg = config.setup;
-
-  available-shells = ["bash"];
   inherit (config.consts.lib) optItemList;
+  inherit (config.consts) valid-gnome-themes valid-shells;
 
   defaultTrue = mkOption {
     default = true;
@@ -33,11 +32,11 @@ in {
     # Shells
     shells = mkOption {
       default = ["bash"];
-      type = types.listOf (types.enum available-shells);
+      type = types.listOf (types.enum valid-shells);
     };
     defaultShell = mkOption {
       default = "bash";
-      type = types.enum available-shells;
+      type = types.enum valid-shells;
     };
 
     # Terminal tools
@@ -66,7 +65,7 @@ in {
         enable = defaultFalse;
         enableExtensions = defaultTrue;
         theme = mkOption {
-          type = types.enum ["vimix-amethyst"];
+          type = types.enum valid-gnome-themes;
         };
         background = mkOption {
           type = types.either types.path (types.submodule {

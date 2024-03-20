@@ -9,54 +9,6 @@
   ];
 
   gnomeCfg = config.setup.desktopEnvironments.gnome;
-  inherit (config.setup) isLaptop;
-
-  theme =
-    if gnomeCfg.theme == "vimix-amethyst"
-    then {
-      pkgs = with pkgs; [
-        vimix-cursors
-        (vimix-gtk-themes.override
-          {
-            colorVariants = ["standard" "light" "dark"];
-            sizeVariants = [
-              (
-                if isLaptop
-                then "compact"
-                else "standard"
-              )
-            ];
-            themeVariants = ["amethyst"];
-          })
-        (vimix-icon-theme.override
-          {
-            colorVariants = ["Amethyst"];
-          })
-      ];
-      cursors = {
-        light = "Vimix-cursors";
-        dark = "Vimix-white-cursors";
-      };
-      gtk =
-        if isLaptop
-        then {
-          light = "vimix-compact-amethyst";
-          dark = "vimix-dark-compact-amethyst";
-        }
-        else {
-          light = "vimix-amethyst";
-          dark = "vimix-dark-amethyst";
-        };
-      icons = {
-        light = "Vimix-Amethyst";
-        dark = "Vimix-Amethyst-dark";
-      };
-      user-theme =
-        if isLaptop
-        then "vimix-dark-compact-amethyst"
-        else "vimix-dark-amethyst";
-    }
-    else abort "Unsupported GNOME theme: ${gnomeCfg.theme}";
 in {
   config = lib.mkIf (gnomeCfg.enable && gnomeCfg.enableExtensions) {
     home.packages =
@@ -69,8 +21,7 @@ in {
         night-theme-switcher
         panel-date-format
       ])
-      ++ extraExtensions
-      ++ theme.pkgs;
+      ++ extraExtensions;
 
     dconf.settings = {
       "org/gnome/shell" = {
@@ -133,29 +84,7 @@ in {
         style = "capslock";
       };
 
-      "org/gnome/shell/extensions/nightthemeswitcher/cursor-variants" = {
-        day = theme.cursors.light;
-        enabled = true;
-        night = theme.cursors.dark;
-      };
-
-      # This should only affect legacy GTK apps. If it starts to break things, just disable it
-      "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
-        day = theme.gtk.light;
-        enabled = true;
-        night = theme.gtk.dark;
-      };
-
-      "org/gnome/shell/extensions/nightthemeswitcher/icon-variants" = {
-        day = theme.icons.light;
-        enabled = true;
-        night = theme.icons.dark;
-      };
-
-      "org/gnome/shell/extensions/nightthemeswitcher/shell-variants" = {
-        enabled = false;
-      };
-
+      # The theme settings for Night Theme Switcher are in ../themes.nix
       "org/gnome/shell/extensions/nightthemeswitcher/time" = {
         manual-schedule = true;
         nightthemeswitcher-ondemand-keybinding = ["<Shift><Super>t"];
@@ -177,10 +106,6 @@ in {
         rounding = 7;
         sex = 1;
         year = 2005;
-      };
-
-      "org/gnome/shell/extensions/user-theme" = {
-        name = theme.user-theme;
       };
     };
   };

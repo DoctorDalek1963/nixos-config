@@ -6,7 +6,13 @@
   system,
   ...
 }:
-with lib; {
+with lib; let
+  stringList = strings:
+    mkOption {
+      type = types.listOf types.str;
+      default = strings;
+    };
+in {
   # Here we can define constant values that can be referenced from any other files
   options.consts = {
     lib = {
@@ -17,6 +23,9 @@ with lib; {
           else [];
       };
     };
+
+    valid-gnome-themes = stringList ["vimix-amethyst"];
+    valid-shells = stringList ["bash"];
 
     nvim = mkOption {
       type = types.submodule {
