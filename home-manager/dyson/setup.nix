@@ -92,8 +92,11 @@ in {
       };
 
       haskell = defaultFalse;
-      nix = defaultTrue;
+      julia = defaultFalse;
+      python = defaultFalse;
       rust = defaultFalse;
+
+      nix = defaultTrue;
     };
 
     # Miscellaneous programs
