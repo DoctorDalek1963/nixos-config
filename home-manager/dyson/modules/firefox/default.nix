@@ -1,46 +1,19 @@
 {
   pkgs,
   config,
-  inputs,
-  system,
   ...
-}: {
+}: let
+  cfg = config.setup.firefox;
+in {
+  imports = [./extensions/default.nix];
+
   programs.firefox = {
-    enable = true;
+    inherit (cfg) enable;
     package = pkgs.firefox.override {
-      cfg.enableGnomeExtensions = true;
+      firefox.enableGnomeExtensions = cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable;
     };
     profiles.dyson = {
       id = 0;
-      # TODO: Allow unfree extensions
-      extensions = with inputs.firefox-addons.packages.${system}; [
-        # Privacy
-        duckduckgo-privacy-essentials
-        privacy-badger
-        ublock-origin
-
-        # Programming
-        github-file-icons
-        refined-github
-        rust-search-extension
-        # tampermonkey # Unfree
-
-        # YouTube
-        dearrow
-        # enhancer-for-youtube # Unfree
-        leechblock-ng
-        return-youtube-dislikes
-        sponsorblock
-
-        # Misc
-        darkreader
-        # dashlane # Unfree
-        wayback-machine
-
-        # Not yet packages
-        # Zotero Connector
-        # Who Wrote That?
-      ];
       settings = {
         "browser.bookmarks.showMobileBookmarks" = true;
         "browser.contentblocking.category" = "strict"; # Block cookies

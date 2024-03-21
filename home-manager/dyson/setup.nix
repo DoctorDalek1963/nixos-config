@@ -78,6 +78,11 @@ in {
       };
     };
 
+    firefox = {
+      enable = defaultFalse;
+      enableExtensions = defaultTrue;
+    };
+
     programming = {
       miscTools = {
         git-all = defaultTrue;
