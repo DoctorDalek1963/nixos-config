@@ -1,4 +1,10 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
+  system.stateVersion = "23.11";
+
   nix = {
     # Enable flakes
     settings.experimental-features = ["nix-command" "flakes"];
@@ -12,9 +18,10 @@
   };
 
   # Allow unfree packages (drivers and hardware stuff)
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = config.allowUnfree;
 
   networking = {
+    hostName = config.setup.hostname;
     firewall.enable = true;
     networkmanager.enable = true;
   };
@@ -76,7 +83,12 @@
   users.users.dyson = {
     isNormalUser = true;
     description = "Dyson";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = [];
+    extraGroups =
+      ["networkmanager" "wheel"]
+      ++ (
+        if config.setup.virtualBoxHost
+        then ["vboxusers"]
+        else []
+      );
   };
 }

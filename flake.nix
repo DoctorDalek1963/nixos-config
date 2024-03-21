@@ -9,7 +9,18 @@
     nixosConfigurations = {
       "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = [./machines/vbox.nix];
+        modules = [
+          ./setup.nix
+          ./hardware/vbox.nix
+          {
+            setup = {
+              hostname = "VirtualBox-NixOS";
+              virtualBoxGuest = true;
+              desktopEnvironments.gnome.enable = true;
+              displayManagers.gdm.enable = true;
+            };
+          }
+        ];
       };
     };
   };
