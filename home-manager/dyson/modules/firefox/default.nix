@@ -1,19 +1,21 @@
 {
   pkgs,
   config,
+  inputs,
+  system,
   ...
 }: let
   cfg = config.setup.firefox;
+  extensions = import ./extensions/default.nix {inherit config inputs system;};
 in {
-  imports = [./extensions/default.nix];
-
   programs.firefox = {
     inherit (cfg) enable;
     package = pkgs.firefox.override {
-      firefox.enableGnomeExtensions = cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable;
+      cfg.enableGnomeExtensions = cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable;
     };
     profiles.dyson = {
       id = 0;
+      inherit extensions;
       settings = {
         "browser.bookmarks.showMobileBookmarks" = true;
         "browser.contentblocking.category" = "strict"; # Block cookies

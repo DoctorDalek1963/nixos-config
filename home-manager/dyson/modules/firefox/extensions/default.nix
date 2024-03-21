@@ -2,7 +2,6 @@
   config,
   inputs,
   system,
-  ...
 }: let
   extensions =
     # TODO: Allow unfree extensions
@@ -35,9 +34,7 @@
       # Zotero Connector
       # Who Wrote That?
     ];
-in {
-  programs.firefox.extensions =
-    if config.setup.firefox.enableExtensions
-    then extensions
-    else [];
-}
+in
+  if config.setup.firefox.enableExtensions
+  then extensions
+  else []
