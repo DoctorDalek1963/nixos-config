@@ -6,8 +6,6 @@
   ...
 }:
 with lib; let
-  cfg = config.setup;
-  inherit (config.consts.lib) optItemList;
   inherit (config.consts) valid-gnome-themes valid-shells;
 
   defaultTrue = mkOption {
@@ -24,49 +22,21 @@ with lib; let
 
     ./modules/core.nix
 
-    # Shells
-    ./modules/shells/bash.nix
-
-    # Terminal tools
-    ./modules/terminalTools/bat.nix
-    ./modules/terminalTools/btop.nix
-    ./modules/terminalTools/delta.nix
-    ./modules/terminalTools/fd.nix
-    ./modules/terminalTools/git.nix
-    ./modules/terminalTools/nvim.nix
-    ./modules/terminalTools/ripgrep.nix
-
-    # Secrets
-    ./modules/secrets/provisioning.nix
-    ./modules/secrets/gnome-keyring.nix
-
-    # Desktop environments
-    # Each default.nix file here also imports any other necessary nix files
-    ./modules/desktopEnvironments/gnome/default.nix
-
+    ./modules/shells/default.nix
+    ./modules/terminalTools/default.nix
+    ./modules/secrets/default.nix
+    ./modules/desktopEnvironments/default.nix
     ./modules/firefox/default.nix
-
-    # Programming
-    ./modules/programming/miscTools.nix
-    ./modules/programming/haskell.nix
-    ./modules/programming/julia.nix
-    ./modules/programming/nix.nix
-    ./modules/programming/python.nix
-    ./modules/programming/rust.nix
-
+    ./modules/programming/default.nix
     ./modules/maths/default.nix
-
-    ./modules/gaming.nix
-
-    # Misc programs
-    ./modules/miscPrograms/discord.nix
+    ./modules/gaming/default.nix
+    ./modules/miscPrograms/default.nix
   ];
   other-modules = [inputs.sops-nix.homeManagerModules.sops];
 in {
   imports = file-modules ++ other-modules;
 
   options.setup = {
-    # General stuff
     username = mkOption {
       type = types.nonEmptyStr;
     };
@@ -76,7 +46,6 @@ in {
     isLaptop = defaultFalse;
     hasDvdDrive = defaultFalse;
 
-    # Shells
     shells = mkOption {
       default = ["bash"];
       type = types.listOf (types.enum valid-shells);
@@ -86,7 +55,6 @@ in {
       type = types.enum valid-shells;
     };
 
-    # Terminal tools
     terminalTools = {
       # Need custom config
       bat = defaultTrue;
@@ -106,7 +74,6 @@ in {
 
     secrets = defaultTrue;
 
-    # Desktop environments
     desktopEnvironments = {
       gnome = {
         enable = defaultFalse;
@@ -162,33 +129,12 @@ in {
 
     gaming = defaultFalse;
 
-    # Miscellaneous programs
     miscPrograms = {
-      discord = defaultFalse; # Handled custom
+      discord = defaultFalse;
+      handbrake = defaultFalse; # DVD ripper
       obsidian = defaultFalse;
       vlc = defaultTrue;
       zoom = defaultFalse;
     };
-  };
-
-  config = let
-    tt = cfg.terminalTools;
-    terminalToolsPkgs =
-      optItemList tt.sad pkgs.sad
-      ++ optItemList tt.sd pkgs.sd
-      ++ optItemList tt.tldr pkgs.tldr
-      ++ optItemList tt.vim pkgs.vim;
-
-    mp = cfg.miscPrograms;
-    miscProgramsPkgs =
-      optItemList mp.obsidian pkgs.obsidian
-      ++ optItemList mp.vlc pkgs.vlc
-      ++ optItemList mp.zoom pkgs.zoom-us;
-  in {
-    # TODO: Do something with defaultShell
-    home.packages =
-      terminalToolsPkgs
-      ++ miscProgramsPkgs
-      ++ optItemList cfg.hasDvdDrive pkgs.handbrake;
   };
 }
