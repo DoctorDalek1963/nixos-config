@@ -75,6 +75,7 @@
                 theme = "vimix-amethyst";
                 background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
+              firefox.enable = true;
             };
           }
         ];
