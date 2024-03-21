@@ -2,7 +2,9 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  cfg = config.setup;
+in {
   system.stateVersion = "23.11";
 
   nix = {
@@ -18,10 +20,10 @@
   };
 
   # Allow unfree packages (drivers and hardware stuff)
-  nixpkgs.config.allowUnfree = config.allowUnfree;
+  nixpkgs.config.allowUnfree = cfg.allowUnfree;
 
   networking = {
-    hostName = config.setup.hostname;
+    hostName = cfg.hostname;
     firewall.enable = true;
     networkmanager.enable = true;
   };
@@ -44,7 +46,13 @@
   };
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = cfg.enableSsh;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
+    };
 
     # Audio with pipewire
     pipewire = {
@@ -56,7 +64,7 @@
     };
 
     # Enable CUPS for printing
-    printing.enable = true;
+    printing.enable = cfg.enablePrinting;
 
     xserver = {
       enable = true;

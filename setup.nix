@@ -23,6 +23,9 @@ in {
     };
     isLaptop = defaultFalse;
 
+    enablePrinting = defaultFalse;
+    enableSsh = defaultTrue;
+
     allowUnfree = defaultFalse;
 
     virtualBoxGuest = defaultFalse;
