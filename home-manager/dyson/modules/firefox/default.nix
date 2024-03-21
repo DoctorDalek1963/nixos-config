@@ -1,54 +1,27 @@
 {
   pkgs,
-  homedir,
-  hostname,
+  config,
+  inputs,
   system,
-  username,
-  firefox-addons,
   ...
-}: {
+}: let
+  cfg = config.setup.firefox;
+  extensions = import ./extensions/default.nix {inherit config inputs system;};
+in {
   programs.firefox = {
-    enable = true;
+    inherit (cfg) enable;
     package = pkgs.firefox.override {
-      cfg.enableGnomeExtensions = true;
+      cfg.enableGnomeExtensions = cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable;
     };
     profiles.dyson = {
       id = 0;
-      # TODO: Allow unfree extensions
-      extensions = with firefox-addons.packages.${system}; [
-        # Privacy
-        duckduckgo-privacy-essentials
-        privacy-badger
-        ublock-origin
-
-        # Programming
-        github-file-icons
-        refined-github
-        rust-search-extension
-        # tampermonkey # Unfree
-
-        # YouTube
-        dearrow
-        # enhancer-for-youtube # Unfree
-        leechblock-ng
-        return-youtube-dislikes
-        sponsorblock
-
-        # Misc
-        darkreader
-        # dashlane # Unfree
-        wayback-machine
-
-        # Not yet packages
-        # Zotero Connector
-        # Who Wrote That?
-      ];
+      inherit extensions;
       settings = {
         "browser.bookmarks.showMobileBookmarks" = true;
         "browser.contentblocking.category" = "strict"; # Block cookies
 
         "browser.download.always_ask_before_handling_new_types" = true;
-        "browser.download.dir" = "${homedir}/Downloads";
+        "browser.download.dir" = "${config.home.homeDirectory}/Downloads";
 
         # Configure what the new tab page looks like
         "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
@@ -118,7 +91,7 @@
         "findbar.highlightAll" = true;
 
         # Set device name
-        "identity.fxaccounts.account.device.name" = "${username}'s Firefox on ${hostname}";
+        "identity.fxaccounts.account.device.name" = "${config.setup.username}'s Firefox on ${config.setup.hostname}";
 
         # Auto-play DRM-controlled HTML5 content
         "media.eme.enabled" = true;

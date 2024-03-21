@@ -1,4 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: let
+  cfg = config.setup;
+in {
+  system.stateVersion = "23.11";
+
   nix = {
     # Enable flakes
     settings.experimental-features = ["nix-command" "flakes"];
@@ -12,9 +20,10 @@
   };
 
   # Allow unfree packages (drivers and hardware stuff)
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = cfg.allowUnfree;
 
   networking = {
+    hostName = cfg.hostname;
     firewall.enable = true;
     networkmanager.enable = true;
   };
@@ -37,7 +46,13 @@
   };
 
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = cfg.enableSsh;
+      settings = {
+        PermitRootLogin = "no";
+        PasswordAuthentication = false;
+      };
+    };
 
     # Audio with pipewire
     pipewire = {
@@ -49,7 +64,7 @@
     };
 
     # Enable CUPS for printing
-    printing.enable = true;
+    printing.enable = cfg.enablePrinting;
 
     xserver = {
       enable = true;
@@ -77,7 +92,12 @@
   users.users.dyson = {
     isNormalUser = true;
     description = "Dyson";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = [];
+    extraGroups =
+      ["networkmanager" "wheel"]
+      ++ (
+        if config.setup.virtualBoxHost
+        then ["vboxusers"]
+        else []
+      );
   };
 }

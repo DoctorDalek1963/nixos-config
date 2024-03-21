@@ -22,67 +22,62 @@
   };
 
   outputs = {
-    #self,
     nixpkgs,
-    #unstable,
     home-manager,
-    firefox-addons,
-    nixvim-flake,
-    sops-nix,
     ...
-  }: let
+  } @ inputs: let
     system = "x86_64-linux";
     username = "dyson";
     pkgs = import nixpkgs {
       inherit system;
     };
     extraSpecialArgs = {
-      #inherit unstable;
-      inherit firefox-addons sops-nix system username;
-      homedir = "/home/${username}";
-      my-nixvim = nixvim-flake.packages.${system}.default;
+      inherit system inputs;
     };
   in {
     packages.${system}.default = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
       "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = extraSpecialArgs // {hostname = "Sasha-Ubuntu";};
+        inherit pkgs extraSpecialArgs;
         modules = [
-          ./modules/core.nix
-          ./modules/shells/bash.nix
-          ./modules/secrets/provisioning.nix
-          ./modules/gaming.nix
-          ./modules/maths.nix
-          ./modules/programming.nix
+          ./setup.nix
+          {
+            setup = {
+              inherit username;
+              hostname = "Sasha-Ubuntu";
+            };
+          }
         ];
       };
       "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = extraSpecialArgs // {hostname = "Harold-NixOS";};
+        inherit pkgs extraSpecialArgs;
         modules = [
-          ./modules/core.nix
-          ./modules/shells/bash.nix
-          ./modules/secrets/provisioning.nix.nix
-          ./modules/secrets/gnome-keyring.nix
-          ./modules/gnome/default.nix
-          ./modules/firefox.nix
-          ./modules/maths.nix
-          ./modules/programming.nix
+          ./setup.nix
+          {
+            setup = {
+              inherit username;
+              hostname = "Harold-NixOS";
+            };
+          }
         ];
       };
       "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = extraSpecialArgs // {hostname = "VirtualBox-NixOS";};
+        inherit pkgs extraSpecialArgs;
         modules = [
-          ./modules/core.nix
-          ./modules/shells/bash.nix
-          ./modules/secrets/provisioning.nix
-          ./modules/secrets/gnome-keyring.nix
-          ./modules/gnome/default.nix
-          ./modules/firefox.nix
-          ./modules/programming.nix
+          ./setup.nix
+          {
+            setup = {
+              inherit username;
+              hostname = "VirtualBox-NixOS";
+              desktopEnvironments.gnome = {
+                enable = true;
+                theme = "vimix-amethyst";
+                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+              };
+              firefox.enable = true;
+            };
+          }
         ];
       };
     };
