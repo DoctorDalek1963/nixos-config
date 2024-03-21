@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (config.consts) optItemList;
+  inherit (config.consts.lib) optItemList;
   tt = config.setup.terminalTools;
 in {
   imports = [

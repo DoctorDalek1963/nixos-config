@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (config.consts) optItemList;
+  inherit (config.consts.lib) optItemList;
   mp = config.setup.miscPrograms;
 in {
   imports = [./discord.nix];
