@@ -41,33 +41,31 @@
       "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./import-all.nix
+          ./setup.nix
           {
             setup = {
               inherit username;
               hostname = "Sasha-Ubuntu";
             };
           }
-          ./modules/gaming.nix
         ];
       };
       "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./import-all.nix
+          ./setup.nix
           {
             setup = {
               inherit username;
               hostname = "Harold-NixOS";
             };
           }
-          ./modules/firefox.nix
         ];
       };
       "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
-          ./import-all.nix
+          ./setup.nix
           {
             setup = {
               inherit username;
@@ -79,7 +77,6 @@
               };
             };
           }
-          ./modules/firefox.nix
         ];
       };
     };
