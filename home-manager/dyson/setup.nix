@@ -133,7 +133,7 @@ in {
       discord = defaultFalse;
       handbrake = defaultFalse; # DVD ripper
       obsidian = defaultFalse;
-      vlc = defaultTrue;
+      vlc = defaultFalse;
       zoom = defaultFalse;
     };
   };
