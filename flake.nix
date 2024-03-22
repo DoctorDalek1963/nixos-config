@@ -18,6 +18,10 @@
               virtualBoxGuest = true;
               desktopEnvironments.gnome.enable = true;
               displayManagers.gdm.enable = true;
+              uinput = {
+                enable = true;
+                users = ["dyson"];
+              };
             };
           }
         ];

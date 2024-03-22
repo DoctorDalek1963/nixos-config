@@ -19,6 +19,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    xremap = {
+      url = "github:xremap/nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -76,6 +80,7 @@
                 background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
               firefox.enable = true;
+              miscPrograms.xremap = true;
             };
           }
         ];
