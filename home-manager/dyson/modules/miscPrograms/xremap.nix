@@ -1,11 +1,10 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: let
-  switch-or-activate = pkgs.writeScriptBin "switch-or-activate" ''
-    #!/usr/bin/env bash
-
+  switch-or-activate = pkgs.writeShellScriptBin "switch-or-activate" ''
     window_name=
     if [ -z "$1" ]; then
       echo "First argument must be window name"
@@ -29,9 +28,9 @@
       echo "TODO: Implement switch-or-activate for Wayland"
     else # X11
       if [ $use_class = 1 ]; then
-        wmctrl -a "$window_name" -x
+        ${pkgs.wmctrl}/bin/wmctrl -a "$window_name" -x
       else
-        wmctrl -a "$window_name"
+        ${pkgs.wmctrl}/bin/wmctrl -a "$window_name"
       fi
 
       if [ $? -gt 0 ]; then
