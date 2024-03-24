@@ -10,12 +10,12 @@
 
   optionalExtensions =
     if config.setup.miscPrograms.xremap
-    then [pkgs.gnomeExtensions.xremap]
+    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
     else [];
 
   optionalExtensionsNames =
     if config.setup.miscPrograms.xremap
-    then ["xremap@k0kubun.com"]
+    then ["activate-window-by-title@lucaswerkmeister.de" "xremap@k0kubun.com"]
     else [];
 
   gnomeCfg = config.setup.desktopEnvironments.gnome;

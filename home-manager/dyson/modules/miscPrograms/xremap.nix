@@ -24,8 +24,22 @@
       use_class=1
     fi
 
+    # Try to switch to the window
     if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-      echo "TODO: Implement switch-or-activate for Wayland"
+      case "$(echo "$XDG_CURRENT_DESKTOP" | ${pkgs.coreutils}/bin/tr '[:upper:]' '[:lower:]')" in
+        *gnome*)
+          if [ $use_class = 1 ]; then
+            busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateByWmClass s "$window_name"
+          else
+            busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateBySubstring s "$window_name"
+          fi
+        ;;
+
+        *)
+          echo "Unsupported desktop environment"
+          exit 1
+        ;;
+      esac
     else # X11
       if [ $use_class = 1 ]; then
         ${pkgs.wmctrl}/bin/wmctrl -a "$window_name" -x
@@ -33,23 +47,29 @@
         ${pkgs.wmctrl}/bin/wmctrl -a "$window_name"
       fi
 
-      if [ $? -gt 0 ]; then
-        eval "$binary_path" &> /dev/null & disown
-      fi
+    fi
+
+    # If we couldn't switch, then start a new instance
+    if [ $? -gt 0 ]; then
+      eval "$binary_path" &> /dev/null & disown
     fi
   '';
 
   soa-bin = "${switch-or-activate}/bin/switch-or-activate";
 
-  # TODO: Make a derivation for a shell script that can switch to an active
-  # window if it exists or start a new instance of that program. Then use that
-  # shell script for the xremap maps
   conditional-keymaps = [
     {
       condition = config.setup.firefox.enable;
       keymap = {
         name = "Firefox";
         remap.alt-f.launch = [soa-bin "firefox" "${config.programs.firefox.package.outPath}/bin/firefox"];
+      };
+    }
+    {
+      condition = config.setup.desktopEnvironments.gnome.enable;
+      keymap = {
+        name = "Terminator";
+        remap.alt-y.launch = [soa-bin "terminator.Terminator" "${pkgs.terminator}/bin/terminator" "--class"];
       };
     }
   ];
