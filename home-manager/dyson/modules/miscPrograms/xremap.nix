@@ -67,14 +67,14 @@
       condition = config.setup.firefox.enable;
       keymap = {
         name = "Firefox";
-        remap.alt-f.launch = [soa-bin "Firefox" "${config.programs.firefox.package.outPath}/bin/firefox"];
+        remap.alt-c.launch = [soa-bin "Firefox" "${config.programs.firefox.package.outPath}/bin/firefox"];
       };
     }
     {
       condition = config.setup.desktopEnvironments.gnome.enable;
       keymap = {
         name = "Terminator";
-        remap.alt-y.launch = [soa-bin "terminator" "${pkgs.terminator}/bin/terminator" "--class"];
+        remap.alt-t.launch = [soa-bin "terminator" "${pkgs.terminator}/bin/terminator" "--class"];
       };
     }
   ];
