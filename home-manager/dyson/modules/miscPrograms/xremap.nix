@@ -28,10 +28,16 @@
     if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
       case "$(echo "$XDG_CURRENT_DESKTOP" | ${pkgs.coreutils}/bin/tr '[:upper:]' '[:lower:]')" in
         *gnome*)
+          output=
           if [ $use_class = 1 ]; then
-            busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateByWmClass s "$window_name"
+            output=$(busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateByWmClass s "$window_name")
           else
-            busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateBySubstring s "$window_name"
+            output="$(busctl --user call org.gnome.Shell /de/lucaswerkmeister/ActivateWindowByTitle de.lucaswerkmeister.ActivateWindowByTitle activateBySubstring s "$window_name")"
+          fi
+
+          # If we couldn't switch, then start a new instance
+          if (echo "$output" | ${pkgs.gnugrep}/bin/grep false); then
+            eval "$binary_path" &> /dev/null & disown
           fi
         ;;
 
@@ -47,11 +53,10 @@
         ${pkgs.wmctrl}/bin/wmctrl -a "$window_name"
       fi
 
-    fi
-
-    # If we couldn't switch, then start a new instance
-    if [ $? -gt 0 ]; then
-      eval "$binary_path" &> /dev/null & disown
+      # If we couldn't switch, then start a new instance
+      if [ $? -gt 0 ]; then
+        eval "$binary_path" &> /dev/null & disown
+      fi
     fi
   '';
 
