@@ -32,7 +32,10 @@ with lib; let
     ./modules/gaming/default.nix
     ./modules/miscPrograms/default.nix
   ];
-  other-modules = [inputs.sops-nix.homeManagerModules.sops];
+  other-modules = [
+    inputs.sops-nix.homeManagerModules.sops
+    inputs.xremap.homeManagerModules.default
+  ];
 in {
   imports = file-modules ++ other-modules;
 
@@ -134,6 +137,7 @@ in {
       handbrake = defaultFalse; # DVD ripper
       obsidian = defaultFalse;
       vlc = defaultFalse;
+      xremap = defaultFalse;
       zoom = defaultFalse;
     };
   };

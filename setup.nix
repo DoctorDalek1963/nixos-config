@@ -15,6 +15,7 @@ in {
     ./modules/desktopEnvironments/default.nix
     ./modules/displayManagers/default.nix
     ./modules/virtualBox/default.nix
+    ./modules/uinput/default.nix
   ];
 
   options.setup = {
@@ -32,6 +33,14 @@ in {
     virtualBoxHost = defaultFalse;
 
     secrets = defaultTrue;
+
+    uinput = {
+      enable = defaultFalse;
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+      };
+    };
 
     desktopEnvironments = {
       gnome = {

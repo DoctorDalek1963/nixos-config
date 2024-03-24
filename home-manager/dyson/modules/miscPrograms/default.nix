@@ -6,7 +6,7 @@
   inherit (config.consts.lib) optItemList;
   mp = config.setup.miscPrograms;
 in {
-  imports = [./discord.nix];
+  imports = [./discord.nix ./xremap.nix];
 
   home.packages =
     optItemList mp.handbrake pkgs.handbrake

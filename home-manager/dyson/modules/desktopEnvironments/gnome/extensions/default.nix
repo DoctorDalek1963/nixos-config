@@ -8,6 +8,16 @@
     (pkgs.callPackage ./thanatophobia.nix {})
   ];
 
+  optionalExtensions =
+    if config.setup.miscPrograms.xremap
+    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
+    else [];
+
+  optionalExtensionsNames =
+    if config.setup.miscPrograms.xremap
+    then ["activate-window-by-title@lucaswerkmeister.de" "xremap@k0kubun.com"]
+    else [];
+
   gnomeCfg = config.setup.desktopEnvironments.gnome;
 in {
   config = lib.mkIf (gnomeCfg.enable && gnomeCfg.enableExtensions) {
@@ -21,7 +31,8 @@ in {
         night-theme-switcher
         panel-date-format
       ])
-      ++ extraExtensions;
+      ++ extraExtensions
+      ++ optionalExtensions;
 
     dconf.settings = {
       "org/gnome/shell" = {
@@ -33,22 +44,24 @@ in {
           "native-window-placement@gnome-shell-extensions.gcampax.github.com"
           "window-list@gnome-shell-extensions.gcampax.github.com"
         ];
-        enabled-extensions = [
-          # Built-in to GNOME 45
-          "places-menu@gnome-shell-extensions.gcampax.github.com"
-          "drive-menu@gnome-shell-extensions.gcampax.github.com"
-          "user-theme@gnome-shell-extensions.gcampax.github.com"
-          "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
+        enabled-extensions =
+          [
+            # Built-in to GNOME 45
+            "places-menu@gnome-shell-extensions.gcampax.github.com"
+            "drive-menu@gnome-shell-extensions.gcampax.github.com"
+            "user-theme@gnome-shell-extensions.gcampax.github.com"
+            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
 
-          "appindicatorsupport@rgcjonas.gmail.com"
-          "caffeine@patapon.info"
-          "clipboard-indicator@tudmotu.com"
-          "dash-to-dock@micxgx.gmail.com"
-          "lockkeys@vaina.lt"
-          "nightthemeswitcher@romainvigier.fr"
-          "panel-date-format@keiii.github.com"
-          "thanatophobia@yatx.one"
-        ];
+            "appindicatorsupport@rgcjonas.gmail.com"
+            "caffeine@patapon.info"
+            "clipboard-indicator@tudmotu.com"
+            "dash-to-dock@micxgx.gmail.com"
+            "lockkeys@vaina.lt"
+            "nightthemeswitcher@romainvigier.fr"
+            "panel-date-format@keiii.github.com"
+            "thanatophobia@yatx.one"
+          ]
+          ++ optionalExtensionsNames;
       };
 
       "org/gnome/shell/extensions/caffeine" = {
