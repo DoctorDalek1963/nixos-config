@@ -1,11 +1,10 @@
 {
+  pkgs,
   config,
-  inputs,
-  system,
 }: let
   extensions =
     # TODO: Allow unfree extensions
-    with inputs.firefox-addons.packages.${system}; [
+    with pkgs.nur.repos.rycee.firefox-addons; [
       # Privacy
       duckduckgo-privacy-essentials
       privacy-badger
@@ -15,18 +14,18 @@
       github-file-icons
       refined-github
       rust-search-extension
-      # tampermonkey # Unfree
+      tampermonkey # Unfree
 
       # YouTube
       dearrow
-      # enhancer-for-youtube # Unfree
+      enhancer-for-youtube # Unfree
       leechblock-ng
       return-youtube-dislikes
       sponsorblock
 
       # Misc
       darkreader
-      # dashlane # Unfree
+      dashlane # Unfree
       wayback-machine
 
       # Not yet packages

@@ -4,16 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nur.url = "github:nix-community/nur";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -34,6 +31,7 @@
     username = "dyson";
     pkgs = import nixpkgs {
       inherit system;
+      overlays = [inputs.nur.overlay];
     };
     extraSpecialArgs = {
       inherit system inputs;
