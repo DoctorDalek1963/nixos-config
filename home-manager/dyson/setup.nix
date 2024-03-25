@@ -21,6 +21,7 @@ with lib; let
     ./consts.nix
 
     ./modules/core.nix
+    ./modules/activation.nix
 
     ./modules/shells/default.nix
     ./modules/terminalTools/default.nix
