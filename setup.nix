@@ -14,6 +14,7 @@ in {
 
     ./modules/desktopEnvironments/default.nix
     ./modules/displayManagers/default.nix
+    ./modules/pam/default.nix
     ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
   ];
@@ -33,6 +34,14 @@ in {
     virtualBoxHost = defaultFalse;
 
     secrets = defaultTrue;
+
+    pamShortenFailDelay = {
+      enable = defaultTrue;
+      microseconds = mkOption {
+        type = types.ints.unsigned;
+        default = 150000; # 150 ms
+      };
+    };
 
     uinput = {
       enable = defaultFalse;
