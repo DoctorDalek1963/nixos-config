@@ -6,13 +6,20 @@
   ...
 }: let
   cfg = config.setup.firefox;
+
   extensions = import ./extensions/default.nix {inherit config inputs system;};
+
+  firefox-package =
+    if (cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable)
+    then
+      (pkgs.firefox.override {
+        nativeMessagingHosts = [pkgs.gnome-browser-connector];
+      })
+    else pkgs.firefox;
 in {
   programs.firefox = {
     inherit (cfg) enable;
-    package = pkgs.firefox.override {
-      cfg.enableGnomeExtensions = cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable;
-    };
+    package = firefox-package;
     profiles.dyson = {
       id = 0;
       inherit extensions;
