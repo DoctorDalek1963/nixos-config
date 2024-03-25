@@ -47,7 +47,15 @@
     # only actually installed by certain modules.
 
     # TODO: Why does firefox-addons not respect this? Even if allowUnfree = true, it still complains
-    allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["obsidian" "tampermonkey"];
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "obsidian"
+
+        # Firefox extensions
+        "dashlane"
+        "enhancer-for-youtube"
+        "tampermonkey"
+      ];
 
     permittedInsecurePackages = [
       "electron-25.9.0" # Needed by obsidian

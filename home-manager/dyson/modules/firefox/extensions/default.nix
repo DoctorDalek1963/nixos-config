@@ -14,18 +14,18 @@
       github-file-icons
       refined-github
       rust-search-extension
-      # tampermonkey # Unfree
+      tampermonkey # Unfree
 
       # YouTube
       dearrow
-      # enhancer-for-youtube # Unfree
+      enhancer-for-youtube # Unfree
       leechblock-ng
       return-youtube-dislikes
       sponsorblock
 
       # Misc
       darkreader
-      # dashlane # Unfree
+      dashlane # Unfree
       wayback-machine
 
       # Not yet packages
