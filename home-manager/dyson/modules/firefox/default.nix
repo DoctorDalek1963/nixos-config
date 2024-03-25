@@ -1,13 +1,11 @@
 {
   pkgs,
   config,
-  inputs,
-  system,
   ...
 }: let
   cfg = config.setup.firefox;
 
-  extensions = import ./extensions/default.nix {inherit config inputs system;};
+  extensions = import ./extensions/default.nix {inherit pkgs config;};
 
   firefox-package =
     if (cfg.enableExtensions && config.setup.desktopEnvironments.gnome.enable)
