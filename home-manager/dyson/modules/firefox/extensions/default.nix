@@ -1,11 +1,10 @@
 {
+  pkgs,
   config,
-  inputs,
-  system,
 }: let
   extensions =
     # TODO: Allow unfree extensions
-    with inputs.firefox-addons.packages.${system}; [
+    with pkgs.nur.repos.rycee.firefox-addons; [
       # Privacy
       duckduckgo-privacy-essentials
       privacy-badger
