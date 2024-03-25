@@ -22,6 +22,7 @@
       $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user xremap
     '';
   };
+  # TODO: How can I restart all the rclone mount services?
 in {
   home.activation = restartSopsNix // restartXremap;
 }
