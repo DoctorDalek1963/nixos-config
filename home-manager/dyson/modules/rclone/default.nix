@@ -11,8 +11,7 @@
       value = {
         Unit = {
           Description = "Mount the rclone remote ${opts.remote}";
-          After = ["network-online.target"];
-          Requires = ["network-online.target"];
+          After = ["graphical-session.target"];
         };
         Install = {
           WantedBy = ["default.target"];
@@ -25,7 +24,7 @@
             else "";
         in {
           Type = "simple";
-          ExecStartPre = "mkdir -p ${opts.mountpoint}";
+          ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${opts.mountpoint}";
           ExecStart = "${pkgs.rclone}/bin/rclone mount --vfs-cache-mode writes ${readonly} ${opts.extraArgs} ${opts.remote}: ${opts.mountpoint}";
           ExecStop = "${pkgs.fuse}/bin/fusermount -u ${opts.mountpoint}";
           Restart = "on-failure";
