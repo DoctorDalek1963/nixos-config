@@ -15,6 +15,7 @@ in {
     ./modules/desktopEnvironments/default.nix
     ./modules/displayManagers/default.nix
     ./modules/pam/default.nix
+    ./modules/secrets/default.nix
     ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
   ];
@@ -33,7 +34,23 @@ in {
     virtualBoxGuest = defaultFalse;
     virtualBoxHost = defaultFalse;
 
-    secrets = defaultTrue;
+    secrets = {
+      enable = defaultTrue;
+      userPasswords = {
+        enable = defaultTrue;
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = ["dyson"];
+        };
+      };
+      wifiPasswords = {
+        enable = defaultFalse;
+        groups = mkOption {
+          type = types.listOf (types.enum []);
+          default = [];
+        };
+      };
+    };
 
     pamShortenFailDelay = {
       enable = defaultTrue;

@@ -89,15 +89,19 @@ in {
     vim
   ];
 
-  users.users.dyson = {
-    isNormalUser = true;
-    description = "Dyson";
-    extraGroups =
-      ["networkmanager" "wheel"]
-      ++ (
-        if config.setup.virtualBoxHost
-        then ["vboxusers"]
-        else []
-      );
+  users = {
+    mutableUsers = !config.setup.secrets.userPasswords.enable;
+
+    users.dyson = {
+      isNormalUser = true;
+      description = "Dyson";
+      extraGroups =
+        ["networkmanager" "wheel"]
+        ++ (
+          if config.setup.virtualBoxHost
+          then ["vboxusers"]
+          else []
+        );
+    };
   };
 }
