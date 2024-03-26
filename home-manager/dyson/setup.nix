@@ -107,7 +107,7 @@ in {
       automounts = mkOption {
         default = [];
         type = types.listOf (types.submodule {
-          option = {
+          options = {
             remote = mkOption {
               type = types.nonEmptyStr;
               description = "The name of the remote server to mount.";
