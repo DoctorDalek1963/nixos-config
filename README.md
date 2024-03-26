@@ -29,3 +29,5 @@ The first time you use an SSH key, GNOME Keyring will prompt you for the passphr
 You'll have to login to Firefox to enable Firefox Sync. The device name should already be set up.
 
 Firefox add-ons need to be manually configured. Refined GitHub needs a token, which is available in `/run/user/1000/secrets/firefox/extensions/refined_github/personal_access_token`. I won't enumerate all of my add-on settings here, but I'd recommend copying them from another machine.
+
+You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/dyson/flake.nix`.
