@@ -43,11 +43,12 @@ in {
           default = ["dyson"];
         };
       };
-      wifiPasswords = {
+      networking = {
         enable = defaultFalse;
-        groups = mkOption {
-          type = types.listOf (types.enum []);
-          default = [];
+        simpleWifiNetworkNames = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = ["HOME"];
+          description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret environment.env file.'';
         };
       };
     };
