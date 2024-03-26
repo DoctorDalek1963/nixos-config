@@ -28,6 +28,7 @@ with lib; let
     ./modules/secrets/default.nix
     ./modules/desktopEnvironments/default.nix
     ./modules/firefox/default.nix
+    ./modules/rclone/default.nix
     ./modules/programming/default.nix
     ./modules/maths/default.nix
     ./modules/gaming/default.nix
@@ -99,6 +100,35 @@ in {
     firefox = {
       enable = defaultFalse;
       enableExtensions = defaultTrue;
+    };
+
+    rclone = {
+      enable = defaultFalse;
+      automounts = mkOption {
+        default = [];
+        type = types.listOf (types.submodule {
+          options = {
+            remote = mkOption {
+              type = types.nonEmptyStr;
+              description = "The name of the remote server to mount.";
+            };
+            mountpoint = mkOption {
+              type = types.nonEmptyStr;
+              description = "The full path of the folder to mount the remote into.";
+            };
+            readonly = mkOption {
+              type = types.bool;
+              default = false;
+              description = "Should this mount be readonly?";
+            };
+            extraArgs = mkOption {
+              type = types.str;
+              default = "";
+              description = "Any extra args to pass to the `rclone mount` command.";
+            };
+          };
+        });
+      };
     };
 
     programming = {

@@ -5,8 +5,28 @@
   ...
 }: let
   homedir = config.home.homeDirectory;
+  cfg = config.setup;
+
+  secretsIf = condition: secrets:
+    if condition
+    then secrets
+    else {};
+
+  gh-secrets =
+    secretsIf cfg.programming.miscTools.gh
+    {
+      "gh/hosts" = {
+        path = "${config.xdg.configHome}/gh/hosts.yml";
+        mode = "0600";
+      };
+    };
+  firefox-secrets =
+    secretsIf cfg.firefox.enable
+    {
+      "firefox/extensions/refined_github/personal_access_token" = {};
+    };
 in {
-  config = lib.mkIf config.setup.secrets {
+  config = lib.mkIf cfg.secrets {
     home.packages = with pkgs; [
       age
       openssh
@@ -20,48 +40,46 @@ in {
         generateKey = false;
       };
 
-      secrets = {
-        "firefox/extensions/refined_github/personal_access_token" = {};
-        "gh/hosts" = {
-          path = "${config.xdg.configHome}/gh/hosts.yml";
-          mode = "0600";
-        };
-        "ssh/authorized_keys" = {
-          path = "${homedir}/.ssh/authorized_keys";
-          mode = "0600";
-        };
-        "ssh/config" = {
-          path = "${homedir}/.ssh/config";
-          mode = "0644";
-        };
-        "ssh/github_main/passphrase" = {};
-        "ssh/github_main/private" = {
-          path = "${homedir}/.ssh/github_main";
-          mode = "0600";
-        };
-        "ssh/github_main/public" = {
-          path = "${homedir}/.ssh/github_main.pub";
-          mode = "0644";
-        };
-        "ssh/git_main_signing/passphrase" = {};
-        "ssh/git_main_signing/private" = {
-          path = "${homedir}/.ssh/git_main_signing";
-          mode = "0600";
-        };
-        "ssh/git_main_signing/public" = {
-          path = "${homedir}/.ssh/git_main_signing.pub";
-          mode = "0644";
-        };
-        "ssh/id_ed25519/passphrase" = {};
-        "ssh/id_ed25519/private" = {
-          path = "${homedir}/.ssh/id_ed25519";
-          mode = "0600";
-        };
-        "ssh/id_ed25519/public" = {
-          path = "${homedir}/.ssh/id_ed25519.pub";
-          mode = "0644";
-        };
-      };
+      secrets =
+        {
+          "ssh/authorized_keys" = {
+            path = "${homedir}/.ssh/authorized_keys";
+            mode = "0600";
+          };
+          "ssh/config" = {
+            path = "${homedir}/.ssh/config";
+            mode = "0644";
+          };
+          "ssh/github_main/passphrase" = {};
+          "ssh/github_main/private" = {
+            path = "${homedir}/.ssh/github_main";
+            mode = "0600";
+          };
+          "ssh/github_main/public" = {
+            path = "${homedir}/.ssh/github_main.pub";
+            mode = "0644";
+          };
+          "ssh/git_main_signing/passphrase" = {};
+          "ssh/git_main_signing/private" = {
+            path = "${homedir}/.ssh/git_main_signing";
+            mode = "0600";
+          };
+          "ssh/git_main_signing/public" = {
+            path = "${homedir}/.ssh/git_main_signing.pub";
+            mode = "0644";
+          };
+          "ssh/id_ed25519/passphrase" = {};
+          "ssh/id_ed25519/private" = {
+            path = "${homedir}/.ssh/id_ed25519";
+            mode = "0600";
+          };
+          "ssh/id_ed25519/public" = {
+            path = "${homedir}/.ssh/id_ed25519.pub";
+            mode = "0644";
+          };
+        }
+        // gh-secrets
+        // firefox-secrets;
     };
   };
 }

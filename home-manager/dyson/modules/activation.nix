@@ -7,21 +7,26 @@
     if condition
     then content
     else {};
+
   mkScript = script: lib.hm.dag.entryAfter ["writeBoundary"] script;
+
+  mkSystemdRestart = serviceName:
+    mkScript ''
+      $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user ${serviceName}
+    '';
 
   cfg = config.setup;
 
-  restartSopsNix = fillIf cfg.secrets {
-    restartSopsNix = mkScript ''
-      $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user sops-nix
-    '';
-  };
+  restartRcloneMounts =
+    fillIf cfg.rclone.enable
+    (builtins.listToAttrs (builtins.map ({remote, ...}: {
+        name = "restartRcloneMount${remote}";
+        value = mkSystemdRestart "rclone-mount-${lib.strings.toLower remote}";
+      })
+      cfg.rclone.automounts));
 
-  restartXremap = fillIf cfg.miscPrograms.xremap {
-    restartXremap = mkScript ''
-      $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user xremap
-    '';
-  };
+  restartSopsNix = fillIf cfg.secrets {restartSopsNix = mkSystemdRestart "sops-nix";};
+  restartXremap = fillIf cfg.miscPrograms.xremap {restartXremap = mkSystemdRestart "xremap";};
 in {
-  home.activation = restartSopsNix // restartXremap;
+  home.activation = restartRcloneMounts // restartSopsNix // restartXremap;
 }

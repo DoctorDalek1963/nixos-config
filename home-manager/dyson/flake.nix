@@ -78,6 +78,16 @@
                 background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
               firefox.enable = true;
+              rclone = {
+                enable = true;
+                automounts = [
+                  {
+                    remote = "OneDrive";
+                    mountpoint = "/home/${username}/OneDrive";
+                    readonly = true;
+                  }
+                ];
+              };
               miscPrograms.xremap = true;
             };
           }
