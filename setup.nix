@@ -15,6 +15,7 @@ in {
     ./modules/desktopEnvironments/default.nix
     ./modules/displayManagers/default.nix
     ./modules/pam/default.nix
+    ./modules/secrets/default.nix
     ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
   ];
@@ -33,7 +34,24 @@ in {
     virtualBoxGuest = defaultFalse;
     virtualBoxHost = defaultFalse;
 
-    secrets = defaultTrue;
+    secrets = {
+      enable = defaultTrue;
+      userPasswords = {
+        enable = defaultTrue;
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = ["dyson"];
+        };
+      };
+      networking = {
+        enable = defaultFalse;
+        simpleWifiNetworkNames = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = ["HOME"];
+          description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret environment.env file.'';
+        };
+      };
+    };
 
     pamShortenFailDelay = {
       enable = defaultTrue;

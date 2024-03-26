@@ -1,5 +1,5 @@
 keys:
-  - &primary age1vck0k5vp94jkqpnlymvrd3k9xqzl46tlagduq0q7uamug08ktprs8h60x9
+  - &primary age1kmyex5r8lm530tgwgnawfccgg94u3m58j5spgfwr0suspfm4e42q55xhy0
 
 creation_rules:
   - path_regex: sops-secrets/secrets.yaml$

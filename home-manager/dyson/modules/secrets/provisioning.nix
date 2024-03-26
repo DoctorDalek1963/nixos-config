@@ -34,9 +34,9 @@ in {
     ];
 
     sops = {
-      defaultSopsFile = ../../secrets/secrets.yaml;
+      defaultSopsFile = ../../sops-secrets/secrets.yaml;
       age = {
-        keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
+        keyFile = "/etc/nixos/home-manager/dyson/sops-secrets/key.txt";
         generateKey = false;
       };
 

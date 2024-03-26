@@ -14,8 +14,9 @@ This is my configuration for all my NixOS machines. Installation should be fairl
 8. Move `hardware-configuration.nix` to `hardware/`.
 9. Rebuild the system with `sudo nixos-rebuild switch --flake /etc/nixos#desiredHostname`.
     - Once you've done this the first time, you should be able to just do `sudo nixos-rebuild switch` in the future.
-10. Copy your `age` private key into `/home/dyson/.config/sops/age/keys.txt`. The key is available on Dashlane if you can't copy it from another computer.
+10. Copy your `age` private keys to their proper places in `/etc/nixos/sops-secrets/key.txt` and `/etc/nixos/home-manager/dyson/sops-secrets/key.txt`. The keys are available on Dashlane if you can't copy them from another computer.
 11. Run `nix run /etc/nixos/home-manager/dyson -- --flake /etc/nixos/home-manager/dyson switch` to setup home-manager.
+    - Once you've done this the first time, you should be able to just do `home-manager switch` in the future.
 12. Reboot the system, and everything should be setup!
 
 ## Post-installation config
@@ -28,6 +29,6 @@ The first time you use an SSH key, GNOME Keyring will prompt you for the passphr
 
 You'll have to login to Firefox to enable Firefox Sync. The device name should already be set up.
 
-Firefox add-ons need to be manually configured. Refined GitHub needs a token, which is available in `/run/user/1000/secrets/firefox/extensions/refined_github/personal_access_token`. I won't enumerate all of my add-on settings here, but I'd recommend copying them from another machine.
+Firefox add-ons need to be manually configured. Refined GitHub needs a token, which is available in `/run/user/<uid>/secrets/firefox/extensions/refined_github/personal_access_token`. I won't enumerate all of my add-on settings here, but I'd recommend copying them from another machine.
 
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/dyson/flake.nix`.
