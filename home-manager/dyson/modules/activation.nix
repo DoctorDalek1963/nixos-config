@@ -11,6 +11,18 @@
 
   cfg = config.setup;
 
+  restartRcloneMounts =
+    if cfg.rclone.enable
+    then
+      builtins.listToAttrs (builtins.map ({remote, ...}: {
+          name = "restartRcloneMount${remote}";
+          value = mkScript ''
+            $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user rclone-mount-${lib.strings.toLower remote}
+          '';
+        })
+        cfg.rclone.automounts)
+    else {};
+
   restartSopsNix = fillIf cfg.secrets {
     restartSopsNix = mkScript ''
       $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user sops-nix
@@ -22,7 +34,6 @@
       $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user xremap
     '';
   };
-  # TODO: How can I restart all the rclone mount services?
 in {
-  home.activation = restartSopsNix // restartXremap;
+  home.activation = restartRcloneMounts // restartSopsNix // restartXremap;
 }
