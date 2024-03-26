@@ -11,7 +11,7 @@
   optionalExtensions =
     (
       if config.setup.rclone.enable
-      then [pkgs.gnomeExtensions.rclone-manager]
+      then [(pkgs.callPackage ./rclone-manager.nix {})]
       else []
     )
     ++ (
