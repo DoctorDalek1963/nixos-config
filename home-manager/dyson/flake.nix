@@ -67,12 +67,12 @@
                 ];
               };
 
-              maths.enable = true;
+              # maths.enable = true;
 
               gaming.enable = true;
 
               miscPrograms = {
-                discord = true;
+                # discord = true;
                 obsidian = true;
                 vlc = true;
                 xremap = true;
