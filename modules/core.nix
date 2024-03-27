@@ -95,6 +95,10 @@ in {
     users.dyson = {
       isNormalUser = true;
       description = "Dyson";
+      initialPassword =
+        if config.setup.secrets.userPasswords.enable
+        then null
+        else "changeme";
       extraGroups =
         ["networkmanager" "wheel"]
         ++ (
