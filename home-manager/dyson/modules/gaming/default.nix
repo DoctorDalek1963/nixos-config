@@ -3,8 +3,10 @@
   lib,
   config,
   ...
-}: {
-  config = lib.mkIf config.gaming {
+}: let
+  cfg = config.setup.gaming;
+in {
+  config = lib.mkIf cfg.enable {
     # TODO: Add Steam and stuff
   };
 }

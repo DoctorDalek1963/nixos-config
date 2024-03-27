@@ -40,6 +40,48 @@
     packages.${system}.default = home-manager.defaultPackage.${system};
 
     homeConfigurations = {
+      "${username}@Alex-NixOS" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs extraSpecialArgs;
+        modules = [
+          ./setup.nix
+          {
+            setup = {
+              inherit username;
+              hostname = "Alex-NixOS";
+
+              desktopEnvironments.gnome = {
+                enable = true;
+                theme = "vimix-amethyst";
+                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+              };
+
+              firefox.enable = true;
+
+              rclone = {
+                enable = true;
+                automounts = [
+                  {
+                    remote = "OneDrive";
+                    mountpoint = "/home/${username}/OneDrive";
+                  }
+                ];
+              };
+
+              maths.enable = true;
+
+              gaming.enable = true;
+
+              miscPrograms = {
+                discord = true;
+                obsidian = true;
+                vlc = true;
+                xremap = true;
+              };
+            };
+          }
+        ];
+      };
+
       "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
@@ -52,6 +94,7 @@
           }
         ];
       };
+
       "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
@@ -64,6 +107,7 @@
           }
         ];
       };
+
       "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [

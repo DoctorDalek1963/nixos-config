@@ -161,7 +161,9 @@ in {
       };
     };
 
-    gaming = defaultFalse;
+    gaming = {
+      enable = defaultFalse;
+    };
 
     miscPrograms = {
       discord = defaultFalse;
