@@ -16,9 +16,21 @@
       availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
       kernelModules = [];
     };
+
     kernelModules = ["kvm-amd"];
     extraModulePackages = [];
-    loader.grub.device = "nodev";
+
+    loader = {
+      systemd-boot.enable = false;
+
+      grub = {
+        enable = true;
+        useOSProber = true;
+
+        efiSupport = true;
+        device = "nodev";
+      };
+    };
   };
 
   fileSystems = {
