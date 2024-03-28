@@ -18,6 +18,7 @@ in {
     ./modules/secrets/default.nix
     ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
+    ./modules/openRGB/default.nix
   ];
 
   options.setup = {
@@ -68,6 +69,8 @@ in {
         default = [];
       };
     };
+
+    openRGB = defaultFalse;
 
     desktopEnvironments = {
       gnome = {

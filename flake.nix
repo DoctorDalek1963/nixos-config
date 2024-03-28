@@ -38,6 +38,8 @@
                 users = ["dyson"];
               };
 
+              openRGB = true;
+
               desktopEnvironments.gnome.enable = true;
               displayManagers.gdm.enable = true;
             };
