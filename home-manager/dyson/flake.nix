@@ -71,6 +71,10 @@
 
               gaming.enable = true;
 
+              programming = {
+                rust = true;
+              };
+
               miscPrograms = {
                 # discord = true;
                 obsidian = true;
