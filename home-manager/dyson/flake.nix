@@ -67,7 +67,7 @@
                 ];
               };
 
-              # maths.enable = true;
+              maths.enable = true;
 
               gaming.enable = true;
 
