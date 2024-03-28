@@ -73,8 +73,6 @@ in {
         pmhttp = "python3 -m http.server";
         clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
 
-        clip = "xclip -selection c";
-
         youtube-dl-s = "youtube-dl --config-location ~/.config/youtube-dl/soundtracks.conf";
         youtube-dl-a = "youtube-dl --config-location ~/.config/youtube-dl/albums.conf";
 
@@ -247,12 +245,6 @@ in {
             fi
         }
 
-        # Copy Unicode code point
-        cpunicp() {
-            string="\\u$1"
-            python -c "print('$string', end=\"\")" | xclip -selection c
-        }
-
         # Create executable file and open it with vim
         vex() {
             ${nvim-path} "$1"
@@ -261,13 +253,30 @@ in {
             fi
         }
 
-        # Easily copy a file
-        cclip() {
-            cat "$1" | xclip -selection c
+        clip() {
+            if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+                wl-copy
+            else
+                xclip -selection c
+            fi
         }
 
+        # Easily copy a file
+        cclip() {
+            if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+                cat "$1" | wl-copy
+            else
+                cat "$1" | xclip -selection c
+            fi
+        }
+
+        # Output the clipboard
         clipo() {
-            echo "$(xclip -selection c -o)"
+            if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+                wl-paste
+            else
+                echo "$(xclip -selection c -o)"
+            fi
         }
 
         # Decode base 64
