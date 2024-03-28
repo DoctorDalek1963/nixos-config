@@ -45,8 +45,6 @@
     # These are lists of allowed unfree and insecure packages respectively.
     # They are allowed on any host (since this is core.nix), but they're
     # only actually installed by certain modules.
-
-    # TODO: Why does firefox-addons not respect this? Even if allowUnfree = true, it still complains
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "obsidian"
