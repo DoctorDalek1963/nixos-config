@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: let
@@ -21,6 +22,13 @@ in {
 
   # Allow unfree packages (drivers and hardware stuff)
   nixpkgs.config.allowUnfree = cfg.allowUnfree;
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-run"
+    ];
 
   networking = {
     hostName = cfg.hostname;

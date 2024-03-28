@@ -40,6 +40,8 @@
 
               openRGB = true;
 
+              gaming.enable = true;
+
               desktopEnvironments.gnome.enable = true;
               displayManagers.gdm.enable = true;
             };

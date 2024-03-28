@@ -31,7 +31,6 @@ with lib; let
     ./modules/rclone/default.nix
     ./modules/programming/default.nix
     ./modules/maths/default.nix
-    ./modules/gaming/default.nix
     ./modules/miscPrograms/default.nix
   ];
   other-modules = [
@@ -159,10 +158,6 @@ in {
           default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
         };
       };
-    };
-
-    gaming = {
-      enable = defaultFalse;
     };
 
     miscPrograms = {

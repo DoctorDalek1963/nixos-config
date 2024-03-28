@@ -19,6 +19,7 @@ in {
     ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
     ./modules/openRGB/default.nix
+    ./modules/gaming/default.nix
   ];
 
   options.setup = {
@@ -71,6 +72,15 @@ in {
     };
 
     openRGB = defaultFalse;
+
+    gaming = {
+      enable = defaultFalse;
+      steam = {
+        enable = defaultTrue;
+        enableProtonGE = defaultTrue;
+      };
+      lutris = defaultTrue;
+    };
 
     desktopEnvironments = {
       gnome = {
