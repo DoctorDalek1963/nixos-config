@@ -80,6 +80,7 @@ in {
 
       "org/gnome/shell/extensions/caffeine" = {
         countdown-timer = 0;
+        enable-fullscreen = false;
         show-indicator = "only-active";
         toggle-state = false;
       };
