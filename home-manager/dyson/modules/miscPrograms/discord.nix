@@ -6,7 +6,7 @@
 }: {
   config = lib.mkIf config.setup.miscPrograms.discord {
     home.packages = [pkgs.discord];
-    xdg.configHome."discord/settings.json".text =
+    xdg.configFile."discord/settings.json".text =
       # json
       ''
         {

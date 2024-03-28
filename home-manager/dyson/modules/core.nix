@@ -47,6 +47,7 @@
     # only actually installed by certain modules.
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
+        "discord"
         "obsidian"
 
         # Firefox extensions

@@ -76,7 +76,7 @@
               };
 
               miscPrograms = {
-                # discord = true;
+                discord = true;
                 obsidian = true;
                 vlc = true;
                 xremap = true;
