@@ -12,14 +12,6 @@
     then secrets
     else {};
 
-  gh-secrets =
-    secretsIf cfg.programming.miscTools.gh
-    {
-      "gh/hosts" = {
-        path = "${config.xdg.configHome}/gh/hosts.yml";
-        mode = "0600";
-      };
-    };
   firefox-secrets =
     secretsIf cfg.firefox.enable
     {
@@ -78,7 +70,6 @@ in {
             mode = "0644";
           };
         }
-        // gh-secrets
         // firefox-secrets;
     };
   };
