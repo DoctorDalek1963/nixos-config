@@ -25,9 +25,11 @@ in {
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
+      # Gaming
       "steam"
       "steam-original"
       "steam-run"
+      "xow_dongle-firmware" # Needed for xone driver
     ];
 
   networking = {
