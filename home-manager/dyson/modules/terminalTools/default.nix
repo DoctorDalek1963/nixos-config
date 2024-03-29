@@ -17,7 +17,8 @@ in {
   ];
 
   home.packages =
-    optItemList tt.sad pkgs.sad
+    optItemList tt.hyperfine pkgs.hyperfine
+    ++ optItemList tt.sad pkgs.sad
     ++ optItemList tt.sd pkgs.sd
     ++ optItemList tt.tldr pkgs.tldr
     ++ optItemList tt.vim pkgs.vim;

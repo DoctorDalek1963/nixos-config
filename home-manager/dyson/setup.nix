@@ -70,6 +70,7 @@ in {
       ripgrep = defaultTrue;
 
       # Just install the packages
+      hyperfine = defaultTrue;
       sad = defaultTrue;
       sd = defaultTrue;
       tldr = defaultTrue;
