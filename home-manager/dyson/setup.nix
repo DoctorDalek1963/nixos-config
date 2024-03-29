@@ -77,7 +77,10 @@ in {
       vim = defaultTrue;
     };
 
-    secrets = defaultTrue;
+    secrets = {
+      enable = defaultTrue;
+      enableKeychain = defaultTrue;
+    };
 
     desktopEnvironments = {
       gnome = {

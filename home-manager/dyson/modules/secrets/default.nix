@@ -1,3 +1,3 @@
 {
-  imports = [./provisioning.nix ./gnome-keyring.nix];
+  imports = [./provisioning.nix ./keychain.nix];
 }

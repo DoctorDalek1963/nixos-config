@@ -18,7 +18,7 @@
       "firefox/extensions/refined_github/personal_access_token" = {};
     };
 in {
-  config = lib.mkIf cfg.secrets {
+  config = lib.mkIf cfg.secrets.enable {
     home.packages = with pkgs; [
       age
       openssh
