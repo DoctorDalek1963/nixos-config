@@ -71,7 +71,10 @@ in {
       };
     };
 
-    openRGB = defaultFalse;
+    openRGB = {
+      enable = defaultFalse;
+      usePlugins = defaultTrue;
+    };
 
     gaming = {
       enable = defaultFalse;

@@ -38,7 +38,7 @@
                 users = ["dyson"];
               };
 
-              openRGB = true;
+              openRGB.enable = true;
 
               gaming.enable = true;
 
