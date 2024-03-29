@@ -69,8 +69,6 @@
 
               maths.enable = true;
 
-              gaming.enable = true;
-
               programming = {
                 rust = true;
               };
