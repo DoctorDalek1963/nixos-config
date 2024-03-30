@@ -63,7 +63,10 @@ in {
     terminalTools = {
       # Need custom config
       bat = defaultTrue;
-      btop = defaultTrue;
+      btop = {
+        enable = defaultTrue;
+        gpuSupport = defaultTrue;
+      };
       comma = defaultTrue;
       delta = defaultTrue;
       fd = defaultTrue;

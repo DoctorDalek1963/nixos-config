@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/nur";
 
     home-manager = {
@@ -28,15 +28,25 @@
 
   outputs = {
     nixpkgs,
+    unstable,
     home-manager,
     ...
   } @ inputs: let
     system = "x86_64-linux";
     username = "dyson";
+
+    # Access unstable packages through pkgs.unstable
+    unstable-overlay = final: _prev: {
+      unstable = import inputs.unstable {
+        inherit (final) system;
+      };
+    };
+
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [inputs.nur.overlay];
+      overlays = [unstable-overlay inputs.nur.overlay];
     };
+
     extraSpecialArgs = {
       inherit system inputs;
     };
