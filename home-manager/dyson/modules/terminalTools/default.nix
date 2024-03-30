@@ -9,6 +9,7 @@ in {
   imports = [
     ./bat.nix
     ./btop.nix
+    ./comma.nix
     ./delta.nix
     ./fd.nix
     ./git.nix

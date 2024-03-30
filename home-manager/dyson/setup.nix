@@ -34,6 +34,7 @@ with lib; let
     ./modules/miscPrograms/default.nix
   ];
   other-modules = [
+    inputs.nix-index-database.hmModules.nix-index
     inputs.sops-nix.homeManagerModules.sops
     inputs.xremap.homeManagerModules.default
   ];
@@ -63,6 +64,7 @@ in {
       # Need custom config
       bat = defaultTrue;
       btop = defaultTrue;
+      comma = defaultTrue;
       delta = defaultTrue;
       fd = defaultTrue;
       git = defaultTrue;
