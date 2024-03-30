@@ -81,8 +81,10 @@ in {
       "org/gnome/shell/extensions/caffeine" = {
         countdown-timer = 0;
         enable-fullscreen = false;
+        inhibit-apps = ["vlc.desktop"];
         show-indicator = "only-active";
         toggle-state = false;
+        trigger-apps-mode = "on-focus";
       };
 
       "org/gnome/shell/extensions/clipboard-indicator" = {
