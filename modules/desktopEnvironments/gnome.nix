@@ -8,6 +8,7 @@
 
   chaff =
     (with pkgs; [
+      gedit # Text editor
       gnome-photos
       gnome-tour
     ])
@@ -17,7 +18,6 @@
       epiphany # Web browser
       file-roller # Zip archive manager
       geary # Email reader
-      gedit # Text editor
       gnome-contacts
       gnome-initial-setup
       gnome-music

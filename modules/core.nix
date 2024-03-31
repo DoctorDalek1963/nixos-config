@@ -79,7 +79,7 @@ in {
     xserver = {
       enable = true;
       # Use British keyboard in graphical sessions
-      layout = "gb";
+      xkb.layout = "gb";
     };
   };
 

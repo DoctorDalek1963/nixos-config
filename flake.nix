@@ -2,7 +2,11 @@
   description = "DoctorDalek1963's NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    # TODO: I'm using unstable here to get better drivers for Alex-NixOS, which
+    # uses a Radeon RX 7800 XT card and needs newer Mesa drivers. Once these
+    # drivers are stable (hopefully 24.05 or 24.11?), then this should be
+    # switched back to stable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
