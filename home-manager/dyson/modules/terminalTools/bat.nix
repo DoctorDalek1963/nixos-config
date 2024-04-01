@@ -5,11 +5,11 @@
 }: let
   theme =
     {
-      "onedark" = {
+      onedark = {
         name = "OneHalfDark";
         pkgs = {}; # Built-in to bat
       };
-      "catppuccin-macchiato" = {
+      catppuccin-macchiato = {
         name = "catppuccin-macchiato";
         pkgs = {
           catppuccin-macchiato = {
