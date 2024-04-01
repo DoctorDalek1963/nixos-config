@@ -20,6 +20,7 @@ in {
     ./modules/uinput/default.nix
     ./modules/openRGB/default.nix
     ./modules/gaming/default.nix
+    ./modules/androidTools/default.nix
   ];
 
   options.setup = {
@@ -83,6 +84,14 @@ in {
         enableProtonGE = defaultTrue;
       };
       lutris = defaultTrue;
+    };
+
+    androidTools = {
+      enable = defaultFalse;
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+      };
     };
 
     desktopEnvironments = {

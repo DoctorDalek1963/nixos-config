@@ -46,6 +46,11 @@
 
               gaming.enable = true;
 
+              androidTools = {
+                enable = true;
+                users = ["dyson"];
+              };
+
               desktopEnvironments.gnome.enable = true;
               displayManagers.gdm.enable = true;
             };
