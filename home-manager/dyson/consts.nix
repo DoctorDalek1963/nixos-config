@@ -25,6 +25,8 @@ in {
     };
 
     valid-gnome-themes = stringList ["vimix-amethyst"];
+    valid-terminal-themes = stringList ["catppuccin-macchiato" "onedark"];
+
     valid-shells = stringList ["bash"];
 
     nvim = mkOption {

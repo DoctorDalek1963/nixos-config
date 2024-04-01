@@ -2,13 +2,37 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  theme =
+    {
+      "onedark" = {
+        name = "OneHalfDark";
+        pkgs = {}; # Built-in to bat
+      };
+      "catppuccin-macchiato" = {
+        name = "catppuccin-macchiato";
+        pkgs = {
+          catppuccin-macchiato = {
+            src = pkgs.fetchFromGitHub {
+              owner = "catppuccin";
+              repo = "bat";
+              rev = "b19bea35a85a32294ac4732cad5b0dc6495bed32";
+              sha256 = "sha256-POoW2sEM6jiymbb+W/9DKIjDM1Buu1HAmrNP0yC2JPg=";
+            };
+            file = "themes/Catppuccin Macchiato.tmTheme";
+          };
+        };
+      };
+    }
+    .${config.setup.terminalTools.theme};
+in {
   programs.bat = {
     enable = config.setup.terminalTools.bat;
     config = {
-      theme = "OneHalfDark";
+      theme = theme.name;
       italic-text = "always";
     };
+    themes = theme.pkgs;
     syntaxes = {
       just = {
         src = pkgs.fetchFromGitHub {

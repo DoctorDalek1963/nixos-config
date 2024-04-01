@@ -69,6 +69,8 @@
                 background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
 
+              terminalTools.theme = "catppuccin-macchiato";
+
               firefox.enable = true;
 
               rclone = {
