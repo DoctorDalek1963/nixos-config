@@ -41,7 +41,12 @@
       options = {
         navigate = true;
         light = false;
-        syntax-theme = "OneHalfDark";
+        syntax-theme =
+          {
+            onedark = "OneHalfDark";
+            catppuccin-macchiato = "catppuccin-macchiato";
+          }
+          .${config.setup.terminalTools.theme};
         line-numbers = true;
       };
     };
