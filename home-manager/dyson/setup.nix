@@ -140,6 +140,7 @@ in {
 
     programming = {
       miscTools = {
+        direnv = defaultTrue;
         git-all = defaultTrue;
         gh = defaultTrue;
         just = defaultTrue;
