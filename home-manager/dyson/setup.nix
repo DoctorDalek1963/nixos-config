@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   inputs,
@@ -160,13 +159,6 @@ in {
 
       sage = defaultTrue;
       tikzit = defaultTrue;
-      texlive = {
-        enable = defaultTrue;
-        pkg = mkOption {
-          type = types.package;
-          default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
-        };
-      };
     };
 
     miscPrograms = {
