@@ -50,6 +50,7 @@ in {
         c = "cat";
         g = "git";
         j = "just";
+        n = "nix";
         p = "python3";
         t = "touch";
         v = nvim-path;
@@ -114,6 +115,7 @@ in {
         complete -F _complete_alias b
         complete -F _complete_alias g
         complete -F _complete_alias j
+        complete -F _complete_alias n
         complete -F _complete_alias p
         complete -F _complete_alias ca
         complete -F _complete_alias jl
