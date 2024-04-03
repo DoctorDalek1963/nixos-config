@@ -47,6 +47,10 @@ in {
     hostname = mkOption {
       type = types.nonEmptyStr;
     };
+    isNixOS = mkOption {
+      type = types.bool;
+    };
+
     isLaptop = defaultFalse;
     hasDvdDrive = defaultFalse;
 

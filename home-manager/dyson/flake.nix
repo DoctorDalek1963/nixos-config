@@ -66,6 +66,7 @@
             setup = {
               inherit username;
               hostname = "Alex-NixOS";
+              isNixOS = true;
 
               desktopEnvironments.gnome = {
                 enable = true;
@@ -110,6 +111,8 @@
             setup = {
               inherit username;
               hostname = "Sasha-Ubuntu";
+              isNixOS = false;
+              hasDvdDrive = true;
             };
           }
         ];
@@ -123,6 +126,8 @@
             setup = {
               inherit username;
               hostname = "Harold-NixOS";
+              isNixOS = true;
+              isLaptop = true;
             };
           }
         ];
@@ -136,6 +141,8 @@
             setup = {
               inherit username;
               hostname = "VirtualBox-NixOS";
+              isNixOS = true;
+
               desktopEnvironments.gnome = {
                 enable = true;
                 theme = "vimix-amethyst";
