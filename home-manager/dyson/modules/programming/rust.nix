@@ -2,14 +2,11 @@
   pkgs,
   lib,
   config,
-  inputs,
-  system,
   ...
 }: {
   config = lib.mkIf config.setup.programming.rust {
     home = {
       packages = [
-        inputs.cargo2nix.packages.${system}.default
         pkgs.evcxr
       ];
 
