@@ -34,8 +34,16 @@ in {
 
     allowUnfree = defaultFalse;
 
-    virtualBoxGuest = defaultFalse;
-    virtualBoxHost = defaultFalse;
+    virtualBox = {
+      guest.enable = defaultFalse;
+      host = {
+        enable = defaultFalse;
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = [];
+        };
+      };
+    };
 
     profilePictures = mkOption {
       type = types.submodule {

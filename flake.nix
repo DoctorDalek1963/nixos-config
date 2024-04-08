@@ -37,7 +37,10 @@
               setup = {
                 hostname = "Alex-NixOS";
 
-                virtualBoxHost = true;
+                virtualBox.host = {
+                  enable = true;
+                  users = ["dyson"];
+                };
 
                 profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
@@ -79,7 +82,7 @@
             {
               setup = {
                 hostname = "VirtualBox-NixOS";
-                virtualBoxGuest = true;
+                virtualBox.guest.enable = true;
                 desktopEnvironments.gnome.enable = true;
                 displayManagers.gdm.enable = true;
                 uinput = {

@@ -109,13 +109,7 @@ in {
         if config.setup.secrets.userPasswords.enable
         then null
         else "changeme";
-      extraGroups =
-        ["networkmanager" "wheel"]
-        ++ (
-          if config.setup.virtualBoxHost
-          then ["vboxusers"]
-          else []
-        );
+      extraGroups = ["networkmanager" "wheel"];
     };
   };
 }
