@@ -27,6 +27,8 @@
       yelp # Help view
     ]);
 in {
+  imports = [./profile-pictures.nix];
+
   config = lib.mkIf cfg.enable {
     services.xserver.desktopManager.gnome.enable = cfg.enable;
 

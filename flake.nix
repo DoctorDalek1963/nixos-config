@@ -39,6 +39,8 @@
 
                 virtualBoxHost = true;
 
+                profilePictures.dyson = ./files/profile-pictures/dyson.png;
+
                 secrets = {
                   enable = true;
                   userPasswords.enable = true;

@@ -37,6 +37,13 @@ in {
     virtualBoxGuest = defaultFalse;
     virtualBoxHost = defaultFalse;
 
+    profilePictures = mkOption {
+      type = types.submodule {
+        freeformType = types.attrsOf types.path;
+      };
+      default = {};
+    };
+
     secrets = {
       enable = defaultTrue;
       userPasswords = {
