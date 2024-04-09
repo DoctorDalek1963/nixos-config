@@ -20,6 +20,7 @@ in {
     ./modules/uinput/default.nix
     ./modules/openRGB/default.nix
     ./modules/gaming/default.nix
+    ./modules/androidTools/default.nix
   ];
 
   options.setup = {
@@ -33,8 +34,23 @@ in {
 
     allowUnfree = defaultFalse;
 
-    virtualBoxGuest = defaultFalse;
-    virtualBoxHost = defaultFalse;
+    virtualBox = {
+      guest.enable = defaultFalse;
+      host = {
+        enable = defaultFalse;
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = [];
+        };
+      };
+    };
+
+    profilePictures = mkOption {
+      type = types.submodule {
+        freeformType = types.attrsOf types.path;
+      };
+      default = {};
+    };
 
     secrets = {
       enable = defaultTrue;
@@ -83,6 +99,14 @@ in {
         enableProtonGE = defaultTrue;
       };
       lutris = defaultTrue;
+    };
+
+    androidTools = {
+      enable = defaultFalse;
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+      };
     };
 
     desktopEnvironments = {

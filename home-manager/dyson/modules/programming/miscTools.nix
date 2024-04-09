@@ -22,13 +22,22 @@ in {
     ++ optItemList mt.just pkgs.just
     ++ optItemList mt.pre-commit pkgs.pre-commit;
 
-  programs.gh = {
-    enable = mt.gh;
-    settings = {
-      git_protocol = "ssh";
-      editor = config.consts.nvim.path;
-      prompt = "enabled";
-      pager = "${pkgs.delta}/bin/delta";
+  programs = {
+    direnv = {
+      enable = mt.direnv;
+      nix-direnv.enable = mt.direnv;
+
+      enableBashIntegration = builtins.elem "bash" config.setup.shells;
+    };
+
+    gh = {
+      enable = mt.gh;
+      settings = {
+        git_protocol = "ssh";
+        editor = config.consts.nvim.path;
+        prompt = "enabled";
+        pager = "${pkgs.delta}/bin/delta";
+      };
     };
   };
 }

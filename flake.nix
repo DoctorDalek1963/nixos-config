@@ -7,6 +7,12 @@
     # drivers are stable (hopefully 24.05 or 24.11?), then this should be
     # switched back to stable
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -14,64 +20,139 @@
     };
   };
 
-  outputs = {nixpkgs, ...} @ inputs: {
-    nixosConfigurations = {
-      "Alex-NixOS" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./setup.nix
-          ./hardware/alex.nix
-          {
-            setup = {
-              hostname = "Alex-NixOS";
+  outputs = {
+    nixpkgs,
+    flake-parts,
+    ...
+  } @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      flake.nixosConfigurations = {
+        "Alex-NixOS" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./setup.nix
+            ./hardware/alex.nix
+            {
+              setup = {
+                hostname = "Alex-NixOS";
 
-              virtualBoxHost = true;
-
-              secrets = {
-                enable = true;
-                userPasswords.enable = true;
-                networking = {
+                virtualBox.host = {
                   enable = true;
-                  simpleWifiNetworkNames = ["HOME"];
+                  users = ["dyson"];
+                };
+
+                profilePictures.dyson = ./files/profile-pictures/dyson.png;
+
+                secrets = {
+                  enable = true;
+                  userPasswords.enable = true;
+                  networking = {
+                    enable = true;
+                    simpleWifiNetworkNames = ["HOME"];
+                  };
+                };
+
+                uinput = {
+                  enable = true;
+                  users = ["dyson"];
+                };
+
+                openRGB.enable = true;
+
+                gaming.enable = true;
+
+                androidTools = {
+                  enable = true;
+                  users = ["dyson"];
+                };
+
+                desktopEnvironments.gnome.enable = true;
+                displayManagers.gdm.enable = true;
+              };
+            }
+          ];
+        };
+        "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./setup.nix
+            ./hardware/vbox.nix
+            {
+              setup = {
+                hostname = "VirtualBox-NixOS";
+                virtualBox.guest.enable = true;
+                desktopEnvironments.gnome.enable = true;
+                displayManagers.gdm.enable = true;
+                uinput = {
+                  enable = true;
+                  users = ["dyson"];
                 };
               };
-
-              uinput = {
-                enable = true;
-                users = ["dyson"];
-              };
-
-              openRGB.enable = true;
-
-              gaming.enable = true;
-
-              desktopEnvironments.gnome.enable = true;
-              displayManagers.gdm.enable = true;
-            };
-          }
-        ];
+            }
+          ];
+        };
       };
-      "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./setup.nix
-          ./hardware/vbox.nix
-          {
-            setup = {
-              hostname = "VirtualBox-NixOS";
-              virtualBoxGuest = true;
-              desktopEnvironments.gnome.enable = true;
-              displayManagers.gdm.enable = true;
-              uinput = {
-                enable = true;
-                users = ["dyson"];
-              };
+
+      imports = [
+        inputs.pre-commit-hooks.flakeModule
+      ];
+
+      systems = ["x86_64-linux" "aarch64-linux"];
+      perSystem = {
+        config,
+        system,
+        ...
+      }: let
+        pkgs = import nixpkgs {inherit system;};
+      in {
+        devShells.default = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [age sops];
+          shellHook = ''
+            ${config.pre-commit.installationScript}
+          '';
+        };
+
+        # See https://flake.parts/options/pre-commit-hooks-nix and
+        # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
+        # for all the available hooks and options
+        pre-commit = {
+          # One of the hooks runs `nix flake check` on this flake, so we don't
+          # want to recurse infinitely
+          check.enable = false;
+
+          settings.hooks = {
+            check-added-large-files.enable = true;
+            check-merge-conflicts.enable = true;
+            check-toml.enable = true;
+            check-vcs-permalinks.enable = true;
+            check-yaml.enable = true;
+            end-of-file-fixer.enable = true;
+            trim-trailing-whitespace.enable = true;
+
+            alejandra.enable = true;
+            deadnix.enable = true;
+            statix.enable = true;
+
+            nixos-flake-check = {
+              enable = true;
+              name = "nixos flake check";
+              entry = "nix flake check";
+              files = ''.*\.(nix|lock)$'';
+              pass_filenames = false;
+              stages = ["pre-push"];
             };
-          }
-        ];
+            hm-flake-check = {
+              enable = true;
+              name = "home-manager flake check";
+              entry = ''${pkgs.bash}/bin/bash -c 'for user in ./home-manager/*; do nix flake check "$user"; done' '';
+              files = ''.*\.(nix|lock)$'';
+              pass_filenames = false;
+              stages = ["pre-push"];
+            };
+          };
+        };
       };
     };
-  };
 }

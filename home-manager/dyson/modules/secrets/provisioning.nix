@@ -19,11 +19,7 @@
     };
 in {
   config = lib.mkIf cfg.secrets.enable {
-    home.packages = with pkgs; [
-      age
-      openssh
-      sops
-    ];
+    home.packages = [pkgs.openssh];
 
     sops = {
       defaultSopsFile = ../../sops-secrets/secrets.yaml;

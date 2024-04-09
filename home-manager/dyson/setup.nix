@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   inputs,
@@ -48,6 +47,10 @@ in {
     hostname = mkOption {
       type = types.nonEmptyStr;
     };
+    isNixOS = mkOption {
+      type = types.bool;
+    };
+
     isLaptop = defaultFalse;
     hasDvdDrive = defaultFalse;
 
@@ -147,6 +150,7 @@ in {
 
     programming = {
       miscTools = {
+        direnv = defaultTrue;
         git-all = defaultTrue;
         gh = defaultTrue;
         just = defaultTrue;
@@ -166,13 +170,6 @@ in {
 
       sage = defaultTrue;
       tikzit = defaultTrue;
-      texlive = {
-        enable = defaultTrue;
-        pkg = mkOption {
-          type = types.package;
-          default = pkgs.texlive.combine {inherit (pkgs.texlive) scheme-medium;};
-        };
-      };
     };
 
     miscPrograms = {

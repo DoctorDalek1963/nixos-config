@@ -1,3 +1,3 @@
 {
-  imports = [./gnome.nix];
+  imports = [./gnome/default.nix];
 }

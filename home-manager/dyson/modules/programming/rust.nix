@@ -6,9 +6,8 @@
 }: {
   config = lib.mkIf config.setup.programming.rust {
     home = {
-      packages = with pkgs; [
-        evcxr
-        rustup
+      packages = [
+        pkgs.evcxr
       ];
 
       file = {
@@ -26,13 +25,6 @@
           t = "test"
           tr = "test --release"
           up = "update"
-
-          [target.x86_64-unknown-linux-gnu]
-          linker = "${pkgs.clang}/bin/clang"
-          rustflags = ["-Clink-arg=-fuse-ld=${pkgs.mold-wrapped}/bin/mold"]
-
-          [target.armv7-unknown-linux-gnueabihf]
-          linker = "arm-linux-gnueabihf-gcc"
         '';
       };
     };

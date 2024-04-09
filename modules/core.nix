@@ -15,7 +15,7 @@ in {
     # Garbage collect old packages every week
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "daily";
       options = "--delete-older-than 7d";
     };
   };
@@ -109,13 +109,7 @@ in {
         if config.setup.secrets.userPasswords.enable
         then null
         else "changeme";
-      extraGroups =
-        ["networkmanager" "wheel"]
-        ++ (
-          if config.setup.virtualBoxHost
-          then ["vboxusers"]
-          else []
-        );
+      extraGroups = ["networkmanager" "wheel"];
     };
   };
 }

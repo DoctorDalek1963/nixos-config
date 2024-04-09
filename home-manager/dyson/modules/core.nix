@@ -69,7 +69,7 @@
     settings.experimental-features = ["nix-command" "flakes"];
   };
 
-  targets.genericLinux.enable = true;
+  targets.genericLinux.enable = !config.setup.isNixOS;
 
   fonts.fontconfig.enable = true;
 }
