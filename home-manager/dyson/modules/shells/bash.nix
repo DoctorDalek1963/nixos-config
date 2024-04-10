@@ -185,7 +185,7 @@ in {
             # If we're in a nix-shell, then add that to the start in pink
             if ([ -n "$IN_NIX_SHELL" ] || [ -n "$NIX_GCROOT" ]) && [ $EXTENDED_PS1 -ne 0 ]; then
                 if [ "$color_prompt" = yes ]; then
-                    PS1="\[\033[01;38;5;206m\][nix-shell]\[\033[00m\] $PS1"
+                    PS1="\[\033[01;95m\][nix-shell]\[\033[00m\] $PS1"
                 else
                     PS1="[nix-shell] $PS1"
                 fi
