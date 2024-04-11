@@ -43,7 +43,7 @@ in {
           path = "${pkg}/bin/nvim";
         }
         else rec {
-          pkg = pkgs.nvim;
+          pkg = pkgs.neovim;
           path = "${pkg}/bin/nvim";
         };
     };

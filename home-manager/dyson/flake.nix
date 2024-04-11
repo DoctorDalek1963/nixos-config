@@ -160,6 +160,7 @@
               #     }
               #   ];
               # };
+              terminalTools.nvimCustom = false;
               miscPrograms.xremap = true;
             };
           }
