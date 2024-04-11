@@ -6,15 +6,10 @@
   config,
   ...
 }: {
-  imports = [./dconf.nix ./extensions/default.nix ./themes.nix];
+  imports = [./dconf.nix ./extensions/default.nix ./terminator.nix ./themes.nix];
 
   config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
-    home.packages = with pkgs; [
-      gnome.gnome-tweaks
-      terminator
-    ];
-
-    xdg.configFile."terminator/config".source = ../../../files/terminator_config;
+    home.packages = [pkgs.gnome.gnome-tweaks];
 
     dconf.enable = true;
 

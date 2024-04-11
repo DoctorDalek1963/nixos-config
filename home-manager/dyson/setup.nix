@@ -5,7 +5,7 @@
   ...
 }:
 with lib; let
-  inherit (config.consts) valid-gnome-themes valid-shells;
+  inherit (config.consts) valid-gnome-themes valid-terminal-themes valid-shells;
 
   defaultTrue = mkOption {
     default = true;
@@ -64,6 +64,12 @@ in {
     };
 
     terminalTools = {
+      theme = mkOption {
+        type = types.enum valid-terminal-themes;
+        default = "onedark";
+      };
+      useThemeInTerminalItself = defaultFalse;
+
       # Need custom config
       bat = defaultTrue;
       btop = {
