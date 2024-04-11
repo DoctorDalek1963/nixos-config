@@ -12,10 +12,7 @@
 
   mt = config.setup.programming.miscTools;
 
-  optItemList = opt: item:
-    if opt
-    then [item]
-    else [];
+  inherit (config.consts.lib) optItemList;
 in {
   home.packages =
     optItemList mt.git-all git-all
