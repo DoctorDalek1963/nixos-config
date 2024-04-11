@@ -5,8 +5,6 @@
 }: let
   cfg = config.setup.secrets;
   keychain-enabled = cfg.enable && cfg.enableKeychain;
-
-  shellEnabled = name: builtins.elem name config.setup.shells;
 in {
   config = lib.mkIf keychain-enabled {
     programs.keychain = {
@@ -17,7 +15,7 @@ in {
         "id_ed25519"
       ];
 
-      enableBashIntegration = shellEnabled "bash";
+      enableBashIntegration = config.setup.shells.bash;
     };
   };
 }

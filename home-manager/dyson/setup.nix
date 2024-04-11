@@ -54,9 +54,8 @@ in {
     isLaptop = defaultFalse;
     hasDvdDrive = defaultFalse;
 
-    shells = mkOption {
-      default = ["bash"];
-      type = types.listOf (types.enum valid-shells);
+    shells = {
+      bash = defaultTrue;
     };
     defaultShell = mkOption {
       default = "bash";

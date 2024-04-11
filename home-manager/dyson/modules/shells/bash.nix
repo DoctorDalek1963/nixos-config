@@ -4,19 +4,18 @@
   config,
   ...
 }: let
-  bash-enabled = builtins.elem "bash" config.setup.shells;
   inherit (config.setup) username;
   homedir = config.home.homeDirectory;
   nvim-path = config.consts.nvim.path;
 in {
-  config = lib.mkIf bash-enabled {
+  config = lib.mkIf config.setup.shells.bash {
     home = {
       packages = [pkgs.complete-alias];
       sessionVariables.EXTENDED_PS1 = 1;
     };
 
     programs.bash = {
-      enable = bash-enabled;
+      enable = true;
       enableCompletion = true;
       historySize = 1000;
       historyFileSize = -1;
