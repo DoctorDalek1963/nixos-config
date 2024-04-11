@@ -24,7 +24,7 @@ in {
       };
     };
 
-    valid-gnome-themes = stringList ["vimix-amethyst"];
+    valid-gnome-themes = stringList ["catppuccin-adaptive-macchiato-mauve" "vimix-amethyst"];
     valid-terminal-themes = stringList ["catppuccin-macchiato" "onedark"];
 
     valid-shells = stringList ["bash"];

@@ -66,11 +66,14 @@
 
               desktopEnvironments.gnome = {
                 enable = true;
-                theme = "vimix-amethyst";
+                theme = "catppuccin-adaptive-macchiato-mauve";
                 background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
               };
 
-              terminalTools.theme = "catppuccin-macchiato";
+              terminalTools = {
+                theme = "catppuccin-macchiato";
+                useThemeInTerminalItself = true;
+              };
 
               firefox.enable = true;
 
