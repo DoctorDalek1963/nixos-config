@@ -147,19 +147,19 @@
               desktopEnvironments.gnome = {
                 enable = true;
                 theme = "vimix-amethyst";
-                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                background = ./files/desktop-backgrounds/virtualbox.jpg;
               };
-              firefox.enable = true;
-              rclone = {
-                enable = true;
-                automounts = [
-                  {
-                    remote = "OneDrive";
-                    mountpoint = "/home/${username}/OneDrive";
-                    readonly = true;
-                  }
-                ];
-              };
+              # firefox.enable = true;
+              # rclone = {
+              #   enable = true;
+              #   automounts = [
+              #     {
+              #       remote = "OneDrive";
+              #       mountpoint = "/home/${username}/OneDrive";
+              #       readonly = true;
+              #     }
+              #   ];
+              # };
               miscPrograms.xremap = true;
             };
           }
