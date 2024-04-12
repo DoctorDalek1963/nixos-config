@@ -23,6 +23,15 @@ in {
 
     sops = {
       defaultSopsFile = ../../sops-secrets/secrets.yaml;
+
+      # FIXME: This is bad because we don't want to hardcode the UID, but
+      # sops-nix seems to have no way of knowing where it will link things at
+      # build time, so it can't reference paths to secrets which are not
+      # symlinked elsewhere, like SSH key passphrases. See ./keychain.nix for
+      # why we need this.
+      defaultSymlinkPath = "/run/user/1000/secrets";
+      defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+
       age = {
         keyFile = "/etc/nixos/home-manager/dyson/sops-secrets/key.txt";
         generateKey = false;
