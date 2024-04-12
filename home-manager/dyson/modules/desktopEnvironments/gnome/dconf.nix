@@ -55,6 +55,7 @@ in
           icon-theme = "Vimix-Amethyst-dark";
           locate-pointer = false;
           monospace-font-name = "Hack Nerd Font 10";
+          show-battery-percentage = true;
           toolkit-accessibility = false;
         };
 
@@ -181,6 +182,15 @@ in
           night-light-schedule-from = 6.25;
           night-light-schedule-to = 7.0;
           night-light-temperature = mkUint32 3240;
+        };
+
+        "org/gnome/settings-daemon/plugins/power" = {
+          idle-dim = true;
+          power-button-action = "nothing";
+          power-saver-profile-on-low-battery = true;
+          sleep-inactive-ac-type = "nothing"; # Don't automatically suspend when plugged in
+          sleep-inactive-battery-timeout = 900; # 15 minutes
+          sleep-inactive-battery-type = "suspend"; # Automatically suspend when on battery
         };
 
         "org/gnome/settings-daemon/plugins/media-keys" = {
