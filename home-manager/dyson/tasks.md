@@ -5,3 +5,4 @@
 5. GNOME profile pictures
 6. xremap dd@ and ddd@ expansions
 7. Install MangoHUD
+8. Use NightThemeSwitcher's command functionality to symlink the correct GTK4 themes when switching themes
