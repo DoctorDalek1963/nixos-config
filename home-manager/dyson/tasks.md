@@ -1,4 +1,4 @@
-1. Install lean4, weylus, and Zotero in maths module
+1. Install lean4, weylus, Zotero, and octave in maths module
 2. Set scrolling direction for different machines (invert touchpad scrolling?)
 3. xremap dd@ and ddd@ expansions
 4. Install MangoHUD with hotkey to toggle
