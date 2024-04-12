@@ -73,6 +73,47 @@
             }
           ];
         };
+        "Harold-NixOS" = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            ./setup.nix
+            ./hardware/harold.nix
+            {
+              setup = {
+                hostname = "Harold-NixOS";
+
+                profilePictures.dyson = ./files/profile-pictures/dyson.png;
+
+                secrets = {
+                  enable = true;
+                  userPasswords.enable = true;
+                  networking = {
+                    enable = true;
+                    simpleWifiNetworkNames = [
+                      "HOME"
+                      "IZZY_LINEAGE"
+                      "FRIEND_1"
+                    ];
+                  };
+                };
+
+                uinput = {
+                  enable = true;
+                  users = ["dyson"];
+                };
+
+                androidTools = {
+                  enable = true;
+                  users = ["dyson"];
+                };
+
+                desktopEnvironments.gnome.enable = true;
+                displayManagers.gdm.enable = true;
+              };
+            }
+          ];
+        };
         "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {inherit inputs;};

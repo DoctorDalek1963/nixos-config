@@ -129,6 +129,42 @@
               hostname = "Harold-NixOS";
               isNixOS = true;
               isLaptop = true;
+
+              desktopEnvironments.gnome = {
+                enable = true;
+                theme = "catppuccin-adaptive-macchiato-mauve";
+                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+              };
+
+              terminalTools = {
+                theme = "catppuccin-macchiato";
+                useThemeInTerminalItself = true;
+              };
+
+              firefox.enable = true;
+
+              rclone = {
+                enable = true;
+                automounts = [
+                  {
+                    remote = "OneDrive";
+                    mountpoint = "/home/${username}/OneDrive";
+                  }
+                ];
+              };
+
+              maths.enable = true;
+
+              programming = {
+                rust = true;
+              };
+
+              miscPrograms = {
+                discord = true;
+                obsidian = true;
+                vlc = true;
+                xremap = true;
+              };
             };
           }
         ];
