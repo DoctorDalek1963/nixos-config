@@ -24,6 +24,7 @@
       hitori # Sudoku game
       iagno # Go game
       tali # Poker game
+      totem # Video player
       yelp # Help view
     ]);
 in {
