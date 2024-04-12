@@ -67,7 +67,14 @@ in
           numlock-state = true;
         };
 
+        "org/gnome/desktop/peripherals/mouse" = {
+          natural-scroll = false;
+        };
+
         "org/gnome/desktop/peripherals/touchpad" = {
+          edge-scrolling-enabled = false;
+          natural-scroll = true;
+          tap-to-click = true;
           two-finger-scrolling-enabled = true;
         };
 
