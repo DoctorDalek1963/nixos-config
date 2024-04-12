@@ -103,6 +103,7 @@ in {
 
     androidTools = {
       enable = defaultFalse;
+      droidcam = defaultTrue;
       users = mkOption {
         type = types.listOf types.nonEmptyStr;
         default = [];

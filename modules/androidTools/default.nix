@@ -15,5 +15,7 @@ in {
     };
 
     users.groups.plugdev.members = cfg.users;
+
+    programs.droidcam.enable = cfg.droidcam;
   };
 }
