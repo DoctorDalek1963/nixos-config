@@ -28,8 +28,8 @@
       ".git-prompt.sh".source = "${pkgs.fetchFromGitHub {
         owner = "git";
         repo = "git";
-        rev = "fc134b41ce2ee7b2a98a988db6eeb109e11a2831";
-        hash = "sha256-vL2zpDQJ7vJBrBflPqPUMPFP+tu8K79LbojtUGzFUMw=";
+        rev = "v2.44.0";
+        hash = "sha256-6MBdULOBBp8AtGS0rsvo5nh86t22LOb5LoYA/2cwp9g=";
         sparseCheckout = ["contrib/completion/git-prompt.sh"];
       }}/contrib/completion/git-prompt.sh";
       ".inputrc".text = ''
