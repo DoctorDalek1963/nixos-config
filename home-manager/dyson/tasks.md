@@ -4,4 +4,3 @@
 4. Use NightThemeSwitcher's command functionality to symlink the correct GTK4 themes when switching themes
 5. Use AirStatus to show airpod charge in status bar in GNOME on laptops
 6. Set default Nautilus config with dconf
-7. Move bash `buildPrompt()` into `programs.bash.promptInit`
