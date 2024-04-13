@@ -50,7 +50,9 @@ in {
 
       bash.initExtra = lib.mkIf config.setup.shells.bash ''
         eval "$(SHELL=bash ${shellCommand})"
-        ${populate-ssh-keychain-path} &> /dev/null
+        if [ $(ssh-add -l | "${pkgs.coreutils}/bin/wc" -l) -lt ${toString (builtins.length ssh-add-commands)} ]; then
+          ${populate-ssh-keychain-path} &> /dev/null
+        fi
       '';
 
       # zsh.initExtra = lib.mkIf config.setup.shells.zsh ''
