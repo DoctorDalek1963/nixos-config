@@ -6,7 +6,7 @@
   config,
   ...
 }: {
-  imports = [./dconf.nix ./extensions/default.nix ./terminator.nix ./themes.nix];
+  imports = [./dconf.nix ./extensions ./terminator.nix ./themes.nix];
 
   config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.gnome.gnome-tweaks];

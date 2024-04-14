@@ -12,15 +12,15 @@ in {
   imports = [
     ./modules/core.nix
 
-    ./modules/androidTools/default.nix
-    ./modules/desktopEnvironments/default.nix
-    ./modules/displayManagers/default.nix
-    ./modules/gaming/default.nix
-    ./modules/openRGB/default.nix
-    ./modules/pam/default.nix
-    ./modules/secrets/default.nix
-    ./modules/uinput/default.nix
-    ./modules/virtualBox/default.nix
+    ./modules/androidTools
+    ./modules/desktopEnvironments
+    ./modules/displayManagers
+    ./modules/gaming
+    ./modules/openRGB
+    ./modules/pam
+    ./modules/secrets
+    ./modules/uinput
+    ./modules/virtualBox
   ];
 
   options.setup = {

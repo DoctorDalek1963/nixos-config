@@ -22,15 +22,15 @@ with lib; let
     ./modules/core.nix
     ./modules/activation.nix
 
-    ./modules/shells/default.nix
-    ./modules/terminalTools/default.nix
-    ./modules/desktopEnvironments/default.nix
-    ./modules/firefox/default.nix
-    ./modules/maths/default.nix
-    ./modules/miscPrograms/default.nix
-    ./modules/programming/default.nix
-    ./modules/rclone/default.nix
-    ./modules/secrets/default.nix
+    ./modules/shells
+    ./modules/terminalTools
+    ./modules/desktopEnvironments
+    ./modules/firefox
+    ./modules/maths
+    ./modules/miscPrograms
+    ./modules/programming
+    ./modules/rclone
+    ./modules/secrets
   ];
   other-modules = [
     inputs.nix-index-database.hmModules.nix-index
