@@ -12,6 +12,8 @@ in {
   imports = [
     ./modules/core.nix
 
+    ./modules/laptop
+
     ./modules/androidTools
     ./modules/desktopEnvironments
     ./modules/displayManagers

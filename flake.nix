@@ -82,6 +82,7 @@
             {
               setup = {
                 hostname = "Harold-NixOS";
+                isLaptop = true;
 
                 profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
