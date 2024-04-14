@@ -12,15 +12,15 @@ in {
   imports = [
     ./modules/core.nix
 
+    ./modules/androidTools/default.nix
     ./modules/desktopEnvironments/default.nix
     ./modules/displayManagers/default.nix
+    ./modules/gaming/default.nix
+    ./modules/openRGB/default.nix
     ./modules/pam/default.nix
     ./modules/secrets/default.nix
-    ./modules/virtualBox/default.nix
     ./modules/uinput/default.nix
-    ./modules/openRGB/default.nix
-    ./modules/gaming/default.nix
-    ./modules/androidTools/default.nix
+    ./modules/virtualBox/default.nix
   ];
 
   options.setup = {
@@ -29,22 +29,23 @@ in {
     };
     isLaptop = defaultFalse;
 
+    # === Basic system config
     enablePrinting = defaultFalse;
     enableSsh = defaultTrue;
 
     allowUnfree = defaultFalse;
 
-    virtualBox = {
-      guest.enable = defaultFalse;
-      host = {
-        enable = defaultFalse;
-        users = mkOption {
-          type = types.listOf types.nonEmptyStr;
-          default = [];
-        };
+    # === Android dev
+    androidTools = {
+      enable = defaultFalse;
+      droidcam = defaultTrue;
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
       };
     };
 
+    # === Desktop stuff
     profilePictures = mkOption {
       type = types.submodule {
         freeformType = types.attrsOf types.path;
@@ -52,6 +53,48 @@ in {
       default = {};
     };
 
+    desktopEnvironments = {
+      gnome = {
+        enable = defaultFalse;
+        minimal = defaultTrue;
+      };
+    };
+
+    displayManagers = {
+      gdm = {
+        enable = defaultFalse;
+      };
+      sddm = {
+        enable = defaultFalse;
+        # TODO: Handle theming
+      };
+    };
+
+    # === Gaming
+    gaming = {
+      enable = defaultFalse;
+      steam = {
+        enable = defaultTrue;
+        enableProtonGE = defaultTrue;
+      };
+      lutris = defaultTrue;
+    };
+
+    openRGB = {
+      enable = defaultFalse;
+      usePlugins = defaultTrue;
+    };
+
+    # === Passwords
+    pamShortenFailDelay = {
+      enable = defaultTrue;
+      microseconds = mkOption {
+        type = types.ints.unsigned;
+        default = 150000; # 150 ms
+      };
+    };
+
+    # === Secrets
     secrets = {
       enable = defaultTrue;
       userPasswords = {
@@ -71,14 +114,8 @@ in {
       };
     };
 
-    pamShortenFailDelay = {
-      enable = defaultTrue;
-      microseconds = mkOption {
-        type = types.ints.unsigned;
-        default = 150000; # 150 ms
-      };
-    };
-
+    # === Input
+    # We need uinput for xremap and weylus
     uinput = {
       enable = defaultFalse;
       users = mkOption {
@@ -87,43 +124,15 @@ in {
       };
     };
 
-    openRGB = {
-      enable = defaultFalse;
-      usePlugins = defaultTrue;
-    };
-
-    gaming = {
-      enable = defaultFalse;
-      steam = {
-        enable = defaultTrue;
-        enableProtonGE = defaultTrue;
-      };
-      lutris = defaultTrue;
-    };
-
-    androidTools = {
-      enable = defaultFalse;
-      droidcam = defaultTrue;
-      users = mkOption {
-        type = types.listOf types.nonEmptyStr;
-        default = [];
-      };
-    };
-
-    desktopEnvironments = {
-      gnome = {
+    # === VirtualBox
+    virtualBox = {
+      guest.enable = defaultFalse;
+      host = {
         enable = defaultFalse;
-        minimal = defaultTrue;
-      };
-    };
-
-    displayManagers = {
-      gdm = {
-        enable = defaultFalse;
-      };
-      sddm = {
-        enable = defaultFalse;
-        # TODO: Handle theming
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = [];
+        };
       };
     };
   };

@@ -24,13 +24,13 @@ with lib; let
 
     ./modules/shells/default.nix
     ./modules/terminalTools/default.nix
-    ./modules/secrets/default.nix
     ./modules/desktopEnvironments/default.nix
     ./modules/firefox/default.nix
-    ./modules/rclone/default.nix
-    ./modules/programming/default.nix
     ./modules/maths/default.nix
     ./modules/miscPrograms/default.nix
+    ./modules/programming/default.nix
+    ./modules/rclone/default.nix
+    ./modules/secrets/default.nix
   ];
   other-modules = [
     inputs.nix-index-database.hmModules.nix-index
@@ -54,6 +54,7 @@ in {
     isLaptop = defaultFalse;
     hasDvdDrive = defaultFalse;
 
+    # === Shell and terminal stuff
     shells = {
       bash = defaultTrue;
     };
@@ -90,11 +91,7 @@ in {
       vim = defaultTrue;
     };
 
-    secrets = {
-      enable = defaultTrue;
-      enableKeychain = defaultTrue;
-    };
-
+    # === Desktop stuff
     desktopEnvironments = {
       gnome = {
         enable = defaultFalse;
@@ -113,11 +110,49 @@ in {
       };
     };
 
+    # === Firefox
     firefox = {
       enable = defaultFalse;
       enableExtensions = defaultTrue;
     };
 
+    # === Maths
+    maths = {
+      enable = defaultFalse;
+
+      sage = defaultTrue;
+      tikzit = defaultTrue;
+    };
+
+    # === Misc programs
+    miscPrograms = {
+      discord = defaultFalse;
+      handbrake = defaultFalse; # DVD ripper
+      obsidian = defaultFalse;
+      vlc = defaultFalse;
+      xremap = defaultFalse;
+      zoom = defaultFalse;
+    };
+
+    # === Programming
+    programming = {
+      miscTools = {
+        direnv = defaultTrue;
+        git-all = defaultTrue;
+        gh = defaultTrue;
+        just = defaultTrue;
+        pre-commit = defaultTrue;
+      };
+
+      haskell = defaultFalse;
+      julia = defaultFalse;
+      python = defaultFalse;
+      rust = defaultFalse;
+
+      nix = defaultTrue;
+    };
+
+    # === Rclone
     rclone = {
       enable = defaultFalse;
       automounts = mkOption {
@@ -147,37 +182,10 @@ in {
       };
     };
 
-    programming = {
-      miscTools = {
-        direnv = defaultTrue;
-        git-all = defaultTrue;
-        gh = defaultTrue;
-        just = defaultTrue;
-        pre-commit = defaultTrue;
-      };
-
-      haskell = defaultFalse;
-      julia = defaultFalse;
-      python = defaultFalse;
-      rust = defaultFalse;
-
-      nix = defaultTrue;
-    };
-
-    maths = {
-      enable = defaultFalse;
-
-      sage = defaultTrue;
-      tikzit = defaultTrue;
-    };
-
-    miscPrograms = {
-      discord = defaultFalse;
-      handbrake = defaultFalse; # DVD ripper
-      obsidian = defaultFalse;
-      vlc = defaultFalse;
-      xremap = defaultFalse;
-      zoom = defaultFalse;
+    # === Secrets
+    secrets = {
+      enable = defaultTrue;
+      enableKeychain = defaultTrue;
     };
   };
 }
