@@ -12,6 +12,7 @@ in {
     ./comma.nix
     ./delta.nix
     ./fd.nix
+    ./fzf.nix
     ./git.nix
     ./nvim.nix
     ./ripgrep.nix

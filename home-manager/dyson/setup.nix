@@ -79,6 +79,7 @@ in {
       comma = defaultTrue;
       delta = defaultTrue;
       fd = defaultTrue;
+      fzf = defaultTrue;
       git = defaultTrue;
       nvimCustom = defaultTrue;
       ripgrep = defaultTrue;
