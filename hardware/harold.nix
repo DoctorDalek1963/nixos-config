@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   modulesPath,
@@ -46,6 +47,15 @@
       size = 8 * 1024; # 8GB
     }
   ];
+
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver # LIBVA_DRIVER_NAME=iHD
+      intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but apparently works better with Firefox & Chromium)
+      libvdpau-va-gl
+    ];
+  };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
