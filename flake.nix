@@ -51,6 +51,7 @@
                     enable = true;
                     simpleWifiNetworkNames = ["HOME"];
                   };
+                  vpn.enable = true;
                 };
 
                 uinput = {

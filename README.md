@@ -33,3 +33,5 @@ Firefox add-ons need to be manually configured. Refined GitHub needs a token, wh
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/dyson/flake.nix`.
 
 Copy your sops age keys to `~/.config/sops/age/keys.txt`. The keys should be on separate lines.
+
+To setup the OpenVPN configs in GNOME's VPN menu, you'll need to import the `/etc/openvpn/<name-of-vpn>.ovpn` and copy the username and password from the `/run/secrets/openvpn/<name-of-vpn>/user-pass` file. The username is on the first line and the password is on the second line.
