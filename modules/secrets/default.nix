@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  imports = [inputs.sops-nix.nixosModules.sops ./networking.nix ./vpn.nix ./users.nix];
+  imports = [inputs.sops-nix.nixosModules.sops ./networking ./users.nix];
 
   config = lib.mkIf config.setup.secrets.enable {
     sops = {
