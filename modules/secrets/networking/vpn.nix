@@ -3,24 +3,60 @@
   lib,
   config,
   ...
-}: {
+}: let
+  cfg = config.setup.secrets.vpn;
+
+  optSet = cond: set:
+    if cond
+    then set
+    else {};
+
+  vpnEnabled = name: builtins.elem name (map ({vpnName, ...}: vpnName) cfg.vpns);
+
+  bash-script = let
+    nmcli = "${pkgs.networkmanager}/bin/nmcli";
+    nmcli-command-blocks = builtins.map ({
+      vpnName,
+      users,
+    }: let
+      perm-commands = map (username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'") users;
+    in
+      # bash
+      ''
+        ${nmcli} connection delete ${vpnName}
+        ${nmcli} connection import type openvpn file "/etc/openvpn/${vpnName}.ovpn"
+
+        ${nmcli} connection modify ${vpnName} connection.permissions ""
+        ${lib.concatStringsSep "\n" perm-commands}
+
+        ${nmcli} connection modify ${vpnName} vpn.user-name "$(head -1 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path})"
+        ${nmcli} connection modify ${vpnName} -vpn.data "password-flags=1"
+        ${nmcli} connection modify ${vpnName} +vpn.data "password-flags=0"
+        ${nmcli} connection modify ${vpnName} vpn.secrets "password=$(head -2 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path} | tail -1)"
+      '')
+    cfg.vpns;
+  in
+    pkgs.writeShellScriptBin "import-ovpn-files" (lib.concatStringsSep "\n\n\n" nmcli-command-blocks);
+in {
   config = lib.mkIf config.setup.secrets.vpn.enable {
     environment.systemPackages = [pkgs.openvpn];
 
-    sops.secrets = {
-      "openvpn/hotspotshield-gb/user-pass" = {
-        mode = "0644";
+    sops.secrets =
+      {}
+      // optSet (vpnEnabled "hotspotshield-gb") {
+        "openvpn/hotspotshield-gb/user-pass" = {
+          mode = "0644";
+        };
+        "openvpn/hotspotshield-gb/cert" = {
+          mode = "0644";
+        };
+        "openvpn/hotspotshield-gb/key" = {
+          mode = "0644";
+        };
+        "openvpn/hotspotshield-gb/ca" = {
+          mode = "0644";
+        };
       };
-      "openvpn/hotspotshield-gb/cert" = {
-        mode = "0644";
-      };
-      "openvpn/hotspotshield-gb/key" = {
-        mode = "0644";
-      };
-      "openvpn/hotspotshield-gb/ca" = {
-        mode = "0644";
-      };
-    };
 
     networking.networkmanager.plugins = [pkgs.networkmanager-openvpn];
 
@@ -54,5 +90,13 @@
       key ${config.sops.secrets."openvpn/hotspotshield-gb/key".path}
       ca ${config.sops.secrets."openvpn/hotspotshield-gb/ca".path}
     '';
+
+    systemd.services.networkmanager-import-ovpn-files = {
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${bash-script}/bin/import-ovpn-files";
+      };
+      wantedBy = ["network-online.target"];
+    };
   };
 }
