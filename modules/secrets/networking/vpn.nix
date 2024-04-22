@@ -15,7 +15,7 @@
 
   bash-script = let
     nmcli = "${pkgs.networkmanager}/bin/nmcli";
-    nmcli-command-blocks = builtins.map ({
+    nmcli-command-blocks = map ({
       vpnName,
       users,
     }: let
@@ -23,7 +23,7 @@
     in
       # bash
       ''
-        ${nmcli} connection delete ${vpnName}
+        ${nmcli} connection delete ${vpnName} || true
         ${nmcli} connection import type openvpn file "/etc/openvpn/${vpnName}.ovpn"
 
         ${nmcli} connection modify ${vpnName} connection.permissions ""
