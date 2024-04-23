@@ -16,8 +16,14 @@ build-iso-with-secrets:
 bootstrap-home-manager:
 	nix run /etc/nixos/home-manager/dyson -- --flake /etc/nixos/home-manager/dyson switch
 
+# set the git remote to use my SSH key
+set-git-remote:
+	git remote rm origin
+	git remote add origin github-dd:DoctorDalek1963/nixos-config.git
+
 # make sure everything is set up properly after a fresh install
 post-install:
 	sudo chown -R dyson:users /etc/nixos
 	sudo nixos-rebuild switch
+	@just set-git-remote
 	@just bootstrap-home-manager
