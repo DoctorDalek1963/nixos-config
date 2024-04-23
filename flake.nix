@@ -138,13 +138,23 @@
             {
               setup = {
                 hostname = "VirtualBox-NixOS";
+
                 virtualBox.guest.enable = true;
-                desktopEnvironments.gnome.enable = true;
-                displayManagers.gdm.enable = true;
+
+                profilePictures.dyson = ./files/profile-pictures/dyson.png;
+
+                secrets = {
+                  enable = true;
+                  userPasswords.enable = true;
+                };
+
                 uinput = {
                   enable = true;
                   users = ["dyson"];
                 };
+
+                desktopEnvironments.gnome.enable = true;
+                displayManagers.gdm.enable = true;
               };
             }
           ];
