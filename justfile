@@ -24,6 +24,7 @@ set-git-remote:
 # make sure everything is set up properly after a fresh install
 post-install:
 	sudo chown -R dyson:users /etc/nixos
+	chmod -R u+w /etc/nixos
 	sudo nixos-rebuild switch
 	@just set-git-remote
 	@just bootstrap-home-manager
