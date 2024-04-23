@@ -1,7 +1,8 @@
 {
-  config,
   pkgs,
   lib,
+  config,
+  inputs,
   ...
 }: {
   home = {
@@ -66,6 +67,11 @@
 
   nix = {
     package = pkgs.nix;
+
+    # Use these flake inputs for system-wide flake registry
+    registry = lib.mkForce (lib.mapAttrs (_: value: {flake = value;}) inputs);
+
+    # Enable flakes
     settings.experimental-features = ["nix-command" "flakes"];
   };
 
