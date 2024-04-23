@@ -16,6 +16,7 @@
     pkgs.writeShellScriptBin "connect-wifi" ''
       if [[ -z "$1" || -z "$2" ]]; then
         echo "Usage: $0 SSID PSK"
+        exit 1
       fi
 
       wifi_device="$(${nmcli} device | ${pkgs.gawk}/bin/awk '$2 == "wifi" {print $1}')"
