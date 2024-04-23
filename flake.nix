@@ -14,6 +14,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,12 +25,19 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
     flake-parts,
     ...
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       flake.nixosConfigurations = {
+        iso = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {inherit self;};
+          modules = ["${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ./iso];
+        };
+
         "Alex-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {inherit inputs;};
@@ -74,6 +85,7 @@
             }
           ];
         };
+
         "Harold-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {inherit inputs;};
@@ -116,12 +128,13 @@
             }
           ];
         };
+
         "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {inherit inputs;};
           modules = [
             ./setup.nix
-            ./hardware/vbox.nix
+            ./machines/VirtualBox-NixOS
             {
               setup = {
                 hostname = "VirtualBox-NixOS";
@@ -151,7 +164,15 @@
         pkgs = import nixpkgs {inherit system;};
       in {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [age sops];
+          nativeBuildInputs = with pkgs; [
+            # Secrets
+            age
+            sops
+
+            # Build ISO with justfile
+            just
+            nix-output-monitor
+          ];
           shellHook = ''
             ${config.pre-commit.installationScript}
           '';
