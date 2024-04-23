@@ -13,6 +13,7 @@ This is my configuration for all my NixOS machines. Installation should be fairl
 7. Run `install-nixos-with-disko <hostname>` on the target machine. If it asks for a root password, just use something simple.
 8. Reboot and cd into `/etc/nixos`. Run `nix develop --command just post-install`.
 9. Reboot and everything will now be installed and setup!
+10. Remember to delete the custom ISO from the USB, because it contains secret keys.
 
 ## Post-installation config
 
