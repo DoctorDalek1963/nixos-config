@@ -33,7 +33,10 @@ in {
   ];
 
   # Allow ISO to connect to WiFi
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+    wireless.enable = false;
+  };
 
   # Use British keyboard
   services.xserver.xkb.layout = "gb";
