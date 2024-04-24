@@ -49,5 +49,5 @@ disko-resize:
 	read -p "Are you sure you want to continue? [y/N] " -n 1 -r
 	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
-		sudo disko --mode mount
+		sudo disko --mode mount "$disko_file"
 	fi
