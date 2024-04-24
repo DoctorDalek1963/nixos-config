@@ -1,13 +1,24 @@
 {
   self,
   pkgs,
+  system,
+  inputs,
   ...
 }: let
   install-nixos-with-disko = pkgs.callPackage ({stdenvNoCC}:
     stdenvNoCC.mkDerivation {
       name = "install-nixos-with-disko";
       dontUnpack = true;
-      installPhase = "install -Dm555 ${./install-nixos-with-disko} $out/bin/install-nixos-with-disko";
+
+      buildPhase = ''
+        cp ${./install-nixos-with-disko} ./install-nixos-with-disko
+        substituteInPlace ./install-nixos-with-disko \
+          --replace DISKOCOMMAND "${inputs.disko.packages."${system}".disko}/bin/disko"
+      '';
+
+      installPhase = ''
+        install -Dm555 ./install-nixos-with-disko $out/bin/install-nixos-with-disko
+      '';
     }) {};
 
   connect-wifi = let

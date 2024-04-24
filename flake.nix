@@ -32,11 +32,14 @@
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       flake.nixosConfigurations = {
-        iso = nixpkgs.lib.nixosSystem {
+        iso = let
           system = "x86_64-linux";
-          specialArgs = {inherit self;};
-          modules = ["${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ./iso];
-        };
+        in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {inherit self inputs system;};
+            modules = ["${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ./iso];
+          };
 
         "Alex-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
@@ -181,6 +184,7 @@
 
             # Build ISO with justfile
             just
+            inputs.disko.packages."${system}".disko
             nix-output-monitor
           ];
           shellHook = ''

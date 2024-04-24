@@ -52,11 +52,7 @@ echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     sudo true
 
-    sudo nix run github:nix-community/disko \
-        --no-write-lock-file \
-        -- \
-        --mode zap_create_mount \
-        "machines/${TARGET_HOST}/disko.nix"
+    sudo DISKOCOMMAND --mode disko "machines/${TARGET_HOST}/disko.nix"
 
     # Rsync my nix-config to the target install
     sudo mkdir -p "/mnt/etc/nixos"

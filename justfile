@@ -29,3 +29,25 @@ post-install:
 	sudo nixos-rebuild switch
 	@just set-git-remote
 	@just bootstrap-home-manager
+
+# resize the disks on this machine to reflect the current state of the disko.nix file
+disko-resize:
+	#!/usr/bin/env bash
+
+	disko_file="{{justfile_directory()}}/machines/$(cat /etc/hostname)/disko.nix"
+
+	if [[ ! -f "$disko_file" ]]; then
+		echo "ERROR! $disko_file not found"
+		exit 1
+	fi
+
+	echo "WARNING! You are about to resize the disks on this machine to reflect $disko_file"
+	echo "         This should maintain any existing data, but data loss is a very real possibility"
+	echo "         Make sure to back up any important files"
+	echo "         It would be a good idea to create a recovery ISO with NixOS and secrets just in case"
+	echo
+	read -p "Are you sure you want to continue? [y/N] " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
+		sudo disko --mode mount
+	fi
