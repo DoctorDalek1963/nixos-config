@@ -12,6 +12,15 @@ with lib; let
       type = types.listOf types.str;
       default = strings;
     };
+
+  nvim-pkg =
+    {
+      basic = pkgs.neovim;
+      small = inputs.nixvim-flake.packages.${system}.nvim-small;
+      medium = inputs.nixvim-flake.packages.${system}.nvim-medium;
+      full = inputs.nixvim-flake.packages.${system}.nvim-full;
+    }
+    .${config.setup.terminalTools.nvim};
 in {
   # Here we can define constant values that can be referenced from any other files
   options.consts = {
@@ -29,23 +38,14 @@ in {
 
     valid-shells = stringList ["bash"];
 
-    nvim = mkOption {
-      type = types.submodule {
-        options = {
-          pkg = mkOption {type = types.package;};
-          path = mkOption {type = types.str;};
-        };
-      };
-      default =
-        if config.setup.terminalTools.nvimCustom
-        then rec {
-          pkg = inputs.nixvim-flake.packages.${system}.default;
-          path = "${pkg}/bin/nvim";
-        }
-        else rec {
-          pkg = pkgs.neovim;
-          path = "${pkg}/bin/nvim";
-        };
+    nvimPkg = mkOption {
+      type = types.package;
+      default = nvim-pkg;
+    };
+
+    nvimPath = mkOption {
+      type = types.nonEmptyStr;
+      default = "${nvim-pkg}/bin/nvim";
     };
   };
 }

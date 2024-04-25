@@ -196,7 +196,7 @@
               #     }
               #   ];
               # };
-              terminalTools.nvimCustom = false;
+              terminalTools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
               miscPrograms.xremap = true;
             };
           }

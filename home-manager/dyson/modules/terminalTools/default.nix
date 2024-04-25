@@ -5,6 +5,7 @@
 }: let
   inherit (config.consts.lib) optItemList;
   tt = config.setup.terminalTools;
+  inherit (config.consts) nvimPkg nvimPath;
 in {
   imports = [
     ./bat.nix
@@ -14,14 +15,18 @@ in {
     ./fd.nix
     ./fzf.nix
     ./git.nix
-    ./nvim.nix
     ./ripgrep.nix
   ];
 
-  home.packages =
-    optItemList tt.hyperfine pkgs.hyperfine
-    ++ optItemList tt.sad pkgs.sad
-    ++ optItemList tt.sd pkgs.sd
-    ++ optItemList tt.tldr pkgs.tldr
-    ++ optItemList tt.vim pkgs.vim;
+  home = {
+    packages =
+      [nvimPkg]
+      ++ optItemList tt.hyperfine pkgs.hyperfine
+      ++ optItemList tt.sad pkgs.sad
+      ++ optItemList tt.sd pkgs.sd
+      ++ optItemList tt.tldr pkgs.tldr
+      ++ optItemList tt.vim pkgs.vim;
+
+    sessionVariables.EDITOR = nvimPath;
+  };
 }

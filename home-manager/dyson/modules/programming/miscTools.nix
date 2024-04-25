@@ -31,7 +31,7 @@ in {
       enable = mt.gh;
       settings = {
         git_protocol = "ssh";
-        editor = config.consts.nvim.path;
+        editor = config.consts.nvimPath;
         prompt = "enabled";
         pager = "${pkgs.delta}/bin/delta";
       };

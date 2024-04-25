@@ -5,8 +5,8 @@
   ...
 }: let
   inherit (config.setup) username;
+  inherit (config.consts) nvimPath;
   homedir = config.home.homeDirectory;
-  nvim-path = config.consts.nvim.path;
 in {
   config = lib.mkIf config.setup.shells.bash {
     home = {
@@ -52,7 +52,7 @@ in {
         n = "nix";
         p = "python3";
         t = "touch";
-        v = nvim-path;
+        v = nvimPath;
         x = "exit";
 
         # Two letters
@@ -64,6 +64,10 @@ in {
         rs = "evcxr";
 
         nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
+
+        nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
+        nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
+        nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
 
         ipy = "python3 -m IPython";
         jnb = "jupyter notebook";
@@ -248,7 +252,7 @@ in {
 
         # Create executable file and open it with vim
         vex() {
-            ${nvim-path} "$1"
+            ${nvimPath} "$1"
             if [ -f "$1" ]; then
                 chmod +x "$1"
             fi

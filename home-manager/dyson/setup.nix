@@ -81,7 +81,10 @@ in {
       fd = defaultTrue;
       fzf = defaultTrue;
       git = defaultTrue;
-      nvimCustom = defaultTrue;
+      nvim = mkOption {
+        type = types.enum ["basic" "small" "medium" "full"];
+        default = "medium";
+      };
       ripgrep = defaultTrue;
 
       # Just install the packages
