@@ -42,6 +42,7 @@ in {
     pkgs.rsync
     install-nixos-with-disko
     connect-wifi
+    inputs.disko.packages."${system}".disko
   ];
 
   # Allow ISO to connect to WiFi
