@@ -1,3 +1,3 @@
 {inputs, ...}: {
-  imports = [inputs.disko.nixosModules.disko ./disko.nix ./hardware.nix];
+  imports = [inputs.disko.nixosModules.disko ./disko.nix ./hardware.nix ./snapper.nix];
 }
