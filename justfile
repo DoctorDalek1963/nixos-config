@@ -28,3 +28,9 @@ post-install:
 	sudo nixos-rebuild switch
 	@just set-git-remote
 	@just bootstrap-home-manager
+
+# copy sops keys to ~/.config/sops/age/keys.txt (WILL OVERWRITE)
+copy-sops-keys:
+	mkdir -p {{env("HOME")}}/.config/sops/age
+	cat {{justfile_directory()}}/sops-secrets/key.txt > {{env("HOME")}}/.config/sops/age/keys.txt
+	cat {{justfile_directory()}}/home-manager/dyson/sops-secrets/key.txt >> {{env("HOME")}}/.config/sops/age/keys.txt
