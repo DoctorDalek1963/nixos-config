@@ -94,7 +94,7 @@
           specialArgs = {inherit inputs;};
           modules = [
             ./setup.nix
-            ./hardware/harold.nix
+            ./machines/Harold-NixOS
             {
               setup = {
                 hostname = "Harold-NixOS";
