@@ -113,6 +113,7 @@
                       "FRIEND_1"
                     ];
                   };
+                  vpn.enable = true;
                 };
 
                 uinput = {
