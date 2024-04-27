@@ -23,11 +23,18 @@
                 resumeDevice = true;
               };
             };
-            root = {
+            luks = {
               size = "100%";
               content = {
-                type = "lvm_pv";
-                vg = "pool";
+                type = "luks";
+                name = "cryptrootsda";
+                passwordFile = "/tmp/password";
+                settings.allowDiscards = true;
+
+                content = {
+                  type = "lvm_pv";
+                  vg = "pool";
+                };
               };
             };
           };
@@ -38,11 +45,18 @@
         type = "disk";
         content = {
           type = "gpt";
-          partitions.root = {
+          partitions.luks = {
             size = "100%";
             content = {
-              type = "lvm_pv";
-              vg = "pool";
+              type = "luks";
+              name = "cryptrootsdb";
+              passwordFile = "/tmp/password";
+              settings.allowDiscards = true;
+
+              content = {
+                type = "lvm_pv";
+                vg = "pool";
+              };
             };
           };
         };
