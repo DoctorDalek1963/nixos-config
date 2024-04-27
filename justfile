@@ -20,7 +20,6 @@ bootstrap-home-manager:
 set-git-remote:
 	git remote rm origin
 	git remote add origin github-dd:DoctorDalek1963/nixos-config.git
-	git branch --set-upstream-to=origin/main main
 
 # make sure everything is set up properly after a fresh install
 post-install:
