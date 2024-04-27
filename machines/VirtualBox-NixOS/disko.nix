@@ -23,11 +23,18 @@
                 resumeDevice = true;
               };
             };
-            root = {
+            luks = {
               size = "100%";
               content = {
-                type = "lvm_pv";
-                vg = "pool";
+                type = "luks";
+                name = "cryptrootsda";
+                passwordFile = "/tmp/password";
+                settings.allowDiscards = true;
+
+                content = {
+                  type = "lvm_pv";
+                  vg = "pool";
+                };
               };
             };
           };
@@ -38,11 +45,18 @@
         type = "disk";
         content = {
           type = "gpt";
-          partitions.root = {
+          partitions.luks = {
             size = "100%";
             content = {
-              type = "lvm_pv";
-              vg = "pool";
+              type = "luks";
+              name = "cryptrootsdb";
+              passwordFile = "/tmp/password";
+              settings.allowDiscards = true;
+
+              content = {
+                type = "lvm_pv";
+                vg = "pool";
+              };
             };
           };
         };
@@ -51,36 +65,29 @@
 
     lvm_vg.pool = {
       type = "lvm_vg";
-      lvs.luks = {
+      lvs.root = {
         size = "100%VG"; # The whole volume group
         content = {
-          type = "luks";
-          name = "cryptroot";
-          passwordFile = "/tmp/password";
-          settings.allowDiscards = true;
-
-          content = {
-            type = "btrfs";
-            extraArgs = ["-f" "--label" "NixOS"];
-            subvolumes = let
-              mountOptions = ["compress=zstd:2" "noatime"];
-            in {
-              "/rootfs" = {
-                inherit mountOptions;
-                mountpoint = "/";
-              };
-              "/home" = {
-                inherit mountOptions;
-                mountpoint = "/home";
-              };
-              "/home/.snapshots" = {
-                inherit mountOptions;
-                mountpoint = "/home/.snapshots";
-              };
-              "/nix" = {
-                inherit mountOptions;
-                mountpoint = "/nix";
-              };
+          type = "btrfs";
+          extraArgs = ["-f" "--label" "NixOS"];
+          subvolumes = let
+            mountOptions = ["compress=zstd:2" "noatime"];
+          in {
+            "/rootfs" = {
+              inherit mountOptions;
+              mountpoint = "/";
+            };
+            "/home" = {
+              inherit mountOptions;
+              mountpoint = "/home";
+            };
+            "/home/.snapshots" = {
+              inherit mountOptions;
+              mountpoint = "/home/.snapshots";
+            };
+            "/nix" = {
+              inherit mountOptions;
+              mountpoint = "/nix";
             };
           };
         };
