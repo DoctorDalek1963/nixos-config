@@ -34,6 +34,7 @@
 
       ${nmcli} connection add type wifi con-name "$1" ifname "$wifi_device" ssid "$1"
       ${nmcli} connection modify "$1" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$2"
+      ${nmcli} connection up "$1"
     '';
 in {
   environment.systemPackages = [
