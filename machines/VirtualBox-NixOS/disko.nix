@@ -56,21 +56,23 @@
         content = {
           type = "btrfs";
           extraArgs = ["-f" "--label" "NixOS"];
-          subvolumes = {
+          subvolumes = let
+            mountOptions = ["compress=zstd:2" "noatime"];
+          in {
             "/rootfs" = {
-              mountOptions = ["compress=zstd" "noatime"];
+              inherit mountOptions;
               mountpoint = "/";
             };
             "/home" = {
-              mountOptions = ["compress=zstd" "noatime"];
+              inherit mountOptions;
               mountpoint = "/home";
             };
             "/home/.snapshots" = {
-              mountOptions = ["compress=zstd" "noatime"];
+              inherit mountOptions;
               mountpoint = "/home/.snapshots";
             };
             "/nix" = {
-              mountOptions = ["compress=zstd" "noatime"];
+              inherit mountOptions;
               mountpoint = "/nix";
             };
           };
