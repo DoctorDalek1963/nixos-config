@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -8,5 +9,7 @@
   config = lib.mkIf config.setup.gaming.enable {
     hardware.xone.enable = true;
     programs.gamemode.enable = true;
+
+    environment.systemPackages = with pkgs; [ludusavi mangohud];
   };
 }
