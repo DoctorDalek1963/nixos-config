@@ -1,5 +1,6 @@
 {
   disko.devices = {
+    # 120 GB SSD
     disk.nvme0n1 = {
       device = "/dev/nvme0n1";
       type = "disk";
@@ -27,22 +28,26 @@
                 type = "btrfs";
                 extraArgs = ["-f" "--label" "NixOS"];
                 subvolumes = let
-                  mountOptions = ["compress=zstd:2" "noatime"];
+                  mount-options = compression-level: [
+                    "compress=zstd:${compression-level}"
+                    "discard=async"
+                    "noatime"
+                  ];
                 in {
                   "/rootfs" = {
-                    inherit mountOptions;
+                    mountOptions = mount-options "2";
                     mountpoint = "/";
                   };
                   "/home" = {
-                    inherit mountOptions;
+                    mountOptions = mount-options "2";
                     mountpoint = "/home";
                   };
                   "/home/.snapshots" = {
-                    inherit mountOptions;
+                    mountOptions = mount-options "5";
                     mountpoint = "/home/.snapshots";
                   };
                   "/nix" = {
-                    inherit mountOptions;
+                    mountOptions = mount-options "2";
                     mountpoint = "/nix";
                   };
                 };
