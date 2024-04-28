@@ -28,23 +28,6 @@
     };
   };
 
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-uuid/0434b37b-c707-4f0b-bcda-5c799a17e3e9";
-      fsType = "ext4";
-    };
-
-    "/boot" = {
-      device = "/dev/disk/by-uuid/5E55-DF68";
-      fsType = "vfat";
-    };
-
-    "/home" = {
-      device = "/dev/disk/by-uuid/271b17ed-f1b6-493e-8343-453adde17d7e";
-      fsType = "ext4";
-    };
-  };
-
   swapDevices = [
     {
       device = "/swapfile";

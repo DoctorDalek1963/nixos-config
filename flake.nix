@@ -46,7 +46,7 @@
           specialArgs = {inherit inputs;};
           modules = [
             ./setup.nix
-            ./hardware/alex.nix
+            ./machines/Alex-NixOS
             {
               setup = {
                 hostname = "Alex-NixOS";
