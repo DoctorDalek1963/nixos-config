@@ -9,16 +9,9 @@
   ];
 
   optionalExtensions =
-    (
-      if config.setup.rclone.enable
-      then [(pkgs.callPackage ./rclone-manager.nix {})]
-      else []
-    )
-    ++ (
-      if config.setup.miscPrograms.xremap
-      then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
-      else []
-    );
+    if config.setup.miscPrograms.xremap
+    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
+    else [];
 
   optionalExtensionsNames =
     (
