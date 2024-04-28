@@ -30,79 +30,88 @@ in {
         "globstar"
         "checkjobs"
       ];
-      shellAliases = {
-        # Basics
-        grep = "grep --color=auto";
-        diff = "diff --color=auto";
-        ls = "ls --color=auto";
-        ll = "ls -la";
-        la = "ls -a";
-        lh = "ls -lah";
+      shellAliases =
+        {
+          # Basics
+          grep = "grep --color=auto";
+          diff = "diff --color=auto";
+          ls = "ls --color=auto";
+          ll = "ls -la";
+          la = "ls -a";
+          lh = "ls -lah";
 
-        # NixOS management
-        cdnc = "cd /etc/nixos";
-        cdhm = "cd /etc/nixos/home-manager/${username}";
-        home-manager = "nix run /etc/nixos/home-manager/${username} -- --flake /etc/nixos/home-manager/${username}";
+          # NixOS management
+          cdnc = "cd /etc/nixos";
+          cdhm = "cd /etc/nixos/home-manager/${username}";
+          home-manager = "nix run /etc/nixos/home-manager/${username} -- --flake /etc/nixos/home-manager/${username}";
 
-        # Single letters
-        b = "bat";
-        c = "cat";
-        g = "git";
-        j = "just";
-        n = "nix";
-        p = "python3";
-        t = "touch";
-        v = nvimPath;
-        x = "exit";
+          # Single letters
+          b = "bat";
+          c = "cat";
+          g = "git";
+          j = "just";
+          n = "nix";
+          p = "python3";
+          t = "touch";
+          v = nvimPath;
+          x = "exit";
 
-        # Two letters
-        ca = "cargo";
-        cl = "clear";
-        jl = "julia";
-        ps = "ps auxf";
-        rm = "rm -v";
-        rs = "evcxr";
+          # Two letters
+          ca = "cargo";
+          cl = "clear";
+          jl = "julia";
+          ps = "ps auxf";
+          rm = "rm -v";
+          rs = "evcxr";
 
-        nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
+          nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
 
-        nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
-        nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
-        nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
+          nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
+          nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
+          nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
 
-        ipy = "python3 -m IPython";
-        jnb = "jupyter notebook";
-        pnb = "julia -e 'import Pluto; Pluto.run()'";
-        pip = "python3 -m pip";
-        pup = "python3 -m pip install --upgrade pip";
-        pmhttp = "python3 -m http.server";
-        clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
+          ipy = "python3 -m IPython";
+          jnb = "jupyter notebook";
+          pnb = "julia -e 'import Pluto; Pluto.run()'";
+          pip = "python3 -m pip";
+          pup = "python3 -m pip install --upgrade pip";
+          pmhttp = "python3 -m http.server";
+          clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
 
-        youtube-dl-s = "youtube-dl --config-location ~/.config/youtube-dl/soundtracks.conf";
-        youtube-dl-a = "youtube-dl --config-location ~/.config/youtube-dl/albums.conf";
+          youtube-dl-s = "youtube-dl --config-location ~/.config/youtube-dl/soundtracks.conf";
+          youtube-dl-a = "youtube-dl --config-location ~/.config/youtube-dl/albums.conf";
 
-        rclone = "rclone --progress --bwlimit=\"09:00,256 23:00,off\"";
+          rclone = "rclone --progress --bwlimit=\"09:00,256 23:00,off\"";
 
-        resetwifi = "nmcli networking off && nmcli networking on";
+          resetwifi = "nmcli networking off && nmcli networking on";
 
-        gp = "git push";
-        gpfwl = "git push --force-with-lease";
-        gpx = "git push && exit";
-        gst = "git status";
-        ga = "git add -A";
-        gf = "git fetch";
-        gpl = "git pull";
-        gfpl = "git fetch && git pull";
-        gl = "git log";
+          gp = "git push";
+          gpfwl = "git push --force-with-lease";
+          gpx = "git push && exit";
+          gst = "git status";
+          ga = "git add -A";
+          gf = "git fetch";
+          gpl = "git pull";
+          gfpl = "git fetch && git pull";
+          gl = "git log";
 
-        gstall = "git-all status";
-        gfall = "git-all fetch";
-        gplall = "git-all pull";
-        gfplall = "git-all fetch && git-all pull";
-        gpall = "git-all push";
+          gstall = "git-all status";
+          gfall = "git-all fetch";
+          gplall = "git-all pull";
+          gfplall = "git-all fetch && git-all pull";
+          gpall = "git-all push";
 
-        # Search long-form history
-        rghist = "cat ~/.bash_history | rg --";
-      };
+          # Search long-form history
+          rghist = "cat ~/.bash_history | rg --";
+        }
+        // (
+          if config.setup.programming.nix
+          then {
+            nhos = "FLAKE=/etc/nixos nh os";
+            nhh = "FLAKE=/etc/nixos/home-manager/dyson nh home";
+          }
+          else {}
+        );
       bashrcExtra = ''
         trySource() {
             if [ -f "$1" ]; then
@@ -123,6 +132,16 @@ in {
         complete -F _complete_alias ca
         complete -F _complete_alias jl
         complete -F _complete_alias rclone
+        ${
+          if config.setup.programming.nix
+          then
+            # bash
+            ''
+              complete -F _complete_alias nhh
+              complete -F _complete_alias nhos
+            ''
+          else ""
+        }
 
         buildPrompt() {
             local exit_code="$?" # We need this first to catch it
