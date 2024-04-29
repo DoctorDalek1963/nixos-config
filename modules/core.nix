@@ -114,6 +114,7 @@ in {
     file
     git
     vim
+    wget
   ];
 
   users = {
