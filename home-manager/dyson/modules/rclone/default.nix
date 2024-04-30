@@ -35,6 +35,7 @@
             "--rc"
             "--rc-addr=localhost:5572"
             "--rc-web-gui"
+            "--rc-web-gui-no-open-browser"
             "${readonly}"
             "${opts.extraArgs}"
             "${opts.remote}: ${opts.mountpoint}"
