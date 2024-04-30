@@ -149,31 +149,27 @@ in
           edge-tiling = true;
         };
 
-        # TODO: Set nemo as default file browser
-        # "org/gnome/nautilus/icon-view" = {
-        #   captions = ["size" "type" "none"];
-        #   default-zoom-level = "small";
-        # };
-        #
-        # "org/gnome/nautilus/list-view" = {
-        #   default-column-order = ["name" "size" "type" "owner" "group" "permissions" "where" "date_modified" "date_modified_with_time" "date_accessed" "recency" "starred" "detailed_type"];
-        #   default-visible-columns = ["name" "size" "date_modified" "starred"];
-        #   use-tree-view = false;
-        # };
-        #
-        # "org/gnome/nautilus/preferences" = {
-        #   default-folder-viewer = "icon-view";
-        #   fts-enabled = false;
-        #   search-filter-time-type = "last_modified";
-        #   search-view = "list-view";
-        #   show-create-link = true;
-        # };
-        #
-        # "org/gnome/nautilus/window-state" = {
-        #   initial-size = mkTuple [900 600];
-        #   maximized = false;
-        #   sidebar-width = 200;
-        # };
+        "org/gnome/nautilus/icon-view" = {
+          captions = ["size" "date_modified" "permissions"];
+          default-zoom-level = "small-plus";
+        };
+
+        "org/gnome/nautilus/list-view" = {
+          default-column-order = ["name" "size" "type" "owner" "group" "permissions" "where" "date_modified" "date_modified_with_time" "date_accessed" "recency" "starred" "detailed_type"];
+          default-visible-columns = ["name" "size" "date_modified" "starred"];
+        };
+
+        "org/gnome/nautilus/preferences" = {
+          default-folder-viewer = "icon-view";
+          show-create-link = true;
+          show-delete-permanently = true;
+        };
+
+        "org/gnome/nautilus/window-state" = {
+          initial-size = mkTuple [950 600];
+          maximized = false;
+          sidebar-width = 200;
+        };
 
         "org/gnome/settings-daemon/plugins/color" = {
           night-light-enabled = true;
@@ -243,49 +239,6 @@ in
           sort-directories-first = true;
           sort-order = "ascending";
           type-format = "category";
-        };
-
-        "org/nemo/desktop" = {
-          show-desktop-icons = false;
-        };
-
-        "org/nemo/icon-view" = {
-          captions = ["size" "date_modified" "octal_permissions"];
-          default-zoom-level = "small";
-        };
-
-        "org/nemo/plugins" = {
-          disabled-actions = [
-            "change-background.nemo_action"
-            "set-as-background.nemo_action"
-            "add-desklets.nemo_action"
-          ];
-        };
-
-        "org/nemo/preferences" = {
-          bulk-rename-tool = "bulky";
-          click-double-parent-folder = true;
-          date-format = "informal";
-          inherit-folder-viewer = false;
-          quick-renames-with-pause-in-between = true;
-          show-advanced-permissions = true;
-          show-hidden-files = false;
-          show-location-entry = false;
-          tooltips-in-icon-view = true;
-          tooltips-show-mod-date = true;
-        };
-
-        "org/nemo/preferences/menu-config" = {
-          selection-menu-make-link = true;
-        };
-
-        "org/nemo/window-state" = {
-          maximized = false;
-          my-computer-expanded = true;
-          side-pane-view = "places";
-          sidebar-bookmark-breakpoint = 9;
-          sidebar-width = 180;
-          start-with-sidebar = true;
         };
       };
     };
