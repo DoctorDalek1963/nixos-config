@@ -50,9 +50,7 @@ in
           clock-format = "12h";
           clock-show-seconds = true;
           color-scheme = "prefer-dark";
-          cursor-theme = "Vimix-white-cursors";
           font-hinting = "slight";
-          icon-theme = "Vimix-Amethyst-dark";
           locate-pointer = false;
           monospace-font-name = "Hack Nerd Font 10";
           show-battery-percentage = true;
