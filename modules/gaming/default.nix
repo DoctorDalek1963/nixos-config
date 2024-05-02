@@ -11,5 +11,8 @@
     programs.gamemode.enable = true;
 
     environment.systemPackages = with pkgs; [ludusavi mangohud];
+
+    # Gaming is still broken on Wayland
+    services.xserver.displayManager.gdm.wayland = false;
   };
 }
