@@ -136,7 +136,10 @@
               desktopEnvironments.gnome = {
                 enable = true;
                 theme = "catppuccin-adaptive-macchiato-mauve";
-                background = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                background = {
+                  light = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                  dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                };
               };
 
               terminalTools = {
