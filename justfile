@@ -34,3 +34,7 @@ copy-sops-keys:
 	mkdir -p {{env("HOME")}}/.config/sops/age
 	cat {{justfile_directory()}}/sops-secrets/key.txt > {{env("HOME")}}/.config/sops/age/keys.txt
 	cat {{justfile_directory()}}/home-manager/dyson/sops-secrets/key.txt >> {{env("HOME")}}/.config/sops/age/keys.txt
+
+# set authentication token for Cachix
+cachix-authtoken:
+	cachix authtoken "$(sudo cat /run/secrets/cachix/tokens/doctordalek1963)"

@@ -28,3 +28,5 @@ Firefox add-ons need to be manually enabled and configured. I won't enumerate al
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/dyson/flake.nix`.
 
 Copy your sops age keys to `~/.config/sops/age/keys.txt`. The keys should be on separate lines.
+
+Add your Cachix auth token with `cachix authtoken "$(sudo cat /run/secrets/cachix/tokens/doctordalek1963)"`

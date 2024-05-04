@@ -136,6 +136,7 @@ in {
         };
       };
       tailscale.enable = defaultTrue;
+      cachix-watch.enable = defaultTrue;
     };
 
     # === Input
