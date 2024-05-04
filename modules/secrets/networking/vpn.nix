@@ -43,17 +43,17 @@ in {
 
     sops.secrets =
       {}
-      // optSet (vpnEnabled "hotspotshield-gb") {
-        "openvpn/hotspotshield-gb/user-pass" = {
+      // optSet (vpnEnabled "gb-hotspotshield") {
+        "openvpn/gb-hotspotshield/user-pass" = {
           mode = "0644";
         };
-        "openvpn/hotspotshield-gb/cert" = {
+        "openvpn/gb-hotspotshield/cert" = {
           mode = "0644";
         };
-        "openvpn/hotspotshield-gb/key" = {
+        "openvpn/gb-hotspotshield/key" = {
           mode = "0644";
         };
-        "openvpn/hotspotshield-gb/ca" = {
+        "openvpn/gb-hotspotshield/ca" = {
           mode = "0644";
         };
       };
@@ -62,7 +62,7 @@ in {
 
     # To generate .ovpn files for other locations, follow the guidance on
     # https://support.hotspotshield.com/hc/en-us/articles/360046865972-How-do-I-install-Hotspot-Shield-on-OpenVPN-devices
-    environment.etc."openvpn/hotspotshield-gb.ovpn".text = ''
+    environment.etc."openvpn/gb-hotspotshield.ovpn".text = ''
       client
       dev tun
       proto udp
@@ -81,14 +81,14 @@ in {
       reneg-sec 0
       remote-cert-tls server
       comp-noadapt
-      auth-user-pass ${config.sops.secrets."openvpn/hotspotshield-gb/user-pass".path}
+      auth-user-pass ${config.sops.secrets."openvpn/gb-hotspotshield/user-pass".path}
       auth sha256
       cipher AES-128-CBC
       verb 3
 
-      cert ${config.sops.secrets."openvpn/hotspotshield-gb/cert".path}
-      key ${config.sops.secrets."openvpn/hotspotshield-gb/key".path}
-      ca ${config.sops.secrets."openvpn/hotspotshield-gb/ca".path}
+      cert ${config.sops.secrets."openvpn/gb-hotspotshield/cert".path}
+      key ${config.sops.secrets."openvpn/gb-hotspotshield/key".path}
+      ca ${config.sops.secrets."openvpn/gb-hotspotshield/ca".path}
     '';
 
     systemd.services.networkmanager-import-ovpn-files = {

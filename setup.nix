@@ -129,7 +129,7 @@ in {
           });
           default = [
             {
-              vpnName = "hotspotshield-gb";
+              vpnName = "gb-hotspotshield";
               users = ["dyson"];
             }
           ];
