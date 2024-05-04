@@ -150,6 +150,7 @@
                 secrets = {
                   enable = true;
                   userPasswords.enable = true;
+                  tailscale.enable = false;
                 };
 
                 uinput = {
