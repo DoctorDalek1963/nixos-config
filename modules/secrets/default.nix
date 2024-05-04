@@ -4,7 +4,7 @@
   inputs,
   ...
 }: {
-  imports = [inputs.sops-nix.nixosModules.sops ./networking ./users.nix];
+  imports = [inputs.sops-nix.nixosModules.sops ./networking ./tailscale.nix ./users.nix];
 
   config = lib.mkIf config.setup.secrets.enable {
     sops = {

@@ -135,6 +135,7 @@ in {
           ];
         };
       };
+      tailscale.enable = defaultTrue;
     };
 
     # === Input
