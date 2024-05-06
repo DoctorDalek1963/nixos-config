@@ -111,6 +111,7 @@
                       "HOME"
                       "IZZY_LINEAGE"
                       "FRIEND_1"
+                      "FRIEND_2"
                     ];
                   };
                   vpn.enable = true;
