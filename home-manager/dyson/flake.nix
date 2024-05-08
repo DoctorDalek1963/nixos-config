@@ -99,6 +99,7 @@
               miscPrograms = {
                 discord = true;
                 obsidian = true;
+                rustdesk = true;
                 vlc = true;
                 xremap = true;
               };
@@ -168,6 +169,7 @@
               miscPrograms = {
                 discord = true;
                 obsidian = true;
+                rustdesk = true;
                 vlc = true;
                 xremap = true;
               };

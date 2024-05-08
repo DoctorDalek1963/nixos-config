@@ -9,6 +9,7 @@
   chaff =
     (with pkgs; [
       gedit # Text editor
+      gnome-connections
       gnome-photos
       gnome-tour
     ])

@@ -52,6 +52,7 @@
     allowUnfreePredicate = pkg:
       builtins.elem (lib.getName pkg) [
         "discord"
+        "libsciter" # For RustDesk
         "obsidian"
 
         # Firefox extensions

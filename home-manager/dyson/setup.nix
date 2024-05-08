@@ -133,6 +133,7 @@ in {
       discord = defaultFalse;
       handbrake = defaultFalse; # DVD ripper
       obsidian = defaultFalse;
+      rustdesk = defaultFalse;
       vlc = defaultFalse;
       xremap = defaultFalse;
       zoom = defaultFalse;
