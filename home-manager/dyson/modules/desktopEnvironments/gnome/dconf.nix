@@ -86,15 +86,6 @@ in
           report-technical-problems = true;
         };
 
-        "org/gnome/desktop/screensaver" = {
-          color-shading-type = "solid";
-          lock-delay = mkUint32 0;
-          picture-options = "zoom";
-          picture-uri = "file:///home/dyson/.local/share/backgrounds/2022-04-02-19-18-50-fossa-purple.jpeg";
-          primary-color = "#000000000000";
-          secondary-color = "#000000000000";
-        };
-
         "org/gnome/desktop/session" = {
           idle-delay = mkUint32 600; # 10 minutes
         };
@@ -107,7 +98,6 @@ in
 
         "org/gnome/desktop/wm/preferences" = {
           button-layout = ":minimize,maximize,close";
-          num-workspaces = 4;
           resize-with-right-button = false;
           workspace-names = [];
         };
