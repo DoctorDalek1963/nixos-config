@@ -97,7 +97,6 @@
               };
 
               miscPrograms = {
-                discord = true;
                 obsidian = true;
                 rustdesk = true;
                 vlc = true;
