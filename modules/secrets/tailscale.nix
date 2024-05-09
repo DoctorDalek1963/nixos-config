@@ -9,9 +9,8 @@ in {
   config = lib.mkIf (cfg.enable && cfg.tailscale.enable) {
     environment.systemPackages = [pkgs.tailscale];
 
-    sops.secrets = {
-      "tailscale/Alex-NixOS" = {mode = "0400";};
-      "tailscale/Harold-NixOS" = {mode = "0400";};
+    sops.secrets."tailscale/${config.setup.hostname}" = {
+      mode = "0400";
     };
 
     services.tailscale = {
