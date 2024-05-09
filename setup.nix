@@ -139,7 +139,7 @@ in {
         };
       };
       tailscale.enable = defaultTrue;
-      cachix-watch.enable = defaultTrue;
+      cachix.enable = defaultTrue;
     };
 
     # === uinput
