@@ -22,6 +22,7 @@ in {
     ./modules/pam
     ./modules/secrets
     ./modules/uinput
+    ./modules/users
     ./modules/virtualBox
   ];
 
@@ -139,7 +140,7 @@ in {
       cachix-watch.enable = defaultTrue;
     };
 
-    # === Input
+    # === uinput
     # We need uinput for xremap and weylus
     uinput = {
       enable = defaultFalse;
@@ -147,6 +148,11 @@ in {
         type = types.listOf types.nonEmptyStr;
         default = [];
       };
+    };
+
+    # === Users
+    users = {
+      dyson = defaultTrue;
     };
 
     # === VirtualBox
