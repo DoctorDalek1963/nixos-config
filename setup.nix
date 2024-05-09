@@ -102,9 +102,11 @@ in {
       enable = defaultTrue;
       userPasswords = {
         enable = defaultTrue;
-        users = mkOption {
-          type = types.listOf types.nonEmptyStr;
-          default = ["dyson"];
+
+        # Note that enabling any of these DOES NOT enable the user. Use
+        # `setup.users` to enable users.
+        users = {
+          dyson = defaultTrue;
         };
       };
       networking = {

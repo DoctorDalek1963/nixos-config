@@ -11,7 +11,7 @@ in {
       isNormalUser = true;
       description = "Dyson";
       initialPassword =
-        if (cfgPass.enable && builtins.elem "dyson" cfgPass.users)
+        if (cfgPass.enable && cfgPass.users.dyson)
         then null
         else "changeme";
       extraGroups = ["networkmanager" "wheel"];

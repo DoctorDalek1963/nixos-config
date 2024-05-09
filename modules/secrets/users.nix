@@ -5,24 +5,40 @@
 }: let
   cfg = config.setup.secrets;
 
-  userPasswordConfig = users:
+  userPasswordConfig = user:
     builtins.listToAttrs
-    (lib.lists.flatten
-      (builtins.map (user: [
-          {
-            name = "sops";
-            value = {secrets."user-passwords/${user}".neededForUsers = true;};
-          }
-          {
-            name = "users";
-            value = {
-              users."${user}".hashedPasswordFile = config.sops.secrets."user-passwords/${user}".path;
-            };
-          }
-        ])
-        users));
+    [
+      {
+        name = "sops";
+        value = {secrets."user-passwords/${user}".neededForUsers = true;};
+      }
+      {
+        name = "users";
+        value = {
+          users."${user}".hashedPasswordFile = config.sops.secrets."user-passwords/${user}".path;
+        };
+      }
+    ];
+
+  allUsers = ["dyson"];
 in {
-  # TODO: Why do I get an infinite recursion error when I use
-  # `cfg.userPasswords.users` here?
-  config = lib.mkIf (cfg.enable && cfg.userPasswords.enable) (userPasswordConfig ["dyson"]);
+  assertions = [
+    {
+      assertion = let
+        setupUsers = builtins.attrNames config.setup.users;
+        passwordUsers = builtins.attrNames cfg.userPasswords.users;
+      in
+        (allUsers == setupUsers) && (allUsers == passwordUsers);
+      message = "config.setup.users must have all the same users as config.setup.secrets.userPasswords.users";
+    }
+  ];
+
+  imports =
+    map (user: {
+      config =
+        lib.mkIf
+        (cfg.enable && cfg.userPasswords.enable && config.setup.users.${user} && cfg.userPasswords.users.${user})
+        (userPasswordConfig user);
+    })
+    allUsers;
 }
