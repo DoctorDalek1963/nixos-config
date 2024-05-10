@@ -73,14 +73,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bat
     bintools
     bluez
-    btop
     dig
     ethtool
+    fd
     file
     git
+    htop
     libraspberrypi
     minicom
     neovim
