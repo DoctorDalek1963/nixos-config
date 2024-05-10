@@ -10,7 +10,7 @@
 
   optionalExtensions =
     if config.setup.miscPrograms.xremap
-    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
+    then with pkgs.unstable.gnomeExtensions; [activate-window-by-title xremap]
     else [];
 
   optionalExtensionsNames =
@@ -29,7 +29,7 @@
 in {
   config = lib.mkIf (gnomeCfg.enable && gnomeCfg.enableExtensions) {
     home.packages =
-      (with pkgs.gnomeExtensions; [
+      (with pkgs.unstable.gnomeExtensions; [
         appindicator
         caffeine
         clipboard-indicator
@@ -53,7 +53,7 @@ in {
         ];
         enabled-extensions =
           [
-            # Built-in to GNOME 45
+            # Built-in to GNOME 45+
             "places-menu@gnome-shell-extensions.gcampax.github.com"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
