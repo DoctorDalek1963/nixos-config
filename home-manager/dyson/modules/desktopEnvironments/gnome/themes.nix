@@ -10,7 +10,7 @@
   theme =
     {
       vimix-amethyst = {
-        pkgs = with pkgs; [
+        pkgs = with pkgs.unstable; [
           vimix-cursors
           (vimix-gtk-themes.override
             {
@@ -49,7 +49,7 @@
         };
       };
       catppuccin-adaptive-macchiato-mauve = {
-        pkgs = with pkgs; [
+        pkgs = with pkgs.unstable; [
           catppuccin-cursors.latteDark # Light mode
           catppuccin-cursors.macchiatoLight # Dark mode
           (catppuccin-gtk.override {

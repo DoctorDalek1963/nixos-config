@@ -102,27 +102,6 @@ in
           workspace-names = [];
         };
 
-        "org/gnome/eog/fullscreen" = {
-          seconds = 3;
-        };
-
-        "org/gnome/eog/plugins" = {
-          active-plugins = ["statusbar-date" "fullscreen"];
-        };
-
-        "org/gnome/eog/ui" = {
-          image-gallery = false;
-          sidebar = false;
-          statusbar = true;
-        };
-
-        "org/gnome/eog/view" = {
-          background-color = "rgb(0,0,0)";
-          extrapolate = false;
-          interpolate = false;
-          use-background-color = true;
-        };
-
         "org/gnome/evince/default" = {
           continuous = true;
           dual-page = false;
@@ -131,6 +110,14 @@ in
           fullscreen = false;
           inverted-colors = false;
           show-sidebar = false;
+        };
+
+        "org/gnome/evolution-data-server/calendar" = {
+          notify-window-height = 450;
+          notify-window-paned-position = 250;
+          notify-window-width = 675;
+          notify-window-x = 90;
+          notify-window-y = 80;
         };
 
         "org/gnome/mutter" = {
