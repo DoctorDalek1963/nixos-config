@@ -112,6 +112,14 @@ in
           show-sidebar = false;
         };
 
+        "org/gnome/evolution-data-server/calendar" = {
+          notify-window-height = 450;
+          notify-window-paned-position = 250;
+          notify-window-width = 675;
+          notify-window-x = 90;
+          notify-window-y = 80;
+        };
+
         "org/gnome/mutter" = {
           center-new-windows = false;
           dynamic-workspaces = true;
