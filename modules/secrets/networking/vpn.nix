@@ -93,7 +93,9 @@ in {
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {
-        Type = "oneshot";
+        Type = "simple";
+        Restart = "on-failure";
+        RestartSec = "3s";
         ExecStart = "${bash-script}/bin/import-ovpn-files";
       };
       wantedBy = ["network-online.target"];
