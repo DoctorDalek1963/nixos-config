@@ -17,6 +17,7 @@ in {
     ./modules/androidTools
     ./modules/desktopEnvironments
     ./modules/displayManagers
+    ./modules/development
     ./modules/gaming
     ./modules/openRGB
     ./modules/pam
@@ -73,6 +74,11 @@ in {
       };
     };
 
+    # === Development
+    binfmt = {
+      aarch64 = defaultFalse;
+    };
+
     # === Gaming
     gaming = {
       enable = defaultFalse;
@@ -107,6 +113,7 @@ in {
         # `setup.users` to enable users.
         users = {
           dyson = defaultTrue;
+          pi = defaultTrue;
         };
       };
       networking = {
@@ -155,6 +162,7 @@ in {
     # === Users
     users = {
       dyson = defaultTrue;
+      pi = defaultFalse;
     };
 
     # === VirtualBox

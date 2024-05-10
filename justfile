@@ -12,6 +12,9 @@ build-iso:
 build-iso-with-secrets:
 	nom build path:{{justfile_directory()}}#nixosConfigurations.iso.config.system.build.isoImage
 
+build-raspi-sd:
+	nom build {{justfile_directory()}}#nixosConfigurations.Bert-NixOS.config.system.build.sdImage
+
 # bootstrap home-manager for dyson
 bootstrap-home-manager:
 	nix run /etc/nixos/home-manager/dyson -- --flake /etc/nixos/home-manager/dyson switch

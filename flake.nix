@@ -18,6 +18,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,6 +59,8 @@
 
                 profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
+                binfmt.aarch64 = true;
+
                 secrets = {
                   enable = true;
                   userPasswords.enable = true;
@@ -84,6 +87,43 @@
 
                 desktopEnvironments.gnome.enable = true;
                 displayManagers.gdm.enable = true;
+              };
+            }
+          ];
+        };
+
+        "Bert-NixOS" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {inherit inputs;};
+          modules = [
+            inputs.nixos-hardware.nixosModules.raspberry-pi-4
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            ./setup.nix
+            ./machines/Bert-NixOS
+            {
+              setup = {
+                hostname = "Bert-NixOS";
+
+                secrets = {
+                  enable = true;
+                  userPasswords = {
+                    enable = true;
+                    users = {
+                      dyson = false;
+                      pi = true;
+                    };
+                  };
+                  networking = {
+                    enable = true;
+                    simpleWifiNetworkNames = ["HOME"];
+                  };
+                  vpn.enable = true;
+                };
+
+                users = {
+                  dyson = false;
+                  pi = true;
+                };
               };
             }
           ];
