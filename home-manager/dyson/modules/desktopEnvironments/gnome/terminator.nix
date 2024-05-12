@@ -20,7 +20,7 @@
       scrollbar_position = hidden
       scrollback_infinite = True
       use_system_font = False
-      bold_is_bright = True
+      bold_is_bright = False
     '';
 
   toTerminatorConfig = {
