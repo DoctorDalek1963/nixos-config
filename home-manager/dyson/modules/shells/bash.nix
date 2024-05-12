@@ -68,12 +68,12 @@ in {
           ble-face syntax_delimiter=bold
           ble-face syntax_document=fg=brown
           ble-face syntax_document_begin=fg=brown,bold
-          ble-face syntax_error=fg=white,bold,bg=orange
+          ble-face syntax_error=fg=black,bold,bg=orange
           ble-face syntax_escape=fg=magenta
           ble-face syntax_expr=fg=navy
           ble-face syntax_function_name=fg=purple,bold
           ble-face syntax_glob=fg=magenta,bold
-          ble-face syntax_history_expansion=fg=white,bg=orange
+          ble-face syntax_history_expansion=fg=black,bg=orange
           ble-face syntax_param_expansion=fg=purple
           ble-face syntax_quotation=fg=green,bold
           ble-face syntax_quoted=fg=green
