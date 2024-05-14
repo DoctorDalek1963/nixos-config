@@ -39,6 +39,8 @@
     unstable-overlay = final: _prev: {
       unstable = import inputs.unstable {
         inherit (final) system;
+        # TODO: Remove this when RustDesk goes back to being from stable nixpkgs in 24.05
+        config.allowUnfreePredicate = pkg: builtins.elem (final.lib.getName pkg) ["libsciter"];
       };
     };
 
