@@ -99,6 +99,7 @@
               };
 
               miscPrograms = {
+                hexchat = true;
                 obsidian = true;
                 rustdesk = true;
                 vlc = true;
@@ -169,6 +170,7 @@
 
               miscPrograms = {
                 discord = true;
+                hexchat = true;
                 obsidian = true;
                 rustdesk = true;
                 vlc = true;
