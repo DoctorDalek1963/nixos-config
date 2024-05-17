@@ -99,33 +99,47 @@ in {
           if cfg.secrets.enable
           then {password = "READPASSWORD(${config.sops.secrets."irc/${name}/password".path})";}
           else {};
-      in {
-        libera =
+
+        mkServerConfig = {
+          serverName,
+          server,
+          userName,
+          autojoin,
+        }:
           {
-            userName = "doctordalek";
+            inherit userName;
 
             realName = "Dyson";
-            servers = ["irc.libera.chat"];
+            servers = [server];
             loginMethod = "sasl";
 
             nickname = settings.irc_nick1;
             nickname2 = settings.irc_nick2;
 
-            autojoin = [
-              "#linux"
-              "#nixos"
-              "##rust"
-            ];
+            inherit autojoin;
             charset = "UTF-8 (Unicode)";
             options = {
               acceptInvalidSSLCertificates = false;
               autoconnect = true;
               connectToSelectedServerOnly = true;
               useGlobalUserInformation = false;
-              forceSSL = false;
+              forceSSL = true;
             };
           }
-          // optPassword "libera";
+          // optPassword serverName;
+      in {
+        libera = mkServerConfig {
+          serverName = "libera";
+          server = "irc.libera.chat";
+          userName = "doctordalek";
+          autojoin = ["#linux" "#nixos" "##rust"];
+        };
+        oftc = mkServerConfig {
+          serverName = "oftc";
+          server = "irc.oftc.net";
+          userName = "doctordalek";
+          autojoin = ["#home-manager" "#linux"];
+        };
       };
     };
 
@@ -146,7 +160,7 @@ in {
 
               new_servlist = servlist
 
-              for filename in re.findall(r"READPASSWORD\(([/\a-zA-Z0-9_-]+)\)", servlist):
+              for filename in re.findall(r"READPASSWORD\(([/\a-zA-Z0-9_-]*?)\)", servlist):
                   with open(filename, "r") as f:
                       password = f.read().strip()
 

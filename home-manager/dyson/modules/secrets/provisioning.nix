@@ -20,6 +20,7 @@
 
   irc-secrets = secretsIf cfg.miscPrograms.hexchat {
     "irc/libera/password" = {mode = "0400";};
+    "irc/oftc/password" = {mode = "0400";};
   };
 in {
   config = lib.mkIf cfg.secrets.enable {
