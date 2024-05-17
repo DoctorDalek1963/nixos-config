@@ -70,7 +70,7 @@
                 enable = true;
                 theme = "catppuccin-adaptive-macchiato-mauve";
                 background = {
-                  light = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
                 };
               };
@@ -139,7 +139,7 @@
                 enable = true;
                 theme = "catppuccin-adaptive-macchiato-mauve";
                 background = {
-                  light = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
                 };
               };
