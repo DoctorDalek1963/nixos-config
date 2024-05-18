@@ -28,7 +28,6 @@
 
   outputs = {
     nixpkgs,
-    unstable,
     home-manager,
     ...
   } @ inputs: let

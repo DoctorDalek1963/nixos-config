@@ -180,16 +180,17 @@
         pkgs = import nixpkgs {inherit system;};
       in {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs = with pkgs; [
-            # Secrets
-            age
-            sops
+          nativeBuildInputs =
+            (with pkgs; [
+              # Secrets
+              age
+              sops
 
-            # Build ISO with justfile
-            just
-            inputs.disko.packages."${system}".disko
-            nix-output-monitor
-          ];
+              # Build ISO with justfile
+              just
+              nix-output-monitor
+            ])
+            ++ [inputs.disko.packages."${system}".disko];
           shellHook = ''
             ${config.pre-commit.installationScript}
           '';
