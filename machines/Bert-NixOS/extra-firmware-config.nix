@@ -9,7 +9,7 @@
     extraFirmwareConfig = mkOption {
       type = types.attrs;
       default = {};
-      description = lib.mdDoc ''
+      description = mdDoc ''
         Extra configuration to be added to config.txt.
       '';
     };
