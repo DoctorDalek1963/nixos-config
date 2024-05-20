@@ -115,6 +115,11 @@
     raspberry-pi."4" = {
       apply-overlays-dtmerge.enable = true;
       fkms-3d.enable = true; # rudolf
+      leds = {
+        act.disable = true;
+        eth.disable = true;
+        pwr.disable = true;
+      };
     };
     deviceTree = {
       enable = true;
