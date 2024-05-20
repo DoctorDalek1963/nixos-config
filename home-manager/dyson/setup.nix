@@ -132,6 +132,7 @@ in {
     miscPrograms = {
       discord = defaultFalse;
       handbrake = defaultFalse; # DVD ripper
+      hexchat = defaultFalse;
       obsidian = defaultFalse;
       rustdesk = defaultFalse;
       vlc = defaultFalse;

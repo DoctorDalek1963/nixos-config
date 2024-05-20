@@ -1,6 +1,7 @@
 {
   self,
   pkgs,
+  lib,
   system,
   inputs,
   ...
@@ -66,7 +67,16 @@ in {
     # These paths will end up in /iso when in the installation medium
     contents = [
       {
-        source = self;
+        source = let
+          excludeFilter = path: _type:
+            (lib.hasInfix ".direnv" path)
+            || (lib.hasSuffix ".pre-commit-config.yaml" path)
+            || (lib.hasInfix "result" path);
+        in
+          lib.cleanSourceWith {
+            src = self;
+            filter = path: type: ! (excludeFilter path type);
+          };
         target = "/config";
       }
     ];

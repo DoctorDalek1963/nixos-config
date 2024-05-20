@@ -78,26 +78,25 @@
       };
     }
   ];
-
-  xremap-config = {
-    keymap = lib.lists.flatten (builtins.map ({
-      condition,
-      keymap,
-    }:
-      if condition
-      then [keymap]
-      else [])
-    conditional-keymaps);
-  };
 in {
-  # TODO: Fork xremap/nix-flake to add `enable` option
-  # Current xremap is always installed but we just remove all the mappings when
-  # it's disabled
   services.xremap = {
+    enable = config.setup.miscPrograms.xremap;
     withGnome = true;
-    config =
-      if config.setup.miscPrograms.xremap
-      then xremap-config
-      else {};
+    config = {
+      keymap = lib.lists.flatten (builtins.map ({
+        condition,
+        keymap,
+      }:
+        if condition
+        then [keymap]
+        else [])
+      conditional-keymaps);
+    };
   };
+
+  # The xremap flake creates this service, so we can just slide our own
+  # adjusted config in there. We want `KillMode=process` so that when the
+  # xremap service gets restarted (like when we run home-manager switch), the
+  # spawned processes don't get killed as well.
+  systemd.user.services.xremap.Service.KillMode = "process";
 }

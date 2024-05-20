@@ -103,43 +103,33 @@
       };
     }
     .${gnomeCfg.theme};
+
+  # Create the gsettings command to switch to the theme of the specified mode
+  gsettingsSetCommand = mode:
+    lib.concatStringsSep "; "
+    [
+      ''gsettings set org.gnome.desktop.interface           cursor-theme "${theme.cursors.${mode}}"''
+      ''gsettings set org.gnome.desktop.interface           icon-theme   "${theme.icons.${mode}}"''
+      ''gsettings set org.gnome.desktop.interface           gtk-theme    "${theme.gtk.${mode}}"''
+      ''gsettings set org.gnome.shell.extensions.user-theme name         "${theme.gtk.${mode}}"''
+    ];
 in {
   config = lib.mkIf gnomeCfg.enable {
     home.packages = theme.pkgs;
 
     dconf.settings =
-      {
+      if gnomeCfg.enableExtensions
+      then {
+        "org/gnome/shell/extensions/nightthemeswitcher/commands" = {
+          enabled = true;
+          sunrise = gsettingsSetCommand "light";
+          sunset = gsettingsSetCommand "dark";
+        };
+      }
+      else {
         "org/gnome/shell/extensions/user-theme" = {
           name = theme.gtk.dark;
         };
-      }
-      // (
-        if gnomeCfg.enableExtensions
-        then {
-          "org/gnome/shell/extensions/nightthemeswitcher/cursor-variants" = {
-            day = theme.cursors.light;
-            enabled = true;
-            night = theme.cursors.dark;
-          };
-
-          # This should only affect legacy GTK apps. If it starts to break things, just disable it
-          "org/gnome/shell/extensions/nightthemeswitcher/gtk-variants" = {
-            day = theme.gtk.light;
-            enabled = true;
-            night = theme.gtk.dark;
-          };
-
-          "org/gnome/shell/extensions/nightthemeswitcher/icon-variants" = {
-            day = theme.icons.light;
-            enabled = true;
-            night = theme.icons.dark;
-          };
-
-          "org/gnome/shell/extensions/nightthemeswitcher/shell-variants" = {
-            enabled = false;
-          };
-        }
-        else {}
-      );
+      };
   };
 }

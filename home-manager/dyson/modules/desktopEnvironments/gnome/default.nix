@@ -11,6 +11,5 @@
   config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.unstable.gnome.gnome-tweaks];
     dconf.enable = true;
-    gtk.enable = true;
   };
 }

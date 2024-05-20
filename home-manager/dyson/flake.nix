@@ -28,7 +28,6 @@
 
   outputs = {
     nixpkgs,
-    unstable,
     home-manager,
     ...
   } @ inputs: let
@@ -39,6 +38,8 @@
     unstable-overlay = final: _prev: {
       unstable = import inputs.unstable {
         inherit (final) system;
+        # TODO: Remove this when RustDesk goes back to being from stable nixpkgs in 24.05
+        config.allowUnfreePredicate = pkg: builtins.elem (final.lib.getName pkg) ["libsciter"];
       };
     };
 
@@ -68,7 +69,7 @@
                 enable = true;
                 theme = "catppuccin-adaptive-macchiato-mauve";
                 background = {
-                  light = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
                 };
               };
@@ -97,6 +98,7 @@
               };
 
               miscPrograms = {
+                hexchat = true;
                 obsidian = true;
                 rustdesk = true;
                 vlc = true;
@@ -137,7 +139,7 @@
                 enable = true;
                 theme = "catppuccin-adaptive-macchiato-mauve";
                 background = {
-                  light = ./files/desktop-backgrounds/kurzgesagt-space.webp;
+                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
                 };
               };
@@ -167,6 +169,7 @@
 
               miscPrograms = {
                 discord = true;
+                hexchat = true;
                 obsidian = true;
                 rustdesk = true;
                 vlc = true;

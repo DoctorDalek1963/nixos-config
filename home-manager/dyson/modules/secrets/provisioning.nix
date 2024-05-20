@@ -17,6 +17,11 @@
     {
       "firefox/extensions/refined_github/personal_access_token" = {};
     };
+
+  irc-secrets = secretsIf cfg.miscPrograms.hexchat {
+    "irc/libera/password" = {mode = "0400";};
+    "irc/oftc/password" = {mode = "0400";};
+  };
 in {
   config = lib.mkIf cfg.secrets.enable {
     home.packages = [pkgs.openssh];
@@ -79,7 +84,8 @@ in {
             mode = "0644";
           };
         }
-        // firefox-secrets;
+        // firefox-secrets
+        // irc-secrets;
     };
   };
 }
