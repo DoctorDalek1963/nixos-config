@@ -26,6 +26,8 @@ in {
     services.nginx = {
       enable = true;
       virtualHosts."bert-nixos.triceratops-egret.ts.net" = {
+        enableACME = true;
+        forceSSL = true;
         locations = {
           "/wordle".root = "${wordle-nginx}";
         };
@@ -33,5 +35,10 @@ in {
     };
 
     networking.firewall.allowedTCPPorts = [80 443];
+
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "dyson.dyson@icloud.com";
+    };
   };
 }
