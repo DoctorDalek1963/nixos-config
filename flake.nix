@@ -25,6 +25,10 @@
     };
 
     # Personal projects for home server
+    tic-tac-toe = {
+      url = "github:DoctorDalek1963/tic-tac-toe";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     wordle = {
       url = "github:DoctorDalek1963/wordle";
       inputs.nixpkgs.follows = "nixpkgs";
