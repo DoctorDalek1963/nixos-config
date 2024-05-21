@@ -97,6 +97,10 @@ in {
 
     # === Home server
     homeServer = {
+      domainName = mkOption {
+        type = types.nonEmptyStr;
+      };
+
       homeAutomation = {};
       mediaServer = {};
       personalProjects = {

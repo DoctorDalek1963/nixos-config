@@ -117,7 +117,10 @@
                 setup = {
                   hostname = "Bert-NixOS";
 
-                  homeServer.personalProjects.enable = true;
+                  homeServer = {
+                    domainName = "bert-nixos.triceratops-egret.ts.net";
+                    personalProjects.enable = true;
+                  };
 
                   secrets = {
                     enable = true;
