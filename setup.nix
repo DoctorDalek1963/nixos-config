@@ -20,6 +20,7 @@ in {
     ./modules/development
     ./modules/gaming
     ./modules/openRGB
+    ./modules/homeServer
     ./modules/pam
     ./modules/secrets
     ./modules/uinput
@@ -92,6 +93,18 @@ in {
     openRGB = {
       enable = defaultFalse;
       usePlugins = defaultTrue;
+    };
+
+    # === Home server
+    homeServer = {
+      homeAutomation = {};
+      mediaServer = {};
+      personalProjects = {
+        enable = defaultFalse;
+        tictactoe = defaultTrue;
+        winter-wonderlights = defaultTrue;
+        wordle = defaultTrue;
+      };
     };
 
     # === Passwords

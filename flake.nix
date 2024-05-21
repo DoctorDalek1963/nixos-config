@@ -23,6 +23,12 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Personal projects for home server
+    wordle = {
+      url = "github:DoctorDalek1963/wordle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -92,42 +98,47 @@
           ];
         };
 
-        "Bert-NixOS" = nixpkgs.lib.nixosSystem {
+        "Bert-NixOS" = let
           system = "aarch64-linux";
-          specialArgs = {inherit inputs;};
-          modules = [
-            inputs.nixos-hardware.nixosModules.raspberry-pi-4
-            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
-            ./setup.nix
-            ./machines/Bert-NixOS
-            {
-              setup = {
-                hostname = "Bert-NixOS";
+        in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {inherit inputs system;};
+            modules = [
+              inputs.nixos-hardware.nixosModules.raspberry-pi-4
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              ./setup.nix
+              ./machines/Bert-NixOS
+              {
+                setup = {
+                  hostname = "Bert-NixOS";
 
-                secrets = {
-                  enable = true;
-                  userPasswords = {
+                  homeServer.personalProjects.enable = true;
+
+                  secrets = {
                     enable = true;
-                    users = {
-                      dyson = false;
-                      pi = true;
+                    userPasswords = {
+                      enable = true;
+                      users = {
+                        dyson = false;
+                        pi = true;
+                      };
                     };
+                    networking = {
+                      enable = true;
+                      simpleWifiNetworkNames = ["HOME"];
+                    };
+                    vpn.enable = true;
                   };
-                  networking = {
-                    enable = true;
-                    simpleWifiNetworkNames = ["HOME"];
-                  };
-                  vpn.enable = true;
-                };
 
-                users = {
-                  dyson = false;
-                  pi = true;
+                  users = {
+                    dyson = false;
+                    pi = true;
+                  };
                 };
-              };
-            }
-          ];
-        };
+              }
+            ];
+          };
 
         "Harold-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
