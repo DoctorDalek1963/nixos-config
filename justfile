@@ -12,9 +12,13 @@ build-iso:
 build-iso-with-secrets:
 	nom build path:{{justfile_directory()}}#nixosConfigurations.iso.config.system.build.isoImage
 
+# We use `sudo true` so that just doesn't mkdir pi-mnt until we know the user
+# is present to sudo mount the image. It's annoying to need to rmdir this
+# folder before I try again if I left it running in the background for a while.
+
 # We have a hardcoded offset=39845888 here because working it out is
 # complicated, and it seems like NixOS always creates a 30M boot partition at
-# the start, and then the root partition afterwards
+# the start, and then the root partition afterwards.
 
 # build the image for the SD card for Bert-NixOS, my Raspberry Pi 4, and copy the secret key to the correct place
 build-raspi-sd:
@@ -22,6 +26,7 @@ build-raspi-sd:
 	cp {{justfile_directory()}}/result/sd-image/pi.img pi.img
 	chmod u+w pi.img
 
+	sudo true
 	mkdir {{justfile_directory()}}/pi-mnt
 	sudo mount -o loop,offset=39845888 pi.img {{justfile_directory()}}/pi-mnt/
 
