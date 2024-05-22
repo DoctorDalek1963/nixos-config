@@ -47,16 +47,14 @@
     else {};
 in {
   config = lib.mkIf cfgPp.enable {
-    services.nginx = {
-      virtualHosts."${cfg.domainName}" = {
-        locations =
-          optLoc cfgPp.tictactoe {
-            "/tictactoe".root = "${tictactoe-nginx}";
-          }
-          // optLoc cfgPp.wordle {
-            "/wordle".root = "${wordle-nginx}";
-          };
-      };
+    services.nginx.virtualHosts."${cfg.domainName}" = {
+      locations =
+        optLoc cfgPp.tictactoe {
+          "/tictactoe".root = "${tictactoe-nginx}";
+        }
+        // optLoc cfgPp.wordle {
+          "/wordle".root = "${wordle-nginx}";
+        };
     };
   };
 }

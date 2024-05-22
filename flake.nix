@@ -29,6 +29,10 @@
       url = "github:DoctorDalek1963/tic-tac-toe";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    winter-wonderlights = {
+      url = "github:DoctorDalek1963/winter-wonderlights/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     wordle = {
       url = "github:DoctorDalek1963/wordle";
       inputs.nixpkgs.follows = "nixpkgs";
