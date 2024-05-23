@@ -120,6 +120,7 @@
               {
                 setup = {
                   hostname = "Bert-NixOS";
+                  isGraphical = false;
 
                   homeServer = {
                     domainName = "bert-nixos.triceratops-egret.ts.net";

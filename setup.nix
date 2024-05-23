@@ -12,6 +12,7 @@ in {
   imports = [
     ./modules/core.nix
 
+    ./modules/graphical
     ./modules/laptop
 
     ./modules/androidTools
@@ -32,6 +33,7 @@ in {
     hostname = mkOption {
       type = types.nonEmptyStr;
     };
+    isGraphical = defaultTrue;
     isLaptop = defaultFalse;
 
     # === Basic system config
