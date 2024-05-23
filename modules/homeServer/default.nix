@@ -18,6 +18,8 @@ in {
       };
     };
 
+    systemd.services.nginx.after = ["network.target" "tailscale-certificates.service"];
+
     networking.firewall.allowedTCPPorts = [80 443];
   };
 }

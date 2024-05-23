@@ -65,7 +65,7 @@ in {
         RestartSec = "3s";
         ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
-      wantedBy = ["network-online.target"];
+      wantedBy = ["network-online.target" "tailscale-certificates.service"];
     };
   };
 }
