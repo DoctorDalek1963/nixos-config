@@ -29,7 +29,7 @@ in {
       experimental-features = ["nix-command" "flakes"];
     };
 
-    # Garbage collect old packages every week
+    # Garbage collect old packages every two weeks
     gc = {
       automatic = true;
       dates = "weekly";
