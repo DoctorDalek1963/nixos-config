@@ -8,15 +8,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1716156051,
-        "narHash": "sha256-TjUX7WWRcrhuUxDHsR8pDR2N7jitqZehgCVSy3kBeS8=",
-        "owner": "ipetkov",
+        "lastModified": 1716317235,
+        "narHash": "sha256-0qkpF5fp3bejFZXX5leQWrK+WbApffM93wTk0Nraxmg=",
+        "owner": "DoctorDalek1963",
         "repo": "crane",
-        "rev": "7443df1c478947bf96a2e699209f53b2db26209d",
+        "rev": "8847cdcd31a026003fdcd2f260720cfafa949f74",
         "type": "github"
       },
       "original": {
-        "owner": "ipetkov",
+        "owner": "DoctorDalek1963",
+        "ref": "parallelize-removeReferencesToVendoredSources",
         "repo": "crane",
         "type": "github"
       }
@@ -884,11 +885,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1716300545,
-        "narHash": "sha256-Ns8JGLAV5Q2ARV1LmbYgElG6v5X8efnHV6ebccRxydo=",
+        "lastModified": 1716413753,
+        "narHash": "sha256-nTdQqNRYolp+IuBMTiiB78Qofjw9JuWMsNDGJ2f9RCY=",
         "owner": "DoctorDalek1963",
         "repo": "tic-tac-toe",
-        "rev": "03295798c01c13a1bc03e3b7274b38ed29c6e6ec",
+        "rev": "8a7b521fb55da13c9919c3e18b0651f0ee30a7f4",
         "type": "github"
       },
       "original": {
