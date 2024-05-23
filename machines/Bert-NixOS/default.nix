@@ -46,6 +46,10 @@
 
     kernelPackages = pkgs.linuxPackages_rpi4;
 
+    # Disable strict checking of IO memory accesses. This allows the rpi_ws281x
+    # library used by Winter WonderLights to work properly
+    kernelParams = ["iomem=relaxed"];
+
     # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set.
     # This will cause the `mdmon` service to crash.
     # See: https://github.com/NixOS/nixpkgs/issues/254807
