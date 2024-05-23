@@ -12,8 +12,8 @@
   env = rec {
     DATA_DIR = "/var/lib/winter-wonderlights";
     COORDS_FILENAME = "2023-small-tree.gift";
-    SERVER_SSL_CERT_PATH = "/var/lib/acme/${cfg.domainName}/cert.pem";
-    SERVER_SSL_KEY_PATH = "/var/lib/acme/${cfg.domainName}/key.pem";
+    SERVER_SSL_CERT_PATH = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
+    SERVER_SSL_KEY_PATH = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
     PORT = "23120";
     LIGHTS_NUM = "250";
     SERVER_URL = "wss://${cfg.domainName}:${PORT}";
