@@ -74,7 +74,7 @@ in {
       "org/gnome/shell/extensions/caffeine" = {
         countdown-timer = 0;
         enable-fullscreen = false;
-        inhibit-apps = ["vlc.desktop"];
+        inhibit-apps = [];
         show-indicator = "only-active";
         toggle-state = false;
         trigger-apps-mode = "on-focus";
