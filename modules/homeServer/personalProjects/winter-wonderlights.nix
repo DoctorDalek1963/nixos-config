@@ -48,16 +48,22 @@ in {
 
     boot.postBootCommands = ''
       if [ ! -d ${env.DATA_DIR} ]; then
+        mkdir -p ${env.DATA_DIR}
         cp -rv ${inputs.winter-wonderlights}/data/* ${env.DATA_DIR}/
       fi
     '';
 
+    # The tailscale-certificates.service can take a few seconds to get the
+    # certificates initially, but the server requires them. The --require-tls
+    # flag will cause the server to exit if it can't establish a TLS
+    # connection, so this service will keep restarting until we've got proper
+    # certificates.
     systemd.services.winter-wonderlights-server = {
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
         RestartSec = "3s";
-        ExecStart = "${winter-wonderlights-server}/bin/ww-server";
+        ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
       wantedBy = ["network-online.target"];
     };

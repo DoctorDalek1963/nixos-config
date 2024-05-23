@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     winter-wonderlights = {
-      url = "github:DoctorDalek1963/winter-wonderlights/nix";
+      url = "github:DoctorDalek1963/winter-wonderlights";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wordle = {

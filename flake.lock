@@ -909,16 +909,15 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1716392611,
-        "narHash": "sha256-pxnayyV4JVT7OhT8xAK7vvts5lJP39gspkQC20NMaio=",
+        "lastModified": 1716489886,
+        "narHash": "sha256-eVGGHJmYdDz+9lI+V5RB7NI354Pu9jCr38fDA1dFwjo=",
         "owner": "DoctorDalek1963",
         "repo": "winter-wonderlights",
-        "rev": "684dd4f0f6a48447ceb332a5764db9d406ff7fd3",
+        "rev": "a8e9965b4472f642411229256aa9fb3d8cc54f9f",
         "type": "github"
       },
       "original": {
         "owner": "DoctorDalek1963",
-        "ref": "nix",
         "repo": "winter-wonderlights",
         "type": "github"
       }
