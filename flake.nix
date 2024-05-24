@@ -124,7 +124,12 @@
 
                   homeServer = {
                     domainName = "bert-nixos.triceratops-egret.ts.net";
-                    personalProjects.enable = true;
+                    personalProjects = {
+                      enable = true;
+                      # I only need to enable this around Christmas, when I'm
+                      # actually using the lights
+                      winter-wonderlights = false;
+                    };
                   };
 
                   secrets = {
