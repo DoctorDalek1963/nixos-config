@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }: let
   cfg = config.setup;
@@ -10,17 +9,6 @@ in {
   system.stateVersion = "23.11";
 
   nix = {
-    # Registry and channel settings were taken from
-    # https://github.com/jnsgruk/nixos-config/blob/e7f63ca65cc221760ab5e5e6b92e1777c7a90a87/host/default.nix#L51-L59
-
-    # Use these flake inputs for system-wide flake registry
-    registry = lib.mkForce (lib.mapAttrs (_: value: {flake = value;}) inputs);
-
-    # Use these flake inputs for nix channels for old commands
-    nixPath = lib.mkForce (
-      lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry
-    );
-
     settings = {
       # Keep the nix store optimised
       auto-optimise-store = true;
