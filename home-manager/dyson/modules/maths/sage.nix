@@ -8,7 +8,11 @@
 in {
   config = lib.mkIf (cfg.enable && cfg.sage) {
     home = {
-      packages = [pkgs.sageWithDoc];
+      packages = [
+        # TODO: Go back to sageWithDoc once it builds again on 24.05
+        # pkgs.sageWithDoc
+        pkgs.sage
+      ];
       file.".sage/init.sage".text =
         # python
         ''

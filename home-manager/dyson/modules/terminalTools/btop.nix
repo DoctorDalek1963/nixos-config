@@ -9,7 +9,7 @@
   package =
     if cfg.gpuSupport
     then
-      pkgs.unstable.btop.override {
+      pkgs.btop.override {
         cudaSupport = true;
         rocmSupport = true;
       }

@@ -10,7 +10,7 @@
 
   optionalExtensions =
     if config.setup.miscPrograms.xremap
-    then with pkgs.unstable.gnomeExtensions; [activate-window-by-title xremap]
+    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
     else [];
 
   optionalExtensionsNames =
@@ -29,7 +29,7 @@
 in {
   config = lib.mkIf (gnomeCfg.enable && gnomeCfg.enableExtensions) {
     home.packages =
-      (with pkgs.unstable.gnomeExtensions; [
+      (with pkgs.gnomeExtensions; [
         appindicator
         caffeine
         clipboard-indicator

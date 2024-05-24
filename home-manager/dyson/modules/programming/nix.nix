@@ -8,11 +8,11 @@
     home.packages = with pkgs; [
       alejandra
       deadnix
+      nh
       nix-output-monitor
       nix-tree
       nvd
       statix
-      unstable.nh
     ];
   };
 }

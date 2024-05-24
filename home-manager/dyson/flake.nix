@@ -2,12 +2,12 @@
   description = "DoctorDalek1963's home-manager flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    # unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/nur";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -35,17 +35,16 @@
     username = "dyson";
 
     # Access unstable packages through pkgs.unstable
-    unstable-overlay = final: _prev: {
-      unstable = import inputs.unstable {
-        inherit (final) system;
-        # TODO: Remove this when RustDesk goes back to being from stable nixpkgs in 24.05
-        config.allowUnfreePredicate = pkg: builtins.elem (final.lib.getName pkg) ["libsciter"];
-      };
-    };
+    # unstable-overlay = _final: _prev: {
+    #   unstable = inputs.unstable.legacyPackages.${system};
+    # };
 
     pkgs = import nixpkgs {
       inherit system;
-      overlays = [unstable-overlay inputs.nur.overlay];
+      overlays = [
+        # unstable-overlay
+        inputs.nur.overlay
+      ];
     };
 
     extraSpecialArgs = {
