@@ -61,9 +61,7 @@
         "tampermonkey"
       ];
 
-    permittedInsecurePackages = [
-      "electron-25.9.0" # Needed by obsidian
-    ];
+    permittedInsecurePackages = [];
   };
 
   nix = {
