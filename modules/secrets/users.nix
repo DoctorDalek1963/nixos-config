@@ -20,7 +20,7 @@
       }
     ];
 
-  allUsers = ["dyson"];
+  allUsers = ["dyson" "pi"];
 in {
   assertions = [
     {
@@ -29,7 +29,7 @@ in {
         passwordUsers = builtins.attrNames cfg.userPasswords.users;
       in
         (allUsers == setupUsers) && (allUsers == passwordUsers);
-      message = "config.setup.users must have all the same users as config.setup.secrets.userPasswords.users";
+      message = "config.setup.users must have all the same users as config.setup.secrets.userPasswords.users and all those users must be defined in modules/secrets/users.nix";
     }
   ];
 

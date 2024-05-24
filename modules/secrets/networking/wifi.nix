@@ -40,7 +40,9 @@ in {
 
     systemd.services.networkmanager-declarative-wifi = {
       serviceConfig = {
-        Type = "oneshot";
+        Type = "simple";
+        Restart = "on-failure";
+        RestartSec = "3s";
         ExecStart = "${bash-script}/bin/add-wifi-networks";
       };
       wantedBy = ["network-online.target"];

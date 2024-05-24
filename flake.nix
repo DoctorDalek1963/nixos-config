@@ -18,8 +18,23 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Personal projects for home server
+    tic-tac-toe = {
+      url = "github:DoctorDalek1963/tic-tac-toe";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    winter-wonderlights = {
+      url = "github:DoctorDalek1963/winter-wonderlights";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    wordle = {
+      url = "github:DoctorDalek1963/wordle";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -58,6 +73,8 @@
 
                 profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
+                binfmt.aarch64 = true;
+
                 secrets = {
                   enable = true;
                   userPasswords.enable = true;
@@ -88,6 +105,57 @@
             }
           ];
         };
+
+        "Bert-NixOS" = let
+          system = "aarch64-linux";
+        in
+          nixpkgs.lib.nixosSystem {
+            inherit system;
+            specialArgs = {inherit inputs system;};
+            modules = [
+              inputs.nixos-hardware.nixosModules.raspberry-pi-4
+              "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+              ./setup.nix
+              ./machines/Bert-NixOS
+              {
+                setup = {
+                  hostname = "Bert-NixOS";
+                  isGraphical = false;
+
+                  homeServer = {
+                    domainName = "bert-nixos.triceratops-egret.ts.net";
+                    personalProjects = {
+                      enable = true;
+                      # I only need to enable this around Christmas, when I'm
+                      # actually using the lights
+                      winter-wonderlights = false;
+                    };
+                  };
+
+                  secrets = {
+                    enable = true;
+                    userPasswords = {
+                      enable = true;
+                      users = {
+                        dyson = false;
+                        pi = true;
+                      };
+                    };
+                    networking = {
+                      enable = true;
+                      simpleWifiNetworkNames = ["HOME"];
+                    };
+                    vpn.enable = true;
+                  };
+
+                  users = {
+                    dyson = false;
+                    pi = true;
+                  };
+                };
+              }
+            ];
+          };
 
         "Harold-NixOS" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";

@@ -12,13 +12,16 @@ in {
   imports = [
     ./modules/core.nix
 
+    ./modules/graphical
     ./modules/laptop
 
     ./modules/androidTools
     ./modules/desktopEnvironments
     ./modules/displayManagers
+    ./modules/development
     ./modules/gaming
     ./modules/openRGB
+    ./modules/homeServer
     ./modules/pam
     ./modules/secrets
     ./modules/uinput
@@ -30,6 +33,7 @@ in {
     hostname = mkOption {
       type = types.nonEmptyStr;
     };
+    isGraphical = defaultTrue;
     isLaptop = defaultFalse;
 
     # === Basic system config
@@ -73,6 +77,11 @@ in {
       };
     };
 
+    # === Development
+    binfmt = {
+      aarch64 = defaultFalse;
+    };
+
     # === Gaming
     gaming = {
       enable = defaultFalse;
@@ -86,6 +95,22 @@ in {
     openRGB = {
       enable = defaultFalse;
       usePlugins = defaultTrue;
+    };
+
+    # === Home server
+    homeServer = {
+      domainName = mkOption {
+        type = types.nonEmptyStr;
+      };
+
+      homeAutomation = {};
+      mediaServer = {};
+      personalProjects = {
+        enable = defaultFalse;
+        tictactoe = defaultTrue;
+        winter-wonderlights = defaultTrue;
+        wordle = defaultTrue;
+      };
     };
 
     # === Passwords
@@ -107,6 +132,7 @@ in {
         # `setup.users` to enable users.
         users = {
           dyson = defaultTrue;
+          pi = defaultTrue;
         };
       };
       networking = {
@@ -155,6 +181,7 @@ in {
     # === Users
     users = {
       dyson = defaultTrue;
+      pi = defaultFalse;
     };
 
     # === VirtualBox

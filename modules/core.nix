@@ -81,32 +81,12 @@ in {
       };
     };
 
-    # Audio with pipewire
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # jack.enable = true;
-    };
-
     # Enable CUPS for printing
     printing.enable = cfg.enablePrinting;
-
-    xserver = {
-      enable = true;
-      # Use British keyboard in graphical sessions
-      xkb.layout = "gb";
-    };
   };
 
   # Use British keyboard in TTYs
   console.keyMap = "uk";
-
-  # Enable sound
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
 
   environment.systemPackages = with pkgs; [
     busybox
