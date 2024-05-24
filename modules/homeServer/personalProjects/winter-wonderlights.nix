@@ -62,7 +62,7 @@ in {
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
-        RestartSec = "3s";
+        RestartSec = "10s";
         ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
       wantedBy = ["network-online.target" "tailscale-certificates.service"];
