@@ -16,6 +16,7 @@ in {
     services.tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."tailscale/${config.setup.hostname}".path;
+      extraDaemonFlags = ["--no-logs-no-support"];
     };
   };
 }
