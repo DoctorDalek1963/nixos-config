@@ -188,7 +188,7 @@ in {
           '';
         };
       in
-        lib.hm.dag.entryAfter ["writeBoundary"] "$DRY_RUN_CMD ${populate}/bin/populate-hexchat-passwords";
+        lib.hm.dag.entryAfter ["writeBoundary" "sops-nix" "restartSopsNix"] "$DRY_RUN_CMD ${populate}/bin/populate-hexchat-passwords";
     };
   };
 }
