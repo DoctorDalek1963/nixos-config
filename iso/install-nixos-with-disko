@@ -28,8 +28,8 @@ if [[ ! -e "sops-secrets/key.txt" ]]; then
     exit 1
 fi
 
-if [[ ! -e "home-manager/dyson/sops-secrets/key.txt" ]]; then
-    echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/dyson/sops-secrets/key.txt"
+if [[ ! -e "home-manager/sops-secrets/keys/dyson.txt" ]]; then
+    echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/sops-secrets/keys/dyson.txt"
 
     read -p "Do you want to continue without this secret key? [y/N]" -n 1 -r
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then

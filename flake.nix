@@ -292,7 +292,7 @@
             hm-flake-check = {
               enable = true;
               name = "home-manager flake check";
-              entry = ''${pkgs.bash}/bin/bash -c 'for user in ./home-manager/*; do nix flake check "$user"; done' '';
+              entry = "nix flake check ./home-manager";
               files = ''.*\.(nix|lock)$'';
               pass_filenames = false;
               stages = ["pre-push"];

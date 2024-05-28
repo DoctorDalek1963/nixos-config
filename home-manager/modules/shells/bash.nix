@@ -4,7 +4,6 @@
   config,
   ...
 }: let
-  inherit (config.setup) username;
   inherit (config.consts) nvimPath;
   homedir = config.home.homeDirectory;
 in {
@@ -122,8 +121,8 @@ in {
 
           # NixOS management
           cdnc = "cd /etc/nixos";
-          cdhm = "cd /etc/nixos/home-manager/${username}";
-          home-manager = "nix run /etc/nixos/home-manager/${username} -- --flake /etc/nixos/home-manager/${username}";
+          cdhm = "cd /etc/nixos/home-manager";
+          home-manager = "nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager";
 
           # Single letters
           b = "bat";
@@ -188,7 +187,7 @@ in {
           if config.setup.programming.nix
           then {
             nhos = "FLAKE=/etc/nixos nh os";
-            nhh = "FLAKE=/etc/nixos/home-manager/dyson nh home";
+            nhh = "FLAKE=/etc/nixos/home-manager nh home";
           }
           else {}
         );

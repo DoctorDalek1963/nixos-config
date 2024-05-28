@@ -36,9 +36,9 @@ build-raspi-sd:
 	sudo umount {{justfile_directory()}}/pi-mnt
 	rmdir {{justfile_directory()}}/pi-mnt
 
-# bootstrap home-manager for dyson
+# bootstrap home-manager
 bootstrap-home-manager:
-	nix run /etc/nixos/home-manager/dyson -- --flake /etc/nixos/home-manager/dyson switch
+	nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager switch
 
 # set the git remote to use my SSH key
 set-git-remote:
@@ -57,7 +57,7 @@ post-install:
 copy-sops-keys:
 	mkdir -p {{env("HOME")}}/.config/sops/age
 	cat {{justfile_directory()}}/sops-secrets/key.txt > {{env("HOME")}}/.config/sops/age/keys.txt
-	cat {{justfile_directory()}}/home-manager/dyson/sops-secrets/key.txt >> {{env("HOME")}}/.config/sops/age/keys.txt
+	cat {{justfile_directory()}}/home-manager/sops-secrets/keys/{{env("USER")}}.txt >> {{env("HOME")}}/.config/sops/age/keys.txt
 
 # set authentication token for Cachix
 cachix-authtoken:

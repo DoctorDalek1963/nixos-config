@@ -19,7 +19,7 @@ in {
     inherit (cfg) enable;
     package = firefox-package;
     profiles = {
-      dyson = {
+      "${config.username}" = {
         id = 0;
         inherit extensions;
         settings = {
