@@ -7,6 +7,8 @@
   homedir = config.home.homeDirectory;
   cfg = config.setup;
 
+  uid = {dyson = 1000;}.${config.username};
+
   secretsIf = condition: secrets:
     if condition
     then secrets
@@ -34,11 +36,11 @@ in {
       # build time, so it can't reference paths to secrets which are not
       # symlinked elsewhere, like SSH key passphrases. See ./keychain.nix for
       # why we need this.
-      defaultSymlinkPath = "/run/user/1000/secrets";
-      defaultSecretsMountPoint = "/run/user/1000/secrets.d";
+      defaultSymlinkPath = "/run/user/${uid}/secrets";
+      defaultSecretsMountPoint = "/run/user/${uid}/secrets.d";
 
       age = {
-        keyFile = "/etc/nixos/home-manager/dyson/sops-secrets/key.txt";
+        keyFile = "/etc/nixos/home-manager/sops-secrets/keys/dyson.txt";
         generateKey = false;
       };
 
