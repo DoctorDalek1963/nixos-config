@@ -37,15 +37,20 @@ if [[ ! -e "home-manager/sops-secrets/keys/dyson.txt" ]]; then
     fi
 fi
 
+# grep exits with 1 if nothing is found, but we want to ignore that
+set +e
 password_files="$(grep -Po '(?<=passwordFile = ")[^"]+(?=";)' "machines/${TARGET_HOST}/disko.nix" | uniq)"
+set -e
 
-while IFS= read -r password_file; do
-	if [[ ! -f "$password_file" ]]; then
-		echo "ERROR! ${TARGET_HOST} requires a LUKS password in ${password_file} but this file was not found"
-		echo "Please write to this file with \`echo -n \"password\" > ${password_file}\` and try again"
-		exit 1
-	fi
-done <<< "$password_files"
+if [[ -n "$password_files" ]]; then
+	while IFS= read -r password_file; do
+		if [[ ! -f "$password_file" ]]; then
+			echo "ERROR! ${TARGET_HOST} requires a LUKS password in ${password_file} but this file was not found"
+			echo "Please write to this file with \`echo -n \"password\" > ${password_file}\` and try again"
+			exit 1
+		fi
+	done <<< "$password_files"
+fi
 
 echo "WARNING! The disks in ${TARGET_HOST} are about to get wiped"
 echo "         NixOS will be re-installed"
