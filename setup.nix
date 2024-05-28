@@ -1,5 +1,6 @@
-{lib, ...}:
-with lib; let
+{lib, ...}: let
+  inherit (lib) mkOption types;
+
   defaultTrue = mkOption {
     default = true;
     type = types.bool;

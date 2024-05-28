@@ -3,8 +3,8 @@
   config,
   inputs,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkOption types;
   inherit (config.consts) valid-gnome-themes valid-terminal-themes valid-shells;
 
   defaultTrue = mkOption {

@@ -5,8 +5,9 @@
   inputs,
   system,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkOption types;
+
   stringList = strings:
     mkOption {
       type = types.listOf types.str;
