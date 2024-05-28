@@ -97,19 +97,22 @@ in {
 
     # === Desktop stuff
     desktopEnvironments = {
+      background = mkOption {
+        type = types.either types.path (types.submodule {
+          options = {
+            light = mkOption {type = types.path;};
+            dark = mkOption {type = types.path;};
+          };
+        });
+      };
+      cinnamon = {
+        enable = defaultFalse;
+      };
       gnome = {
         enable = defaultFalse;
         enableExtensions = defaultTrue;
         theme = mkOption {
           type = types.enum valid-gnome-themes;
-        };
-        background = mkOption {
-          type = types.either types.path (types.submodule {
-            options = {
-              light = mkOption {type = types.path;};
-              dark = mkOption {type = types.path;};
-            };
-          });
         };
       };
     };

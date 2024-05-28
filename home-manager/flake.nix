@@ -64,12 +64,14 @@
               hostname = "Alex-NixOS";
               isNixOS = true;
 
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
+              desktopEnvironments = {
                 background = {
                   light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                };
+                gnome = {
+                  enable = true;
+                  theme = "catppuccin-adaptive-macchiato-mauve";
                 };
               };
 
@@ -134,12 +136,14 @@
               isNixOS = true;
               isLaptop = true;
 
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
+              desktopEnvironments = {
                 background = {
                   light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                   dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                };
+                gnome = {
+                  enable = true;
+                  theme = "catppuccin-adaptive-macchiato-mauve";
                 };
               };
 
@@ -189,10 +193,12 @@
               hostname = "VirtualBox-NixOS";
               isNixOS = true;
 
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "vimix-amethyst";
+              desktopEnvironments = {
                 background = ./files/desktop-backgrounds/virtualbox.jpg;
+                cinnamon = {
+                  enable = true;
+                  theme = "Mint-Y-Orange";
+                };
               };
               # firefox.enable = true;
               # rclone = {

@@ -223,8 +223,8 @@
                   users = ["dyson"];
                 };
 
-                desktopEnvironments.gnome.enable = true;
-                displayManagers.gdm.enable = true;
+                desktopEnvironments.cinnamon.enable = true;
+                displayManagers.lightdm.enable = true;
               };
             }
           ];
