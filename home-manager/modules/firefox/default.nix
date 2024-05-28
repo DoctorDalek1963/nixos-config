@@ -19,7 +19,7 @@ in {
     inherit (cfg) enable;
     package = firefox-package;
     profiles = {
-      "${config.username}" = {
+      "${config.setup.username}" = {
         id = 0;
         inherit extensions;
         settings = {
