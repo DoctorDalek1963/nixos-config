@@ -70,6 +70,7 @@ in {
         source = let
           excludeFilter = path: _type:
             (lib.hasInfix ".direnv" path)
+            || (lib.hasSuffix "pi.img" path)
             || (lib.hasSuffix ".pre-commit-config.yaml" path)
             || (lib.hasInfix "result" path);
         in
