@@ -9,32 +9,32 @@ TARGET_HOST="${1:-}"
 cd /iso/config
 
 if [[ "$(id -u)" -eq 0 ]]; then
-  echo "ERROR! $(basename "${0}") should be run as a regular user"
-  exit 1
+	echo "ERROR! $(basename "${0}") should be run as a regular user"
+	exit 1
 fi
 
 if [[ -z "$TARGET_HOST" ]]; then
-    echo "ERROR! $(basename "${0}") requires a hostname as the first argument"
-    exit 1
+	echo "ERROR! $(basename "${0}") requires a hostname as the first argument"
+	exit 1
 fi
 
 if [[ ! -e "machines/${TARGET_HOST}/disko.nix" ]]; then
-    echo "ERROR! $(basename "${0}") could not find the required machines/${TARGET_HOST}/disko.nix"
-    exit 1
+	echo "ERROR! $(basename "${0}") could not find the required machines/${TARGET_HOST}/disko.nix"
+	exit 1
 fi
 
 if [[ ! -e "sops-secrets/key.txt" ]]; then
-    echo "ERROR! $(basename "${0}") could not find the system wide sops key in /iso/config/sops-secrets/key.txt"
-    exit 1
+	echo "ERROR! $(basename "${0}") could not find the system wide sops key in /iso/config/sops-secrets/key.txt"
+	exit 1
 fi
 
 if [[ ! -e "home-manager/sops-secrets/keys/dyson.txt" ]]; then
-    echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/sops-secrets/keys/dyson.txt"
+	echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/sops-secrets/keys/dyson.txt"
 
-    read -p "Do you want to continue without this secret key? [y/N]" -n 1 -r
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit 1
-    fi
+	read -p "Do you want to continue without this secret key? [y/N]" -n 1 -r
+	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+		exit 1
+	fi
 fi
 
 # grep exits with 1 if nothing is found, but we want to ignore that
@@ -59,13 +59,13 @@ echo
 read -p "Are you sure? [y/N] " -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    sudo DISKOCOMMAND --mode disko "machines/${TARGET_HOST}/disko.nix"
+	sudo DISKOCOMMAND --mode disko "machines/${TARGET_HOST}/disko.nix"
 
-    # Rsync my nix-config to the target install
-    sudo mkdir -p "/mnt/etc/nixos"
-    sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
+	# Rsync my nix-config to the target install
+	sudo mkdir -p "/mnt/etc/nixos"
+	sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
 
-    sudo nixos-install --flake ".#${TARGET_HOST}"
+	sudo nixos-install --flake ".#${TARGET_HOST}"
 else
 	echo "Cancelling installation"
 	exit 1
