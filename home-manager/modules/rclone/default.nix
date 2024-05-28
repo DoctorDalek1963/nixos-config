@@ -6,7 +6,7 @@
 }: let
   cfg = config.setup.rclone;
 
-  log-dir = "${config.home.homeDirectory}/.rclone-logs";
+  log-dir = "/tmp/rclone-logs/${config.setup.username}";
 
   services = builtins.listToAttrs (builtins.map (opts: {
       name = "rclone-mount-${lib.strings.toLower opts.remote}";
