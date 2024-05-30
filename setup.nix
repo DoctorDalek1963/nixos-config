@@ -39,7 +39,10 @@ in {
 
     # === Basic system config
     enablePrinting = defaultFalse;
-    enableSsh = defaultTrue;
+    ssh = {
+      enable = defaultTrue;
+      mosh = defaultTrue;
+    };
 
     allowUnfree = defaultFalse;
 

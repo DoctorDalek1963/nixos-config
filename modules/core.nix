@@ -60,9 +60,11 @@ in {
     };
   };
 
+  programs.mosh.enable = cfg.ssh.mosh;
+
   services = {
     openssh = {
-      enable = cfg.enableSsh;
+      inherit (cfg.ssh) enable;
       settings = {
         PermitRootLogin = "no";
         PasswordAuthentication = false;
