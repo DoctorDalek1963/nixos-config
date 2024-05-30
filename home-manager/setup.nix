@@ -107,6 +107,9 @@ in {
       };
       cinnamon = {
         enable = defaultFalse;
+        theme = mkOption {
+          type = types.nonEmptyStr;
+        };
       };
       gnome = {
         enable = defaultFalse;
