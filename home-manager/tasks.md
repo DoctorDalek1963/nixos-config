@@ -2,3 +2,5 @@
 2. xremap dd@ and ddd@ expansions
 3. Use AirStatus to show airpod charge in status bar in GNOME on laptops
 4. Change `$DRY_RUN_CMD` to `run` in modules/activation.nix
+5. rm rclone logs in ExecStop
+6. Add option for rclone bisync points
