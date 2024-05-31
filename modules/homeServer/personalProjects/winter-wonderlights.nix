@@ -44,6 +44,7 @@ in {
   config = lib.mkIf (cfgPp.enable && cfgPp.winter-wonderlights) {
     services.nginx.virtualHosts."${cfg.domainName}" = {
       locations."/winter-wonderlights".root = "${winter-wonderlights-nginx}";
+      extraConfig = "rewrite ^/winter-wonderlights/docs(/(index.html)?)?$ /winter-wonderlights/docs/ww_effects permanent;";
     };
 
     boot.postBootCommands = ''
