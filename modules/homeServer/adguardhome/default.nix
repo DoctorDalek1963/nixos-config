@@ -8,6 +8,8 @@ in {
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
     services.adguardhome = {
       enable = true;
+
+      port = 3000;
       openFirewall = true;
 
       # Despite setting things declaratively, you MIGHT need to turn on
