@@ -119,7 +119,9 @@
                   isGraphical = false;
 
                   homeServer = {
+                    enable = true;
                     domainName = "bert-nixos.triceratops-egret.ts.net";
+
                     adguardhome.enable = true;
                     personalProjects = {
                       enable = true;

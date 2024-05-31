@@ -51,7 +51,7 @@
     then list
     else [];
 in {
-  config = lib.mkIf cfgPp.enable {
+  config = lib.mkIf (cfg.enable && cfgPp.enable) {
     services.nginx.virtualHosts."${cfg.domainName}" = {
       locations =
         optSet cfgPp.tictactoe {

@@ -21,8 +21,7 @@
     chmod -R g+r /etc/tailscale-certificates
   '';
 in {
-  # TODO: Remember to use (adguardhome || homeAutomation || mediaServer || personalProjects) here
-  config = lib.mkIf (cfgHs.adguardhome.enable || cfgHs.personalProjects.enable) {
+  config = lib.mkIf cfgHs.enable {
     assertions = [
       {
         assertion = cfg.secrets.tailscale.enable;

@@ -5,7 +5,7 @@
 }: let
   cfg = config.setup.homeServer;
 in {
-  config = lib.mkIf cfg.adguardhome.enable {
+  config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
     services.adguardhome = {
       enable = true;
       openFirewall = true;

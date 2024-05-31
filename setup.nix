@@ -103,6 +103,7 @@ in {
 
     # === Home server
     homeServer = {
+      enable = defaultFalse;
       domainName = mkOption {
         type = types.nonEmptyStr;
       };

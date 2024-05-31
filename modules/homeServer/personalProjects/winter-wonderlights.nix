@@ -41,7 +41,7 @@
 
   winter-wonderlights-server = inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override env;
 in {
-  config = lib.mkIf (cfgPp.enable && cfgPp.winter-wonderlights) {
+  config = lib.mkIf (cfg.enable && cfgPp.enable && cfgPp.winter-wonderlights) {
     services.nginx.virtualHosts."${cfg.domainName}" = {
       locations."/winter-wonderlights".root = "${winter-wonderlights-nginx}";
       extraConfig = "rewrite ^/winter-wonderlights/docs(/(index.html)?)?$ /winter-wonderlights/docs/ww_effects permanent;";

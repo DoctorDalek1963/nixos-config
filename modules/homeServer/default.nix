@@ -7,7 +7,7 @@
 in {
   imports = [./adguardhome ./personalProjects ./tailscaleCerts.nix];
 
-  config = lib.mkIf cfg.personalProjects.enable {
+  config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
       group = "certs";
