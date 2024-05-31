@@ -12,6 +12,7 @@ in {
       enable = true;
       group = "certs";
       virtualHosts."${cfg.domainName}" = {
+        kTLS = true;
         forceSSL = true;
         sslCertificate = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
         sslCertificateKey = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
