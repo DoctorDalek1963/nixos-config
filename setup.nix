@@ -107,6 +107,7 @@ in {
         type = types.nonEmptyStr;
       };
 
+      adguardhome.enable = defaultFalse;
       homeAutomation = {};
       mediaServer = {};
       personalProjects = {

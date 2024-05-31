@@ -5,7 +5,7 @@
 }: let
   cfg = config.setup.homeServer;
 in {
-  imports = [./personalProjects ./tailscaleCerts.nix];
+  imports = [./adguardhome ./personalProjects ./tailscaleCerts.nix];
 
   config = lib.mkIf cfg.personalProjects.enable {
     services.nginx = {

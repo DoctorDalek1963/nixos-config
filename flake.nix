@@ -120,6 +120,7 @@
 
                   homeServer = {
                     domainName = "bert-nixos.triceratops-egret.ts.net";
+                    adguardhome.enable = true;
                     personalProjects = {
                       enable = true;
                       # I only need to enable this around Christmas, when I'm
