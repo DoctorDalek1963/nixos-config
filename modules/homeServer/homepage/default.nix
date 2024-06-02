@@ -97,7 +97,7 @@ in {
           ++ personalProjectsBookmarks;
         services = infraServices;
 
-        settings = {headerStyle = "clean";}; # Why doesn't this work?
+        settings = {headerStyle = "boxed";};
         widgets = [
           {
             search = {
