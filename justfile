@@ -30,6 +30,11 @@ build-raspi-sd:
 	mkdir {{justfile_directory()}}/pi-mnt
 	sudo mount -o loop,offset=39845888 pi.img {{justfile_directory()}}/pi-mnt/
 
+	fd --one-file-system --hidden --type d -x sudo mkdir -p ./pi-mnt/etc/nixos/{}
+	fd --one-file-system --hidden --type f -x sudo cp {} ./pi-mnt/etc/nixos/{}
+	fd --one-file-system --hidden --no-ignore --type d . .git/ -x sudo mkdir -p ./pi-mnt/etc/nixos/{}
+	fd --one-file-system --hidden --no-ignore --type f . .git/ -x sudo cp {} ./pi-mnt/etc/nixos/{}
+
 	sudo mkdir -p {{justfile_directory()}}/pi-mnt/etc/nixos/sops-secrets
 	sudo cp /etc/nixos/sops-secrets/key.txt {{justfile_directory()}}/pi-mnt/etc/nixos/sops-secrets/key.txt
 

@@ -255,6 +255,7 @@
 
               # Build ISO with justfile
               just
+              fd
               nix-output-monitor
             ])
             ++ [inputs.disko.packages."${system}".disko];
