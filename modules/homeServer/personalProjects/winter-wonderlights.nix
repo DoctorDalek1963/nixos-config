@@ -14,10 +14,10 @@
     COORDS_FILENAME = "2023-small-tree.gift";
     SERVER_SSL_CERT_PATH = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
     SERVER_SSL_KEY_PATH = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
-    PORT = "23120";
+    PORT = toString cfg.ports.winter-wonderlights.normal;
     LIGHTS_NUM = "250";
     SERVER_URL = "wss://${cfg.domainName}:${PORT}";
-    SCANNER_PORT = "23121";
+    SCANNER_PORT = toString cfg.ports.winter-wonderlights.scanner;
     SCANNER_SERVER_URL = "wss://${cfg.domainName}:${SCANNER_PORT}";
   };
 

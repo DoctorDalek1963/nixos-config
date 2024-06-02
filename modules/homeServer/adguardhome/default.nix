@@ -9,7 +9,7 @@ in {
     services.adguardhome = {
       enable = true;
 
-      port = 3000;
+      port = cfg.ports.adguardhome.http;
       openFirewall = true;
 
       # Despite setting things declaratively, you MIGHT need to turn on
@@ -30,9 +30,9 @@ in {
           server_name = "${cfg.domainName}";
 
           force_https = true;
-          port_https = 3001;
-          port_dns_over_tls = 853;
-          port_dns_over_quic = 853;
+          port_https = cfg.ports.adguardhome.https;
+          port_dns_over_tls = cfg.ports.adguardhome.dnsOverTls;
+          port_dns_over_quic = cfg.ports.adguardhome.dnsOverQuic;
 
           certificate_path = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
           private_key_path = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
@@ -61,8 +61,8 @@ in {
     };
 
     networking.firewall = {
-      allowedTCPPorts = [853 3001];
-      allowedUDPPorts = [853]; # QUIC uses UDP
+      allowedTCPPorts = [cfg.ports.adguardhome.dnsOverTls cfg.ports.adguardhome.https];
+      allowedUDPPorts = [cfg.ports.adguardhome.dnsOverQuic]; # QUIC uses UDP
     };
   };
 }

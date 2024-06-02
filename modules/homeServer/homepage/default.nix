@@ -47,7 +47,7 @@
   infraServices = let
     list = optList cfg.adguardhome.enable {
       "AdGuard Home" = rec {
-        href = "https://${cfg.domainName}:3001/";
+        href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
         description = "DNS-level ad blocker";
         widget = {
           type = "adguard";
@@ -62,12 +62,14 @@
 in {
   config = lib.mkIf cfg.enable {
     services = {
-      nginx.virtualHosts."${cfg.domainName}".locations."/".proxyPass = "http://localhost:42731";
+      nginx.virtualHosts."${cfg.domainName}".locations."/" = {
+        proxyPass = "http://localhost:${toString cfg.ports.homepage}";
+      };
 
       homepage-dashboard = {
         enable = true;
 
-        listenPort = 42731;
+        listenPort = cfg.ports.homepage;
         openFirewall = true;
 
         bookmarks =
