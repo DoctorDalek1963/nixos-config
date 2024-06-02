@@ -112,7 +112,7 @@ in {
       ports = let
         port = num:
           mkOption {
-            type = types.ints.u16;
+            type = types.port;
             default = num;
           };
       in {
