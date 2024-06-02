@@ -70,7 +70,23 @@ in {
         listenPort = 42731;
         openFirewall = true;
 
-        bookmarks = personalProjectsBookmarks;
+        bookmarks =
+          [
+            {
+              "Admin tools" = [
+                {
+                  Tailscale = [
+                    {
+                      abbr = "TS";
+                      href = "https://login.tailscale.com/admin/machines";
+                      description = "Tailscale dashboard";
+                    }
+                  ];
+                }
+              ];
+            }
+          ]
+          ++ personalProjectsBookmarks;
         services = infraServices;
 
         settings = {headerStyle = "clean";}; # Why doesn't this work?
