@@ -11,6 +11,9 @@
     then [item]
     else [];
 
+  # Information about how the icons work can be found at
+  # https://gethomepage.dev/latest/configs/services/#icons
+
   personalProjectsBookmarks =
     if cfgPp.enable && builtins.length personalProjectsList > 0
     then [{"Personal projects" = personalProjectsList;}]
@@ -20,6 +23,7 @@
       Tictactoe = [
         {
           abbr = "TTT";
+          icon = "https://raw.githubusercontent.com/DoctorDalek1963/tic-tac-toe/main/favicon.ico";
           href = "https://${cfg.domainName}/tictactoe";
           description = "Tic-tac-toe";
         }
@@ -47,6 +51,7 @@
   infraServices = let
     list = optList cfg.adguardhome.enable {
       "AdGuard Home" = rec {
+        icon = "adguard-home";
         href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
         description = "DNS-level ad blocker";
         widget = {
@@ -80,6 +85,7 @@ in {
                   Tailscale = [
                     {
                       abbr = "TS";
+                      icon = "tailscale";
                       href = "https://login.tailscale.com/admin/machines";
                       description = "Tailscale dashboard";
                     }
