@@ -111,16 +111,15 @@
         ];
       };
 
-      "${username}@Bert-NixOS" = home-manager.lib.homeManagerConfiguration {
+      "pi@Bert-NixOS" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
           ./setup.nix
           {
             setup = {
-              inherit username;
+              username = "pi";
               hostname = "Bert-NixOS";
               isNixOS = true;
-              isLaptop = true;
               terminalTools.btop = false;
               programming.miscTools.git-all = false;
             };
