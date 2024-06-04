@@ -25,7 +25,7 @@
           abbr = "TTT";
           icon = "https://raw.githubusercontent.com/DoctorDalek1963/tic-tac-toe/main/favicon.ico";
           href = "https://${cfg.domainName}/tictactoe";
-          description = "Tic-tac-toe";
+          description = "";
         }
       ];
     }
@@ -34,7 +34,7 @@
         {
           abbr = "WW";
           href = "https://${cfg.domainName}/winter-wonderlights";
-          description = "Winter WonderLights";
+          description = "";
         }
       ];
     }
@@ -43,7 +43,7 @@
         {
           abbr = "WD";
           href = "https://${cfg.domainName}/wordle";
-          description = "Wordle";
+          description = "";
         }
       ];
     };
@@ -87,7 +87,7 @@ in {
                       abbr = "TS";
                       icon = "tailscale";
                       href = "https://login.tailscale.com/admin/machines";
-                      description = "Tailscale dashboard";
+                      description = "";
                     }
                   ];
                 }
