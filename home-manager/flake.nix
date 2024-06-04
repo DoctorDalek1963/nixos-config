@@ -108,6 +108,23 @@
         ];
       };
 
+      "${username}@Bert-NixOS" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs extraSpecialArgs;
+        modules = [
+          ./setup.nix
+          {
+            setup = {
+              inherit username;
+              hostname = "Bert-NixOS";
+              isNixOS = true;
+              isLaptop = true;
+              terminalTools.btop = false;
+              programming.miscTools.git-all = false;
+            };
+          }
+        ];
+      };
+
       "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs extraSpecialArgs;
         modules = [
