@@ -60,7 +60,7 @@ in {
       defaultSecretsMountPoint = "/run/user/${uid}/secrets.d";
 
       age = {
-        keyFile = "/etc/nixos/home-manager/sops-secrets/keys/${config.home.username}.txt";
+        keyFile = "/etc/nixos/home-manager/sops-secrets/key.txt";
         generateKey = false;
       };
 
