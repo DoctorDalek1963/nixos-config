@@ -8,6 +8,7 @@
 in {
   config = lib.mkIf cfg.users.dyson {
     users.users.dyson = {
+      uid = 1000;
       isNormalUser = true;
       description = "Dyson";
       initialPassword =

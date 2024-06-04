@@ -8,6 +8,7 @@
 in {
   config = lib.mkIf cfg.users.pi {
     users.users.pi = {
+      uid = 1001;
       isNormalUser = true;
       description = "Pi";
       initialPassword =

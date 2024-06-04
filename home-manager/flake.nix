@@ -129,7 +129,7 @@
                 username = "pi";
                 hostname = "Bert-NixOS";
                 isNixOS = true;
-                terminalTools.btop = false;
+                terminalTools.btop.enable = false;
                 programming.miscTools.git-all = false;
               };
             }

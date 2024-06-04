@@ -7,7 +7,12 @@
   homedir = config.home.homeDirectory;
   cfg = config.setup;
 
-  uid = {dyson = "1000";}.${config.home.username};
+  uid =
+    {
+      dyson = "1000";
+      pi = "1001";
+    }
+    .${config.home.username};
 
   secretsIf = condition: secrets:
     if condition
