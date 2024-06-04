@@ -351,7 +351,7 @@ in {
             fi
         }
 
-        # Create executable file and open it with vim
+        # Create executable file and open it with nvim
         vex() {
             ${nvimPath} "$1"
             if [ -f "$1" ]; then
