@@ -18,7 +18,10 @@
     nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+      };
     };
     xremap = {
       url = "github:xremap/nix-flake";
