@@ -38,6 +38,9 @@ build-raspi-sd:
 	sudo mkdir -p {{justfile_directory()}}/pi-mnt/etc/nixos/sops-secrets
 	sudo cp /etc/nixos/sops-secrets/key.txt {{justfile_directory()}}/pi-mnt/etc/nixos/sops-secrets/key.txt
 
+	sudo mkdir -p {{justfile_directory()}}/pi-mnt/etc/nixos/home-manager/sops-secrets
+	sudo cp /etc/nixos/home-manager/sops-secrets/key.txt {{justfile_directory()}}/pi-mnt/etc/nixos/home-manager/sops-secrets/key.txt
+
 	sudo umount {{justfile_directory()}}/pi-mnt
 	rmdir {{justfile_directory()}}/pi-mnt
 
