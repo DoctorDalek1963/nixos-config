@@ -34,7 +34,6 @@
     home-manager,
     ...
   } @ inputs: let
-    system = "x86_64-linux";
     username = "dyson";
 
     # Access unstable packages through pkgs.unstable
@@ -42,194 +41,216 @@
     #   unstable = inputs.unstable.legacyPackages.${system};
     # };
 
-    pkgs = import nixpkgs {
-      inherit system;
-      overlays = [
-        # unstable-overlay
-        inputs.nur.overlay
-      ];
-    };
+    mkPkgs = system:
+      import nixpkgs {
+        inherit system;
+        overlays = [
+          # unstable-overlay
+          inputs.nur.overlay
+        ];
+      };
 
-    extraSpecialArgs = {
-      inherit system inputs;
-    };
+    extraSpecialArgs = {inherit inputs;};
   in {
-    packages.${system}.default = home-manager.defaultPackage.${system};
+    packages = {
+      "x86_64-linux".default = home-manager.defaultPackage."x86_64-linux";
+      "aarch64-linux".default = home-manager.defaultPackage."aarch64-linux";
+    };
 
     homeConfigurations = {
-      "${username}@Alex-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
-        modules = [
-          ./setup.nix
-          {
-            setup = {
-              inherit username;
-              hostname = "Alex-NixOS";
-              isNixOS = true;
+      "${username}@Alex-NixOS" = let
+        system = "x86_64-linux";
+      in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = extraSpecialArgs // {inherit system;};
+          modules = [
+            ./setup.nix
+            {
+              setup = {
+                inherit username;
+                hostname = "Alex-NixOS";
+                isNixOS = true;
 
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
-                background = {
-                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
-                  dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                desktopEnvironments.gnome = {
+                  enable = true;
+                  theme = "catppuccin-adaptive-macchiato-mauve";
+                  background = {
+                    light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
+                    dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                  };
+                };
+
+                terminalTools = {
+                  theme = "catppuccin-macchiato";
+                  useThemeInTerminalItself = true;
+                };
+
+                firefox.enable = true;
+
+                rclone = {
+                  enable = true;
+                  automounts = [
+                    {
+                      remote = "OneDrive";
+                      mountpoint = "/home/${username}/OneDrive";
+                    }
+                  ];
+                };
+
+                maths.enable = true;
+
+                programming = {
+                  rust = true;
+                };
+
+                miscPrograms = {
+                  hexchat = true;
+                  obsidian = true;
+                  rustdesk = true;
+                  vlc = true;
+                  xremap = true;
                 };
               };
+            }
+          ];
+        };
 
-              terminalTools = {
-                theme = "catppuccin-macchiato";
-                useThemeInTerminalItself = true;
+      "pi@Bert-NixOS" = let
+        system = "aarch64-linux";
+      in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = extraSpecialArgs // {inherit system;};
+          modules = [
+            ./setup.nix
+            {
+              setup = {
+                username = "pi";
+                hostname = "Bert-NixOS";
+                isNixOS = true;
+                terminalTools.btop = false;
+                programming.miscTools.git-all = false;
               };
+            }
+          ];
+        };
 
-              firefox.enable = true;
-
-              rclone = {
-                enable = true;
-                automounts = [
-                  {
-                    remote = "OneDrive";
-                    mountpoint = "/home/${username}/OneDrive";
-                  }
-                ];
+      "${username}@Sasha-Ubuntu" = let
+        system = "x86_64-linux";
+      in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = extraSpecialArgs // {inherit system;};
+          modules = [
+            ./setup.nix
+            {
+              setup = {
+                inherit username;
+                hostname = "Sasha-Ubuntu";
+                isNixOS = false;
+                hasDvdDrive = true;
               };
+            }
+          ];
+        };
 
-              maths.enable = true;
+      "${username}@Harold-NixOS" = let
+        system = "x86_64-linux";
+      in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = extraSpecialArgs // {inherit system;};
+          modules = [
+            ./setup.nix
+            {
+              setup = {
+                inherit username;
+                hostname = "Harold-NixOS";
+                isNixOS = true;
+                isLaptop = true;
 
-              programming = {
-                rust = true;
-              };
+                desktopEnvironments.gnome = {
+                  enable = true;
+                  theme = "catppuccin-adaptive-macchiato-mauve";
+                  background = {
+                    light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
+                    dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                  };
+                };
 
-              miscPrograms = {
-                hexchat = true;
-                obsidian = true;
-                rustdesk = true;
-                vlc = true;
-                xremap = true;
-              };
-            };
-          }
-        ];
-      };
+                terminalTools = {
+                  theme = "catppuccin-macchiato";
+                  useThemeInTerminalItself = true;
+                };
 
-      "pi@Bert-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
-        modules = [
-          ./setup.nix
-          {
-            setup = {
-              username = "pi";
-              hostname = "Bert-NixOS";
-              isNixOS = true;
-              terminalTools.btop = false;
-              programming.miscTools.git-all = false;
-            };
-          }
-        ];
-      };
+                firefox.enable = true;
 
-      "${username}@Sasha-Ubuntu" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
-        modules = [
-          ./setup.nix
-          {
-            setup = {
-              inherit username;
-              hostname = "Sasha-Ubuntu";
-              isNixOS = false;
-              hasDvdDrive = true;
-            };
-          }
-        ];
-      };
+                rclone = {
+                  enable = true;
+                  automounts = [
+                    {
+                      remote = "OneDrive";
+                      mountpoint = "/home/${username}/OneDrive";
+                    }
+                  ];
+                };
 
-      "${username}@Harold-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
-        modules = [
-          ./setup.nix
-          {
-            setup = {
-              inherit username;
-              hostname = "Harold-NixOS";
-              isNixOS = true;
-              isLaptop = true;
+                maths.enable = true;
 
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
-                background = {
-                  light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
-                  dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                programming = {
+                  rust = true;
+                };
+
+                miscPrograms = {
+                  discord = true;
+                  hexchat = true;
+                  obsidian = true;
+                  rustdesk = true;
+                  vlc = true;
+                  xremap = true;
                 };
               };
+            }
+          ];
+        };
 
-              terminalTools = {
-                theme = "catppuccin-macchiato";
-                useThemeInTerminalItself = true;
+      "${username}@VirtualBox-NixOS" = let
+        system = "x86_64-linux";
+      in
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+          extraSpecialArgs = extraSpecialArgs // {inherit system;};
+          modules = [
+            ./setup.nix
+            {
+              setup = {
+                inherit username;
+                hostname = "VirtualBox-NixOS";
+                isNixOS = true;
+
+                desktopEnvironments.gnome = {
+                  enable = true;
+                  theme = "vimix-amethyst";
+                  background = ./files/desktop-backgrounds/virtualbox.jpg;
+                };
+                # firefox.enable = true;
+                # rclone = {
+                #   enable = true;
+                #   automounts = [
+                #     {
+                #       remote = "OneDrive";
+                #       mountpoint = "/home/${username}/OneDrive";
+                #       readonly = true;
+                #     }
+                #   ];
+                # };
+                terminalTools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
+                miscPrograms.xremap = false;
               };
-
-              firefox.enable = true;
-
-              rclone = {
-                enable = true;
-                automounts = [
-                  {
-                    remote = "OneDrive";
-                    mountpoint = "/home/${username}/OneDrive";
-                  }
-                ];
-              };
-
-              maths.enable = true;
-
-              programming = {
-                rust = true;
-              };
-
-              miscPrograms = {
-                discord = true;
-                hexchat = true;
-                obsidian = true;
-                rustdesk = true;
-                vlc = true;
-                xremap = true;
-              };
-            };
-          }
-        ];
-      };
-
-      "${username}@VirtualBox-NixOS" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
-        modules = [
-          ./setup.nix
-          {
-            setup = {
-              inherit username;
-              hostname = "VirtualBox-NixOS";
-              isNixOS = true;
-
-              desktopEnvironments.gnome = {
-                enable = true;
-                theme = "vimix-amethyst";
-                background = ./files/desktop-backgrounds/virtualbox.jpg;
-              };
-              # firefox.enable = true;
-              # rclone = {
-              #   enable = true;
-              #   automounts = [
-              #     {
-              #       remote = "OneDrive";
-              #       mountpoint = "/home/${username}/OneDrive";
-              #       readonly = true;
-              #     }
-              #   ];
-              # };
-              terminalTools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
-              miscPrograms.xremap = false;
-            };
-          }
-        ];
-      };
+            }
+          ];
+        };
     };
   };
 }
