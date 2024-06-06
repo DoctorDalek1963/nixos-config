@@ -108,7 +108,7 @@ in {
         enable = defaultFalse;
         menuIcon = mkOption {
           type = types.nullOr types.path;
-          default = ./files/icons/nix-snowflake-white.nix;
+          default = ./files/icons/nix-snowflake-white.svg;
         };
         theme = mkOption {
           type = types.nonEmptyStr;
