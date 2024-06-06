@@ -5,13 +5,14 @@
 }: let
   cfg = config.setup.homeServer;
 in {
-  imports = [./personalProjects ./tailscaleCerts.nix];
+  imports = [./adguardhome ./homepage ./personalProjects ./tailscaleCerts.nix];
 
-  config = lib.mkIf cfg.personalProjects.enable {
+  config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
       group = "certs";
       virtualHosts."${cfg.domainName}" = {
+        kTLS = true;
         forceSSL = true;
         sslCertificate = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
         sslCertificateKey = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";

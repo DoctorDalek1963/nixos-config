@@ -6,6 +6,14 @@
 }: let
   inherit (config.consts) nvimPath;
   homedir = config.home.homeDirectory;
+
+  git-prompt-repo = pkgs.fetchFromGitHub {
+    owner = "git";
+    repo = "git";
+    rev = "v2.44.0";
+    hash = "sha256-6MBdULOBBp8AtGS0rsvo5nh86t22LOb5LoYA/2cwp9g=";
+    sparseCheckout = ["contrib/completion/git-prompt.sh"];
+  };
 in {
   config = lib.mkIf config.setup.shells.bash {
     home = {
@@ -252,10 +260,6 @@ in {
             fi
 
             if [ $EXTENDED_PS1 -ne 0 ]; then
-                if [ ! -f "${homedir}/.git-prompt.sh" ]; then
-                    echo "${homedir}/.git-prompt.sh not found!"
-                fi
-
                 # Add git information and $ to prompt
                 GIT_PS1_SHOWDIRTYSTATE=true
                 GIT_PS1_SHOWSTASHSTATE=true
@@ -263,7 +267,7 @@ in {
                 GIT_PS1_SHOWUPSTREAM="auto"
                 GIT_PS1_HIDE_IF_PWD_IGNORED=true
 
-                trySource "${homedir}/.git-prompt.sh"
+                . ${git-prompt-repo}/contrib/completion/git-prompt.sh
 
                 if [ "$color_prompt" = yes ]; then
                     PS1="$PS1\[\033[01;31m\]$(__git_ps1 " [%s]")\[\033[00m\]"
@@ -351,7 +355,7 @@ in {
             fi
         }
 
-        # Create executable file and open it with vim
+        # Create executable file and open it with nvim
         vex() {
             ${nvimPath} "$1"
             if [ -f "$1" ]; then

@@ -39,7 +39,10 @@ in {
 
     # === Basic system config
     enablePrinting = defaultFalse;
-    enableSsh = defaultTrue;
+    ssh = {
+      enable = defaultTrue;
+      mosh = defaultTrue;
+    };
 
     allowUnfree = defaultFalse;
 
@@ -107,10 +110,36 @@ in {
 
     # === Home server
     homeServer = {
+      enable = defaultFalse;
       domainName = mkOption {
         type = types.nonEmptyStr;
       };
 
+      # All the ports used by different services
+      ports = let
+        port = num:
+          mkOption {
+            type = types.port;
+            default = num;
+          };
+      in {
+        homepage = port 42731;
+
+        adguardhome = {
+          http = port 3000;
+          https = port 3001;
+          dnsOverTls = port 853;
+          dnsOverQuic = port 853;
+        };
+        personalProjects = {
+          winter-wonderlights = {
+            normal = port 23120;
+            scanner = port 23121;
+          };
+        };
+      };
+
+      adguardhome.enable = defaultFalse;
       homeAutomation = {};
       mediaServer = {};
       personalProjects = {

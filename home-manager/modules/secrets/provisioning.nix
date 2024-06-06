@@ -7,18 +7,43 @@
   homedir = config.home.homeDirectory;
   cfg = config.setup;
 
-  uid = {dyson = "1000";}.${config.home.username};
+  uid =
+    {
+      dyson = "1000";
+      pi = "1001";
+    }
+    .${config.home.username};
 
   secretsIf = condition: secrets:
     if condition
     then secrets
     else {};
 
-  firefox-secrets =
-    secretsIf cfg.firefox.enable
-    {
-      "firefox/extensions/refined_github/personal_access_token" = {};
+  git-ssh-secrets = secretsIf cfg.terminalTools.git {
+    "ssh/github_main/passphrase" = {};
+    "ssh/github_main/keys/github_main" = {
+      path = "${homedir}/.ssh/github_main";
+      mode = "0600";
     };
+    "ssh/github_main/keys/github_main.pub" = {
+      path = "${homedir}/.ssh/github_main.pub";
+      mode = "0644";
+    };
+
+    "ssh/git_main_signing/passphrase" = {};
+    "ssh/git_main_signing/keys/git_main_signing" = {
+      path = "${homedir}/.ssh/git_main_signing";
+      mode = "0600";
+    };
+    "ssh/git_main_signing/keys/git_main_signing.pub" = {
+      path = "${homedir}/.ssh/git_main_signing.pub";
+      mode = "0644";
+    };
+  };
+
+  firefox-secrets = secretsIf cfg.firefox.enable {
+    "firefox/extensions/refined_github/personal_access_token" = {};
+  };
 
   irc-secrets = secretsIf cfg.miscPrograms.hexchat {
     "irc/libera/password" = {mode = "0400";};
@@ -40,7 +65,7 @@ in {
       defaultSecretsMountPoint = "/run/user/${uid}/secrets.d";
 
       age = {
-        keyFile = "/etc/nixos/home-manager/sops-secrets/keys/dyson.txt";
+        keyFile = "/etc/nixos/home-manager/sops-secrets/key.txt";
         generateKey = false;
       };
 
@@ -56,26 +81,6 @@ in {
             mode = "0644";
           };
 
-          "ssh/github_main/passphrase" = {};
-          "ssh/github_main/keys/github_main" = {
-            path = "${homedir}/.ssh/github_main";
-            mode = "0600";
-          };
-          "ssh/github_main/keys/github_main.pub" = {
-            path = "${homedir}/.ssh/github_main.pub";
-            mode = "0644";
-          };
-
-          "ssh/git_main_signing/passphrase" = {};
-          "ssh/git_main_signing/keys/git_main_signing" = {
-            path = "${homedir}/.ssh/git_main_signing";
-            mode = "0600";
-          };
-          "ssh/git_main_signing/keys/git_main_signing.pub" = {
-            path = "${homedir}/.ssh/git_main_signing.pub";
-            mode = "0644";
-          };
-
           "ssh/id_ed25519/passphrase" = {};
           "ssh/id_ed25519/keys/id_ed25519" = {
             path = "${homedir}/.ssh/id_ed25519";
@@ -86,6 +91,7 @@ in {
             mode = "0644";
           };
         }
+        // git-ssh-secrets
         // firefox-secrets
         // irc-secrets;
     };

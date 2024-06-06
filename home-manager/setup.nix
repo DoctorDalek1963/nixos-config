@@ -92,7 +92,6 @@ in {
       sad = defaultTrue;
       sd = defaultTrue;
       tldr = defaultTrue;
-      vim = defaultTrue;
     };
 
     # === Desktop stuff

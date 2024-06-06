@@ -40,7 +40,7 @@ in {
         per-window = false;
         sources = [(mkTuple ["xkb" "gb"]) (mkTuple ["xkb" "gr"])];
         xkb-options = [
-          "caps:escape" # Use caps lock as escape, mostly for vim
+          "caps:escape" # Use caps lock as escape, mostly for nvim
           "numpad:mac" # Num lock is always on
           "terminate:ctrl_alt_bksp" # Terminate the X session with ctrl + alt + backspace
           "compose:menu" # Use the menu key as the compose key

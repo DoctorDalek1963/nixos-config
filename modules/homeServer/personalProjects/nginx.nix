@@ -41,20 +41,33 @@
       '';
     };
 
-  optLoc = condition: location:
+  optSet = condition: set:
     if condition
-    then location
+    then set
     else {};
+
+  optList = condition: list:
+    if condition
+    then list
+    else [];
 in {
-  config = lib.mkIf cfgPp.enable {
+  config = lib.mkIf (cfg.enable && cfgPp.enable) {
     services.nginx.virtualHosts."${cfg.domainName}" = {
       locations =
-        optLoc cfgPp.tictactoe {
+        optSet cfgPp.tictactoe {
           "/tictactoe".root = "${tictactoe-nginx}";
         }
-        // optLoc cfgPp.wordle {
+        // optSet cfgPp.wordle {
           "/wordle".root = "${wordle-nginx}";
         };
+      extraConfig = lib.concatStringsSep "\n" (
+        optList cfgPp.tictactoe [
+          "rewrite ^/tictactoe/docs(/(index.html)?)?$ /tictactoe/docs/tictactoe permanent;"
+        ]
+        ++ optList cfgPp.wordle [
+          "rewrite ^/wordle/docs(/(index.html)?)?$ /wordle/docs/wordle permanent;"
+        ]
+      );
     };
   };
 }

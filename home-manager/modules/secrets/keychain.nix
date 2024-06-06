@@ -17,7 +17,7 @@
     script =
       pkgs.writeShellScriptBin "cat-passphrase"
       ''cat "${config.sops.secrets."ssh/${keyname}/passphrase".path}"'';
-  in ''cat "${config.sops.secrets."ssh/${keyname}/keys/${keyname}".path}" | SSH_ASKPASS="${script}/bin/cat-passphrase" ssh-add -'')
+  in ''cat "${config.sops.secrets."ssh/${keyname}/keys/${keyname}".path}" | SSH_ASKPASS="${script}/bin/cat-passphrase" SSH_ASKPASS_REQUIRE=force ssh-add -'')
   ssh-keys;
 
   populate-ssh-keychain-path = let

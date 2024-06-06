@@ -17,7 +17,10 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+      };
     };
 
     # Personal projects for home server
@@ -119,7 +122,10 @@
                   isGraphical = false;
 
                   homeServer = {
+                    enable = true;
                     domainName = "bert-nixos.triceratops-egret.ts.net";
+
+                    adguardhome.enable = true;
                     personalProjects = {
                       enable = true;
                       # I only need to enable this around Christmas, when I'm
@@ -252,6 +258,7 @@
 
               # Build ISO with justfile
               just
+              fd
               nix-output-monitor
             ])
             ++ [inputs.disko.packages."${system}".disko];
