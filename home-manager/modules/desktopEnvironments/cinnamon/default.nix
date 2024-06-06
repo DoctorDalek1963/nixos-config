@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  imports = [./dconf.nix];
+  imports = [./dconf.nix ./menuIcon.nix];
 
   config = lib.mkIf config.setup.desktopEnvironments.cinnamon.enable {};
 }

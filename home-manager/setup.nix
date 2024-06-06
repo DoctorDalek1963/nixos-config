@@ -106,6 +106,10 @@ in {
       };
       cinnamon = {
         enable = defaultFalse;
+        menuIcon = mkOption {
+          type = types.nullOr types.path;
+          default = ./files/icons/nix-snowflake-white.nix;
+        };
         theme = mkOption {
           type = types.nonEmptyStr;
         };
