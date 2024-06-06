@@ -4,6 +4,9 @@
   ...
 }: {
   config = lib.mkIf config.setup.desktopEnvironments.cinnamon.enable {
-    dconf.settings = {};
+    dconf = {
+      enable = true;
+      settings = {};
+    };
   };
 }
