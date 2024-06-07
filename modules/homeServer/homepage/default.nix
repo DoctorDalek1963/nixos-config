@@ -42,6 +42,7 @@
       Wordle = [
         {
           abbr = "WD";
+          icon = "https://raw.githubusercontent.com/DoctorDalek1963/wordle/main/web/favicon.ico";
           href = "https://${cfg.domainName}/wordle";
           description = "";
         }
