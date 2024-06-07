@@ -870,11 +870,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1716843223,
-        "narHash": "sha256-jBqJYtx/sHFJr3xz8pKhIaCn/5yWNRNF65PV9LvIzCU=",
+        "lastModified": 1717750460,
+        "narHash": "sha256-JroeXiQRS6bNc0qE2pNwFsynVZcMYk9gka5C88eJvCM=",
         "owner": "DoctorDalek1963",
         "repo": "tic-tac-toe",
-        "rev": "3ec856de2970b6226dbb90ce67a1bf5652ae1275",
+        "rev": "f00f864e4f64991e07de9f82d717441d6b240273",
         "type": "github"
       },
       "original": {
@@ -918,11 +918,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1716550511,
-        "narHash": "sha256-4TvsGFFjtHLvy37+q3nhrKu4zm4dC2EFWoj7q0DSNmM=",
+        "lastModified": 1717750554,
+        "narHash": "sha256-UoW3x8W2dZAswmcPK+yAFfpByr3k/+7v0xbVIKIf9EY=",
         "owner": "DoctorDalek1963",
         "repo": "wordle",
-        "rev": "81f8730551bc3b40061ba252ee0f89611a997626",
+        "rev": "b8d851c978c0a528526360786ece7ef2f93281c3",
         "type": "github"
       },
       "original": {
