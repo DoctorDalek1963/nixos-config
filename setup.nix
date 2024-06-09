@@ -188,6 +188,10 @@ in {
           });
           default = [
             {
+              vpnName = "ch-hotspotshield";
+              users = ["dyson"];
+            }
+            {
               vpnName = "gb-hotspotshield";
               users = ["dyson"];
             }

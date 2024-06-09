@@ -19,7 +19,10 @@
       vpnName,
       users,
     }: let
-      perm-commands = map (username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'") users;
+      perm-commands =
+        map
+        (username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'")
+        users;
     in
       # bash
       ''
@@ -43,6 +46,20 @@ in {
 
     sops.secrets =
       {}
+      // optSet (vpnEnabled "ch-hotspotshield") {
+        "openvpn/ch-hotspotshield/user-pass" = {
+          mode = "0644";
+        };
+        "openvpn/ch-hotspotshield/cert" = {
+          mode = "0644";
+        };
+        "openvpn/ch-hotspotshield/key" = {
+          mode = "0644";
+        };
+        "openvpn/ch-hotspotshield/ca" = {
+          mode = "0644";
+        };
+      }
       // optSet (vpnEnabled "gb-hotspotshield") {
         "openvpn/gb-hotspotshield/user-pass" = {
           mode = "0644";
@@ -62,34 +79,40 @@ in {
 
     # To generate .ovpn files for other locations, follow the guidance on
     # https://support.hotspotshield.com/hc/en-us/articles/360046865972-How-do-I-install-Hotspot-Shield-on-OpenVPN-devices
-    environment.etc."openvpn/gb-hotspotshield.ovpn".text = ''
-      client
-      dev tun
-      proto udp
-      remote penfactory.us 8041
-      verify-x509-name penfactory.us name
-      resolv-retry infinite
-      remote-random
-      nobind
-      tun-mtu 1500
-      tun-mtu-extra 32
-      mssfix 1450
-      persist-key
-      persist-tun
-      ping 15
-      ping-restart 0
-      reneg-sec 0
-      remote-cert-tls server
-      comp-noadapt
-      auth-user-pass ${config.sops.secrets."openvpn/gb-hotspotshield/user-pass".path}
-      auth sha256
-      cipher AES-128-CBC
-      verb 3
+    environment.etc = let
+      build-hss-ovpn = country: remote: {
+        "openvpn/${country}-hotspotshield.ovpn".text = ''
+          client
+          dev tun
+          proto udp
+          remote ${remote} 8041
+          verify-x509-name ${remote} name
+          resolv-retry infinite
+          remote-random
+          nobind
+          tun-mtu 1500
+          tun-mtu-extra 32
+          mssfix 1450
+          persist-key
+          persist-tun
+          ping 15
+          ping-restart 0
+          reneg-sec 0
+          remote-cert-tls server
+          comp-noadapt
+          auth-user-pass ${config.sops.secrets."openvpn/${country}-hotspotshield/user-pass".path}
+          auth sha256
+          cipher AES-128-CBC
+          verb 3
 
-      cert ${config.sops.secrets."openvpn/gb-hotspotshield/cert".path}
-      key ${config.sops.secrets."openvpn/gb-hotspotshield/key".path}
-      ca ${config.sops.secrets."openvpn/gb-hotspotshield/ca".path}
-    '';
+          cert ${config.sops.secrets."openvpn/${country}-hotspotshield/cert".path}
+          key ${config.sops.secrets."openvpn/${country}-hotspotshield/key".path}
+          ca ${config.sops.secrets."openvpn/${country}-hotspotshield/ca".path}
+        '';
+      };
+    in
+      optSet (vpnEnabled "ch-hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
+      // optSet (vpnEnabled "gb-hotspotshield") (build-hss-ovpn "gb" "penfactory.us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {

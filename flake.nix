@@ -147,7 +147,15 @@
                       enable = true;
                       simpleWifiNetworkNames = ["HOME"];
                     };
-                    vpn.enable = true;
+                    vpn = {
+                      enable = true;
+                      vpns = [
+                        {
+                          vpnName = "ch-hotspotshield";
+                          users = ["pi"];
+                        }
+                      ];
+                    };
                   };
 
                   users = {
