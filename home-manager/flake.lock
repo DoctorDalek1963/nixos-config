@@ -706,11 +706,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1717519624,
-        "narHash": "sha256-DFOh6Yc0C/KdHXQ4bjDdg68VH/heM/xdAZ7JF6P24lU=",
+        "lastModified": 1717936626,
+        "narHash": "sha256-RyWrcysMwTdIKJmBVfwVLWw6lYMnQjYyjLxrltDjyoc=",
         "owner": "DoctorDalek1963",
         "repo": "nixvim-config",
-        "rev": "dd7c061331fc614ddcdb45ce18183f186841f99a",
+        "rev": "3cdb8bd5c335548a9129901ad084900ab237c4a6",
         "type": "github"
       },
       "original": {
