@@ -122,10 +122,6 @@ in {
           # Basics
           grep = "grep --color=auto";
           diff = "diff --color=auto";
-          ls = "ls --color=auto";
-          ll = "ls -la";
-          la = "ls -a";
-          lh = "ls -lah";
 
           # NixOS management
           cdnc = "cd /etc/nixos";
@@ -191,6 +187,19 @@ in {
           # Search long-form history
           rghist = "cat ~/.bash_history | rg --";
         }
+        // (
+          if config.setup.terminalTools.eza
+          then {
+            ls = "eza";
+            ll = "eza --long --all --mounts --icons=auto --group --header --git";
+          }
+          else {
+            ls = "ls --color=auto";
+            ll = "ls -la";
+            la = "ls -a";
+            lh = "ls -lah";
+          }
+        )
         // (
           if config.setup.programming.nix
           then {

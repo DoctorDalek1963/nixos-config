@@ -88,6 +88,7 @@ in {
       ripgrep = defaultTrue;
 
       # Just install the packages
+      eza = defaultTrue;
       hyperfine = defaultTrue;
       sad = defaultTrue;
       sd = defaultTrue;

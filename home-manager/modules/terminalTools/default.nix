@@ -21,6 +21,7 @@ in {
   home = {
     packages =
       [nvimPkg]
+      ++ optItemList tt.eza pkgs.eza
       ++ optItemList tt.hyperfine pkgs.hyperfine
       ++ optItemList tt.sad pkgs.sad
       ++ optItemList tt.sd pkgs.sd
