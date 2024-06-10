@@ -2,7 +2,7 @@
 <svg
 	inkscape:export-ydpi="600"
 	inkscape:export-xdpi="600"
-	sodipodi:docname="nix-snowflake-white.svg"
+	sodipodi:docname="nix-snowflake-black.svg"
 	inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
 	version="1.1"
 	id="svg2"
@@ -23,15 +23,15 @@
 			inkscape:collect="always"
 			id="main">
 			<stop
-				style="stop-color:#ffffff;stop-opacity:0"
+				style="stop-color:#000000;stop-opacity:0"
 				offset="0"
 				id="stop915" />
 			<stop
 				id="stop917"
 				offset="0.23168644"
-				style="stop-color:#ffffff;stop-opacity:1" />
+				style="stop-color:#000000;stop-opacity:1" />
 			<stop
-				style="stop-color:#ffffff;stop-opacity:1"
+				style="stop-color:#000000;stop-opacity:1"
 				offset="1"
 				id="stop919" />
 		</linearGradient>
@@ -125,7 +125,7 @@
 					inkscape:connector-curvature="0"
 					id="path4260-0"
 					d="m 309.54892,-710.38827 122.19683,211.67512 -56.15706,0.5268 -32.6236,-56.8692 -32.85645,56.5653 -27.90237,-0.011 -14.29086,-24.6896 46.81047,-80.4901 -33.22946,-57.8256 z"
-					style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient1299);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:33.1535;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+					style="color:#ffffff;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#ffffff;solid-opacity:1;fill:url(#linearGradient1299);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:33.1535;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
 				<use
 					x="0"
 					y="0"
