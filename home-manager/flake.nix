@@ -237,6 +237,7 @@
                   background = ./files/desktop-backgrounds/virtualbox.jpg;
                   cinnamon = {
                     enable = true;
+                    menuIcon = ./files/icons/nix-snowflake-black.svg;
                     theme = {
                       gtk = "Mint-Y-Orange";
                       cursor = "Bibata-Original-Classic";
