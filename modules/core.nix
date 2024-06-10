@@ -35,6 +35,9 @@ in {
       "steam-original"
       "steam-run"
       "xow_dongle-firmware" # Needed for xone driver
+
+      # Printing
+      "cnijfilter" # Canon Pixma driver
     ];
 
   networking = {
@@ -62,17 +65,12 @@ in {
 
   programs.mosh.enable = cfg.ssh.mosh;
 
-  services = {
-    openssh = {
-      inherit (cfg.ssh) enable;
-      settings = {
-        PermitRootLogin = "no";
-        PasswordAuthentication = false;
-      };
+  services. openssh = {
+    inherit (cfg.ssh) enable;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
     };
-
-    # Enable CUPS for printing
-    printing.enable = cfg.enablePrinting;
   };
 
   # Use British keyboard in TTYs

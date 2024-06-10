@@ -74,6 +74,12 @@
 
                 binfmt.aarch64 = true;
 
+                printing = {
+                  enable = true;
+                  users = ["dyson"];
+                  specificPrinters.canonPixmaMG3250 = true;
+                };
+
                 secrets = {
                   enable = true;
                   userPasswords.enable = true;

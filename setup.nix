@@ -24,6 +24,7 @@ in {
     ./modules/openRGB
     ./modules/homeServer
     ./modules/pam
+    ./modules/printing
     ./modules/secrets
     ./modules/uinput
     ./modules/users
@@ -38,7 +39,6 @@ in {
     isLaptop = defaultFalse;
 
     # === Basic system config
-    enablePrinting = defaultFalse;
     ssh = {
       enable = defaultTrue;
       mosh = defaultTrue;
@@ -149,6 +149,22 @@ in {
       microseconds = mkOption {
         type = types.ints.unsigned;
         default = 150000; # 150 ms
+      };
+    };
+
+    # === Printing
+    printing = {
+      enable = defaultFalse;
+      networkAutoDiscovery = defaultTrue;
+      scanning = defaultTrue;
+
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+      };
+
+      specificPrinters = {
+        canonPixmaMG3250 = defaultFalse;
       };
     };
 
