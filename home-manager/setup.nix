@@ -110,8 +110,13 @@ in {
           type = types.nullOr types.path;
           default = ./files/icons/nix-snowflake-white.svg;
         };
-        theme = mkOption {
-          type = types.nonEmptyStr;
+        theme = {
+          cursor = mkOption {
+            type = types.nonEmptyStr;
+          };
+          gtk = mkOption {
+            type = types.nonEmptyStr;
+          };
         };
       };
       gnome = {

@@ -237,7 +237,10 @@
                   background = ./files/desktop-backgrounds/virtualbox.jpg;
                   cinnamon = {
                     enable = true;
-                    theme = "Mint-Y-Orange";
+                    theme = {
+                      gtk = "Mint-Y-Orange";
+                      cursor = "Bibata-Original-Classic";
+                    };
                   };
                 };
                 # firefox.enable = true;
