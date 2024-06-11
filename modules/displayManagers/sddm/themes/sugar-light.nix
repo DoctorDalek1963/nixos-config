@@ -12,16 +12,20 @@ stdenv.mkDerivation {
     hash = "sha256-KddZtCTionZntQPD8ttXhHFLZl8b1NsawG9qbjuI1fc=";
   };
 
-  installPhase =
+  buildPhase =
     ''
-      mkdir -p $out
-      cp -Rv ./* $out/
+      sed -i 's/ForceHideCompletePassword=false/ForceHideCompletePassword=true/' theme.conf
     ''
     + (
       if background != null
       then ''
-        cp -v ${background} $out/Background.jpg
+        cp -v ${background} Background.jpg
       ''
       else ""
     );
+
+  installPhase = ''
+    mkdir -p $out
+    cp -Rv ./* $out/
+  '';
 }
