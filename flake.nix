@@ -230,7 +230,12 @@
                 };
 
                 desktopEnvironments.cinnamon.enable = true;
-                displayManagers.lightdm.enable = true;
+                displayManagers.sddm = {
+                  enable = true;
+                  theme = (nixpkgs.legacyPackages."x86_64-linux".callPackage
+                    ./modules/displayManagers/sddm/themes/sugar-light.nix {})
+                  {background = ./home-manager/files/desktop-backgrounds/virtualbox.jpg;};
+                };
               };
             }
           ];
