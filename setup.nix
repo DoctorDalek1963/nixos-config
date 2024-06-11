@@ -84,7 +84,9 @@ in {
       };
       sddm = {
         enable = defaultFalse;
-        # TODO: Handle theming
+        theme = mkOption {
+          type = types.nullOr types.package;
+        };
       };
     };
 
