@@ -84,6 +84,7 @@
                 terminalTools = {
                   theme = "catppuccin-macchiato";
                   useThemeInTerminalItself = true;
+                  yt-dlp = true;
                 };
 
                 firefox.enable = true;
@@ -182,6 +183,7 @@
                 terminalTools = {
                   theme = "catppuccin-macchiato";
                   useThemeInTerminalItself = true;
+                  yt-dlp = true;
                 };
 
                 firefox.enable = true;

@@ -93,6 +93,7 @@ in {
       sad = defaultTrue;
       sd = defaultTrue;
       tldr = defaultTrue;
+      yt-dlp = defaultFalse;
     };
 
     # === Desktop stuff

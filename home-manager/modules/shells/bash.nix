@@ -161,9 +161,6 @@ in {
           pmhttp = "python3 -m http.server";
           clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
 
-          youtube-dl-s = "youtube-dl --config-location ~/.config/youtube-dl/soundtracks.conf";
-          youtube-dl-a = "youtube-dl --config-location ~/.config/youtube-dl/albums.conf";
-
           rclone = "rclone --progress --bwlimit=\"09:00,256 23:00,off\"";
 
           resetwifi = "nmcli networking off && nmcli networking on";

@@ -25,7 +25,8 @@ in {
       ++ optItemList tt.hyperfine pkgs.hyperfine
       ++ optItemList tt.sad pkgs.sad
       ++ optItemList tt.sd pkgs.sd
-      ++ optItemList tt.tldr pkgs.tldr;
+      ++ optItemList tt.tldr pkgs.tldr
+      ++ optItemList tt.yt-dlp pkgs.yt-dlp;
 
     sessionVariables.EDITOR = nvimPath;
   };
