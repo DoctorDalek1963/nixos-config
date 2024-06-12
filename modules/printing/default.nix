@@ -14,14 +14,14 @@ in {
 
       users.groups.lp.members = cfg.users;
     })
-    (mkIf cfg.networkAutoDiscovery {
+    (mkIf (cfg.enable && cfg.networkAutoDiscovery) {
       services.avahi = {
         enable = true;
         nssmdns = true;
         openFirewall = true;
       };
     })
-    (mkIf cfg.scanning {
+    (mkIf (cfg.enable && cfg.scanning) {
       hardware.sane = {
         enable = true;
         extraBackends = [pkgs.sane-airscan];
@@ -30,7 +30,7 @@ in {
 
       users.groups.scanner.members = cfg.users;
     })
-    (mkIf cfg.specificPrinters.canonPixmaMG3250 {
+    (mkIf (cfg.enable && cfg.specificPrinters.canonPixmaMG3250) {
       services.printing.drivers = [pkgs.cnijfilter_4_00];
     })
   ];
