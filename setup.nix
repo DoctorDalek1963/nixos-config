@@ -103,6 +103,9 @@ in {
         enableProtonGE = defaultTrue;
       };
       lutris = defaultTrue;
+      emulators = {
+        ps3 = defaultTrue;
+      };
     };
 
     openRGB = {
