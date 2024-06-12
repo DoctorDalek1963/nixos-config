@@ -21,6 +21,7 @@
 
     ./modules/core.nix
     ./modules/activation.nix
+    ./modules/fonts.nix
 
     ./modules/shells
     ./modules/terminalTools
@@ -134,6 +135,12 @@ in {
     firefox = {
       enable = defaultFalse;
       enableExtensions = defaultTrue;
+    };
+
+    # === Fonts
+    fonts = {
+      hackNerdFont = defaultTrue;
+      microsoftFonts = defaultFalse;
     };
 
     # === Maths

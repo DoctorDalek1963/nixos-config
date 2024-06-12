@@ -21,8 +21,6 @@
     packages = with pkgs; [
       # wl-clipboard
       xclip
-
-      (nerdfonts.override {fonts = ["Hack"];})
     ];
 
     file = {
@@ -52,6 +50,10 @@
         "dashlane"
         "enhancer-for-youtube"
         "tampermonkey"
+
+        # Microsoft fonts
+        "corefonts"
+        "vista-fonts"
       ];
 
     permittedInsecurePackages = [];
@@ -68,6 +70,4 @@
   };
 
   targets.genericLinux.enable = !config.setup.isNixOS;
-
-  fonts.fontconfig.enable = true;
 }
