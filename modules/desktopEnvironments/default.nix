@@ -1,3 +1,3 @@
 {
-  imports = [./gnome];
+  imports = [./cinnamon.nix ./gnome];
 }

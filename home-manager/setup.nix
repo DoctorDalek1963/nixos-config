@@ -98,19 +98,34 @@ in {
 
     # === Desktop stuff
     desktopEnvironments = {
+      background = mkOption {
+        type = types.either types.path (types.submodule {
+          options = {
+            light = mkOption {type = types.path;};
+            dark = mkOption {type = types.path;};
+          };
+        });
+      };
+      cinnamon = {
+        enable = defaultFalse;
+        menuIcon = mkOption {
+          type = types.nullOr types.path;
+          default = null;
+        };
+        theme = {
+          cursor = mkOption {
+            type = types.nonEmptyStr;
+          };
+          gtk = mkOption {
+            type = types.nonEmptyStr;
+          };
+        };
+      };
       gnome = {
         enable = defaultFalse;
         enableExtensions = defaultTrue;
         theme = mkOption {
           type = types.enum valid-gnome-themes;
-        };
-        background = mkOption {
-          type = types.either types.path (types.submodule {
-            options = {
-              light = mkOption {type = types.path;};
-              dark = mkOption {type = types.path;};
-            };
-          });
         };
       };
     };

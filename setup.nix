@@ -65,6 +65,9 @@ in {
     };
 
     desktopEnvironments = {
+      cinnamon = {
+        enable = defaultFalse;
+      };
       gnome = {
         enable = defaultFalse;
         minimal = defaultTrue;
@@ -75,9 +78,15 @@ in {
       gdm = {
         enable = defaultFalse;
       };
+      lightdm = {
+        enable = defaultFalse;
+        # TODO: Handle theming and greeters
+      };
       sddm = {
         enable = defaultFalse;
-        # TODO: Handle theming
+        theme = mkOption {
+          type = types.nullOr types.package;
+        };
       };
     };
 

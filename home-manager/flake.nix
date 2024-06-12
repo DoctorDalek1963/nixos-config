@@ -72,12 +72,14 @@
                 hostname = "Alex-NixOS";
                 isNixOS = true;
 
-                desktopEnvironments.gnome = {
-                  enable = true;
-                  theme = "catppuccin-adaptive-macchiato-mauve";
+                desktopEnvironments = {
                   background = {
                     light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                     dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                  };
+                  gnome = {
+                    enable = true;
+                    theme = "catppuccin-adaptive-macchiato-mauve";
                   };
                 };
 
@@ -171,12 +173,14 @@
                 isNixOS = true;
                 isLaptop = true;
 
-                desktopEnvironments.gnome = {
-                  enable = true;
-                  theme = "catppuccin-adaptive-macchiato-mauve";
+                desktopEnvironments = {
                   background = {
                     light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
                     dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                  };
+                  gnome = {
+                    enable = true;
+                    theme = "catppuccin-adaptive-macchiato-mauve";
                   };
                 };
 
@@ -231,10 +235,16 @@
                 hostname = "VirtualBox-NixOS";
                 isNixOS = true;
 
-                desktopEnvironments.gnome = {
-                  enable = true;
-                  theme = "vimix-amethyst";
+                desktopEnvironments = {
                   background = ./files/desktop-backgrounds/virtualbox.jpg;
+                  cinnamon = {
+                    enable = true;
+                    menuIcon = ./files/icons/nix-snowflake-black.svg;
+                    theme = {
+                      gtk = "Mint-Y-Orange";
+                      cursor = "Bibata-Original-Classic";
+                    };
+                  };
                 };
                 # firefox.enable = true;
                 # rclone = {

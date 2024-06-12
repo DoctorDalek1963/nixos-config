@@ -52,8 +52,8 @@ if [[ -n "$password_files" ]]; then
 	done <<< "$password_files"
 fi
 
-echo "WARNING! The disks in ${TARGET_HOST} are about to get wiped"
-echo "         NixOS will be re-installed"
+echo "WARNING! All the disks on this machine are about to get wiped"
+echo "         NixOS will be re-installed and this machine will become ${TARGET_HOST}"
 echo "         This is a destructive operation"
 echo
 read -p "Are you sure? [y/N] " -n 1 -r

@@ -4,7 +4,9 @@
   config,
   ...
 }: let
-  inherit (config.setup.desktopEnvironments.gnome) background;
+  inherit (lib.hm.gvariant) mkTuple mkUint32;
+  inherit (config.setup.desktopEnvironments) background;
+
   light-path =
     if builtins.isPath background
     then background
@@ -13,10 +15,11 @@
     if builtins.isPath background
     then background
     else background.dark;
-in
-  with lib.hm.gvariant; {
-    config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
-      dconf.settings = {
+in {
+  config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
+    dconf = {
+      enable = true;
+      settings = {
         "org/gnome/desktop/applications/terminal" = {
           exec = "${pkgs.terminator}/bin/terminator";
           exec-arg = "-x";
@@ -219,4 +222,5 @@ in
         };
       };
     };
-  }
+  };
+}
