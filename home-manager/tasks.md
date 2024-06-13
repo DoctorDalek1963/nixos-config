@@ -1,4 +1,4 @@
-- Install weylus, Zotero, and octave in maths module
+- Install weylus and Zotero in maths module
 - xremap dd@ and ddd@ expansions
 - Use AirStatus to show airpod charge in status bar in GNOME on laptops
 - rm rclone logs in ExecStop
