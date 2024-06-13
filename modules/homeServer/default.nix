@@ -5,12 +5,15 @@
 }: let
   cfg = config.setup.homeServer;
 in {
-  imports = [./adguardhome ./homepage ./personalProjects ./tailscaleCerts.nix];
+  imports = [./adguardhome ./homepage ./mediaServer ./personalProjects ./tailscaleCerts.nix];
 
   config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
       group = "certs";
+
+      recommendedProxySettings = true;
+
       virtualHosts."${cfg.domainName}" = {
         kTLS = true;
         forceSSL = true;

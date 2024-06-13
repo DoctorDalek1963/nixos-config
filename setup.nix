@@ -136,6 +136,12 @@ in {
           dnsOverTls = port 853;
           dnsOverQuic = port 853;
         };
+
+        mediaServer = {
+          prowlarr = port 9696;
+          transmission = port 9091;
+        };
+
         personalProjects = {
           winter-wonderlights = {
             normal = port 23120;
@@ -145,8 +151,17 @@ in {
       };
 
       adguardhome.enable = defaultFalse;
+
       homeAutomation = {};
-      mediaServer = {};
+
+      mediaServer = {
+        enable = defaultFalse;
+        mediaRoot = mkOption {
+          type = types.nonEmptyStr;
+          default = "/data/media";
+        };
+      };
+
       personalProjects = {
         enable = defaultFalse;
         tictactoe = defaultTrue;

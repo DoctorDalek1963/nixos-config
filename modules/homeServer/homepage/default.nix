@@ -65,8 +65,46 @@
     if builtins.length list > 0
     then [{Infrastructure = list;}]
     else [];
+
+  mediaServices = let
+    list = lib.optionals cfg.mediaServer.enable [
+      {
+        "Transmission" = {
+          icon = "transmission";
+          href = "https://${cfg.domainName}/transmission";
+          description = "BitTorrent client";
+          widget = {
+            type = "transmission";
+            url = "http://localhost:${toString cfg.ports.mediaServer.transmission}";
+            username = config.services.transmission.settings.rpc-username;
+            password = config.services.transmission.settings.rpc-password;
+            rpc-url = "/transmission/";
+          };
+        };
+      }
+      {
+        "Prowlarr" = rec {
+          icon = "prowlarr";
+          href = "https://${cfg.domainName}/prowlarr";
+          description = "Torrent & Usenet indexer manager";
+          widget = {
+            type = "prowlarr";
+            url = href;
+            key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+          };
+        };
+      }
+    ];
+  in
+    if builtins.length list > 0
+    then [{Media = list;}]
+    else [];
 in {
   config = lib.mkIf cfg.enable {
+    sops.secrets."home-server/homepage.env" = {
+      mode = "0400";
+    };
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/" = {
         proxyPass = "http://localhost:${toString cfg.ports.homepage}";
@@ -74,6 +112,8 @@ in {
 
       homepage-dashboard = {
         enable = true;
+
+        environmentFile = config.sops.secrets."home-server/homepage.env".path;
 
         listenPort = cfg.ports.homepage;
         openFirewall = true;
@@ -96,7 +136,7 @@ in {
             }
           ]
           ++ personalProjectsBookmarks;
-        services = infraServices;
+        services = infraServices ++ mediaServices;
 
         settings = {headerStyle = "boxed";};
         widgets = [
