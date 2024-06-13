@@ -130,6 +130,7 @@
                   homeServer = {
                     enable = true;
                     domainName = "bert-nixos.triceratops-egret.ts.net";
+                    dataRoot = "/data";
 
                     adguardhome.enable = true;
 

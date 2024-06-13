@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkOption types;
 
   defaultTrue = mkOption {
@@ -119,6 +123,9 @@ in {
       domainName = mkOption {
         type = types.nonEmptyStr;
       };
+      dataRoot = mkOption {
+        type = types.nonEmptyStr;
+      };
 
       # All the ports used by different services
       ports = let
@@ -158,7 +165,7 @@ in {
         enable = defaultFalse;
         mediaRoot = mkOption {
           type = types.nonEmptyStr;
-          default = "/data/media";
+          default = "${config.homeServer.dataRoot}/media";
         };
       };
 
