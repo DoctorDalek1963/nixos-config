@@ -78,10 +78,6 @@ in {
       gdm = {
         enable = defaultFalse;
       };
-      lightdm = {
-        enable = defaultFalse;
-        # TODO: Handle theming and greeters
-      };
       sddm = {
         enable = defaultFalse;
         theme = mkOption {
