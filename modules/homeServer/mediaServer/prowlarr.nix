@@ -26,13 +26,11 @@ in {
       };
 
       # TODO: Add <UrlBase>prowlarr</UrlBase> to ${config.services.prowlarr.dataDir}/config.xml
-      # TODO: PR nixpkgs to bring parity with *arr to Prowlarr's options (user, group, dataDir)
 
       prowlarr = {
         enable = true;
-        # group = "media";
-
         openFirewall = true;
+        # dataDir = "/var/lib/prowlarr";
       };
     };
   };
