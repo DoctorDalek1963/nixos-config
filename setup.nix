@@ -165,7 +165,7 @@ in {
         enable = defaultFalse;
         mediaRoot = mkOption {
           type = types.nonEmptyStr;
-          default = "${config.homeServer.dataRoot}/media";
+          default = "${config.setup.homeServer.dataRoot}/media";
         };
       };
 
