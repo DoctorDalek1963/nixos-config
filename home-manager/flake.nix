@@ -132,7 +132,10 @@
                 username = "pi";
                 hostname = "Bert-NixOS";
                 isNixOS = true;
-                terminalTools.btop.enable = false;
+                terminalTools = {
+                  theme = "catppuccin-macchiato";
+                  btop.gpuSupport = false;
+                };
                 programming.miscTools.git-all = false;
               };
             }
