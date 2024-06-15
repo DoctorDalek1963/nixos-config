@@ -134,7 +134,10 @@
 
                     adguardhome.enable = true;
 
-                    mediaServer.enable = true;
+                    mediaServer = {
+                      enable = true;
+                      transmissionOvpn = "/etc/openvpn/ch-hotspotshield.ovpn";
+                    };
 
                     personalProjects = {
                       enable = true;

@@ -167,6 +167,10 @@ in {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/media";
         };
+
+        transmissionOvpn = mkOption {
+          type = types.nonEmptyStr;
+        };
       };
 
       personalProjects = {
