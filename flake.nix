@@ -136,7 +136,7 @@
 
                     mediaServer = {
                       enable = true;
-                      transmissionOvpnName = "ch-hotspotshield";
+                      transmissionOvpnName = "ch_hotspotshield";
                     };
 
                     personalProjects = {
@@ -164,7 +164,7 @@
                       enable = true;
                       vpns = [
                         {
-                          vpnName = "ch-hotspotshield";
+                          vpnName = "ch_hotspotshield";
                           users = ["pi"];
                         }
                       ];

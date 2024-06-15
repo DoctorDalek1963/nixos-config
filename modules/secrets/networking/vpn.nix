@@ -46,31 +46,31 @@ in {
 
     sops.secrets =
       {}
-      // optSet (vpnEnabled "ch-hotspotshield") {
-        "openvpn/ch-hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "ch_hotspotshield") {
+        "openvpn/ch_hotspotshield/user-pass" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/cert" = {
+        "openvpn/ch_hotspotshield/cert" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/key" = {
+        "openvpn/ch_hotspotshield/key" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/ca" = {
+        "openvpn/ch_hotspotshield/ca" = {
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "gb-hotspotshield") {
-        "openvpn/gb-hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "gb_hotspotshield") {
+        "openvpn/gb_hotspotshield/user-pass" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/cert" = {
+        "openvpn/gb_hotspotshield/cert" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/key" = {
+        "openvpn/gb_hotspotshield/key" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/ca" = {
+        "openvpn/gb_hotspotshield/ca" = {
           mode = "0644";
         };
       };
@@ -81,7 +81,7 @@ in {
     # https://support.hotspotshield.com/hc/en-us/articles/360046865972-How-do-I-install-Hotspot-Shield-on-OpenVPN-devices
     environment.etc = let
       build-hss-ovpn = country: remote: {
-        "openvpn/${country}-hotspotshield.ovpn".text = ''
+        "openvpn/${country}_hotspotshield.ovpn".text = ''
           client
           dev tun
           proto udp
@@ -100,19 +100,19 @@ in {
           reneg-sec 0
           remote-cert-tls server
           comp-noadapt
-          auth-user-pass ${config.sops.secrets."openvpn/${country}-hotspotshield/user-pass".path}
+          auth-user-pass ${config.sops.secrets."openvpn/${country}_hotspotshield/user-pass".path}
           auth sha256
           cipher AES-128-CBC
           verb 3
 
-          cert ${config.sops.secrets."openvpn/${country}-hotspotshield/cert".path}
-          key ${config.sops.secrets."openvpn/${country}-hotspotshield/key".path}
-          ca ${config.sops.secrets."openvpn/${country}-hotspotshield/ca".path}
+          cert ${config.sops.secrets."openvpn/${country}_hotspotshield/cert".path}
+          key ${config.sops.secrets."openvpn/${country}_hotspotshield/key".path}
+          ca ${config.sops.secrets."openvpn/${country}_hotspotshield/ca".path}
         '';
       };
     in
-      optSet (vpnEnabled "ch-hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
-      // optSet (vpnEnabled "gb-hotspotshield") (build-hss-ovpn "gb" "penfactory.us");
+      optSet (vpnEnabled "ch_hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
+      // optSet (vpnEnabled "gb_hotspotshield") (build-hss-ovpn "gb" "penfactory.us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {

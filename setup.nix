@@ -173,7 +173,7 @@ in {
           description = ''
             The unqualified name of the OpenVPN config file to be used for transmission.
 
-            All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh-hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb-hotspotshield.ovpn".
+            All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb_hotspotshield.ovpn".
           '';
         };
       };
@@ -247,11 +247,11 @@ in {
           });
           default = [
             {
-              vpnName = "ch-hotspotshield";
+              vpnName = "ch_hotspotshield";
               users = ["dyson"];
             }
             {
-              vpnName = "gb-hotspotshield";
+              vpnName = "gb_hotspotshield";
               users = ["dyson"];
             }
           ];
