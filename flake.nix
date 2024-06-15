@@ -136,7 +136,7 @@
 
                     mediaServer = {
                       enable = true;
-                      transmissionOvpn = "/etc/openvpn/ch-hotspotshield.ovpn";
+                      transmissionOvpnName = "ch-hotspotshield";
                     };
 
                     personalProjects = {

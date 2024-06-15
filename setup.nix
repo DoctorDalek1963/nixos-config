@@ -168,8 +168,13 @@ in {
           default = "${config.setup.homeServer.dataRoot}/media";
         };
 
-        transmissionOvpn = mkOption {
+        transmissionOvpnName = mkOption {
           type = types.nonEmptyStr;
+          description = ''
+            The unqualified name of the OpenVPN config file to be used for transmission.
+
+            All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh-hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb-hotspotshield.ovpn".
+          '';
         };
       };
 
