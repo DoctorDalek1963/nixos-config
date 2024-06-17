@@ -168,13 +168,22 @@ in {
           default = "${config.setup.homeServer.dataRoot}/media";
         };
 
-        transmissionOvpnName = mkOption {
-          type = types.nonEmptyStr;
-          description = ''
-            The unqualified name of the OpenVPN config file to be used for transmission.
+        transmission = {
+          ovpnName = mkOption {
+            type = types.nonEmptyStr;
+            description = ''
+              The unqualified name of the OpenVPN config file to be used for transmission.
 
-            All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb_hotspotshield.ovpn".
-          '';
+              All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb_hotspotshield.ovpn".
+            '';
+          };
+          thirdOctet = mkOption {
+            type = types.ints.between 1 255;
+            default = 1;
+            description = ''
+              We use a veth system to connect the normal internet to the network namespace used to keep transmission in a VPN. The veth interfaces have the IP addresses 192.168.X.1 and 192.168.X.2, where X is this thirdOctet option.
+            '';
+          };
         };
       };
 

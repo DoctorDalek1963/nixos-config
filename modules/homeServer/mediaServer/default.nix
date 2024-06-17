@@ -14,6 +14,7 @@ in {
     boot.postBootCommands = ''
       mkdir -p ${cfgMs.mediaRoot}
       chown root:media ${cfgMs.mediaRoot}
+      chmod -R a+r ${cfgMs.mediaRoot}
     '';
   };
 }

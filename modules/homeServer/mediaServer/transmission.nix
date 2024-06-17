@@ -10,7 +10,7 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/transmission" = {
-        proxyPass = "http://localhost:${toString cfg.ports.mediaServer.transmission}";
+        proxyPass = "http://192.168.${toString cfgMs.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
       };
 
       transmission = {
@@ -62,6 +62,7 @@ in {
       mkdir -p ${cfgMs.mediaRoot}/torrents/downloads
       mkdir -p ${cfgMs.mediaRoot}/torrents/incomplete
       chown -R transmission:media ${cfgMs.mediaRoot}/torrents
+      chmod -R a+r ${cfgMs.mediaRoot}/torrents
     '';
 
     # These service configs were mostly taken from
@@ -71,6 +72,8 @@ in {
     # the rest of the system has its traffic routed normally.
     systemd.services = let
       ip = "${pkgs.iproute2}/bin/ip";
+      openvpn-ns-service = "openvpn-ns@${cfgMs.transmission.ovpnName}.service";
+      vpn-netns-name = "vpn-${cfgMs.transmission.ovpnName}";
     in {
       "netns@" = {
         description = "%i network namespace";
@@ -125,7 +128,7 @@ in {
           PIDFile = "/run/openvpn/%i.pid";
           KillMode = "process";
           LimitNPROC = 10;
-          DeviceAllow = "/dev/null rw /dev/net/run rw";
+          DeviceAllow = ["/dev/null rw" "/dev/net/tun rw"];
           ProtectSystem = true;
           ProtectHome = true;
           RestartSec = "5s";
@@ -318,16 +321,39 @@ in {
         };
       };
 
-      transmission = let
-        netns-service = "openvpn-ns@${cfgMs.transmissionOvpnName}.service";
-      in {
-        bindsTo = [netns-service];
-        after = [netns-service];
-        requires = [netns-service];
+      create-transmission-veth = {
+        description = "Create a pair of veth interfaces to communicate with Transmission";
+        requires = [openvpn-ns-service];
+        after = [openvpn-ns-service];
+
+        serviceConfig = {
+          Type = "simple";
+          RestartSec = "5s";
+          Restart = "on-failure";
+
+          ExecStart = pkgs.writeShellScript "create-transmission-veth" ''
+            ${ip} link add veth1transm type veth peer veth2transm
+
+            ${ip} link set veth2transm netns ${vpn-netns-name}
+
+            ${ip} addr add 192.168.${toString cfgMs.transmission.thirdOctet}.1/24 dev veth1transm
+            ${ip} netns exec ${vpn-netns-name} ${ip} addr add 192.168.${toString cfgMs.transmission.thirdOctet}.2/24 dev veth2transm
+
+            ${ip} link set veth1transm up
+            ${ip} netns exec ${vpn-netns-name} ${ip} link set veth2transm up
+            ${ip} netns exec ${vpn-netns-name} ${ip} link set lo up
+          '';
+        };
+      };
+
+      transmission = {
+        bindsTo = [openvpn-ns-service];
+        after = [openvpn-ns-service "create-transmission-veth.service"];
+        requires = [openvpn-ns-service "create-transmission-veth.service"];
         serviceConfig = {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
-          NetworkNamespacePath = "/run/netns/vpn-${cfgMs.transmissionOvpnName}";
-          BindReadOnlyPaths = "/etc/netns/vpn-${cfgMs.transmissionOvpnName}/resolv.conf:/etc/resolv.conf";
+          NetworkNamespacePath = "/run/netns/${vpn-netns-name}";
+          BindReadOnlyPaths = ["/etc/netns/${vpn-netns-name}/resolv.conf:/etc/resolv.conf"];
         };
       };
     };

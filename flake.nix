@@ -136,7 +136,7 @@
 
                     mediaServer = {
                       enable = true;
-                      transmissionOvpnName = "ch_hotspotshield";
+                      transmission.ovpnName = "ch_hotspotshield";
                     };
 
                     personalProjects = {

@@ -75,7 +75,7 @@
           description = "BitTorrent client";
           widget = {
             type = "transmission";
-            url = "http://localhost:${toString cfg.ports.mediaServer.transmission}";
+            url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
             username = config.services.transmission.settings.rpc-username;
             password = config.services.transmission.settings.rpc-password;
             rpc-url = "/transmission/";
