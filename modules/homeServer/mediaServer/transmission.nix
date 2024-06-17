@@ -321,20 +321,13 @@ in {
       transmission = let
         netns-service = "openvpn-ns@${cfgMs.transmissionOvpnName}.service";
       in {
-        # bindsTo = [netns-service];
+        bindsTo = [netns-service];
         after = [netns-service];
         requires = [netns-service];
-        # unitConfig.JoinsNamespaceOf = netns-service;
-        serviceConfig = let
-          cfgT = config.services.transmission;
-          originalExecStart = "${cfgT.package}/bin/transmission-daemon -f -g ${cfgT.home}/.config/transmission-daemon ${lib.escapeShellArgs cfgT.extraFlags}";
-        in {
-          ExecStart = lib.mkForce "${ip} netns exec vpn-${cfgMs.transmissionOvpnName} ${originalExecStart}";
-          # ExecStartPre = [
-          #   "${pkgs.iproute}/bin/ip addr"
-          #   "${pkgs.curl}/bin/curl icanhazip.com"
-          # ];
-          # PrivateNetwork = true;
+        serviceConfig = {
+          ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
+          NetworkNamespacePath = "/run/netns/vpn-${cfgMs.transmissionOvpnName}";
+          BindReadOnlyPaths = "/etc/netns/vpn-${cfgMs.transmissionOvpnName}/resolv.conf:/etc/resolv.conf";
         };
       };
     };
