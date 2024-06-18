@@ -67,34 +67,48 @@
     else [];
 
   mediaServices = let
-    list = lib.optionals cfg.mediaServer.enable [
-      {
-        "Transmission" = {
-          icon = "transmission";
-          href = "https://${cfg.domainName}/transmission";
-          description = "BitTorrent client";
-          widget = {
-            type = "transmission";
-            url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
-            username = config.services.transmission.settings.rpc-username;
-            password = config.services.transmission.settings.rpc-password;
-            rpc-url = "/transmission/";
+    list = lib.optionals cfg.mediaServer.enable (
+      [
+        {
+          "Transmission" = {
+            icon = "transmission";
+            href = "https://${cfg.domainName}/transmission";
+            description = "BitTorrent client";
+            widget = {
+              type = "transmission";
+              url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
+              username = config.services.transmission.settings.rpc-username;
+              password = config.services.transmission.settings.rpc-password;
+              rpc-url = "/transmission/";
+            };
           };
-        };
-      }
-      {
-        "Prowlarr" = rec {
-          icon = "prowlarr";
-          href = "https://${cfg.domainName}/prowlarr";
-          description = "Torrent & Usenet indexer manager";
+        }
+        {
+          "Prowlarr" = rec {
+            icon = "prowlarr";
+            href = "https://${cfg.domainName}/prowlarr";
+            description = "Torrent & Usenet indexer manager";
+            widget = {
+              type = "prowlarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            };
+          };
+        }
+      ]
+      ++ (lib.optional cfg.mediaServer.music {
+        "Lidarr" = rec {
+          icon = "lidarr";
+          href = "https://${cfg.domainName}/lidarr";
+          description = "Music manager";
           widget = {
-            type = "prowlarr";
+            type = "lidarr";
             url = href;
-            key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
           };
         };
-      }
-    ];
+      })
+    );
   in
     if builtins.length list > 0
     then [{Media = list;}]

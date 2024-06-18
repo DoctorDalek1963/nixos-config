@@ -6,7 +6,7 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 in {
-  imports = [./prowlarr.nix ./transmission.nix];
+  imports = [./music ./prowlarr.nix ./transmission.nix];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     users.groups.media = {};

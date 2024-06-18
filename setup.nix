@@ -145,6 +145,7 @@ in {
         };
 
         mediaServer = {
+          lidarr = port 8686;
           prowlarr = port 9696;
           transmission = port 9091;
         };
@@ -167,6 +168,8 @@ in {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/media";
         };
+
+        music = defaultTrue;
 
         transmission = {
           ovpnName = mkOption {
