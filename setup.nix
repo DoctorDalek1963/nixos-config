@@ -183,7 +183,7 @@ in {
           };
           thirdOctet = mkOption {
             type = types.ints.between 1 255;
-            default = 1;
+            default = 5;
             description = ''
               We use a veth system to connect the normal internet to the network namespace used to keep transmission in a VPN. The veth interfaces have the IP addresses 192.168.X.1 and 192.168.X.2, where X is this thirdOctet option.
             '';
