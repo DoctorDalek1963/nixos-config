@@ -290,10 +290,6 @@
         # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
         # for all the available hooks and options
         pre-commit = {
-          # One of the hooks runs `nix flake check` on this flake, so we don't
-          # want to recurse infinitely
-          check.enable = false;
-
           settings.hooks = {
             check-added-large-files.enable = true;
             check-merge-conflicts.enable = true;
@@ -306,23 +302,6 @@
             alejandra.enable = true;
             deadnix.enable = true;
             statix.enable = true;
-
-            nixos-flake-check = {
-              enable = true;
-              name = "nixos flake check";
-              entry = "nix flake check";
-              files = ''.*\.(nix|lock)$'';
-              pass_filenames = false;
-              stages = ["pre-push"];
-            };
-            hm-flake-check = {
-              enable = true;
-              name = "home-manager flake check";
-              entry = "nix flake check ./home-manager";
-              files = ''.*\.(nix|lock)$'';
-              pass_filenames = false;
-              stages = ["pre-push"];
-            };
           };
         };
       };

@@ -1,0 +1,32 @@
+name: Check the flakes
+
+on: push
+
+jobs:
+  check-nixos-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nixbuild/nix-quick-install-action@v27
+
+      - uses: cachix/cachix-action@v14
+        with:
+          name: doctordalek1963
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: Check the NixOS flake
+        run: nix flake check . --print-build-logs --keep-going
+
+  check-home-manager-flake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nixbuild/nix-quick-install-action@v27
+
+      - uses: cachix/cachix-action@v14
+        with:
+          name: doctordalek1963
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: Check the home-manager flake
+        run: nix flake check ./home-manager --print-build-logs --keep-going
