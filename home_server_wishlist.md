@@ -15,11 +15,8 @@
 # Media
 - [Radarr](https://radarr.video/) for movies
 - [Sonarr](https://sonarr.tv/) for TV shows
-- [Lidarr](https://lidarr.audio/) for music
 - [Bazarr](https://bazarr.media/) for subtitles
 - [Readarr](https://readarr.com/) for e-books
-- [Prowlarr](https://prowlarr.com/) for general tracker management
-- [Deluge](https://deluge-torrent.org/) for torrenting
 - [Jellyfin](https://jellyfin.org/) for media streaming
 - [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) for media requests
 - [Navidrome](https://github.com/navidrome/navidrome) for music streaming
