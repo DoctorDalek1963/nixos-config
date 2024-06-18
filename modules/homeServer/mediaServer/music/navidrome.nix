@@ -25,7 +25,7 @@ in {
 
           DefaultTheme = "Auto";
           FFmpegPath = "${pkgs.ffmpeg}/bin/ffmpeg";
-          ScanSchedule = "@every 1h";
+          ScanSchedule = "@every 15m";
         };
       };
     };
