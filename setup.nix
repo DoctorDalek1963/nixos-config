@@ -146,6 +146,7 @@ in {
 
         mediaServer = {
           lidarr = port 8686;
+          navidrome = port 4533;
           prowlarr = port 9696;
           transmission = port 9091;
         };

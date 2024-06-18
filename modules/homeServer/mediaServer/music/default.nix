@@ -1,3 +1,3 @@
 {
-  imports = [./lidarr.nix];
+  imports = [./lidarr.nix ./navidrome.nix];
 }

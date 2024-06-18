@@ -96,18 +96,34 @@
           };
         }
       ]
-      ++ (lib.optional cfg.mediaServer.music {
-        "Lidarr" = rec {
-          icon = "lidarr";
-          href = "https://${cfg.domainName}/lidarr";
-          description = "Music manager";
-          widget = {
-            type = "lidarr";
-            url = href;
-            key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+      ++ (lib.optionals cfg.mediaServer.music [
+        {
+          "Lidarr" = rec {
+            icon = "lidarr";
+            href = "https://${cfg.domainName}/lidarr";
+            description = "Music manager";
+            widget = {
+              type = "lidarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+            };
           };
-        };
-      })
+        }
+        {
+          "Navidrome" = rec {
+            icon = "navidrome";
+            href = "https://${cfg.domainName}/navidrome";
+            description = "Music streaming";
+            widget = {
+              type = "navidrome";
+              url = href;
+              user = "admin";
+              token = "4d1618495ed3495dcb95d7d8511e7717";
+              salt = "gt8ou69prf";
+            };
+          };
+        }
+      ])
     );
   in
     if builtins.length list > 0
