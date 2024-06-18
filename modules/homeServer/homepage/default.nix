@@ -168,7 +168,42 @@ in {
           ++ personalProjectsBookmarks;
         services = infraServices ++ mediaServices;
 
-        settings = {headerStyle = "boxed";};
+        settings = {
+          headerStyle = "boxed";
+          iconStyle = "theme";
+
+          layout = [
+            {
+              Media = {
+                style = "row";
+                columns = 4;
+                icon = "si-jellyfin";
+              };
+            }
+            {
+              Infrastructure = {
+                style = "row";
+                columns = 2;
+                icon = "mdi-server";
+              };
+            }
+            {
+              "Admin tools" = {
+                style = "row";
+                columns = 2;
+                icon = "mdi-cog";
+              };
+            }
+            {
+              "Personal projects" = {
+                style = "row";
+                columns = 2;
+                icon = "mdi-account-wrench";
+              };
+            }
+          ];
+        };
+
         widgets = [
           {
             search = {
