@@ -352,6 +352,9 @@ in {
         requires = [openvpn-ns-service "create-transmission-veth.service"];
         serviceConfig = {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
+          RestartSec = "5s";
+          Restart = "on-failure";
+
           NetworkNamespacePath = "/run/netns/${vpn-netns-name}";
           BindReadOnlyPaths = ["/etc/netns/${vpn-netns-name}/resolv.conf:/etc/resolv.conf"];
         };
