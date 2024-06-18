@@ -25,13 +25,16 @@ in {
         };
       };
 
-      # TODO: Add <UrlBase>prowlarr</UrlBase> to ${config.services.prowlarr.dataDir}/config.xml
-
       prowlarr = {
         enable = true;
         openFirewall = true;
         # dataDir = "/var/lib/prowlarr";
       };
+    };
+
+    systemd.services.prowlarr = {
+      after = ["set-servarr-configs.service"];
+      requires = ["set-servarr-configs.service"];
     };
   };
 }

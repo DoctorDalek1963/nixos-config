@@ -32,6 +32,11 @@ in {
       };
     };
 
+    systemd.services.lidarr = {
+      after = ["set-servarr-configs.service"];
+      requires = ["set-servarr-configs.service"];
+    };
+
     boot.postBootCommands = ''
       mkdir -p ${cfgMs.mediaRoot}/music
       chown -R lidarr:media ${cfgMs.mediaRoot}/music
