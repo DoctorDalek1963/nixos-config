@@ -52,7 +52,7 @@
   infraServices = let
     list = optList cfg.adguardhome.enable {
       "AdGuard Home" = rec {
-        icon = "adguard-home";
+        icon = "adguard-home.svg";
         href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
         description = "DNS-level ad blocker";
         widget = {
@@ -71,7 +71,7 @@
       [
         {
           "Transmission" = {
-            icon = "transmission";
+            icon = "transmission.svg";
             href = "https://${cfg.domainName}/transmission";
             description = "BitTorrent client";
             widget = {
@@ -85,7 +85,7 @@
         }
         {
           "Prowlarr" = rec {
-            icon = "prowlarr";
+            icon = "prowlarr.svg";
             href = "https://${cfg.domainName}/prowlarr";
             description = "Torrent & Usenet indexer manager";
             widget = {
@@ -99,7 +99,7 @@
       ++ (lib.optionals cfg.mediaServer.music [
         {
           "Lidarr" = rec {
-            icon = "lidarr";
+            icon = "lidarr.svg";
             href = "https://${cfg.domainName}/lidarr";
             description = "Music manager";
             widget = {
@@ -111,7 +111,7 @@
         }
         {
           "Navidrome" = rec {
-            icon = "navidrome";
+            icon = "navidrome.svg";
             href = "https://${cfg.domainName}/navidrome";
             description = "Music streaming";
             widget = {
@@ -156,7 +156,7 @@ in {
                   Tailscale = [
                     {
                       abbr = "TS";
-                      icon = "tailscale";
+                      icon = "tailscale.svg";
                       href = "https://login.tailscale.com/admin/machines";
                       description = "";
                     }
