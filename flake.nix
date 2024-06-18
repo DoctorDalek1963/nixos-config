@@ -290,6 +290,11 @@
         # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
         # for all the available hooks and options
         pre-commit = {
+          # This repo contains some large images and patch files with
+          # necessary whitespace "errors", so we don't want to run the
+          # pre-commit hooks on every file when checking the flake
+          check.enable = false;
+
           settings.hooks = {
             check-added-large-files.enable = true;
             check-merge-conflicts.enable = true;
