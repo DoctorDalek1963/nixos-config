@@ -137,6 +137,19 @@
             };
           };
         }
+        {
+          "Calibre" = rec {
+            icon = "calibre.svg";
+            href = "https://${cfg.domainName}/calibre";
+            description = "Digital library";
+            widget = {
+              type = "calibreweb";
+              url = href;
+              username = "admin";
+              password = "admin123";
+            };
+          };
+        }
       ])
     );
   in

@@ -36,13 +36,5 @@ in {
       after = ["set-servarr-configs.service"];
       requires = ["set-servarr-configs.service"];
     };
-
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/books
-      chown -R readarr:media ${cfgMs.mediaRoot}/books
-
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/books
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/books
-    '';
   };
 }

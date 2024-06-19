@@ -146,6 +146,10 @@ in {
         };
 
         mediaServer = {
+          calibre = {
+            server = port 8082;
+            web = port 8083;
+          };
           lidarr = port 8686;
           navidrome = port 4533;
           prowlarr = port 9696;
