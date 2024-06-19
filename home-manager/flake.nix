@@ -111,6 +111,7 @@
                   hexchat = true;
                   obsidian = true;
                   rustdesk = true;
+                  supersonic = true;
                   vlc = true;
                   xremap = true;
                 };
@@ -216,6 +217,7 @@
                   hexchat = true;
                   obsidian = true;
                   rustdesk = true;
+                  supersonic = true;
                   vlc = true;
                   xremap = true;
                 };

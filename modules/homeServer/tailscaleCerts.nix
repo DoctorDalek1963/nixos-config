@@ -41,6 +41,7 @@ in {
           Group = "certs";
         };
         after = ["network.target" "network-online.target"];
+        wants = ["network-online.target"];
       };
       timers.tailscale-certificates = {
         timerConfig = {

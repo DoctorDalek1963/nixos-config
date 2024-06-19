@@ -147,6 +147,7 @@ in {
     maths = {
       enable = defaultFalse;
 
+      octave = defaultTrue;
       sage = defaultTrue;
       tikzit = defaultTrue;
     };
@@ -158,6 +159,7 @@ in {
       hexchat = defaultFalse;
       obsidian = defaultFalse;
       rustdesk = defaultFalse;
+      supersonic = defaultFalse;
       vlc = defaultFalse;
       xremap = defaultFalse;
       zoom = defaultFalse;
