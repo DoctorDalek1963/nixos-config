@@ -6,11 +6,11 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 in {
-  config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
+  config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
-        "/lidarr" = {
-          proxyPass = "http://localhost:${toString cfg.ports.mediaServer.lidarr}";
+        "/readarr" = {
+          proxyPass = "http://localhost:${toString cfg.ports.mediaServer.readarr}";
           extraConfig = ''
             proxy_redirect off;
             proxy_http_version 1.1;
@@ -19,30 +19,30 @@ in {
           '';
         };
 
-        "~ /lidarr/api" = {
-          proxyPass = "http://localhost:${toString cfg.ports.mediaServer.lidarr}";
+        "~ /readarr/api" = {
+          proxyPass = "http://localhost:${toString cfg.ports.mediaServer.readarr}";
           extraConfig = "auth_basic off;";
         };
       };
 
-      lidarr = {
+      readarr = {
         enable = true;
         group = "media";
         openFirewall = true;
       };
     };
 
-    systemd.services.lidarr = {
+    systemd.services.readarr = {
       after = ["set-servarr-configs.service"];
       requires = ["set-servarr-configs.service"];
     };
 
     boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/music
-      chown -R lidarr:media ${cfgMs.mediaRoot}/music
+      mkdir -p ${cfgMs.mediaRoot}/books
+      chown -R readarr:media ${cfgMs.mediaRoot}/books
 
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/music
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/music
+      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/books
+      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/books
     '';
   };
 }

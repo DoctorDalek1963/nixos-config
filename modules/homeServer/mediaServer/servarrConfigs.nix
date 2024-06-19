@@ -38,8 +38,8 @@
   servarrTemplate = name: {
     Port = cfg.ports.mediaServer."${name}";
     ApiKey = "$HOMEPAGE_VAR_${lib.strings.toUpper name}_KEY";
-    AuthenticationMethod = "Basic";
-    AuthenticationRequired = "Enabled";
+    AuthenticationMethod = "None";
+    AuthenticationRequired = "Disabled";
     UrlBase = "${name}";
     InstanceName = "${toTitleCase name}";
   };
@@ -52,8 +52,14 @@
     + (
       lib.strings.concatStringsSep "\n"
       (
-        lib.optional cfgMs.music
-        "${yq} -i ${shConfExpr (servarrTemplate "lidarr")} ${config.services.lidarr.dataDir}/config.xml"
+        (
+          lib.optional cfgMs.music
+          "${yq} -i ${shConfExpr (servarrTemplate "lidarr")} ${config.services.lidarr.dataDir}/config.xml"
+        )
+        ++ (
+          lib.optional cfgMs.books
+          "${yq} -i ${shConfExpr (servarrTemplate "readarr")} ${config.services.readarr.dataDir}/config.xml"
+        )
       )
     ));
 in {

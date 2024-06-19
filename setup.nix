@@ -148,6 +148,7 @@ in {
           lidarr = port 8686;
           navidrome = port 4533;
           prowlarr = port 9696;
+          readarr = port 8787;
           transmission = port 9091;
         };
 
@@ -170,6 +171,7 @@ in {
           default = "${config.setup.homeServer.dataRoot}/media";
         };
 
+        books = defaultTrue;
         music = defaultTrue;
 
         transmission = {
