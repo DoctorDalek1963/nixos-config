@@ -120,6 +120,7 @@ in {
     # === Home server
     homeServer = {
       enable = defaultFalse;
+
       domainName = mkOption {
         type = types.nonEmptyStr;
       };
@@ -140,8 +141,8 @@ in {
         adguardhome = {
           http = port 3000;
           https = port 3001;
-          dnsOverTls = port 853;
-          dnsOverQuic = port 853;
+          dnsOverTls = port 853; # TCP
+          dnsOverQuic = port 853; # UDP
         };
 
         mediaServer = {
@@ -166,6 +167,7 @@ in {
 
       mediaServer = {
         enable = defaultFalse;
+
         mediaRoot = mkOption {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/media";
@@ -195,6 +197,7 @@ in {
 
       personalProjects = {
         enable = defaultFalse;
+
         tictactoe = defaultTrue;
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
