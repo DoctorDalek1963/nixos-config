@@ -38,8 +38,8 @@
   servarrTemplate = name: {
     Port = cfg.ports.mediaServer."${name}";
     ApiKey = "$HOMEPAGE_VAR_${lib.strings.toUpper name}_KEY";
-    AuthenticationMethod = "None";
-    AuthenticationRequired = "Disabled";
+    AuthenticationMethod = "Basic";
+    AuthenticationRequired = "Enabled";
     UrlBase = "${name}";
     InstanceName = "${toTitleCase name}";
   };
