@@ -27,7 +27,6 @@ in {
 
       prowlarr = {
         enable = true;
-        openFirewall = true;
         # dataDir = "/var/lib/prowlarr";
       };
     };

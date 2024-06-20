@@ -171,9 +171,7 @@ in {
         enable = true;
 
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
-
         listenPort = cfg.ports.homepage;
-        openFirewall = true;
 
         bookmarks = personalProjectsBookmarks;
         services = infraServices ++ mediaServices;

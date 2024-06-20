@@ -16,7 +16,6 @@ in {
       navidrome = {
         enable = true;
         group = "media";
-        openFirewall = true;
 
         settings = {
           Port = cfg.ports.mediaServer.navidrome;
