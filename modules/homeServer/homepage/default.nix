@@ -175,24 +175,7 @@ in {
         listenPort = cfg.ports.homepage;
         openFirewall = true;
 
-        bookmarks =
-          [
-            {
-              "Admin tools" = [
-                {
-                  Tailscale = [
-                    {
-                      abbr = "TS";
-                      icon = "tailscale.svg";
-                      href = "https://login.tailscale.com/admin/machines";
-                      description = "";
-                    }
-                  ];
-                }
-              ];
-            }
-          ]
-          ++ personalProjectsBookmarks;
+        bookmarks = personalProjectsBookmarks;
         services = infraServices ++ mediaServices;
 
         settings = {
