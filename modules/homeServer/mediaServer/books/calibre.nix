@@ -74,7 +74,6 @@ in {
               ${pkgs.calibre}/bin/calibredb restore_database --library-path="${libraryPath}" --really-do-it
 
               chown -R calibre-server:media "${libraryPath}"
-              chmod -R g+w "${libraryPath}"
             fi
           ''}";
         };

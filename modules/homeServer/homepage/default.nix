@@ -96,6 +96,56 @@
           };
         }
       ]
+      ++ (
+        lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
+        {
+          "Jellyfin" = rec {
+            icon = "jellyfin.svg";
+            href = "https://${cfg.domainName}/jellyfin";
+            description = "Movie and TV streaming";
+            widget = {
+              type = "jellyfin";
+              url = href;
+              key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+              enableBlocks = true;
+              enableNowPlaying = true;
+              enableUser = true;
+              showEpisodeNumber = true;
+              expandOneStreamToTwoRows = true;
+            };
+          };
+        }
+      )
+      ++ (
+        lib.optional cfg.mediaServer.movies
+        {
+          "Radarr" = rec {
+            icon = "radarr.svg";
+            href = "https://${cfg.domainName}/radarr";
+            description = "Movie manager";
+            widget = {
+              type = "radarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+            };
+          };
+        }
+      )
+      ++ (
+        lib.optional cfg.mediaServer.telly
+        {
+          "Sonarr" = rec {
+            icon = "sonarr.svg";
+            href = "https://${cfg.domainName}/sonarr";
+            description = "TV manager";
+            widget = {
+              type = "sonarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+            };
+          };
+        }
+      )
       ++ (lib.optionals cfg.mediaServer.music [
         {
           "Lidarr" = rec {

@@ -146,10 +146,18 @@ in {
             server = port 8082;
             web = port 8083;
           };
-          lidarr = port 8686;
+          jellyfin = {
+            http = port 8096;
+            https = port 8920;
+          };
           navidrome = port 4533;
-          prowlarr = port 9696;
+
+          lidarr = port 8686;
+          radarr = port 7878;
           readarr = port 8787;
+          sonarr = port 8989;
+
+          prowlarr = port 9696;
           transmission = port 9091;
         };
 
@@ -175,6 +183,8 @@ in {
 
         books = defaultTrue;
         music = defaultTrue;
+        movies = defaultTrue;
+        telly = defaultTrue;
 
         transmission = {
           ovpnName = mkOption {

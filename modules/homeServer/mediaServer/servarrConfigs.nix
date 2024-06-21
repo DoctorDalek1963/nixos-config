@@ -60,6 +60,14 @@
           lib.optional cfgMs.books
           "${yq} -i ${shConfExpr (servarrTemplate "readarr")} ${config.services.readarr.dataDir}/config.xml"
         )
+        ++ (
+          lib.optional cfgMs.movies
+          "${yq} -i ${shConfExpr (servarrTemplate "radarr")} ${config.services.radarr.dataDir}/config.xml"
+        )
+        ++ (
+          lib.optional cfgMs.telly
+          "${yq} -i ${shConfExpr (servarrTemplate "sonarr")} ${config.services.sonarr.dataDir}/config.xml"
+        )
       )
     ));
 in {
