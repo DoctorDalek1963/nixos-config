@@ -19,12 +19,14 @@ in {
       mutableSettings = true;
       settings = {
         dns.bind_hosts = ["0.0.0.0"];
+
         filtering = {
           filtering_enabled = true;
           parental_enabled = false;
           safebrowsing_enabled = true;
           safe_search.enabled = false;
         };
+
         tls = {
           enabled = true;
           server_name = "${cfg.domainName}";
@@ -36,6 +38,16 @@ in {
 
           certificate_path = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
           private_key_path = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
+        };
+
+        statistics = {
+          enabled = true;
+          interval = "168h"; # 7 days
+        };
+
+        querylog = {
+          enabled = true;
+          interval = "720h"; # 30 days
         };
 
         filters = [
