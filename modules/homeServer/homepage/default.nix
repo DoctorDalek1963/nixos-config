@@ -68,53 +68,38 @@
 
   mediaServices = let
     list = lib.optionals cfg.mediaServer.enable (
-      [
-        {
-          "Transmission" = {
-            icon = "transmission.svg";
-            href = "https://${cfg.domainName}/transmission";
-            description = "BitTorrent client";
-            widget = {
-              type = "transmission";
-              url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
-              username = config.services.transmission.settings.rpc-username;
-              password = config.services.transmission.settings.rpc-password;
-              rpc-url = "/transmission/";
+      (
+        lib.optionals (cfg.mediaServer.movies || cfg.mediaServer.telly) [
+          {
+            "Jellyfin" = rec {
+              icon = "jellyfin.svg";
+              href = "https://${cfg.domainName}/jellyfin";
+              description = "Movie and TV streaming";
+              widget = {
+                type = "jellyfin";
+                url = href;
+                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+                enableBlocks = true;
+                enableNowPlaying = true;
+                enableUser = true;
+                showEpisodeNumber = true;
+                expandOneStreamToTwoRows = true;
+              };
             };
-          };
-        }
-        {
-          "Prowlarr" = rec {
-            icon = "prowlarr.svg";
-            href = "https://${cfg.domainName}/prowlarr";
-            description = "Torrent & Usenet indexer manager";
-            widget = {
-              type = "prowlarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
-            };
-          };
-        }
-      ]
-      ++ (
-        lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
-        {
-          "Jellyfin" = rec {
-            icon = "jellyfin.svg";
-            href = "https://${cfg.domainName}/jellyfin";
-            description = "Movie and TV streaming";
-            widget = {
-              type = "jellyfin";
-              url = href;
-              key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-              enableBlocks = true;
-              enableNowPlaying = true;
-              enableUser = true;
-              showEpisodeNumber = true;
-              expandOneStreamToTwoRows = true;
-            };
-          };
-        }
+          }
+          # {
+          #   "Jellyseerr" = rec {
+          #     icon = "jellyseerr.svg";
+          #     href = "https://${cfg.domainName}/jellyseerr";
+          #     description = "Request management";
+          #     widget = {
+          #       type = "jellyseerr";
+          #       url = href;
+          #       key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
+          #     };
+          #   };
+          # }
+        ]
       )
       ++ (
         lib.optional cfg.mediaServer.movies
@@ -148,18 +133,6 @@
       )
       ++ (lib.optionals cfg.mediaServer.music [
         {
-          "Lidarr" = rec {
-            icon = "lidarr.svg";
-            href = "https://${cfg.domainName}/lidarr";
-            description = "Music manager";
-            widget = {
-              type = "lidarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-            };
-          };
-        }
-        {
           "Navidrome" = rec {
             icon = "navidrome.svg";
             href = "https://${cfg.domainName}/navidrome";
@@ -173,20 +146,20 @@
             };
           };
         }
-      ])
-      ++ (lib.optionals cfg.mediaServer.books [
         {
-          "Readarr" = rec {
-            icon = "readarr.svg";
-            href = "https://${cfg.domainName}/readarr";
-            description = "E-book and audiobook manager";
+          "Lidarr" = rec {
+            icon = "lidarr.svg";
+            href = "https://${cfg.domainName}/lidarr";
+            description = "Music manager";
             widget = {
-              type = "readarr";
+              type = "lidarr";
               url = href;
-              key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
             };
           };
         }
+      ])
+      ++ (lib.optionals cfg.mediaServer.books [
         {
           "Calibre" = rec {
             icon = "calibre.svg";
@@ -200,7 +173,62 @@
             };
           };
         }
+        {
+          "Readarr" = rec {
+            icon = "readarr.svg";
+            href = "https://${cfg.domainName}/readarr";
+            description = "E-book and audiobook manager";
+            widget = {
+              type = "readarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+            };
+          };
+        }
       ])
+      ++ [
+        {
+          "Transmission" = {
+            icon = "transmission.svg";
+            href = "https://${cfg.domainName}/transmission";
+            description = "BitTorrent client";
+            widget = {
+              type = "transmission";
+              url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
+              username = config.services.transmission.settings.rpc-username;
+              password = config.services.transmission.settings.rpc-password;
+              rpc-url = "/transmission/";
+            };
+          };
+        }
+        {
+          "Prowlarr" = rec {
+            icon = "prowlarr.svg";
+            href = "https://${cfg.domainName}/prowlarr";
+            description = "Torrent & Usenet indexer manager";
+            widget = {
+              type = "prowlarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
+            };
+          };
+        }
+      ]
+      # ++ (
+      #   lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
+      #   {
+      #     "Bazarr" = rec {
+      #       icon = "bazarr.svg";
+      #       href = "https://${cfg.domainName}/bazarr";
+      #       description = "Subtitle manager";
+      #       widget = {
+      #         type = "bazarr";
+      #         url = href;
+      #         key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+      #       };
+      #     };
+      #   }
+      # )
     );
   in
     if builtins.length list > 0
@@ -246,13 +274,6 @@ in {
               };
             }
             {
-              "Admin tools" = {
-                style = "row";
-                columns = 2;
-                icon = "mdi-cog";
-              };
-            }
-            {
               "Personal projects" = {
                 style = "row";
                 columns = 2;
@@ -270,11 +291,22 @@ in {
             };
           }
           {
-            resources = {
-              label = "system";
-              cpu = true;
-              memory = true;
-            };
+            resources =
+              {
+                label = "system";
+                cpu = true;
+                memory = true;
+                cputemp = true;
+                units = "metric";
+                uptime = true;
+              }
+              // {
+                "Bert-NixOS" = {
+                  tempmin = 50;
+                  tempmax = 85;
+                };
+              }
+              .${config.setup.hostname};
           }
           {
             resources = {
