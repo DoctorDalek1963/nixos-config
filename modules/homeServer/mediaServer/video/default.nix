@@ -1,3 +1,3 @@
 {
-  imports = [./jellyfin.nix ./radarr.nix ./sonarr.nix ./bazarr.nix];
+  imports = [./jellyfin.nix ./jellyseerr.nix ./radarr.nix ./sonarr.nix ./bazarr.nix];
 }

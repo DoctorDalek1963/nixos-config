@@ -14,8 +14,5 @@
 - [Home Assistant](https://www.home-assistant.io/) and all its features (voice control, etc.)
 - [ESPHome](https://esphome.io/) for custom automations (heating management, setting the burglar alarm when the house is empty, etc.)
 
-# Media
-- [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) for media requests
-
 # Misc
 - [Mealie](https://github.com/mealie-recipes/mealie) for recipes and meal planning?

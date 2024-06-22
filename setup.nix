@@ -150,6 +150,7 @@ in {
             http = port 8096;
             https = port 8920;
           };
+          jellyseerr = port 5055;
           navidrome = port 4533;
 
           bazarr = port 6767;

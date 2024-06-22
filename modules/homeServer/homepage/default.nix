@@ -87,18 +87,18 @@
               };
             };
           }
-          # {
-          #   "Jellyseerr" = rec {
-          #     icon = "jellyseerr.svg";
-          #     href = "https://${cfg.domainName}/jellyseerr";
-          #     description = "Request management";
-          #     widget = {
-          #       type = "jellyseerr";
-          #       url = href;
-          #       key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
-          #     };
-          #   };
-          # }
+          {
+            "Jellyseerr" = rec {
+              icon = "jellyseerr.svg";
+              href = "https://${cfg.domainName}/jellyseerr";
+              description = "Request management";
+              widget = {
+                type = "jellyseerr";
+                url = href;
+                key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
+              };
+            };
+          }
         ]
       )
       ++ (
