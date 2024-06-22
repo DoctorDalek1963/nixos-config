@@ -14,7 +14,6 @@
     "set-servarr-date-formats.service"
   ];
 in {
-  # TODO: Add all servarr apps to prowlarr (maybe manage tags here as well)
   imports = [
     ./addTransmission.nix
     ./addUser.nix
