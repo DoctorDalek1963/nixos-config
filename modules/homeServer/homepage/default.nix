@@ -302,7 +302,7 @@ in {
               }
               // {
                 "Bert-NixOS" = {
-                  tempmin = 50;
+                  tempmin = 40;
                   tempmax = 85;
                 };
               }
