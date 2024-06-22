@@ -50,7 +50,7 @@
     ${yq} -i ${yqExpr} ${dataDir}/config.xml
   '';
 
-  script = pkgs.writeShellScript "set-servarr-configs" (''
+  script = pkgs.writeShellScript "set-servarr-config-files" (''
       source ${config.sops.secrets."home-server/homepage.env".path}
     ''
     + (
@@ -108,7 +108,7 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     # Don't forget to tell each servarr systemd service that it requires this
     # service and is ordered after it
-    systemd.services.set-servarr-configs = {
+    systemd.services.set-servarr-config-files = {
       description = "Setup the config.xml files for Servarr apps";
 
       serviceConfig = {

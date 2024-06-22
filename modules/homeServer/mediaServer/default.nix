@@ -6,7 +6,7 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 in {
-  imports = [./torrenting ./books ./music ./video ./prowlarr.nix ./servarrConfigs.nix];
+  imports = [./torrenting ./servarrConfig ./books ./music ./video ./prowlarr.nix];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     users.groups.media = {};

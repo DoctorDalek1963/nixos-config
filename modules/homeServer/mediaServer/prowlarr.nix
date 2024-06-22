@@ -32,8 +32,8 @@ in {
     };
 
     systemd.services.prowlarr = {
-      after = ["set-servarr-configs.service"];
-      requires = ["set-servarr-configs.service"];
+      after = ["servarr-config.target"];
+      requires = ["servarr-config.target"];
     };
   };
 }

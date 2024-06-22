@@ -34,8 +34,8 @@ in {
     };
 
     systemd.services.bazarr = {
-      after = ["set-servarr-configs.service"];
-      requires = ["set-servarr-configs.service"];
+      after = ["servarr-config.target"];
+      requires = ["servarr-config.target"];
     };
 
     boot.postBootCommands = ''
