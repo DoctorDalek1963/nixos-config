@@ -152,6 +152,7 @@ in {
           };
           navidrome = port 4533;
 
+          bazarr = port 6767;
           lidarr = port 8686;
           radarr = port 7878;
           readarr = port 8787;

@@ -44,29 +44,63 @@
     InstanceName = "${toTitleCase name}";
   };
 
+  mkCommand = yqExpr: dataDir: ''
+    mkdir -p ${dataDir}
+    touch ${dataDir}/config.xml
+    ${yq} -i ${yqExpr} ${dataDir}/config.xml
+  '';
+
   script = pkgs.writeShellScript "set-servarr-configs" (''
       source ${config.sops.secrets."home-server/homepage.env".path}
-
-      ${yq} -i ${shConfExpr (servarrTemplate "prowlarr")} /var/lib/prowlarr/config.xml
     ''
     + (
       lib.strings.concatStringsSep "\n"
       (
-        (
+        [(mkCommand (shConfExpr (servarrTemplate "prowlarr")) "/var/lib/prowlarr")]
+        ++ (
           lib.optional cfgMs.music
-          "${yq} -i ${shConfExpr (servarrTemplate "lidarr")} ${config.services.lidarr.dataDir}/config.xml"
+          (mkCommand (shConfExpr (servarrTemplate "lidarr")) config.services.lidarr.dataDir)
         )
         ++ (
           lib.optional cfgMs.books
-          "${yq} -i ${shConfExpr (servarrTemplate "readarr")} ${config.services.readarr.dataDir}/config.xml"
+          (mkCommand (shConfExpr (servarrTemplate "readarr")) config.services.readarr.dataDir)
         )
         ++ (
           lib.optional cfgMs.movies
-          "${yq} -i ${shConfExpr (servarrTemplate "radarr")} ${config.services.radarr.dataDir}/config.xml"
+          (mkCommand (shConfExpr (servarrTemplate "radarr")) config.services.radarr.dataDir)
         )
         ++ (
           lib.optional cfgMs.telly
-          "${yq} -i ${shConfExpr (servarrTemplate "sonarr")} ${config.services.sonarr.dataDir}/config.xml"
+          (mkCommand (shConfExpr (servarrTemplate "sonarr")) config.services.sonarr.dataDir)
+        )
+        ++ (
+          lib.optional (cfgMs.movies || cfgMs.telly)
+          (let
+            yqExpr = builtins.concatStringsSep " | " [
+              ''.auth.apikey = "$HOMEPAGE_VAR_BAZARR_KEY"''
+              ''.auth.type = null''
+              ''.general.base_url = "/bazarr"''
+
+              ''.general.use_radarr = true''
+              ''.radarr.apikey = "$HOMEPAGE_VAR_RADARR_KEY"''
+              ''.radarr.base_url = "/radarr"''
+              ''.radarr.ip = "localhost"''
+              ''.radarr.port = ${toString cfg.ports.mediaServer.radarr}''
+
+              ''.general.use_sonarr = true''
+              ''.sonarr.apikey = "$HOMEPAGE_VAR_SONARR_KEY"''
+              ''.sonarr.base_url = "/sonarr"''
+              ''.sonarr.ip = "localhost"''
+              ''.sonarr.port = ${toString cfg.ports.mediaServer.sonarr}''
+
+              ''.opensubtitlescom.username = "$OPENSUBTITLES_USERNAME"''
+              ''.opensubtitlescom.password = "$OPENSUBTITLES_PASSWORD"''
+            ];
+          in ''
+            mkdir -p /var/lib/bazarr/config
+            touch /var/lib/bazarr/config/config.yaml
+            ${yq} -i "${lib.strings.escape ["\""] yqExpr}" /var/lib/bazarr/config/config.yaml
+          '')
         )
       )
     ));

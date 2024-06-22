@@ -214,21 +214,21 @@
           };
         }
       ]
-      # ++ (
-      #   lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
-      #   {
-      #     "Bazarr" = rec {
-      #       icon = "bazarr.svg";
-      #       href = "https://${cfg.domainName}/bazarr";
-      #       description = "Subtitle manager";
-      #       widget = {
-      #         type = "bazarr";
-      #         url = href;
-      #         key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
-      #       };
-      #     };
-      #   }
-      # )
+      ++ (
+        lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
+        {
+          "Bazarr" = rec {
+            icon = "bazarr.svg";
+            href = "https://${cfg.domainName}/bazarr";
+            description = "Subtitle manager";
+            widget = {
+              type = "bazarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
+            };
+          };
+        }
+      )
     );
   in
     if builtins.length list > 0
