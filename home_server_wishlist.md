@@ -15,14 +15,7 @@
 - [ESPHome](https://esphome.io/) for custom automations (heating management, setting the burglar alarm when the house is empty, etc.)
 
 # Media
-- [Radarr](https://radarr.video/) for movies
-- [Sonarr](https://sonarr.tv/) for TV shows
-- [Bazarr](https://bazarr.media/) for subtitles
-- [Readarr](https://readarr.com/) for e-books
-- [Jellyfin](https://jellyfin.org/) for media streaming
 - [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) for media requests
-- [Navidrome](https://github.com/navidrome/navidrome) for music streaming
-- [Kavita](https://github.com/Kareadita/Kavita) for book streaming
 
 # Misc
 - [Mealie](https://github.com/mealie-recipes/mealie) for recipes and meal planning?
