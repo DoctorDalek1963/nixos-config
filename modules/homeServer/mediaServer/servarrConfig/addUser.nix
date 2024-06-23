@@ -18,7 +18,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py" {}
+        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py" {flakeIgnore = ["E501"];}
           ''
             import os
             import sqlite3
@@ -26,6 +26,8 @@ in {
 
             PASSWORD = "ZsMvdA5/z4lu+V8URbBzLbUHGfC+4fKAANWNZImxr/c="
             SALT = "DFNd/zuv18QMhpSFCZfcaQ=="
+
+            READARR_PASSWORD = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
 
 
             def write_user_to_database(db_path: str) -> None:
@@ -46,11 +48,19 @@ in {
                     return
 
                 identifier = str(uuid.uuid4())
+                service_name = db_path.split("/")[-1].strip(".db").lower()
 
-                cur.execute(
-                    "INSERT INTO Users (Identifier, Username, Password, Salt, Iterations)"
-                    f"VALUES ('{identifier}', 'dyson', '{PASSWORD}', '{SALT}', 10000)"
-                )
+                if service_name == "readarr":
+                    cur.execute(
+                        "INSERT INTO Users (Identifier, Username, Password) VALUES "
+                        f"('{identifier}', 'dyson', '{READARR_PASSWORD})"
+                    )
+                else:
+                    cur.execute(
+                        "INSERT INTO Users (Identifier, Username, Password, Salt, Iterations) "
+                        f"VALUES ('{identifier}', 'dyson', '{PASSWORD}', '{SALT}', 10000)"
+                    )
+
                 conn.commit()
 
 
