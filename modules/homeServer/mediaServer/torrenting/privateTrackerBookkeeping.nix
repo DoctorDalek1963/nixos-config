@@ -53,8 +53,17 @@ in {
         name = "mam-dynamic-ip";
         description = "Handle dynamic VPN IPs for MAM";
         script = ''
-          ${pkgs.curl}/bin/curl -v -c ${dir}/mam.cookies -b ${dir}/mam.cookies \
-            https://t.myanonamouse.net/json/dynamicSeedbox.php
+          if [[ -f ${dir}/mam.cookies ]]; then
+            ${pkgs.curl}/bin/curl -v -c ${dir}/mam.cookies -b ${dir}/mam.cookies \
+              https://t.myanonamouse.net/json/dynamicSeedbox.php
+          else
+            echo "ERROR: ${dir}/mam.cookies does not exist"
+            echo "Please create a new session ID on MAM (Preferences > Security) with the following IP:"
+            ${pkgs.curl}/bin/curl ipinfo.io/ip
+            echo "IMPORTANT: Make sure to allow this session to set a dynamic IP"
+            echo "Then run this command:"
+            echo 'echo "mam_id=loooooongSessionId" | sudo tee ${dir}/mam.cookies'
+          fi
         '';
       };
 
