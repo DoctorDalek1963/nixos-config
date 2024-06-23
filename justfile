@@ -54,8 +54,8 @@ set-git-remote:
 	git remote add origin github-dd:DoctorDalek1963/nixos-config.git
 
 # make sure everything is set up properly after a fresh install
-post-install:
-	sudo chown -R dyson:users /etc/nixos
+post-install user='dyson':
+	sudo chown -R {{user}}:users /etc/nixos
 	chmod -R u+w /etc/nixos
 	sudo nixos-rebuild switch
 	@just set-git-remote
