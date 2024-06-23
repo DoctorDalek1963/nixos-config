@@ -32,8 +32,8 @@ in {
     };
 
     systemd.services.sonarr = {
-      after = ["servarr-config.target"];
-      requires = ["servarr-config.target"];
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
 
     boot.postBootCommands = ''
