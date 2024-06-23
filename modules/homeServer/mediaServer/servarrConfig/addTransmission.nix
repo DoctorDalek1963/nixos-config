@@ -20,17 +20,27 @@ in {
         Type = "simple";
         ExecStart = "${pkgs.writers.writePython3 "add_transmission_to_servarr_apps.py" {}
           ''
+            import json
             import os
             import sqlite3
 
-            SETTINGS = """{
-              "host": "192.168.${toString cfgMs.transmission.thirdOctet}.2",
-              "port": ${toString cfg.ports.mediaServer.transmission},
-              "useSsl": false,
-              "urlBase": "/transmission/",
-              "priority": 1,
-              "addPaused": false
-            }"""
+            SETTINGS = {
+                "host": "192.168.${toString cfgMs.transmission.thirdOctet}.2",
+                "port": ${toString cfg.ports.mediaServer.transmission},
+                "useSsl": False,
+                "urlBase": "/transmission/",
+                "priority": 1,
+                "addPaused": False,
+            }
+
+            SPECIFIC_SETTINGS = {
+                # Yes, Readarr does actually use "musicCategory" for its books
+                # (as of 0.3.26.2526)
+                "readarr": {"musicCategory": "books"},
+                "lidarr": {"musicCategory": "music"},
+                "radarr": {"movieCategory": "movies"},
+                "sonarr": {"tvCategory": "telly"},
+            }
 
 
             def add_transmission(db_path: str) -> None:
@@ -50,10 +60,17 @@ in {
                 ):
                     return
 
+                service_name = db_path.split("/")[-1].strip(".db").lower()
+
+                if service_name in SPECIFIC_SETTINGS.keys():
+                    settings = SETTINGS | SPECIFIC_SETTINGS[service_name]
+                else:
+                    settings = SETTINGS
+
                 cur.execute(
                     "INSERT INTO DownloadClients (Enable, Name, Implementation, "
                     "Settings, ConfigContract, Priority) VALUES (1, 'Transmission', "
-                    f"'Transmission', '{SETTINGS}', 'TransmissionSettings', 1)"
+                    f"'Transmission', '{json.dumps(settings)}', 'TransmissionSettings', 1)"
                 )
                 conn.commit()
 
