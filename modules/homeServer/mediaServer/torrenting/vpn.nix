@@ -27,8 +27,8 @@ in {
 
           ExecStart = "${pkgs.writeShellScript "netns-up" ''
             ${ip} netns add $1
-            ${ip} -n $1 ip addr add 127.0.0.1/8 dev lo
-            ${ip} -n $1 ip link set dev lo up
+            ${ip} -n $1 addr add 127.0.0.1/8 dev lo
+            ${ip} -n $1 link set dev lo up
             mkdir -p /etc/netns/$1
           ''} %i";
 
