@@ -14,6 +14,7 @@
     "populate-prowlarr.service"
     "set-servarr-config-files.service"
     "set-servarr-date-formats.service"
+    "set-servarr-rename-rules.service"
   ];
 in {
   imports = [
@@ -23,6 +24,7 @@ in {
     ./populateProwlarr.nix
     ./rootFolders.nix
     ./setDateFormats.nix
+    ./setRenameRules.nix
   ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
