@@ -22,7 +22,7 @@
     then mkProxy service haproxyPort servicePort
     else "";
 in {
-  config = lib.mkIf (cfg.enable && cfgMs.books) {
+  config = lib.mkIf (cfg.enable && (cfgMs.books || cfgMs.movies || cfgMs.telly)) {
     services.haproxy = {
       enable = true;
       group = "certs";
@@ -41,6 +41,14 @@ in {
           "audiobookshelf"
           cfg.ports.haproxy.mediaServer.audiobookshelf
           cfg.ports.mediaServer.audiobookshelf
+        }
+
+        ${
+          optProxy
+          (cfgMs.movies || cfgMs.telly)
+          "jellyseerr"
+          cfg.ports.haproxy.mediaServer.jellyseerr
+          cfg.ports.mediaServer.jellyseerr
         }
       '';
     };

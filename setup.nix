@@ -135,6 +135,7 @@ in {
         haproxy = {
           mediaServer = {
             audiobookshelf = port 8001;
+            jellyseerr = port 5056;
           };
         };
 

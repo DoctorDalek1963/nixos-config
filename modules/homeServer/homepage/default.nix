@@ -88,13 +88,13 @@
             };
           }
           {
-            "Jellyseerr" = rec {
+            "Jellyseerr" = {
               icon = "jellyseerr.svg";
-              href = "https://${cfg.domainName}/jellyseerr";
-              description = "Request management";
+              href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.jellyseerr}";
+              description = "Request movies and TV shows";
               widget = {
                 type = "jellyseerr";
-                url = href;
+                url = "http://localhost:${toString cfg.ports.mediaServer.jellyseerr}";
                 key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
               };
             };
