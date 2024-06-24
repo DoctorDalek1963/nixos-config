@@ -7,15 +7,19 @@
   cfg = config.setup;
   cfgHs = cfg.homeServer;
 
+  certDir = "/etc/tailscale-certificates/${cfgHs.domainName}";
+
   bash-script = pkgs.writeShellScriptBin "tailscale-certificates" ''
     set -euo pipefail
 
-    mkdir -p "/etc/tailscale-certificates/${cfgHs.domainName}"
+    mkdir -p "${certDir}"
 
     ${pkgs.tailscale}/bin/tailscale cert \
-      --cert-file "/etc/tailscale-certificates/${cfgHs.domainName}/cert.pem" \
-      --key-file "/etc/tailscale-certificates/${cfgHs.domainName}/key.pem" \
+      --cert-file "${certDir}/cert.pem" \
+      --key-file "${certDir}/key.pem" \
       "${cfgHs.domainName}"
+
+    cat "${certDir}/cert.pem" "${certDir}/key.pem" > "${certDir}/combined.pem"
 
     chown -R root:certs /etc/tailscale-certificates
     chmod -R g+r /etc/tailscale-certificates

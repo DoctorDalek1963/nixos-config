@@ -132,6 +132,12 @@ in {
             default = num;
           };
       in {
+        haproxy = {
+          mediaServer = {
+            audiobookshelf = port 8001;
+          };
+        };
+
         homepage = port 42731;
 
         adguardhome = {
@@ -142,6 +148,7 @@ in {
         };
 
         mediaServer = {
+          audiobookshelf = port 8000;
           calibre = {
             server = port 8082;
             web = port 8083;

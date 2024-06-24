@@ -174,6 +174,18 @@
           };
         }
         {
+          "Audiobookshelf" = {
+            icon = "audiobookshelf.svg";
+            href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.audiobookshelf}";
+            description = "Digital audiobook library";
+            widget = {
+              type = "audiobookshelf";
+              url = "http://localhost:${toString cfg.ports.mediaServer.audiobookshelf}";
+              key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_KEY}}";
+            };
+          };
+        }
+        {
           "Readarr" = rec {
             icon = "readarr.svg";
             href = "https://${cfg.domainName}/readarr";

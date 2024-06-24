@@ -6,7 +6,7 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 in {
-  imports = [./calibre.nix ./readarr.nix];
+  imports = [./audiobookshelf.nix ./calibre.nix ./readarr.nix];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     boot.postBootCommands = ''
