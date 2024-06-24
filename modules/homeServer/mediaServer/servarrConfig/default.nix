@@ -8,6 +8,7 @@
   cfgMs = cfg.mediaServer;
 
   allServarrServices = [
+    "add-servarr-root-folders.service"
     "add-transmission-to-servarr-apps.service"
     "add-user-to-servarr-apps.service"
     "populate-prowlarr.service"
@@ -20,6 +21,7 @@ in {
     ./addUser.nix
     ./configFiles.nix
     ./populateProwlarr.nix
+    ./rootFolders.nix
     ./setDateFormats.nix
   ];
 
