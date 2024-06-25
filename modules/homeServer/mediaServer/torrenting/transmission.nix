@@ -15,6 +15,8 @@ in {
 
       transmission = {
         enable = true;
+        package = pkgs.transmission_4;
+
         user = "transmission";
         group = "media";
 
@@ -23,12 +25,39 @@ in {
         openRPCPort = true;
         openPeerPorts = true;
 
-        webHome = pkgs.flood-for-transmission;
+        webHome = pkgs.flood-for-transmission.overrideAttrs {
+          postBuild = let
+            optDownloadPath = type: lib.optional cfgMs."${type}" "${cfgMs.mediaRoot}/${type}";
+
+            downloadPaths =
+              (optDownloadPath "movies")
+              ++ (optDownloadPath "telly")
+              ++ (optDownloadPath "music")
+              ++ (optDownloadPath "books");
+
+            columns = [
+              ''{"label": "Percent complete", "width": 100}''
+              ''{"label": "Ratio", "width": 100}''
+            ];
+
+            jqExpr = builtins.concatStringsSep " | " [
+              ".WRAP_HEADER = true"
+              ''.COLUMNS = .COLUMNS + [${builtins.concatStringsSep ", " columns}]''
+              ".COMMON_PATH = [${builtins.concatStringsSep ", "
+                (builtins.map (x: ''"${x}"'') downloadPaths)}]"
+            ];
+          in "cat public/config.json.defaults | ${pkgs.jq}/bin/jq '${jqExpr}' > public/config.json";
+        };
 
         settings = {
+          message-level = 4; # Info
+
           download-dir = "${cfgMs.mediaRoot}/torrents/downloads";
           incomplete-dir = "${cfgMs.mediaRoot}/torrents/incomplete";
           downloadDirPermissions = "755";
+
+          download-queue-enabled = false;
+          seed-queue-enabled = false;
 
           # peer-limit-global = 500;
 
