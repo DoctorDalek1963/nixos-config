@@ -4,6 +4,7 @@
   ...
 }: let
   cfg = config.setup.homeServer;
+  cfgMs = cfg.mediaServer;
   cfgPp = cfg.personalProjects;
 
   optList = cond: item:
@@ -67,9 +68,9 @@
     else [];
 
   mediaServices = let
-    list = lib.optionals cfg.mediaServer.enable (
+    list = lib.optionals cfgMs.enable (
       (
-        lib.optionals (cfg.mediaServer.movies || cfg.mediaServer.telly) [
+        lib.optionals (cfgMs.movies || cfgMs.telly) [
           {
             "Jellyfin" = rec {
               icon = "jellyfin.svg";
@@ -102,36 +103,7 @@
         ]
       )
       ++ (
-        lib.optional cfg.mediaServer.movies
-        {
-          "Radarr" = rec {
-            icon = "radarr.svg";
-            href = "https://${cfg.domainName}/radarr";
-            description = "Movie manager";
-            widget = {
-              type = "radarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
-            };
-          };
-        }
-      )
-      ++ (
-        lib.optional cfg.mediaServer.telly
-        {
-          "Sonarr" = rec {
-            icon = "sonarr.svg";
-            href = "https://${cfg.domainName}/sonarr";
-            description = "TV manager";
-            widget = {
-              type = "sonarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
-            };
-          };
-        }
-      )
-      ++ (lib.optionals cfg.mediaServer.music [
+        lib.optional cfgMs.music
         {
           "Navidrome" = rec {
             icon = "navidrome.svg";
@@ -146,20 +118,8 @@
             };
           };
         }
-        {
-          "Lidarr" = rec {
-            icon = "lidarr.svg";
-            href = "https://${cfg.domainName}/lidarr";
-            description = "Music manager";
-            widget = {
-              type = "lidarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-            };
-          };
-        }
-      ])
-      ++ (lib.optionals cfg.mediaServer.books [
+      )
+      ++ (lib.optionals cfgMs.books [
         {
           "Calibre" = rec {
             icon = "calibre.svg";
@@ -185,20 +145,16 @@
             };
           };
         }
-        {
-          "Readarr" = rec {
-            icon = "readarr.svg";
-            href = "https://${cfg.domainName}/readarr";
-            description = "E-book and audiobook manager";
-            widget = {
-              type = "readarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_READARR_KEY}}";
-            };
-          };
-        }
       ])
-      ++ [
+    );
+  in
+    if builtins.length list > 0
+    then [{Media = list;}]
+    else [];
+
+  mediaDownloadServices = let
+    list = lib.optionals cfgMs.enable (
+      [
         {
           "Transmission" = {
             icon = "transmission.svg";
@@ -206,7 +162,7 @@
             description = "BitTorrent client";
             widget = {
               type = "transmission";
-              url = "http://192.168.${toString cfg.mediaServer.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
+              url = "http://192.168.${toString cfgMs.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
               username = config.services.transmission.settings.rpc-username;
               password = config.services.transmission.settings.rpc-password;
               rpc-url = "/transmission/";
@@ -227,7 +183,37 @@
         }
       ]
       ++ (
-        lib.optional (cfg.mediaServer.movies || cfg.mediaServer.telly)
+        lib.optional cfgMs.movies
+        {
+          "Radarr" = rec {
+            icon = "radarr.svg";
+            href = "https://${cfg.domainName}/radarr";
+            description = "Movie manager";
+            widget = {
+              type = "radarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
+            };
+          };
+        }
+      )
+      ++ (
+        lib.optional cfgMs.telly
+        {
+          "Sonarr" = rec {
+            icon = "sonarr.svg";
+            href = "https://${cfg.domainName}/sonarr";
+            description = "TV manager";
+            widget = {
+              type = "sonarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
+            };
+          };
+        }
+      )
+      ++ (
+        lib.optional (cfgMs.movies || cfgMs.telly)
         {
           "Bazarr" = rec {
             icon = "bazarr.svg";
@@ -241,10 +227,40 @@
           };
         }
       )
+      ++ (
+        lib.optional cfgMs.music
+        {
+          "Lidarr" = rec {
+            icon = "lidarr.svg";
+            href = "https://${cfg.domainName}/lidarr";
+            description = "Music manager";
+            widget = {
+              type = "lidarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
+            };
+          };
+        }
+      )
+      ++ (
+        lib.optional cfgMs.books
+        {
+          "Readarr" = rec {
+            icon = "readarr.svg";
+            href = "https://${cfg.domainName}/readarr";
+            description = "E-book and audiobook manager";
+            widget = {
+              type = "readarr";
+              url = href;
+              key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+            };
+          };
+        }
+      )
     );
   in
     if builtins.length list > 0
-    then [{Media = list;}]
+    then [{"Media downloading" = list;}]
     else [];
 in {
   config = lib.mkIf cfg.enable {
@@ -264,7 +280,7 @@ in {
         listenPort = cfg.ports.homepage;
 
         bookmarks = personalProjectsBookmarks;
-        services = infraServices ++ mediaServices;
+        services = infraServices ++ mediaServices ++ mediaDownloadServices;
 
         settings = {
           headerStyle = "boxed";
@@ -272,10 +288,27 @@ in {
 
           layout = [
             {
-              Media = {
+              Media = let
+                optNum = cond: num:
+                  if cond
+                  then num
+                  else 0;
+                columns =
+                  (optNum (cfgMs.movies || cfgMs.telly) 2)
+                  + (optNum cfgMs.music 1)
+                  + (optNum cfgMs.books 2);
+              in {
+                style = "row";
+                inherit columns;
+                fiveColumns = columns == 5;
+                icon = "si-jellyfin";
+              };
+            }
+            {
+              "Media downloading" = {
                 style = "row";
                 columns = 4;
-                icon = "si-jellyfin";
+                icon = "mdi-download";
               };
             }
             {
