@@ -72,8 +72,9 @@ in {
                 with open(COOKIES_PATH, "r") as f:
                     return unquote(
                         re.search(
-                            r"myanonamouse.net.+mam_id\s+([a-zA-Z0-9%]+)$",
-                            f.read()
+                            r"^\.myanonamouse.net.+mam_id\s+([a-zA-Z0-9%]+)$",
+                            f.read(),
+                            re.MULTILINE
                         ).group(1)
                     )
 
