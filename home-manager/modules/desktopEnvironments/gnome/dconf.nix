@@ -52,7 +52,6 @@ in {
         "org/gnome/desktop/interface" = {
           clock-format = "12h";
           clock-show-seconds = true;
-          color-scheme = "prefer-dark";
           font-hinting = "slight";
           locate-pointer = false;
           monospace-font-name = "Hack Nerd Font 10";
