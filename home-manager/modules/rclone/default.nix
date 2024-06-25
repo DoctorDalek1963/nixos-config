@@ -40,9 +40,13 @@
             "${opts.extraArgs}"
             "${opts.remote}: ${opts.mountpoint}"
           ];
-          ExecStop = "${pkgs.fuse}/bin/fusermount -u ${opts.mountpoint}";
+          ExecStop = "${pkgs.writeShellScript "stop-rclone-mount-${lib.strings.toLower opts.remote}"
+            ''
+              ${pkgs.fuse}/bin/fusermount -u ${opts.mountpoint}
+              ${pkgs.coreutils}/bin/rm -v "${log-dir}/${opts.remote}.log"
+            ''}";
           Restart = "on-failure";
-          RestartSec = "10s";
+          RestartSec = "5s";
         };
       };
     })
