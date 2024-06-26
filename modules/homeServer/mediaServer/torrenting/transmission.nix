@@ -20,7 +20,7 @@ in {
         user = "transmission";
         group = "media";
 
-        # performanceNetParameters = true;
+        performanceNetParameters = true;
 
         openRPCPort = true;
         openPeerPorts = true;
@@ -59,7 +59,12 @@ in {
           download-queue-enabled = false;
           seed-queue-enabled = false;
 
-          # peer-limit-global = 500;
+          peer-limit-global = 500;
+          utp-enabled = false;
+
+          peer-port = 64058;
+          peer-port-random-on-start = false;
+          port-forwarding-enabled = false;
 
           rpc-enabled = true;
           rpc-port = cfg.ports.mediaServer.transmission;
