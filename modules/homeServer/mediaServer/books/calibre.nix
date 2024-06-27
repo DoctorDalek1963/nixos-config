@@ -7,7 +7,7 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  libraryPath = "${cfgMs.mediaRoot}/calibre";
+  libraryPath = "${cfgMs.mediaRoot}/ebooks";
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     services = {

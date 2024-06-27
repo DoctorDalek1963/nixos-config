@@ -38,8 +38,15 @@
         "${config.services.readarr.dataDir}/readarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
         "DefaultQualityProfileId, DefaultTags, IsCalibreLibrary, "
-        "CalibreSettings) VALUES ('${cfgMs.mediaRoot}/calibre/', "
+        "CalibreSettings) VALUES ('${cfgMs.mediaRoot}/ebooks/', "
         f"'Calibre', 1, 1, '[]', 1, '{json.dumps(calibre_settings)}')"
+    )
+
+    add_root_folder(
+        "${config.services.readarr.dataDir}/readarr.db",
+        "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
+        "DefaultQualityProfileId, DefaultTags, IsCalibreLibrary) VALUES "
+        "('${cfgMs.mediaRoot}/audiobooks/', 'Audiobookshelf', 1, 2, '[]', 0)"
     )
   '';
   lidarr = optSnippet cfgMs.music ''

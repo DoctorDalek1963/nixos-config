@@ -12,5 +12,10 @@ in {
       group = "media";
       port = cfg.ports.mediaServer.audiobookshelf;
     };
+
+    boot.postBootCommands = ''
+      mkdir -p ${cfgMs.mediaRoot}/audiobooks
+      chown -R audiobookshelf:media ${cfgMs.mediaRoot}/audiobooks
+    '';
   };
 }
