@@ -23,7 +23,6 @@
     then indent4 code
     else "";
 
-  # TODO: Actually fill in these insert commands
   readarr = optSnippet cfgMs.books ''
     set_naming_config(
         "${config.services.readarr.dataDir}/readarr.db",
