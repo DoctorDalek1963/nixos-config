@@ -29,7 +29,7 @@
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
         "AuthorFolderFormat, RenameBooks, StandardBookFormat, "
         "ColonReplacementFormat) VALUES (1, '{Author Name}', 1, "
-        "'{Author Name}/{Book Title}{ (Part PartNumber)}', 4)"
+        "'{Book Title}{ (Part PartNumber)}', 4)"
     )
   '';
   speakarr = optSnippet cfgMs.books ''
@@ -38,7 +38,7 @@
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
         "AuthorFolderFormat, RenameBooks, StandardBookFormat, "
         "ColonReplacementFormat) VALUES (1, '{Author Name}', 1, "
-        "'{Author Name}/{Book Title}/{Part PartNumber}', 4)"
+        "'{Book Title}/{Part PartNumber}', 4)"
     )
   '';
   lidarr = optSnippet cfgMs.music ''
