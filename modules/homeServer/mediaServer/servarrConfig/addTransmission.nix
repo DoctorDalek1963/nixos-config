@@ -36,7 +36,8 @@ in {
             SPECIFIC_SETTINGS = {
                 # Yes, Readarr does actually use "musicCategory" for its books
                 # (as of 0.3.26.2526)
-                "readarr": {"musicCategory": "books"},
+                "readarr": {"musicCategory": "ebooks"},
+                "speakarr": {"musicCategory": "audiobooks"},
                 "lidarr": {"musicCategory": "music"},
                 "radarr": {"movieCategory": "movies"},
                 "sonarr": {"tvCategory": "telly"},
@@ -78,6 +79,7 @@ in {
             def main() -> None:
                 add_transmission("/var/lib/prowlarr/prowlarr.db")
                 ${optAdd cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
+                ${optAdd cfgMs.books "${config.services.speakarr.dataDir}/readarr.db"}
                 ${optAdd cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
                 ${optAdd cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
                 ${optAdd cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}

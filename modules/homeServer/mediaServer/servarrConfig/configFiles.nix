@@ -66,6 +66,10 @@
           (mkCommand (shConfExpr (servarrTemplate "readarr")) config.services.readarr.dataDir)
         )
         ++ (
+          lib.optional cfgMs.books
+          (mkCommand (shConfExpr (servarrTemplate "speakarr")) config.services.speakarr.dataDir)
+        )
+        ++ (
           lib.optional cfgMs.movies
           (mkCommand (shConfExpr (servarrTemplate "radarr")) config.services.radarr.dataDir)
         )

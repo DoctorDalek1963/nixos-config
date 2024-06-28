@@ -243,19 +243,32 @@
         }
       )
       ++ (
-        lib.optional cfgMs.books
-        {
-          "Readarr" = rec {
-            icon = "readarr.svg";
-            href = "https://${cfg.domainName}/readarr";
-            description = "E-book and audiobook manager";
-            widget = {
-              type = "readarr";
-              url = href;
-              key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+        lib.optionals cfgMs.books [
+          {
+            "Readarr" = rec {
+              icon = "readarr.svg";
+              href = "https://${cfg.domainName}/readarr";
+              description = "E-book manager";
+              widget = {
+                type = "readarr";
+                url = href;
+                key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+              };
             };
-          };
-        }
+          }
+          {
+            "Speakarr" = rec {
+              icon = "readarr.svg";
+              href = "https://${cfg.domainName}/speakarr";
+              description = "Audiobook manager";
+              widget = {
+                type = "readarr";
+                url = href;
+                key = "{{HOMEPAGE_VAR_SPEAKARR_KEY}}";
+              };
+            };
+          }
+        ]
       )
     );
   in

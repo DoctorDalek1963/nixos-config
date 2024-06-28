@@ -29,7 +29,8 @@
         "port": ${toString cfg.ports.mediaServer.calibre.server},
         "username": "admin",
         "password": "admin",
-        "library": "calibre",
+        "library": "ebooks",
+        "outputFormat": "epub",
         "outputProfile": 0,
         "useSsl": False,
     }
@@ -41,9 +42,10 @@
         "CalibreSettings) VALUES ('${cfgMs.mediaRoot}/ebooks/', "
         f"'Calibre', 1, 1, '[]', 1, '{json.dumps(calibre_settings)}')"
     )
-
+  '';
+  speakarr = optSnippet cfgMs.books ''
     add_root_folder(
-        "${config.services.readarr.dataDir}/readarr.db",
+        "${config.services.speakarr.dataDir}/readarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
         "DefaultQualityProfileId, DefaultTags, IsCalibreLibrary) VALUES "
         "('${cfgMs.mediaRoot}/audiobooks/', 'Audiobookshelf', 1, 2, '[]', 0)"
@@ -103,6 +105,7 @@ in {
 
             def main() -> None:
             ${readarr}
+            ${speakarr}
             ${lidarr}
             ${radarr}
             ${sonarr}

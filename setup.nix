@@ -165,6 +165,7 @@ in {
           lidarr = port 8686;
           radarr = port 7878;
           readarr = port 8787;
+          speakarr = port 8282;
           sonarr = port 8989;
 
           prowlarr = port 9696;

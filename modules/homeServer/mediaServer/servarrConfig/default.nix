@@ -45,6 +45,7 @@ in {
         in "${pkgs.writeShellScript "finish-servarr-configs" ''
           ${mkChown "prowlarr" "/var/lib/prowlarr/config.xml"}
           ${optChown cfgMs.books "readarr" "${config.services.readarr.dataDir}/config.xml"}
+          ${optChown cfgMs.books "speakarr" "${config.services.speakarr.dataDir}/config.xml"}
           ${optChown cfgMs.music "lidarr" "${config.services.lidarr.dataDir}/config.xml"}
           ${optChown cfgMs.movies "radarr" "${config.services.radarr.dataDir}/config.xml"}
           ${optChown cfgMs.telly "sonarr" "${config.services.sonarr.dataDir}/config.xml"}

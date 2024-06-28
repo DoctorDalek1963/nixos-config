@@ -28,6 +28,7 @@ in {
 
             APPS = [
                 ${optStr cfgMs.books ''("Readarr", "books"),''}
+                ${optStr cfgMs.books ''("Speakarr", "books"),''}
                 ${optStr cfgMs.music ''("Lidarr", "music"),''}
                 ${optStr cfgMs.movies ''("Radarr", "movies"),''}
                 ${optStr cfgMs.telly ''("Sonarr", "telly"),''}
@@ -89,10 +90,15 @@ in {
                         "}"
                     )
 
+                    if app == "Speakarr":
+                        impl = "Readarr"
+                    else:
+                        impl = app
+
                     cur.execute(
                         "INSERT INTO Applications (Name, Implementation, Settings, "
-                        f"ConfigContract, SyncLevel, Tags) VALUES ('{app}', '{app}', "
-                        f"'{settings}', '{app}Settings', 2, '[1, {TAGS[tag]}]')"
+                        f"ConfigContract, SyncLevel, Tags) VALUES ('{app}', '{impl}', "
+                        f"'{settings}', '{impl}Settings', 2, '[1, {TAGS[tag]}]')"
                     )
 
                 conn.commit()

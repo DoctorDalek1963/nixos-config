@@ -28,12 +28,14 @@ in {
         webHome = pkgs.flood-for-transmission.overrideAttrs {
           postBuild = let
             optDownloadPath = type: lib.optional cfgMs."${type}" "${cfgMs.mediaRoot}/${type}";
+            optDownloadPath2 = type: folder: lib.optional cfgMs."${type}" "${cfgMs.mediaRoot}/${folder}";
 
             downloadPaths =
               (optDownloadPath "movies")
               ++ (optDownloadPath "telly")
               ++ (optDownloadPath "music")
-              ++ (optDownloadPath "books");
+              ++ (optDownloadPath2 "books" "ebooks")
+              ++ (optDownloadPath2 "books" "audiobooks");
 
             columns = [
               ''{"label": "Percent complete", "width": 100}''
