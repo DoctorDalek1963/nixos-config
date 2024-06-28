@@ -10,7 +10,7 @@
     frontend ${service}
         bind :${toString haproxyPort}
         bind :${toString haproxyPort} ssl crt /etc/tailscale-certificates/${cfg.domainName}/combined.pem
-        http-request redirect scheme https unless { ssl_fc }
+        http-request redirect scheme https code 301 unless { ssl_fc }
         default_backend ${service}-backend
 
     backend ${service}-backend
