@@ -73,6 +73,20 @@ in {
         "openvpn/gb-hotspotshield/ca" = {
           mode = "0644";
         };
+      }
+      // optSet (vpnEnabled "us-hotspotshield") {
+        "openvpn/us-hotspotshield/user-pass" = {
+          mode = "0644";
+        };
+        "openvpn/us-hotspotshield/cert" = {
+          mode = "0644";
+        };
+        "openvpn/us-hotspotshield/key" = {
+          mode = "0644";
+        };
+        "openvpn/us-hotspotshield/ca" = {
+          mode = "0644";
+        };
       };
 
     networking.networkmanager.plugins = [pkgs.networkmanager-openvpn];
@@ -112,7 +126,8 @@ in {
       };
     in
       optSet (vpnEnabled "ch-hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
-      // optSet (vpnEnabled "gb-hotspotshield") (build-hss-ovpn "gb" "penfactory.us");
+      // optSet (vpnEnabled "gb-hotspotshield") (build-hss-ovpn "gb" "penfactory.us")
+      // optSet (vpnEnabled "us-hotspotshield") (build-hss-ovpn "us" "universitycalendar.us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {

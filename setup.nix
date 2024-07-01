@@ -219,6 +219,10 @@ in {
               vpnName = "gb-hotspotshield";
               users = ["dyson"];
             }
+            {
+              vpnName = "us-hotspotshield";
+              users = ["dyson"];
+            }
           ];
         };
       };
