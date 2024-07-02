@@ -14,7 +14,7 @@ in {
 
       dataDir = mkOption {
         type = types.str;
-        default = "/var/lib/speakarr/";
+        default = "/var/lib/speakarr";
         description = "The directory where Speakarr stores its data files.";
       };
 
@@ -67,7 +67,7 @@ in {
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        ExecStart = "${cfg.package}/bin/Readarr -nobrowser -data='${cfg.dataDir}'";
+        ExecStart = "${cfg.package}/bin/Speakarr -nobrowser -data='${cfg.dataDir}'";
         Restart = "on-failure";
       };
     };

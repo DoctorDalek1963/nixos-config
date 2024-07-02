@@ -8,6 +8,7 @@
   dotnetCorePackages,
   readarr,
   fd,
+  imagemagick,
   rename,
   sd,
   sqlite,
@@ -28,19 +29,18 @@
     };
 
     nativeBuildInputs = [
-      sd
       fd
+      imagemagick
       rename
+      sd
     ];
 
     patches = [
-      # TODO: Keep name as speakarrRed not Pink, and also change themeAlternateRed
       ./colours.patch
       ./port.patch
       ./warnings-as-errors.patch
     ];
 
-    # TODO: Replace the logo
     buildPhase = ''
       fd -X sd --flags c "readarr" "speakarr"
       fd -X sd --flags c "Readarr" "Speakarr"
@@ -52,6 +52,11 @@
       fd -t d readarr -X rename 's/Readarr/Speakarr/g'
       fd -t f readarr -X rename 's/readarr/speakarr/g'
       fd -t f readarr -X rename 's/Readarr/Speakarr/g'
+
+      cp ${./logo.svg} frontend/src/Content/Images/logo.svg
+      convert -geometry 16x16 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-16x16.png
+      convert -geometry 32x32 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-32x32.png
+      convert -geometry 48x48 ${./logo.svg} frontend/src/Content/Images/Icons/favicon.ico
     '';
 
     installPhase = ''

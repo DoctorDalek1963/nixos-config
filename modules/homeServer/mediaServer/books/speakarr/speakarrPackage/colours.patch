@@ -2,7 +2,7 @@
 +++ b/frontend/src/Styles/Themes/dark.js
 @@ -1,4 +1,4 @@
 -const readarrRed = '#ca302d';
-+const speakarrPink = '#c60f83';
++const speakarrRed = '#f989c1';
  const darkGray = '#888';
  const gray = '#adadad';
  const black = '#000';
@@ -11,29 +11,33 @@
    dangerColor: '#f05050',
    warningColor: '#ffa500',
 -  infoColor: readarrRed,
-+  infoColor: speakarrPink,
++  infoColor: speakarrRed,
    purple,
    pink,
 -  readarrRed,
-+  speakarrPink,
++  speakarrRed,
    helpTextColor: '#909293',
    darkGray,
    gray,
-@@ -33,7 +33,7 @@ module.exports = {
+@@ -33,9 +33,9 @@ module.exports = {
  
    // Theme Colors
  
 -  themeRed: readarrRed,
-+  themeRed: speakarrPink,
-   themeAlternateRed: '#a41726',
-   themeDarkRed: '#66001a',
+-  themeAlternateRed: '#a41726',
+-  themeDarkRed: '#66001a',
++  themeRed: speakarrRed,
++  themeAlternateRed: '#db4a92',
++  themeDarkRed: '#66005b',
    themeDarkColor: '#494949',
+   themeLightColor: '#595959',
+   pageBackground: '#202020',
 @@ -131,14 +131,14 @@ module.exports = {
    //
    // Menu
    menuItemColor: '#e1e2e3',
 -  menuItemHoverColor: readarrRed,
-+  menuItemHoverColor: speakarrPink,
++  menuItemHoverColor: speakarrRed,
    menuItemHoverBackgroundColor: '#606060',
  
    //
@@ -41,8 +45,8 @@
  
 -  toobarButtonHoverColor: readarrRed,
 -  toobarButtonSelectedColor: readarrRed,
-+  toobarButtonHoverColor: speakarrPink,
-+  toobarButtonSelectedColor: speakarrPink,
++  toobarButtonHoverColor: speakarrRed,
++  toobarButtonSelectedColor: speakarrRed,
  
    //
    // Scroller
@@ -50,38 +54,69 @@
 +++ b/frontend/src/Styles/Themes/light.js
 @@ -1,4 +1,4 @@
 -const readarrRed = '#ca302d';
-+const speakarrPink = '#fc8dc4';
++const speakarrRed = '#f989c1';
  const darkGray = '#888';
  const gray = '#adadad';
  const black = '#000';
+@@ -11,7 +11,7 @@ const lightGray = '#ddd';
+ module.exports = {
+   textColor: '#515253',
+   defaultColor: '#333',
+-  disabledColor: '#999',
++  disabledColor: '#aaa',
+   dimColor: '#555',
+   black,
+   white,
 @@ -22,10 +22,10 @@ module.exports = {
    successColor: '#27c24c',
    dangerColor: '#f05050',
    warningColor: '#ffa500',
 -  infoColor: readarrRed,
-+  infoColor: speakarrPink,
++  infoColor: speakarrRed,
    purple,
    pink,
 -  readarrRed,
-+  speakarrPink,
++  speakarrRed,
    helpTextColor: '#909293',
    darkGray,
    gray,
-@@ -33,7 +33,7 @@ module.exports = {
+@@ -33,9 +33,9 @@ module.exports = {
  
    // Theme Colors
  
 -  themeRed: readarrRed,
-+  themeRed: speakarrPink,
-   themeAlternateRed: '#a41726',
-   themeDarkRed: '#66001a',
+-  themeAlternateRed: '#a41726',
+-  themeDarkRed: '#66001a',
++  themeRed: speakarrRed,
++  themeAlternateRed: '#db4a92',
++  themeDarkRed: '#66005b',
    themeDarkColor: '#353535',
+   themeLightColor: '#810020',
+   pageBackground: '#f5f7fa',
+@@ -47,7 +47,7 @@ module.exports = {
+   // Labels
+   inverseLabelColor: '#ddd',
+   inverseLabelTextColor: '#333',
+-  disabledLabelColor: '#999',
++  disabledLabelColor: '#aaa',
+   infoTextColor: white,
+ 
+   // Links
 @@ -56,7 +56,7 @@ module.exports = {
    linkHoverColor: '#1b72e2',
  
    // Header
 -  pageHeaderBackgroundColor: readarrRed,
-+  pageHeaderBackgroundColor: speakarrPink,
++  pageHeaderBackgroundColor: speakarrRed,
  
    // Sidebar
  
+@@ -66,7 +66,7 @@ module.exports = {
+ 
+   // Toolbar
+   toolbarColor: '#e1e2e3',
+-  toolbarBackgroundColor: '#810020',
++  toolbarBackgroundColor: '#db4a92',
+   toolbarMenuItemBackgroundColor: '#66001a',
+   toolbarMenuItemHoverBackgroundColor: '#353535',
+   toolbarLabelColor: '#e1e2e3',
