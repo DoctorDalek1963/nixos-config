@@ -1,0 +1,137 @@
+--- a/src/NzbDrone.Automation.Test/AutomationTest.cs
++++ b/src/NzbDrone.Automation.Test/AutomationTest.cs
+@@ -48,7 +48,7 @@ public void SmokeTestSetup()
+             _runner.KillAll();
+             _runner.Start();
+ 
+-            driver.Url = "http://localhost:8787";
++            driver.Url = "http://localhost:8282";
+ 
+             var page = new PageBase(driver);
+             page.WaitForNoSpinner();
+--- a/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs
++++ b/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs
+@@ -49,7 +49,7 @@ protected void WithMockConfigFile(string configFile)
+         public void GetValue_Success()
+         {
+             const string key = "Port";
+-            const string value = "8787";
++            const string value = "8282";
+ 
+             var result = Subject.GetValue(key, value);
+ 
+@@ -60,7 +60,7 @@ public void GetValue_Success()
+         public void GetInt_Success()
+         {
+             const string key = "Port";
+-            const int value = 8787;
++            const int value = 8282;
+ 
+             var result = Subject.GetValueInt(key, value);
+ 
+@@ -89,7 +89,7 @@ public void GetLaunchBrowser_Success()
+         [Test]
+         public void GetPort_Success()
+         {
+-            const int value = 8787;
++            const int value = 8282;
+ 
+             var result = Subject.Port;
+ 
+--- a/src/NzbDrone.Console/ConsoleApp.cs
++++ b/src/NzbDrone.Console/ConsoleApp.cs
+@@ -53,7 +53,7 @@ public static void Main(string[] args)
+             {
+                 System.Console.WriteLine("");
+                 System.Console.WriteLine("");
+-                Logger.Fatal(ex.Message + ". This can happen if another instance of Readarr is already running another application is using the same port (default: 8787) or the user has insufficient permissions");
++                Logger.Fatal(ex.Message + ". This can happen if another instance of Readarr is already running another application is using the same port (default: 8282) or the user has insufficient permissions");
+                 Exit(ExitCodes.RecoverableFailure, startupArgs);
+             }
+             catch (IOException ex)
+@@ -62,7 +62,7 @@ public static void Main(string[] args)
+                 {
+                     System.Console.WriteLine("");
+                     System.Console.WriteLine("");
+-                    Logger.Fatal(ex.Message + " This can happen if another instance of Readarr is already running another application is using the same port (default: 8787) or the user has insufficient permissions");
++                    Logger.Fatal(ex.Message + " This can happen if another instance of Readarr is already running another application is using the same port (default: 8282) or the user has insufficient permissions");
+                     Exit(ExitCodes.RecoverableFailure, startupArgs);
+                 }
+                 else
+--- a/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs
++++ b/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs
+@@ -150,7 +150,7 @@ public string BindAddress
+             }
+         }
+ 
+-        public int Port => GetValueInt("Port", 8787);
++        public int Port => GetValueInt("Port", 8282);
+ 
+         public int SslPort => GetValueInt("SslPort", 6868);
+ 
+--- a/src/NzbDrone.Host/Bootstrap.cs
++++ b/src/NzbDrone.Host/Bootstrap.cs
+@@ -132,7 +132,7 @@ public static IHostBuilder CreateConsoleHostBuilder(string[] args, StartupContex
+             var config = GetConfiguration(context);
+ 
+             var bindAddress = config.GetValue(nameof(ConfigFileProvider.BindAddress), "*");
+-            var port = config.GetValue(nameof(ConfigFileProvider.Port), 8787);
++            var port = config.GetValue(nameof(ConfigFileProvider.Port), 8282);
+             var sslPort = config.GetValue(nameof(ConfigFileProvider.SslPort), 6868);
+             var enableSsl = config.GetValue(nameof(ConfigFileProvider.EnableSsl), false);
+             var sslCertPath = config.GetValue<string>(nameof(ConfigFileProvider.SslCertPath));
+--- a/src/NzbDrone.Host/Startup.cs
++++ b/src/NzbDrone.Host/Startup.cs
+@@ -150,7 +150,7 @@ public void ConfigureServices(IServiceCollection services)
+                     Variables = new Dictionary<string, OpenApiServerVariable>
+                     {
+                         { "protocol", new OpenApiServerVariable { Default = "http", Enum = new List<string> { "http", "https" } } },
+-                        { "hostpath", new OpenApiServerVariable { Default = "localhost:8787" } }
++                        { "hostpath", new OpenApiServerVariable { Default = "localhost:8282" } }
+                     }
+                 });
+ 
+--- a/src/NzbDrone.Integration.Test/IntegrationTest.cs
++++ b/src/NzbDrone.Integration.Test/IntegrationTest.cs
+@@ -15,7 +15,7 @@ namespace NzbDrone.Integration.Test
+     [Parallelizable(ParallelScope.Fixtures)]
+     public abstract class IntegrationTest : IntegrationTestBase
+     {
+-        protected static int StaticPort = 8787;
++        protected static int StaticPort = 8282;
+ 
+         protected NzbDroneRunner _runner;
+ 
+--- a/src/NzbDrone.Integration.Test/IntegrationTestBase.cs
++++ b/src/NzbDrone.Integration.Test/IntegrationTestBase.cs
+@@ -172,7 +172,7 @@ protected async Task ConnectSignalR()
+         {
+             _signalRReceived = new List<SignalRMessage>();
+             _signalrConnection = new HubConnectionBuilder()
+-                .WithUrl("http://localhost:8787/signalr/messages", options =>
++                .WithUrl("http://localhost:8282/signalr/messages", options =>
+                     {
+                         options.AccessTokenProvider = () => Task.FromResult(ApiKey);
+                     })
+--- a/src/NzbDrone.Test.Common/NzbDroneRunner.cs
++++ b/src/NzbDrone.Test.Common/NzbDroneRunner.cs
+@@ -29,7 +29,7 @@ public class NzbDroneRunner
+         public PostgresOptions PostgresOptions { get; private set; }
+         public int Port { get; private set; }
+ 
+-        public NzbDroneRunner(Logger logger, PostgresOptions postgresOptions, int port = 8787)
++        public NzbDroneRunner(Logger logger, PostgresOptions postgresOptions, int port = 8282)
+         {
+             _processProvider = new ProcessProvider(logger);
+             _restClient = new RestClient($"http://localhost:{port}/api/v1");
+--- a/src/Readarr.Api.V1/openapi.json
++++ b/src/Readarr.Api.V1/openapi.json
+@@ -21,7 +21,7 @@
+           ]
+         },
+         "hostpath": {
+-          "default": "localhost:8787"
++          "default": "localhost:8282"
+         }
+       }
+     }

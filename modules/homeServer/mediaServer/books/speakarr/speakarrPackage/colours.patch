@@ -1,0 +1,87 @@
+--- a/frontend/src/Styles/Themes/dark.js
++++ b/frontend/src/Styles/Themes/dark.js
+@@ -1,4 +1,4 @@
+-const readarrRed = '#ca302d';
++const speakarrPink = '#c60f83';
+ const darkGray = '#888';
+ const gray = '#adadad';
+ const black = '#000';
+@@ -22,10 +22,10 @@ module.exports = {
+   successColor: '#27c24c',
+   dangerColor: '#f05050',
+   warningColor: '#ffa500',
+-  infoColor: readarrRed,
++  infoColor: speakarrPink,
+   purple,
+   pink,
+-  readarrRed,
++  speakarrPink,
+   helpTextColor: '#909293',
+   darkGray,
+   gray,
+@@ -33,7 +33,7 @@ module.exports = {
+ 
+   // Theme Colors
+ 
+-  themeRed: readarrRed,
++  themeRed: speakarrPink,
+   themeAlternateRed: '#a41726',
+   themeDarkRed: '#66001a',
+   themeDarkColor: '#494949',
+@@ -131,14 +131,14 @@ module.exports = {
+   //
+   // Menu
+   menuItemColor: '#e1e2e3',
+-  menuItemHoverColor: readarrRed,
++  menuItemHoverColor: speakarrPink,
+   menuItemHoverBackgroundColor: '#606060',
+ 
+   //
+   // Toolbar
+ 
+-  toobarButtonHoverColor: readarrRed,
+-  toobarButtonSelectedColor: readarrRed,
++  toobarButtonHoverColor: speakarrPink,
++  toobarButtonSelectedColor: speakarrPink,
+ 
+   //
+   // Scroller
+--- a/frontend/src/Styles/Themes/light.js
++++ b/frontend/src/Styles/Themes/light.js
+@@ -1,4 +1,4 @@
+-const readarrRed = '#ca302d';
++const speakarrPink = '#fc8dc4';
+ const darkGray = '#888';
+ const gray = '#adadad';
+ const black = '#000';
+@@ -22,10 +22,10 @@ module.exports = {
+   successColor: '#27c24c',
+   dangerColor: '#f05050',
+   warningColor: '#ffa500',
+-  infoColor: readarrRed,
++  infoColor: speakarrPink,
+   purple,
+   pink,
+-  readarrRed,
++  speakarrPink,
+   helpTextColor: '#909293',
+   darkGray,
+   gray,
+@@ -33,7 +33,7 @@ module.exports = {
+ 
+   // Theme Colors
+ 
+-  themeRed: readarrRed,
++  themeRed: speakarrPink,
+   themeAlternateRed: '#a41726',
+   themeDarkRed: '#66001a',
+   themeDarkColor: '#353535',
+@@ -56,7 +56,7 @@ module.exports = {
+   linkHoverColor: '#1b72e2',
+ 
+   // Header
+-  pageHeaderBackgroundColor: readarrRed,
++  pageHeaderBackgroundColor: speakarrPink,
+ 
+   // Sidebar
+ 

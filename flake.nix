@@ -309,7 +309,11 @@
             check-vcs-permalinks.enable = true;
             check-yaml.enable = true;
             end-of-file-fixer.enable = true;
-            trim-trailing-whitespace.enable = true;
+
+            trim-trailing-whitespace = {
+              enable = true;
+              excludes = [''.+\.patch$''];
+            };
 
             alejandra.enable = true;
             deadnix.enable = true;

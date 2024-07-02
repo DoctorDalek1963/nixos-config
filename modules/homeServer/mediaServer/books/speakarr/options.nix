@@ -22,7 +22,7 @@ in {
       # everywhere, change the default port, and change the colourscheme
       package = mkOption {
         type = types.package;
-        default = pkgs.readarr; # pkgs.callPackage ./speakarrPackage {};
+        default = pkgs.callPackage ./speakarrPackage {};
         description = "The speakarr package to use.";
       };
 
