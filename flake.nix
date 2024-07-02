@@ -130,8 +130,17 @@
                   homeServer = {
                     enable = true;
                     domainName = "bert-nixos.triceratops-egret.ts.net";
+                    dataRoot = "/data";
 
                     adguardhome.enable = true;
+
+                    mediaServer = {
+                      enable = true;
+                      movies = false;
+                      telly = false;
+                      transmission.ovpnName = "ch_airvpn";
+                    };
+
                     personalProjects = {
                       enable = true;
                       # I only need to enable this around Christmas, when I'm
@@ -157,7 +166,7 @@
                       enable = true;
                       vpns = [
                         {
-                          vpnName = "ch-hotspotshield";
+                          vpnName = "ch_airvpn";
                           users = ["pi"];
                         }
                       ];
@@ -302,7 +311,11 @@
             check-vcs-permalinks.enable = true;
             check-yaml.enable = true;
             end-of-file-fixer.enable = true;
-            trim-trailing-whitespace.enable = true;
+
+            trim-trailing-whitespace = {
+              enable = true;
+              excludes = [''.+\.patch$''];
+            };
 
             alejandra.enable = true;
             deadnix.enable = true;

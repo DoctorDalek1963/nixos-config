@@ -23,6 +23,18 @@
         map
         (username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'")
         users;
+
+      add-credentials =
+        if lib.hasSuffix "hotspotshield" vpnName
+        then
+          # bash
+          ''
+            ${nmcli} connection modify ${vpnName} vpn.user-name "$(head -1 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path})"
+            ${nmcli} connection modify ${vpnName} -vpn.data "password-flags=1"
+            ${nmcli} connection modify ${vpnName} +vpn.data "password-flags=0"
+            ${nmcli} connection modify ${vpnName} vpn.secrets "password=$(head -2 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path} | tail -1)"
+          ''
+        else "";
     in
       # bash
       ''
@@ -32,10 +44,7 @@
         ${nmcli} connection modify ${vpnName} connection.permissions ""
         ${lib.concatStringsSep "\n" perm-commands}
 
-        ${nmcli} connection modify ${vpnName} vpn.user-name "$(head -1 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path})"
-        ${nmcli} connection modify ${vpnName} -vpn.data "password-flags=1"
-        ${nmcli} connection modify ${vpnName} +vpn.data "password-flags=0"
-        ${nmcli} connection modify ${vpnName} vpn.secrets "password=$(head -2 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path} | tail -1)"
+        ${add-credentials}
       '')
     cfg.vpns;
   in
@@ -46,31 +55,45 @@ in {
 
     sops.secrets =
       {}
-      // optSet (vpnEnabled "ch-hotspotshield") {
-        "openvpn/ch-hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "ch_airvpn") {
+        "openvpn/ch_airvpn/ca" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/cert" = {
+        "openvpn/ch_airvpn/cert" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/key" = {
+        "openvpn/ch_airvpn/key" = {
           mode = "0644";
         };
-        "openvpn/ch-hotspotshield/ca" = {
+        "openvpn/ch_airvpn/tls-crypt" = {
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "gb-hotspotshield") {
-        "openvpn/gb-hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "ch_hotspotshield") {
+        "openvpn/ch_hotspotshield/user-pass" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/cert" = {
+        "openvpn/ch_hotspotshield/cert" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/key" = {
+        "openvpn/ch_hotspotshield/key" = {
           mode = "0644";
         };
-        "openvpn/gb-hotspotshield/ca" = {
+        "openvpn/ch_hotspotshield/ca" = {
+          mode = "0644";
+        };
+      }
+      // optSet (vpnEnabled "gb_hotspotshield") {
+        "openvpn/gb_hotspotshield/user-pass" = {
+          mode = "0644";
+        };
+        "openvpn/gb_hotspotshield/cert" = {
+          mode = "0644";
+        };
+        "openvpn/gb_hotspotshield/key" = {
+          mode = "0644";
+        };
+        "openvpn/gb_hotspotshield/ca" = {
           mode = "0644";
         };
       }
@@ -94,8 +117,37 @@ in {
     # To generate .ovpn files for other locations, follow the guidance on
     # https://support.hotspotshield.com/hc/en-us/articles/360046865972-How-do-I-install-Hotspot-Shield-on-OpenVPN-devices
     environment.etc = let
+      build-airvpn-ovpn = country: {
+        "openvpn/${country}_airvpn.ovpn".text = ''
+          client
+          dev tun
+          remote ${country}3.vpn.airdns.org 443
+          resolv-retry infinite
+          nobind
+          persist-key
+          persist-tun
+          auth-nocache
+          verb 3
+          explicit-exit-notify 5
+          push-peer-info
+          setenv UV_IPV6 yes
+          setenv IPV6 yes
+          remote-cert-tls server
+          comp-lzo no
+          data-ciphers AES-256-GCM:AES-256-CBC:AES-192-GCM:AES-192-CBC:AES-128-GCM:AES-128-CBC
+          data-ciphers-fallback AES-256-CBC
+          proto udp
+          auth SHA512
+
+          ca ${config.sops.secrets."openvpn/${country}_airvpn/ca".path}
+          cert ${config.sops.secrets."openvpn/${country}_airvpn/cert".path}
+          key ${config.sops.secrets."openvpn/${country}_airvpn/key".path}
+          tls-crypt ${config.sops.secrets."openvpn/${country}_airvpn/tls-crypt".path}
+        '';
+      };
+
       build-hss-ovpn = country: remote: {
-        "openvpn/${country}-hotspotshield.ovpn".text = ''
+        "openvpn/${country}_hotspotshield.ovpn".text = ''
           client
           dev tun
           proto udp
@@ -114,20 +166,21 @@ in {
           reneg-sec 0
           remote-cert-tls server
           comp-noadapt
-          auth-user-pass ${config.sops.secrets."openvpn/${country}-hotspotshield/user-pass".path}
+          auth-user-pass ${config.sops.secrets."openvpn/${country}_hotspotshield/user-pass".path}
           auth sha256
           cipher AES-128-CBC
           verb 3
 
-          cert ${config.sops.secrets."openvpn/${country}-hotspotshield/cert".path}
-          key ${config.sops.secrets."openvpn/${country}-hotspotshield/key".path}
-          ca ${config.sops.secrets."openvpn/${country}-hotspotshield/ca".path}
+          cert ${config.sops.secrets."openvpn/${country}_hotspotshield/cert".path}
+          key ${config.sops.secrets."openvpn/${country}_hotspotshield/key".path}
+          ca ${config.sops.secrets."openvpn/${country}_hotspotshield/ca".path}
         '';
       };
     in
-      optSet (vpnEnabled "ch-hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
-      // optSet (vpnEnabled "gb-hotspotshield") (build-hss-ovpn "gb" "penfactory.us")
-      // optSet (vpnEnabled "us-hotspotshield") (build-hss-ovpn "us" "universitycalendar.us");
+      optSet (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
+      // optSet (vpnEnabled "ch_hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
+      // optSet (vpnEnabled "gb_hotspotshield") (build-hss-ovpn "gb" "penfactory.us")
+      // optSet (vpnEnabled "us_hotspotshield") (build-hss-ovpn "us" "universitycalendar.us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {

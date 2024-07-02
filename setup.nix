@@ -1,4 +1,8 @@
-{lib, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkOption types;
 
   defaultTrue = mkOption {
@@ -112,7 +116,11 @@ in {
     # === Home server
     homeServer = {
       enable = defaultFalse;
+
       domainName = mkOption {
+        type = types.nonEmptyStr;
+      };
+      dataRoot = mkOption {
         type = types.nonEmptyStr;
       };
 
@@ -124,14 +132,46 @@ in {
             default = num;
           };
       in {
+        haproxy = {
+          mediaServer = {
+            audiobookshelf = port 8001;
+            jellyseerr = port 5056;
+          };
+        };
+
         homepage = port 42731;
 
         adguardhome = {
           http = port 3000;
           https = port 3001;
-          dnsOverTls = port 853;
-          dnsOverQuic = port 853;
+          dnsOverTls = port 853; # TCP
+          dnsOverQuic = port 853; # UDP
         };
+
+        mediaServer = {
+          audiobookshelf = port 8000;
+          calibre = {
+            server = port 8082;
+            web = port 8083;
+          };
+          jellyfin = {
+            http = port 8096;
+            https = port 8920;
+          };
+          jellyseerr = port 5055;
+          navidrome = port 4533;
+
+          bazarr = port 6767;
+          lidarr = port 8686;
+          radarr = port 7878;
+          readarr = port 8787;
+          speakarr = port 8282;
+          sonarr = port 8989;
+
+          prowlarr = port 9696;
+          transmission = port 9091;
+        };
+
         personalProjects = {
           winter-wonderlights = {
             normal = port 23120;
@@ -141,10 +181,44 @@ in {
       };
 
       adguardhome.enable = defaultFalse;
+
       homeAutomation = {};
-      mediaServer = {};
+
+      mediaServer = {
+        enable = defaultFalse;
+
+        mediaRoot = mkOption {
+          type = types.nonEmptyStr;
+          default = "${config.setup.homeServer.dataRoot}/media";
+        };
+
+        books = defaultTrue;
+        music = defaultTrue;
+        movies = defaultTrue;
+        telly = defaultTrue;
+
+        transmission = {
+          ovpnName = mkOption {
+            type = types.nonEmptyStr;
+            description = ''
+              The unqualified name of the OpenVPN config file to be used for transmission.
+
+              All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb_hotspotshield.ovpn".
+            '';
+          };
+          thirdOctet = mkOption {
+            type = types.ints.between 1 255;
+            default = 5;
+            description = ''
+              We use a veth system to connect the normal internet to the network namespace used to keep transmission in a VPN. The veth interfaces have the IP addresses 192.168.X.1 and 192.168.X.2, where X is this thirdOctet option.
+            '';
+          };
+        };
+      };
+
       personalProjects = {
         enable = defaultFalse;
+
         tictactoe = defaultTrue;
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
@@ -212,11 +286,11 @@ in {
           });
           default = [
             {
-              vpnName = "ch-hotspotshield";
+              vpnName = "ch_hotspotshield";
               users = ["dyson"];
             }
             {
-              vpnName = "gb-hotspotshield";
+              vpnName = "gb_hotspotshield";
               users = ["dyson"];
             }
             {

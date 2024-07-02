@@ -1,0 +1,11 @@
+--- a/src/Directory.Build.props
++++ b/src/Directory.Build.props
+@@ -1,7 +1,7 @@
+ <Project>
+   <!-- Common to all Readarr Projects -->
+   <PropertyGroup>
+-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
++    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+     <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>

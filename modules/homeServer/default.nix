@@ -1,26 +1,12 @@
 {
-  lib,
-  config,
-  ...
-}: let
-  cfg = config.setup.homeServer;
-in {
-  imports = [./adguardhome ./homepage ./personalProjects ./tailscaleCerts.nix];
+  imports = [
+    ./mediaServer
+    ./personalProjects
 
-  config = lib.mkIf cfg.enable {
-    services.nginx = {
-      enable = true;
-      group = "certs";
-      virtualHosts."${cfg.domainName}" = {
-        kTLS = true;
-        forceSSL = true;
-        sslCertificate = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
-        sslCertificateKey = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
-      };
-    };
-
-    systemd.services.nginx.after = ["network.target" "tailscale-certificates.service"];
-
-    networking.firewall.allowedTCPPorts = [80 443];
-  };
+    ./adguardhome.nix
+    ./haproxy.nix
+    ./homepage.nix
+    ./nginx.nix
+    ./tailscaleCerts.nix
+  ];
 }
