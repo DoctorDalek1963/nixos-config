@@ -18,7 +18,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "populate_prowlarr.py" {}
+        ExecStart = "${pkgs.writers.writePython3 "populate_prowlarr.py" {flakeIgnore = ["W293" "E303"];}
           ''
             import os
             import sqlite3

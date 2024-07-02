@@ -78,7 +78,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py" {}
+        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py" {flakeIgnore = ["W293" "E303"];}
           ''
             import json
             import os

@@ -320,7 +320,7 @@ in {
             {
               "Media downloading" = {
                 style = "row";
-                columns = 4;
+                columns = 3;
                 icon = "mdi-download";
               };
             }

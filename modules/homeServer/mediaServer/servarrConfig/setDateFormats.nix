@@ -18,7 +18,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "set_servarr_date_formats.py" {}
+        ExecStart = "${pkgs.writers.writePython3 "set_servarr_date_formats.py" {flakeIgnore = ["W293" "E303"];}
           ''
             import os
             import sqlite3

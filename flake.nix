@@ -136,6 +136,8 @@
 
                     mediaServer = {
                       enable = true;
+                      movies = false;
+                      telly = false;
                       transmission.ovpnName = "ch_airvpn";
                     };
 

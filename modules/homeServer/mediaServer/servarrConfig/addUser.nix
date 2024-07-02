@@ -18,7 +18,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py" {flakeIgnore = ["E501"];}
+        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py" {flakeIgnore = ["W293" "E303" "E501"];}
           ''
             import os
             import sqlite3

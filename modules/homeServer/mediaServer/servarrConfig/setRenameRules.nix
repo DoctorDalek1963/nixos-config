@@ -84,7 +84,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "set_servarr_rename_rules.py" {}
+        ExecStart = "${pkgs.writers.writePython3 "set_servarr_rename_rules.py" {flakeIgnore = ["W293" "E303"];}
           ''
             import os
             import sqlite3
