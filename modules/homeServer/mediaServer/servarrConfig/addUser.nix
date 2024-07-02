@@ -28,7 +28,6 @@ in {
             SALT = "DFNd/zuv18QMhpSFCZfcaQ=="
 
             READARR_PASSWORD = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
-            SPEAKARR_PASSWORD = "6ba164d4ffaf9a92200f29927f7e6301bf0da55a7b20c400a8f8c2bbfc0c16d4"
 
 
             def write_user_to_database(db_path: str) -> None:
@@ -51,15 +50,10 @@ in {
                 identifier = str(uuid.uuid4())
                 service_name = db_path.split("/")[-1].strip(".db").lower()
 
-                if service_name == "readarr":
+                if service_name == "readarr" or service_name == "speakarr":
                     cur.execute(
                         "INSERT INTO Users (Identifier, Username, Password) VALUES "
                         f"('{identifier}', 'dyson', '{READARR_PASSWORD}')"
-                    )
-                elif service_name == "speakarr":
-                    cur.execute(
-                        "INSERT INTO Users (Identifier, Username, Password) VALUES "
-                        f"('{identifier}', 'dyson', '{SPEAKARR_PASSWORD}')"
                     )
                 else:
                     cur.execute(
@@ -73,7 +67,7 @@ in {
             def main() -> None:
                 write_user_to_database("/var/lib/prowlarr/prowlarr.db")
                 ${optWrite cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optWrite cfgMs.books "${config.services.speakarr.dataDir}/readarr.db"}
+                ${optWrite cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
                 ${optWrite cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
                 ${optWrite cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
                 ${optWrite cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}

@@ -258,7 +258,7 @@
           }
           {
             "Speakarr" = rec {
-              icon = "readarr.svg";
+              icon = "mdi-cast-audio-variant";
               href = "https://${cfg.domainName}/speakarr";
               description = "Audiobook manager";
               widget = {

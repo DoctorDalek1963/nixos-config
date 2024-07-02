@@ -79,7 +79,7 @@ in {
             def main() -> None:
                 add_transmission("/var/lib/prowlarr/prowlarr.db")
                 ${optAdd cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optAdd cfgMs.books "${config.services.speakarr.dataDir}/readarr.db"}
+                ${optAdd cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
                 ${optAdd cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
                 ${optAdd cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
                 ${optAdd cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}

@@ -45,7 +45,7 @@
   '';
   speakarr = optSnippet cfgMs.books ''
     add_root_folder(
-        "${config.services.speakarr.dataDir}/readarr.db",
+        "${config.services.speakarr.dataDir}/speakarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
         "DefaultQualityProfileId, DefaultTags, IsCalibreLibrary) VALUES "
         "('${cfgMs.mediaRoot}/audiobooks/', 'Audiobookshelf', 1, 2, '[]', 0)"

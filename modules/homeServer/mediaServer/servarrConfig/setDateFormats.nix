@@ -58,7 +58,7 @@ in {
             def main() -> None:
                 set_date_formats("/var/lib/prowlarr/prowlarr.db")
                 ${optSet cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optSet cfgMs.books "${config.services.speakarr.dataDir}/readarr.db"}
+                ${optSet cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
                 ${optSet cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
                 ${optSet cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
                 ${optSet cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}

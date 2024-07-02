@@ -34,7 +34,7 @@
   '';
   speakarr = optSnippet cfgMs.books ''
     set_naming_config(
-        "${config.services.speakarr.dataDir}/readarr.db",
+        "${config.services.speakarr.dataDir}/speakarr.db",
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
         "AuthorFolderFormat, RenameBooks, StandardBookFormat, "
         "ColonReplacementFormat) VALUES (1, '{Author Name}', 1, "
