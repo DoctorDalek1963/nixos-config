@@ -46,6 +46,9 @@ in {
             def get_env(var_name: str) -> str:
                 with open(HOMEPAGE_ENV) as f:
                     for line in f.read().splitlines():
+                        if line == "":
+                            continue
+
                         [name, val] = line.split("=", 1)
                         if name == var_name:
                             return val
