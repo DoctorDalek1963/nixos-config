@@ -147,6 +147,7 @@ in {
           dnsOverTls = port 853; # TCP
           dnsOverQuic = port 853; # UDP
         };
+        unbound = port 5335;
 
         mediaServer = {
           audiobookshelf = port 8000;

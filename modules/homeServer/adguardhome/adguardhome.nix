@@ -18,7 +18,19 @@ in {
       # it manually.
       mutableSettings = true;
       settings = {
-        dns.bind_hosts = ["0.0.0.0"];
+        dns = rec {
+          bind_hosts = ["0.0.0.0"];
+
+          enable_dnssec = true;
+          cache_optimistic = true;
+
+          ratelimit = 50;
+
+          upstream_dns =
+            ["127.0.0.1:${toString cfg.ports.unbound}"]
+            ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
+          bootstrap_dns = upstream_dns;
+        };
 
         filtering = {
           filtering_enabled = true;
