@@ -1,2 +1,1 @@
 - Extract /iso/config to /tmp/nixos-config to allow for secret provisioning after building the ISO (use systemd service to extract)
-- Fix snapper only snapping at midnight or change to hourly snapshots and change cleanup
