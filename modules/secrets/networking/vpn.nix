@@ -97,17 +97,17 @@ in {
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "us-hotspotshield") {
-        "openvpn/us-hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "us_hotspotshield") {
+        "openvpn/us_hotspotshield/user-pass" = {
           mode = "0644";
         };
-        "openvpn/us-hotspotshield/cert" = {
+        "openvpn/us_hotspotshield/cert" = {
           mode = "0644";
         };
-        "openvpn/us-hotspotshield/key" = {
+        "openvpn/us_hotspotshield/key" = {
           mode = "0644";
         };
-        "openvpn/us-hotspotshield/ca" = {
+        "openvpn/us_hotspotshield/ca" = {
           mode = "0644";
         };
       };

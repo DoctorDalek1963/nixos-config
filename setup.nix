@@ -294,7 +294,7 @@ in {
               users = ["dyson"];
             }
             {
-              vpnName = "us-hotspotshield";
+              vpnName = "us_hotspotshield";
               users = ["dyson"];
             }
           ];
