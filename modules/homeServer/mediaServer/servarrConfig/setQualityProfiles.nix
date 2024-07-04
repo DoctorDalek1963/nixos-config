@@ -30,10 +30,10 @@
         {"quality": 2, "items": [], "allowed": True},
         {"quality": 3, "items": [], "allowed": True},
         {"quality": 4, "items": [], "allowed": True},
-        {"quality": 10, "items": [], "allowed": False},
-        {"quality": 11, "items": [], "allowed": False},
-        {"quality": 12, "items": [], "allowed": False},
         {"quality": 13, "items": [], "allowed": False},
+        {"quality": 10, "items": [], "allowed": False},
+        {"quality": 12, "items": [], "allowed": False},
+        {"quality": 11, "items": [], "allowed": False},
     ]
 
     set_quality_profile(
@@ -50,10 +50,10 @@
         {"quality": 2, "items": [], "allowed": False},
         {"quality": 3, "items": [], "allowed": False},
         {"quality": 4, "items": [], "allowed": False},
-        {"quality": 10, "items": [], "allowed": True},
-        {"quality": 11, "items": [], "allowed": True},
-        {"quality": 12, "items": [], "allowed": True},
         {"quality": 13, "items": [], "allowed": True},
+        {"quality": 10, "items": [], "allowed": True},
+        {"quality": 12, "items": [], "allowed": True},
+        {"quality": 11, "items": [], "allowed": True},
     ]
 
     set_quality_profile(
