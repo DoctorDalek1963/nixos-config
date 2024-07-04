@@ -15,6 +15,7 @@
     "set-servarr-config-files.service"
     "set-servarr-date-formats.service"
     "set-servarr-rename-rules.service"
+    "set-servarr-quality-profiles.service"
   ];
 in {
   imports = [
@@ -25,6 +26,7 @@ in {
     ./rootFolders.nix
     ./setDateFormats.nix
     ./setRenameRules.nix
+    ./setQualityProfiles.nix
   ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
