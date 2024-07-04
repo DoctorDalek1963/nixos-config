@@ -56,7 +56,7 @@
         "${config.services.lidarr.dataDir}/lidarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
         "DefaultQualityProfileId, DefaultTags) VALUES "
-        "('${cfgMs.mediaRoot}/music/', 'Root', 1, 1, '[]')"
+        "('${cfgMs.mediaRoot}/music/', 'Root', 1, 3, '[]')"
     )
   '';
   radarr = optSnippet cfgMs.movies ''
