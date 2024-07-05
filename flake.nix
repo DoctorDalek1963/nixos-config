@@ -133,6 +133,7 @@
                     dataRoot = "/data";
 
                     adguardhome.enable = true;
+                    ntfy.enable = true;
 
                     mediaServer = {
                       enable = true;

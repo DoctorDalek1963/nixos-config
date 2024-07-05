@@ -148,6 +148,10 @@ in {
           dnsOverQuic = port 853; # UDP
         };
         unbound = port 5335;
+        ntfy = {
+          http = port 4000;
+          https = port 4001;
+        };
 
         mediaServer = {
           audiobookshelf = port 8000;
@@ -182,6 +186,7 @@ in {
       };
 
       adguardhome.enable = defaultFalse;
+      ntfy.enable = defaultFalse;
 
       homeAutomation = {};
 
