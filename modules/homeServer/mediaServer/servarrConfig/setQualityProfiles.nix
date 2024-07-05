@@ -26,7 +26,7 @@
   readarr = optSnippet cfgMs.books ''
     ITEMS = [
         {"quality": 0, "items": [], "allowed": False},
-        {"quality": 1, "items": [], "allowed": False},
+        {"quality": 1, "items": [], "allowed": True},
         {"quality": 2, "items": [], "allowed": True},
         {"quality": 3, "items": [], "allowed": True},
         {"quality": 4, "items": [], "allowed": True},
