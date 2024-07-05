@@ -7,21 +7,24 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  allServarrServices = [
-    "add-servarr-root-folders.service"
-    "add-transmission-to-servarr-apps.service"
-    "add-user-to-servarr-apps.service"
-    "populate-prowlarr.service"
-    "set-servarr-config-files.service"
-    "set-servarr-date-formats.service"
-    "set-servarr-rename-rules.service"
-    "set-servarr-quality-profiles.service"
-  ];
+  allServarrServices =
+    [
+      "add-servarr-root-folders.service"
+      "add-transmission-to-servarr-apps.service"
+      "add-user-to-servarr-apps.service"
+      "populate-prowlarr.service"
+      "set-servarr-config-files.service"
+      "set-servarr-date-formats.service"
+      "set-servarr-rename-rules.service"
+      "set-servarr-quality-profiles.service"
+    ]
+    ++ lib.optional cfg.ntfy.enable "set-servarr-notifications.service";
 in {
   imports = [
     ./addTransmission.nix
     ./addUser.nix
     ./configFiles.nix
+    ./notifications.nix
     ./populateProwlarr.nix
     ./rootFolders.nix
     ./setDateFormats.nix
