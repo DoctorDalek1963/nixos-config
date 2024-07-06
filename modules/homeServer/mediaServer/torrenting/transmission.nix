@@ -10,7 +10,9 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/transmission" = {
-        proxyPass = "http://192.168.${toString cfgMs.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
+        proxyPass =
+          "http://192.168.${toString cfgMs.transmission.thirdOctet}.2"
+          + ":${toString cfg.ports.mediaServer.transmission}";
       };
 
       transmission = {
