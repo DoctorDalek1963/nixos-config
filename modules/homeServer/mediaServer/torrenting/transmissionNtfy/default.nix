@@ -27,6 +27,8 @@ in {
           after = ["transmission.service" "ntfy-sh.service"];
           requires = ["transmission.service" "ntfy-sh.service"];
 
+          wantedBy = ["multi-user.target"];
+
           environment = rec {
             TURL =
               "http://192.168.${toString cfgMs.transmission.thirdOctet}.2"
