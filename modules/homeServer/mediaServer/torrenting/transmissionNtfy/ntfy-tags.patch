@@ -1,0 +1,21 @@
+--- a/src/main.rs
++++ b/src/main.rs
+@@ -21,14 +21,16 @@ struct TorrentStatus {
+ async fn notif_torrent_finished(dispatcher: &Dispatcher, torrent_name: &String) {
+     let notif = Payload::new("transmission")
+         .message(format!("{} download complete", torrent_name))
+-        .title("Transmission");
++        .tags(["white_check_mark"])
++        .title("Transmission - Download Complete");
+     dispatcher.send(&notif).await.unwrap();
+ }
+ 
+ async fn notif_torrent_added(dispatcher: &Dispatcher, torrent_name: &String) {
+     let notif = Payload::new("transmission")
+         .message(format!("{} download started", torrent_name))
+-        .title("Transmission");
++        .tags(["arrow_down"])
++        .title("Transmission - Download Started");
+     dispatcher.send(&notif).await.unwrap();
+ }
+ 

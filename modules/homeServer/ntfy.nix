@@ -18,6 +18,9 @@ in {
         cert-file = "/etc/tailscale-certificates/${cfg.domainName}/cert.pem";
         key-file = "/etc/tailscale-certificates/${cfg.domainName}/key.pem";
 
+        enable-signup = true;
+        enable-login = true;
+
         # Only needed for iOS notifications because Apple is awkward
         upstream-base-url = "https://ntfy.sh";
       };

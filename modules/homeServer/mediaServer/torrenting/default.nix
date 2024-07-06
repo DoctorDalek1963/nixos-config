@@ -1,3 +1,9 @@
 {
-  imports = [./privateTrackerBookkeeping.nix ./transmission.nix ./vpn.nix];
+  imports = [
+    ./transmissionNtfy
+
+    ./privateTrackerBookkeeping.nix
+    ./transmission.nix
+    ./vpn.nix
+  ];
 }
