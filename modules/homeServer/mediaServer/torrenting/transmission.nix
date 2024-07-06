@@ -49,6 +49,8 @@ in {
               ''.COLUMNS = .COLUMNS + [${builtins.concatStringsSep ", " columns}]''
               ".COMMON_PATH = [${builtins.concatStringsSep ", "
                 (builtins.map (x: ''"${x}"'') downloadPaths)}]"
+              ''.SORT_COLUMN = "Progress"''
+              ''.SORT_DIRECTION = "asc"''
             ];
           in "cat public/config.json.defaults | ${pkgs.jq}/bin/jq '${jqExpr}' > public/config.json";
         };
