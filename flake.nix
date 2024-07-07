@@ -289,6 +289,8 @@
               just
               fd
               nix-output-monitor
+              jq
+              cachix
             ])
             ++ [inputs.disko.packages."${system}".disko];
           shellHook = ''

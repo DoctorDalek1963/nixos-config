@@ -44,6 +44,10 @@ build-raspi-sd:
 	sudo umount {{justfile_directory()}}/pi-mnt
 	rmdir {{justfile_directory()}}/pi-mnt
 
+# push all store paths for Bert-NixOS to Cachix
+cachix-push-raspi:
+	nom build {{justfile_directory()}}#nixosConfigurations.Bert-NixOS.config.system.build.toplevel --json | jq -r '.[].drvPath' | cachix push doctordalek1963
+
 # bootstrap home-manager
 bootstrap-home-manager:
 	nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager switch
