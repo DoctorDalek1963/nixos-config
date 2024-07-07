@@ -27,11 +27,11 @@ in {
             HOMEPAGE_ENV = "${config.sops.secrets."home-server/homepage.env".path}"
 
             APPS = [
-                ${optStr cfgMs.books ''("Readarr", "books"),''}
-                ${optStr cfgMs.books ''("Speakarr", "books"),''}
-                ${optStr cfgMs.music ''("Lidarr", "music"),''}
-                ${optStr cfgMs.movies ''("Radarr", "movies"),''}
-                ${optStr cfgMs.telly ''("Sonarr", "telly"),''}
+                ${optStr cfgMs.books ''("Readarr", "books", False),''}
+                ${optStr cfgMs.books ''("Speakarr", "books", False),''}
+                ${optStr cfgMs.music ''("Lidarr", "music", True),''}
+                ${optStr cfgMs.movies ''("Radarr", "movies", True),''}
+                ${optStr cfgMs.telly ''("Sonarr", "telly", True),''}
             ]
 
             TAGS = {
@@ -82,7 +82,7 @@ in {
 
                 cur.execute("DELETE FROM Applications")
 
-                for app, tag in APPS:
+                for app, tag, include_general in APPS:
                     api_key = get_env(f"HOMEPAGE_VAR_{app.upper()}_KEY")
 
                     settings = (
@@ -98,10 +98,16 @@ in {
                     else:
                         impl = app
 
+                    tags = [TAGS[tag]]
+                    if include_general:
+                        tags.append(1)
+
+                    comma_tags = ", ".join(tags)
+
                     cur.execute(
                         "INSERT INTO Applications (Name, Implementation, Settings, "
                         f"ConfigContract, SyncLevel, Tags) VALUES ('{app}', '{impl}', "
-                        f"'{settings}', '{impl}Settings', 2, '[1, {TAGS[tag]}]')"
+                        f"'{settings}', '{impl}Settings', 2, '[{comma_tags}]')"
                     )
 
                 conn.commit()
