@@ -335,6 +335,7 @@ in {
           type = types.listOf types.nonEmptyStr;
           default = [];
         };
+        asSpecialisation = defaultTrue;
       };
     };
   };
