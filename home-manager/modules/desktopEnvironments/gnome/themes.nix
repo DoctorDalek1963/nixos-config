@@ -83,18 +83,18 @@
           })
         ];
         cursors = {
-          light = "Catppuccin-Latte-Dark-Cursors";
-          dark = "Catppuccin-Macchiato-Light-Cursors";
+          light = "catppuccin-latte-dark-cursors";
+          dark = "catppuccin-macchiato-light-cursors";
         };
         gtk =
           if isLaptop
           then {
-            light = "Catppuccin-Latte-Compact-Mauve-Light";
-            dark = "Catppuccin-Macchiato-Compact-Mauve-Dark";
+            light = "catppuccin-latte-mauve-compact+rimless";
+            dark = "catppuccin-macchiato-mauve-compact+rimless";
           }
           else {
-            light = "Catppuccin-Latte-Standard-Mauve-Light";
-            dark = "Catppuccin-Macchiato-Standard-Mauve-Dark";
+            light = "catppuccin-latte-mauve-standard+rimless";
+            dark = "catppuccin-macchiato-mauve-standard+rimless";
           };
         icons = {
           light = "Papirus-Light";
