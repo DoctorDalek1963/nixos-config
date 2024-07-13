@@ -52,13 +52,13 @@
 
   infraServices = let
     list = optList cfg.adguardhome.enable {
-      "AdGuard Home" = rec {
+      "AdGuard Home" = {
         icon = "adguard-home.svg";
         href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
         description = "DNS-level ad blocker";
         widget = {
           type = "adguard";
-          url = href;
+          url = "https://localhost:${toString cfg.ports.adguardhome.https}";
         };
       };
     };
@@ -72,13 +72,13 @@
       (
         lib.optionals (cfgMs.movies || cfgMs.telly) [
           {
-            "Jellyfin" = rec {
+            "Jellyfin" = {
               icon = "jellyfin.svg";
               href = "https://${cfg.domainName}/jellyfin";
               description = "Movie and TV streaming";
               widget = {
                 type = "jellyfin";
-                url = href;
+                url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}/jellyfin";
                 key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
                 enableBlocks = true;
                 enableNowPlaying = true;
@@ -105,13 +105,13 @@
       ++ (
         lib.optional cfgMs.music
         {
-          "Navidrome" = rec {
+          "Navidrome" = {
             icon = "navidrome.svg";
             href = "https://${cfg.domainName}/navidrome";
             description = "Music streaming";
             widget = {
               type = "navidrome";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.navidrome}/navidrome";
               user = "admin";
               token = "4d1618495ed3495dcb95d7d8511e7717";
               salt = "gt8ou69prf";
@@ -121,13 +121,13 @@
       )
       ++ (lib.optionals cfgMs.books [
         {
-          "Calibre" = rec {
+          "Calibre" = {
             icon = "calibre.svg";
             href = "https://${cfg.domainName}/calibre";
             description = "Digital library";
             widget = {
               type = "calibreweb";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.calibre.web}";
               username = "admin";
               password = "admin123";
             };
@@ -170,13 +170,13 @@
           };
         }
         {
-          "Prowlarr" = rec {
+          "Prowlarr" = {
             icon = "prowlarr.svg";
             href = "https://${cfg.domainName}/prowlarr";
             description = "Torrent & Usenet indexer manager";
             widget = {
               type = "prowlarr";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.prowlarr}/prowlarr";
               key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
             };
           };
@@ -185,13 +185,13 @@
       ++ (
         lib.optional cfgMs.movies
         {
-          "Radarr" = rec {
+          "Radarr" = {
             icon = "radarr.svg";
             href = "https://${cfg.domainName}/radarr";
             description = "Movie manager";
             widget = {
               type = "radarr";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.radarr}/radarr";
               key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
             };
           };
@@ -200,13 +200,13 @@
       ++ (
         lib.optional cfgMs.telly
         {
-          "Sonarr" = rec {
+          "Sonarr" = {
             icon = "sonarr.svg";
             href = "https://${cfg.domainName}/sonarr";
             description = "TV manager";
             widget = {
               type = "sonarr";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.sonarr}/sonarr";
               key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
             };
           };
@@ -215,13 +215,13 @@
       ++ (
         lib.optional (cfgMs.movies || cfgMs.telly)
         {
-          "Bazarr" = rec {
+          "Bazarr" = {
             icon = "bazarr.svg";
             href = "https://${cfg.domainName}/bazarr";
             description = "Subtitle manager";
             widget = {
               type = "bazarr";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.bazarr}/bazarr";
               key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
             };
           };
@@ -230,13 +230,13 @@
       ++ (
         lib.optional cfgMs.music
         {
-          "Lidarr" = rec {
+          "Lidarr" = {
             icon = "lidarr.svg";
             href = "https://${cfg.domainName}/lidarr";
             description = "Music manager";
             widget = {
               type = "lidarr";
-              url = href;
+              url = "http://localhost:${toString cfg.ports.mediaServer.lidarr}/lidarr";
               key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
             };
           };
@@ -245,25 +245,25 @@
       ++ (
         lib.optionals cfgMs.books [
           {
-            "Readarr" = rec {
+            "Readarr" = {
               icon = "readarr.svg";
               href = "https://${cfg.domainName}/readarr";
               description = "E-book manager";
               widget = {
                 type = "readarr";
-                url = href;
+                url = "http://localhost:${toString cfg.ports.mediaServer.readarr}/readarr";
                 key = "{{HOMEPAGE_VAR_READARR_KEY}}";
               };
             };
           }
           {
-            "Speakarr" = rec {
+            "Speakarr" = {
               icon = "mdi-cast-audio-variant";
               href = "https://${cfg.domainName}/speakarr";
               description = "Audiobook manager";
               widget = {
                 type = "readarr";
-                url = href;
+                url = "http://localhost:${toString cfg.ports.mediaServer.speakarr}/speakarr";
                 key = "{{HOMEPAGE_VAR_SPEAKARR_KEY}}";
               };
             };
