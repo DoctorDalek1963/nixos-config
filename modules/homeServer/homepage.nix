@@ -306,14 +306,21 @@ in {
                   if cond
                   then num
                   else 0;
-                columns =
+                cols =
                   (optNum (cfgMs.movies || cfgMs.telly) 2)
                   + (optNum cfgMs.music 1)
                   + (optNum cfgMs.books 2);
               in {
                 style = "row";
-                inherit columns;
-                fiveColumns = columns == 5;
+                columns =
+                  {
+                    "1" = 1;
+                    "2" = 2;
+                    "3" = 3;
+                    "4" = 2;
+                    "5" = 3;
+                  }
+                  .${toString cols};
                 icon = "si-jellyfin";
               };
             }
