@@ -102,7 +102,7 @@ in {
                     if include_general:
                         tags.append(1)
 
-                    comma_tags = ", ".join(tags)
+                    comma_tags = ", ".join([str(x) for x in tags])
 
                     cur.execute(
                         "INSERT INTO Applications (Name, Implementation, Settings, "
