@@ -24,20 +24,35 @@ in {
 
 
             def make_settings(
-                topics: list[str], tags: list[str], priority: int = 3
+                topics: list[str],
+                tags: list[str],
+                *,
+                priority: int = 3,
+                click_url: str | None = None,
             ) -> dict[str, typing.Any]:
-                return {
-                  "serverUrl": "https://localhost:${toString cfg.ports.ntfy.https}",
-                  "priority": priority,
-                  "topics": topics,
-                  "tags": tags,
+                settings = {
+                    "serverUrl": "https://localhost:${toString cfg.ports.ntfy.https}",
+                    "priority": priority,
+                    "topics": topics,
+                    "tags": tags,
                 }
+
+                if click_url is not None:
+                    settings |= {"clickUrl": click_url}
+
+                return settings
 
 
             def make_prowlarr_settings(
-                topic: str, tag: str, priority: int = 3
+                topic: str,
+                tag: str,
+                *,
+                priority: int = 3,
+                click_url: str | None = None,
             ) -> dict[str, typing.Any]:
-                return make_settings([f"prowlarr-{topic}"], [tag], priority)
+                return make_settings(
+                    [f"prowlarr-{topic}"], [tag], priority=priority, click_url=click_url
+                )
 
 
             def set_prowlarr_ntfy() -> None:
@@ -49,7 +64,11 @@ in {
 
                 cur.execute("DELETE FROM Notifications")
 
-                settings = make_prowlarr_settings("health", "ambulance")
+                settings = make_prowlarr_settings(
+                    "health",
+                    "ambulance",
+                    click_url="https://${cfg.domainName}/prowlarr"
+                )
                 cur.execute(
                     "INSERT INTO Notifications (Name, Settings, Implementation, "
                     "ConfigContract, Tags, OnHealthIssue, IncludeHealthWarnings, "
