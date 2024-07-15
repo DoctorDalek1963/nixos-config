@@ -18,8 +18,6 @@ in {
         description = "The directory where Speakarr stores its data files.";
       };
 
-      # TODO: Create package for Speakarr, where we take Readarr, rename it
-      # everywhere, change the default port, and change the colourscheme
       package = mkOption {
         type = types.package;
         default = pkgs.callPackage ./speakarrPackage {};
