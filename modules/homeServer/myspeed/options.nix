@@ -52,7 +52,7 @@ in {
   config = mkIf cfg.enable {
     systemd.tmpfiles.settings."10-myspeed".${cfg.dataDir}.d = {
       inherit (cfg) user group;
-      mode = "0700";
+      mode = "0755";
     };
 
     systemd.services.myspeed = {
@@ -69,7 +69,12 @@ in {
         ExecStartPre = [
           "${pkgs.writeShellScript "myspeed-server-pre-start" ''
             if [ ! -d "${cfg.dataDir}/bin" ]; then
-                cp -rv "${cfg.package}/lib/node_modules/myspeed" "${cfg.dataDir}"
+                chmod -R u+w "${cfg.dataDir}"
+                cp -rv -t "${cfg.dataDir}" \
+                    "${cfg.package}/lib/node_modules/myspeed/build" \
+                    "${cfg.package}/lib/node_modules/myspeed/node_modules" \
+                    "${cfg.package}/lib/node_modules/myspeed/package.json" \
+                    "${cfg.package}/lib/node_modules/myspeed/server"
             fi
           ''}"
         ];

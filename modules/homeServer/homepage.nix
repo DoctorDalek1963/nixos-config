@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   cfg = config.setup.homeServer;
@@ -60,9 +61,9 @@
       })
       ++ (lib.optional cfg.myspeed.enable {
         "MySpeed" = {
-          icon = "myspeed.svg";
+          icon = "mdi-speedometer";
           href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.myspeed}/";
-          description = "Speedtest analyzer";
+          description = "Speedtest aggregator and analyzer";
           widget = {
             type = "myspeed";
             url = "http://localhost:${toString cfg.ports.myspeed}";
@@ -295,6 +296,7 @@ in {
 
       homepage-dashboard = {
         enable = true;
+        package = inputs.nixpkgs-unstable.homepage-dashboard;
 
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
         listenPort = cfg.ports.homepage;
