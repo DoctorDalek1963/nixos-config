@@ -7,11 +7,6 @@
   cfgMs = cfg.mediaServer;
   cfgPp = cfg.personalProjects;
 
-  optList = cond: item:
-    if cond
-    then [item]
-    else [];
-
   # Information about how the icons work can be found at
   # https://gethomepage.dev/latest/configs/services/#icons
 
@@ -20,7 +15,7 @@
     then [{"Personal projects" = personalProjectsList;}]
     else [];
   personalProjectsList =
-    optList cfgPp.tictactoe {
+    lib.optional cfgPp.tictactoe {
       Tictactoe = [
         {
           abbr = "TTT";
@@ -30,7 +25,7 @@
         }
       ];
     }
-    ++ optList cfgPp.winter-wonderlights {
+    ++ lib.optional cfgPp.winter-wonderlights {
       "Winter WonderLights" = [
         {
           abbr = "WW";
@@ -39,7 +34,7 @@
         }
       ];
     }
-    ++ optList cfgPp.wordle {
+    ++ lib.optional cfgPp.wordle {
       Wordle = [
         {
           abbr = "WD";
@@ -51,7 +46,7 @@
     };
 
   infraServices = let
-    list = optList cfg.adguardhome.enable {
+    list = lib.optional cfg.adguardhome.enable {
       "AdGuard Home" = {
         icon = "adguard-home.svg";
         href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
