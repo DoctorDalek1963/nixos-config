@@ -46,17 +46,29 @@
     };
 
   infraServices = let
-    list = lib.optional cfg.adguardhome.enable {
-      "AdGuard Home" = {
-        icon = "adguard-home.svg";
-        href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
-        description = "DNS-level ad blocker";
-        widget = {
-          type = "adguard";
-          url = "https://localhost:${toString cfg.ports.adguardhome.https}";
+    list =
+      (lib.optional cfg.adguardhome.enable {
+        "AdGuard Home" = {
+          icon = "adguard-home.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
+          description = "DNS-level ad blocker";
+          widget = {
+            type = "adguard";
+            url = "https://localhost:${toString cfg.ports.adguardhome.https}";
+          };
         };
-      };
-    };
+      })
+      ++ (lib.optional cfg.myspeed.enable {
+        "MySpeed" = {
+          icon = "myspeed.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.myspeed}/";
+          description = "Speedtest analyzer";
+          widget = {
+            type = "myspeed";
+            url = "http://localhost:${toString cfg.ports.myspeed}";
+          };
+        };
+      });
   in
     if builtins.length list > 0
     then [{Infrastructure = list;}]

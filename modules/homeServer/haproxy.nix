@@ -22,7 +22,7 @@
     then mkProxy service haproxyPort servicePort
     else "";
 in {
-  config = lib.mkIf (cfg.enable && (cfgMs.books || cfgMs.movies || cfgMs.telly)) {
+  config = lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfgMs.books || cfgMs.movies || cfgMs.telly)) {
     services.haproxy = {
       enable = true;
       group = "certs";
@@ -34,6 +34,14 @@ in {
             timeout connect 5s
             timeout server 10s
             timeout http-request 10s
+
+        ${
+          optProxy
+          cfg.myspeed.enable
+          "myspeed"
+          cfg.ports.haproxy.myspeed
+          cfg.ports.myspeed
+        }
 
         ${
           optProxy

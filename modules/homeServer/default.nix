@@ -2,6 +2,7 @@
   imports = [
     ./adguardhome
     ./mediaServer
+    ./myspeed
     ./personalProjects
 
     ./haproxy.nix

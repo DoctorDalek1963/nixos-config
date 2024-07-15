@@ -133,6 +133,8 @@ in {
           };
       in {
         haproxy = {
+          myspeed = port 5217;
+
           mediaServer = {
             audiobookshelf = port 8001;
             jellyseerr = port 5056;
@@ -148,6 +150,7 @@ in {
           dnsOverQuic = port 853; # UDP
         };
         unbound = port 5335;
+        myspeed = port 5216;
         ntfy = {
           http = port 4000;
           https = port 4001;
@@ -186,6 +189,7 @@ in {
       };
 
       adguardhome.enable = defaultFalse;
+      myspeed.enable = defaultFalse;
       ntfy.enable = defaultFalse;
 
       homeAutomation = {};
