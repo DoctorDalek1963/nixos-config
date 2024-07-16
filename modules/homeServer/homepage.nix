@@ -311,6 +311,13 @@ in {
 
           layout = [
             {
+              Infrastructure = {
+                style = "row";
+                columns = 2;
+                icon = "mdi-server";
+              };
+            }
+            {
               Media = let
                 optNum = cond: num:
                   if cond
@@ -339,13 +346,6 @@ in {
                 style = "row";
                 columns = 3;
                 icon = "mdi-download";
-              };
-            }
-            {
-              Infrastructure = {
-                style = "row";
-                columns = 2;
-                icon = "mdi-server";
               };
             }
             {
