@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  system,
   ...
 }: let
   cfg = config.setup.homeServer;
@@ -296,7 +297,7 @@ in {
 
       homepage-dashboard = {
         enable = true;
-        package = inputs.nixpkgs-unstable.homepage-dashboard;
+        package = inputs.nixpkgs-unstable.legacyPackages."${system}".homepage-dashboard;
 
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
         listenPort = cfg.ports.homepage;
