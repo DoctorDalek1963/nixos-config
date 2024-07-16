@@ -60,7 +60,7 @@
   };
 
   nix = {
-    package = pkgs.nix;
+    package = pkgs.lix;
 
     # Use these flake inputs for system-wide flake registry
     registry = lib.mkForce (lib.mapAttrs (_: value: {flake = value;}) inputs);
