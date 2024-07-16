@@ -65,7 +65,7 @@ in {
 
   programs.mosh.enable = cfg.ssh.mosh;
 
-  services. openssh = {
+  services.openssh = {
     inherit (cfg.ssh) enable;
     settings = {
       PermitRootLogin = "no";
@@ -76,14 +76,16 @@ in {
   # Use British keyboard in TTYs
   console.keyMap = "uk";
 
-  environment.systemPackages = with pkgs; [
-    busybox
-    coreutils
-    file
-    git
-    vim
-    wget
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      busybox
+      coreutils
+      file
+      git
+      vim
+      wget
+    ])
+    ++ lib.optional cfg.ssh.enable pkgs.sshfs;
 
   # This is a very weird quirk that really should be fixed upstream but I don't
   # understand the root cause. See https://github.com/NixOS/nixpkgs/issues/296953
