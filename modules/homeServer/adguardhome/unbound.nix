@@ -13,7 +13,19 @@ in {
         port = cfg.ports.unbound;
 
         prefetch = true;
-        num-threads = 2;
+        num-threads = 4;
+
+        so-reuseport = true;
+
+        msg-cache-slabs = 4;
+        rrset-cache-slabs = 4;
+        infra-cache-slabs = 4;
+        key-cache-slabs = 4;
+
+        rrset-cache-size = "50m";
+        msg-cache-size = "25m";
+
+        outgoing-range = 200;
       };
     };
   };
