@@ -26,8 +26,8 @@
     ];
   };
 
-  # Don't build the NixOS docs locally
-  documentation.nixos.enable = false;
+  # Don't build any docs locally
+  documentation.enable = false;
 
   # Keep this to make sure wifi works
   hardware = {
