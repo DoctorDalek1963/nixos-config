@@ -28,12 +28,16 @@ in {
       group = "certs";
 
       config = ''
+        global
+            log stdout format raw local0 info
+
         defaults
             mode http
             timeout client 10s
             timeout connect 5s
             timeout server 10s
             timeout http-request 10s
+            log global
 
         ${
           optProxy
