@@ -81,17 +81,10 @@
     bluez
     dig
     ethtool
-    fd
-    file
-    git
-    htop
     libraspberrypi
     minicom
-    neovim
     (python311.withPackages (p: with p; [gpiozero pyserial rpi-gpio]))
     raspberrypi-eeprom
-    ripgrep
-    tree
     usbutils
   ];
 
