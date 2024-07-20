@@ -13,40 +13,41 @@
   # Information about how the icons work can be found at
   # https://gethomepage.dev/latest/configs/services/#icons
 
-  personalProjectsBookmarks =
-    if cfgPp.enable && builtins.length personalProjectsList > 0
-    then [{"Personal projects" = personalProjectsList;}]
+  personalProjectsBookmarks = let
+    list =
+      lib.optional cfgPp.tictactoe {
+        Tictactoe = [
+          {
+            abbr = "TTT";
+            icon = "https://raw.githubusercontent.com/DoctorDalek1963/tic-tac-toe/main/favicon.ico";
+            href = "https://${cfg.domainName}/tictactoe";
+            description = "";
+          }
+        ];
+      }
+      ++ lib.optional cfgPp.winter-wonderlights {
+        "Winter WonderLights" = [
+          {
+            abbr = "WW";
+            href = "https://${cfg.domainName}/winter-wonderlights";
+            description = "";
+          }
+        ];
+      }
+      ++ lib.optional cfgPp.wordle {
+        Wordle = [
+          {
+            abbr = "WD";
+            icon = "https://raw.githubusercontent.com/DoctorDalek1963/wordle/main/web/favicon.ico";
+            href = "https://${cfg.domainName}/wordle";
+            description = "";
+          }
+        ];
+      };
+  in
+    if cfgPp.enable && builtins.length list > 0
+    then [{"Personal projects" = list;}]
     else [];
-  personalProjectsList =
-    lib.optional cfgPp.tictactoe {
-      Tictactoe = [
-        {
-          abbr = "TTT";
-          icon = "https://raw.githubusercontent.com/DoctorDalek1963/tic-tac-toe/main/favicon.ico";
-          href = "https://${cfg.domainName}/tictactoe";
-          description = "";
-        }
-      ];
-    }
-    ++ lib.optional cfgPp.winter-wonderlights {
-      "Winter WonderLights" = [
-        {
-          abbr = "WW";
-          href = "https://${cfg.domainName}/winter-wonderlights";
-          description = "";
-        }
-      ];
-    }
-    ++ lib.optional cfgPp.wordle {
-      Wordle = [
-        {
-          abbr = "WD";
-          icon = "https://raw.githubusercontent.com/DoctorDalek1963/wordle/main/web/favicon.ico";
-          href = "https://${cfg.domainName}/wordle";
-          description = "";
-        }
-      ];
-    };
 
   infraServices = let
     list =
