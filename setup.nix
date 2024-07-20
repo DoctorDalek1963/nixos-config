@@ -138,6 +138,8 @@ in {
         haproxy = {
           myspeed = port 5217;
 
+          firefly-iii = port 8081;
+
           mediaServer = {
             audiobookshelf = port 8001;
             jellyseerr = port 5056;
@@ -194,6 +196,8 @@ in {
       adguardhome.enable = defaultFalse;
       myspeed.enable = defaultFalse;
       ntfy.enable = defaultFalse;
+
+      firefly-iii.enable = defaultFalse;
 
       homeAutomation = {};
 

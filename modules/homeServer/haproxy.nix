@@ -22,7 +22,7 @@
     then mkProxy service haproxyPort servicePort
     else "";
 in {
-  config = lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfgMs.books || cfgMs.movies || cfgMs.telly)) {
+  config = lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfg.firefly-iii.enable || cfgMs.books || cfgMs.movies || cfgMs.telly)) {
     services.haproxy = {
       enable = true;
       group = "certs";
@@ -45,6 +45,31 @@ in {
           "myspeed"
           cfg.ports.haproxy.myspeed
           cfg.ports.myspeed
+        }
+
+        ${
+          if cfg.firefly-iii.enable
+          then ''
+            frontend firefly-iii
+                bind :${toString cfg.ports.haproxy.firefly-iii}
+                bind :${toString cfg.ports.haproxy.firefly-iii} ssl crt /etc/tailscale-certificates/${cfg.domainName}/combined.pem
+                http-request redirect scheme https code 301 unless { ssl_fc }
+                default_backend firefly-iii-backend
+
+            backend firefly-iii-backend
+                use-fcgi-app php-fpm-firefly-iii
+                server firefly-iii_server ${config.services.phpfpm.pools.firefly-iii.socket} proto fcgi
+                http-request set-header X-Forwarded-Proto https
+                http-response set-header Content-Security-Policy upgrade-insecure-requests
+
+            fcgi-app php-fpm-firefly-iii
+                log-stderr global
+                option keep-conn
+                docroot ${config.services.firefly-iii.package}/public
+                index index.php
+                path-info ^(/.+\.php)(/.*)?$
+          ''
+          else ""
         }
 
         ${

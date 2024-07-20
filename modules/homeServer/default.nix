@@ -5,6 +5,7 @@
     ./myspeed
     ./personalProjects
 
+    ./firefly-iii.nix
     ./haproxy.nix
     ./homepage.nix
     ./nginx.nix
