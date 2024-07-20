@@ -24,6 +24,8 @@
       after = [openvpn-ns-service "create-transmission-veth.service"];
       requires = [openvpn-ns-service "create-transmission-veth.service"];
 
+      wantedBy = ["transmission.service"];
+
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${pkgs.writeShellScript name script}";
