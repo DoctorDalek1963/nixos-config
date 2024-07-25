@@ -22,6 +22,8 @@ in {
       firefly-iii = {
         enable = true;
 
+        inherit (config.services.nginx) group;
+
         poolConfig =
           options.services.firefly-iii.poolConfig.default
           // {
@@ -67,14 +69,31 @@ in {
           alias = "${config.services.firefly-iii.package}/public";
           index = "index.php";
           tryFiles = "$uri @firefly-iii";
+          # tryFiles = "$uri $uri/ /firefly-iii/index.php?$query_string";
 
           extraConfig = ''
+            sendfile off;
+
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Server $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $host;
+
+            # This line is optional and may help in some cases.
+            # proxy_set_header X-Forwarded-Port $server_port;
+
+            client_max_body_size 64M;
+            proxy_read_timeout 300s;
+
             location ~* \.php(?:$|/) {
+               fastcgi_pass unix:${config.services.phpfpm.pools.firefly-iii.socket};
+               fastcgi_index index.php;
                include ${config.services.nginx.package}/conf/fastcgi_params;
                fastcgi_param SCRIPT_FILENAME $request_filename;
+               # fastcgi_param SCRIPT_FILENAME ${config.services.firefly-iii.package}/public/$fastcgi_script_name;
                fastcgi_param HTTP_PROXY "";
                fastcgi_param modHeadersAvailable true;
-               fastcgi_pass unix:${config.services.phpfpm.pools.firefly-iii.socket};
             }
           '';
         };
