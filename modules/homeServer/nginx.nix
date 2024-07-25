@@ -10,6 +10,8 @@ in {
       enable = true;
       group = "certs";
 
+      logError = "stderr debug";
+
       recommendedProxySettings = true;
 
       virtualHosts."${cfg.domainName}" = {

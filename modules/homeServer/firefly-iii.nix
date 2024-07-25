@@ -17,6 +17,8 @@ in {
     };
 
     services = {
+      phpfpm.settings.log_level = "debug";
+
       firefly-iii = {
         enable = true;
 
@@ -32,8 +34,8 @@ in {
           APP_LOG_LEVEL = "debug";
 
           APP_KEY_FILE = config.sops.secrets."home-server/firefly-iii/key-file".path;
-          APP_URL = "https://${cfg.domainName}:${toString cfg.ports.haproxy.firefly-iii}";
-          # APP_URL = "https://${cfg.domainName}/firefly-iii";
+          # APP_URL = "https://${cfg.domainName}:${toString cfg.ports.haproxy.firefly-iii}";
+          APP_URL = "https://${cfg.domainName}/firefly-iii";
 
           TRUSTED_PROXIES = "**";
 
@@ -60,26 +62,27 @@ in {
         ];
       };
 
-      # nginx.virtualHosts."${cfg.domainName}".locations = {
-      #   "^~ /firefly-iii" = {
-      #     root = "${config.services.firefly-iii.package}/public";
-      #     tryFiles = "$uri $uri/ @firefly-iii";
-      #     index = "index.php";
-      #
-      #     extraConfig = ''
-      #       location ~* \.php(?:$|/) {
-      #          include ${config.services.nginx.package}/conf/fastcgi_params;
-      #          fastcgi_param SCRIPT_FILENAME $request_filename;
-      #          fastcgi_param modHeadersAvailable true;
-      #          fastcgi_pass unix:${config.services.phpfpm.pools.firefly-iii.socket};
-      #       }
-      #     '';
-      #   };
-      #
-      #   "@firefly-iii" = {
-      #     extraConfig = "rewrite ^/firefly-iii/(.*)$ /firefly-iii/index.php/$1 last;";
-      #   };
-      # };
+      nginx.virtualHosts."${cfg.domainName}".locations = {
+        "/firefly-iii/" = {
+          alias = "${config.services.firefly-iii.package}/public";
+          index = "index.php";
+          tryFiles = "$uri @firefly-iii";
+
+          extraConfig = ''
+            location ~* \.php(?:$|/) {
+               include ${config.services.nginx.package}/conf/fastcgi_params;
+               fastcgi_param SCRIPT_FILENAME $request_filename;
+               fastcgi_param HTTP_PROXY "";
+               fastcgi_param modHeadersAvailable true;
+               fastcgi_pass unix:${config.services.phpfpm.pools.firefly-iii.socket};
+            }
+          '';
+        };
+
+        "@firefly-iii" = {
+          extraConfig = "rewrite ^/firefly-iii/(.*)$ /firefly-iii/index.php/$1 last;";
+        };
+      };
     };
   };
 }
