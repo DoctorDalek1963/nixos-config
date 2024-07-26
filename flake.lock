@@ -971,11 +971,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1717750460,
-        "narHash": "sha256-JroeXiQRS6bNc0qE2pNwFsynVZcMYk9gka5C88eJvCM=",
+        "lastModified": 1722031819,
+        "narHash": "sha256-KcRfjRqN2KnrbGmIstepCVUMI3YDk38OhHkkabwXnGs=",
         "owner": "DoctorDalek1963",
         "repo": "tic-tac-toe",
-        "rev": "f00f864e4f64991e07de9f82d717441d6b240273",
+        "rev": "f1753343bde0e868f5ac18a76fd3d0216bf47308",
         "type": "github"
       },
       "original": {
@@ -995,11 +995,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1716550340,
-        "narHash": "sha256-JexvhH8QyQ9xRdhR141joP6nXOeeHQRSoYYw1kExWVE=",
+        "lastModified": 1722031843,
+        "narHash": "sha256-MFY23RlKc1rnk672Sp4oXyk8wES09iTYY+g13fTZP7M=",
         "owner": "DoctorDalek1963",
         "repo": "winter-wonderlights",
-        "rev": "51026b699ff5a580580ba9f9ab1d0332a109a6f7",
+        "rev": "835770ad77670dedfbf5dff773e9145acac5e647",
         "type": "github"
       },
       "original": {
@@ -1019,11 +1019,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1717750554,
-        "narHash": "sha256-UoW3x8W2dZAswmcPK+yAFfpByr3k/+7v0xbVIKIf9EY=",
+        "lastModified": 1722031828,
+        "narHash": "sha256-sV9JrILk3LePasJdf9XkEZJePi1Y/fM/mXUfFYk5ejI=",
         "owner": "DoctorDalek1963",
         "repo": "wordle",
-        "rev": "b8d851c978c0a528526360786ece7ef2f93281c3",
+        "rev": "9cbfd61a7b0996e6bf5e77f26ce115593dbd9781",
         "type": "github"
       },
       "original": {

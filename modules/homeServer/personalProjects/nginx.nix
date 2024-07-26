@@ -11,7 +11,7 @@
   tictactoe-web = inputs.tic-tac-toe.packages.${system}.web.overrideAttrs {
     TRUNK_BUILD_PUBLIC_URL = "/tictactoe/";
   };
-  tictactoe-doc = inputs.tic-tac-toe.packages.${system}.doc;
+  tictactoe-doc = inputs.tic-tac-toe.packages.${system}.doc-web;
 
   wordle-web = inputs.wordle.packages.${system}.web.overrideAttrs {
     TRUNK_BUILD_PUBLIC_URL = "/wordle/";
