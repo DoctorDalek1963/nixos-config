@@ -29,7 +29,7 @@ in {
             APPS = [
                 ${optStr cfgMs.books ''("Readarr", "books", False),''}
                 ${optStr cfgMs.books ''("Speakarr", "books", False),''}
-                ${optStr cfgMs.music ''("Lidarr", "music", True),''}
+                ${optStr cfgMs.music ''("Lidarr", "music", False),''}
                 ${optStr cfgMs.movies ''("Radarr", "movies", True),''}
                 ${optStr cfgMs.telly ''("Sonarr", "telly", True),''}
             ]
