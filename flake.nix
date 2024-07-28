@@ -144,6 +144,8 @@
 
                     firefly-iii.enable = true;
 
+                    squid.enable = true;
+
                     mediaServer = {
                       enable = true;
                       movies = false;

@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   inputs,
@@ -21,30 +20,25 @@
     SCANNER_SERVER_URL = "wss://${cfg.domainName}:${SCANNER_PORT}";
   };
 
-  winter-wonderlights-nginx = let
-    winter-wonderlights-web =
-      (inputs.winter-wonderlights.packages.${system}.client-web.override env)
-      .overrideAttrs {
-        TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
-      };
-    winter-wonderlights-doc = inputs.winter-wonderlights.packages.${system}.doc;
-  in
-    pkgs.stdenvNoCC.mkDerivation {
-      name = "winter-wonderlights-nginx";
-      dontUnpack = true;
-      installPhase = ''
-        mkdir -p $out/winter-wonderlights/docs
-        cp -rv ${winter-wonderlights-web}/* $out/winter-wonderlights/
-        cp -rv ${winter-wonderlights-doc}/share/doc/* $out/winter-wonderlights/docs/
-      '';
+  winter-wonderlights-web =
+    (inputs.winter-wonderlights.packages.${system}.client-web.override env)
+    .overrideAttrs {
+      TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
     };
+  winter-wonderlights-doc = inputs.winter-wonderlights.packages.${system}.doc;
 
   winter-wonderlights-server = inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override env;
 in {
   config = lib.mkIf (cfg.enable && cfgPp.enable && cfgPp.winter-wonderlights) {
-    services.nginx.virtualHosts."${cfg.domainName}" = {
-      locations."/winter-wonderlights".root = "${winter-wonderlights-nginx}";
-      extraConfig = "rewrite ^/winter-wonderlights/docs(/(index.html)?)?$ /winter-wonderlights/docs/ww_effects permanent;";
+    services.nginx.virtualHosts."${cfg.domainName}".locations = {
+      "/winter-wonderlights/" = {
+        alias = "${winter-wonderlights-web}/";
+        index = "index.html";
+      };
+      "/winter-wonderlights/docs/".alias = "${winter-wonderlights-doc}/share/doc/";
+
+      "/winter-wonderlights".return = "301 /winter-wonderlights/";
+      "/winter-wonderlights/docs".return = "301 /winter-wonderlights/docs/ww_effects/index.html";
     };
 
     boot.postBootCommands = ''

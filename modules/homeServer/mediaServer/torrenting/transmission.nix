@@ -55,6 +55,7 @@ in {
           in "cat public/config.json.defaults | ${pkgs.jq}/bin/jq '${jqExpr}' > public/config.json";
         };
 
+        # See https://github.com/transmission/transmission/blob/main/docs/Editing-Configuration-Files.md#options
         settings = {
           message-level = 4; # Info
 
@@ -71,6 +72,10 @@ in {
           peer-port = 64058;
           peer-port-random-on-start = false;
           port-forwarding-enabled = false;
+
+          dht-enabled = false;
+          lpd-enabled = true;
+          pex-enabled = true;
 
           rpc-enabled = true;
           rpc-port = cfg.ports.mediaServer.transmission;

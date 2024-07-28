@@ -51,8 +51,6 @@ in {
       mosh = defaultTrue;
     };
 
-    allowUnfree = defaultFalse;
-
     # === Android dev
     androidTools = {
       enable = defaultFalse;
@@ -160,6 +158,7 @@ in {
           http = port 4000;
           https = port 4001;
         };
+        squid = port 3128;
 
         mediaServer = {
           audiobookshelf = port 8000;
@@ -198,6 +197,8 @@ in {
       ntfy.enable = defaultFalse;
 
       firefly-iii.enable = defaultFalse;
+
+      squid.enable = defaultFalse;
 
       homeAutomation = {};
 

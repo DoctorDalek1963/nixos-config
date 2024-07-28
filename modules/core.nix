@@ -25,20 +25,21 @@ in {
     };
   };
 
-  # Allow unfree packages (drivers and hardware stuff)
-  nixpkgs.config.allowUnfree = cfg.allowUnfree;
+  nixpkgs.config = {
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        # Gaming
+        "steam"
+        "steam-original"
+        "steam-run"
+        "xow_dongle-firmware" # Needed for xone driver
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      # Gaming
-      "steam"
-      "steam-original"
-      "steam-run"
-      "xow_dongle-firmware" # Needed for xone driver
+        # Printing
+        "cnijfilter" # Canon Pixma driver
+      ];
 
-      # Printing
-      "cnijfilter" # Canon Pixma driver
-    ];
+    permittedInsecurePackages = ["squid-6.8"];
+  };
 
   networking = {
     hostName = cfg.hostname;
