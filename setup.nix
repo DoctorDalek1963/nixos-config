@@ -51,8 +51,6 @@ in {
       mosh = defaultTrue;
     };
 
-    allowUnfree = defaultFalse;
-
     # === Android dev
     androidTools = {
       enable = defaultFalse;
