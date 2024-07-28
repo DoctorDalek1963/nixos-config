@@ -37,6 +37,8 @@ in {
         # Printing
         "cnijfilter" # Canon Pixma driver
       ];
+
+    permittedInsecurePackages = ["squid-6.8"];
   };
 
   networking = {

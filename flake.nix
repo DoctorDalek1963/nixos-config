@@ -142,6 +142,8 @@
                     myspeed.enable = true;
                     ntfy.enable = true;
 
+                    squid.enable = true;
+
                     mediaServer = {
                       enable = true;
                       movies = false;

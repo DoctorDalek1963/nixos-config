@@ -9,6 +9,7 @@
     ./homepage.nix
     ./nginx.nix
     ./ntfy.nix
+    ./squid.nix
     ./tailscaleCerts.nix
   ];
 }

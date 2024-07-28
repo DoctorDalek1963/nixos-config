@@ -156,6 +156,7 @@ in {
           http = port 4000;
           https = port 4001;
         };
+        squid = port 3128;
 
         mediaServer = {
           audiobookshelf = port 8000;
@@ -192,6 +193,8 @@ in {
       adguardhome.enable = defaultFalse;
       myspeed.enable = defaultFalse;
       ntfy.enable = defaultFalse;
+
+      squid.enable = defaultFalse;
 
       homeAutomation = {};
 
