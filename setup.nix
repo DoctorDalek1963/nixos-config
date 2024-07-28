@@ -136,8 +136,6 @@ in {
         haproxy = {
           myspeed = port 5217;
 
-          firefly-iii = port 8081;
-
           mediaServer = {
             audiobookshelf = port 8001;
             jellyseerr = port 5056;

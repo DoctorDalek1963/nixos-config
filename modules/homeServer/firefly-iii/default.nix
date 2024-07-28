@@ -17,10 +17,14 @@ in {
     };
 
     services = {
-      phpfpm.settings.log_level = "debug";
-
       firefly-iii = {
         enable = true;
+
+        package = pkgs.firefly-iii.overrideAttrs {
+          patches = [
+            ./dashboard-redirect-home.patch
+          ];
+        };
 
         inherit (config.services.nginx) group;
 
@@ -32,11 +36,7 @@ in {
           };
 
         settings = {
-          APP_DEBUG = true;
-          APP_LOG_LEVEL = "debug";
-
           APP_KEY_FILE = config.sops.secrets."home-server/firefly-iii/key-file".path;
-          # APP_URL = "https://${cfg.domainName}:${toString cfg.ports.haproxy.firefly-iii}";
           APP_URL = "https://${cfg.domainName}/firefly-iii";
 
           TRUSTED_PROXIES = "**";
@@ -68,8 +68,7 @@ in {
         "/firefly-iii/" = {
           alias = "${config.services.firefly-iii.package}/public/";
           index = "index.php";
-          tryFiles = "$uri @firefly-iii";
-          # tryFiles = "$uri $uri/ /firefly-iii/index.php?$query_string";
+          tryFiles = "$uri $uri/ @firefly-iii";
 
           extraConfig = ''
             sendfile off;
@@ -84,8 +83,10 @@ in {
           '';
         };
 
+        "/firefly-iii".return = "301 /firefly-iii/home";
+
         "@firefly-iii" = {
-          extraConfig = "rewrite ^/firefly-iii/(.*)$ /firefly-iii/index.php/$1 last;";
+          extraConfig = "rewrite ^/firefly-iii/(.*)$ /firefly-iii/index.php?/$1 last;";
         };
       };
     };

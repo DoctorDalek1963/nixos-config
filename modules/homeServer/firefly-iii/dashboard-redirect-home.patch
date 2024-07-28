@@ -1,0 +1,11 @@
+--- a/resources/views/partials/menu-sidebar.twig
++++ b/resources/views/partials/menu-sidebar.twig
+@@ -1,6 +1,6 @@
+ <ul class="sidebar-menu" data-widget="tree">
+-    <li class="{{ activeRouteStrict('index') }}">
+-        <a href="{{ route('index') }}">
++    <li class="{{ activeRouteStrict('home') }}">
++        <a href="{{ route('home') }}">
+             <em class="fa fa-dashboard fa-fw"></em>
+             <span>{{ 'dashboard'|_ }}</span>
+         </a>

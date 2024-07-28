@@ -10,7 +10,7 @@ in {
       enable = true;
       group = "certs";
 
-      logError = "stderr debug";
+      # logError = "stderr debug";
 
       recommendedProxySettings = true;
 

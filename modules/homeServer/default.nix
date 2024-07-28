@@ -1,11 +1,11 @@
 {
   imports = [
     ./adguardhome
+    ./firefly-iii
     ./mediaServer
     ./myspeed
     ./personalProjects
 
-    ./firefly-iii.nix
     ./haproxy.nix
     ./homepage.nix
     ./nginx.nix

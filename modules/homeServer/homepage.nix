@@ -19,7 +19,7 @@
         {
           abbr = "FIII";
           icon = "firefly.png";
-          href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.firefly-iii}";
+          href = "https://${cfg.domainName}/firefly-iii/home";
           description = "";
         }
       ];
