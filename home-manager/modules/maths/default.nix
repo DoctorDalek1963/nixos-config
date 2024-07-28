@@ -11,6 +11,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages =
       lib.optional cfg.octave pkgs.octaveFull
-      ++ lib.optional cfg.tikzit pkgs.tikzit;
+      ++ lib.optional cfg.tikzit pkgs.tikzit
+      ++ lib.optional cfg.zotero pkgs.zotero;
   };
 }

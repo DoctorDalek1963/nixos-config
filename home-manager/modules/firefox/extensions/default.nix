@@ -25,11 +25,8 @@
     darkreader
     dashlane # Unfree
     wayback-machine
-
-    # Not yet packages
-    # TODO: Package these manually?
-    # Zotero Connector
-    # Who Wrote That?
+    whowrotethat
+    zotero-connector
   ];
 in
   if config.setup.firefox.enableExtensions

@@ -150,6 +150,7 @@ in {
       octave = defaultTrue;
       sage = defaultTrue;
       tikzit = defaultTrue;
+      zotero = defaultTrue;
     };
 
     # === Misc programs
