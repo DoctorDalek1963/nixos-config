@@ -24,6 +24,7 @@
     # Misc
     darkreader
     dashlane # Unfree
+    foxyproxy-standard
     wayback-machine
     whowrotethat
     zotero-connector
