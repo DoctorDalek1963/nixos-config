@@ -1,6 +1,7 @@
 {
   imports = [
     ./adguardhome
+    ./firefly-iii
     ./mediaServer
     ./myspeed
     ./personalProjects

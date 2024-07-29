@@ -194,6 +194,8 @@ in {
       myspeed.enable = defaultFalse;
       ntfy.enable = defaultFalse;
 
+      firefly-iii.enable = defaultFalse;
+
       squid.enable = defaultFalse;
 
       homeAutomation = {};

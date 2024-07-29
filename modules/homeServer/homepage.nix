@@ -13,6 +13,22 @@
   # Information about how the icons work can be found at
   # https://gethomepage.dev/latest/configs/services/#icons
 
+  miscBookmarks = let
+    list = lib.optional cfg.firefly-iii.enable {
+      "Firefly III" = [
+        {
+          abbr = "FIII";
+          icon = "firefly.png";
+          href = "https://${cfg.domainName}/firefly-iii/home";
+          description = "";
+        }
+      ];
+    };
+  in
+    if builtins.length list > 0
+    then [{Misc = list;}]
+    else [];
+
   personalProjectsBookmarks = let
     list =
       lib.optional cfgPp.tictactoe {
@@ -309,7 +325,7 @@ in {
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
         listenPort = cfg.ports.homepage;
 
-        bookmarks = personalProjectsBookmarks;
+        bookmarks = miscBookmarks ++ personalProjectsBookmarks;
         services = infraServices ++ mediaServices ++ mediaDownloadServices;
 
         settings = {
@@ -353,6 +369,13 @@ in {
                 style = "row";
                 columns = 3;
                 icon = "mdi-download";
+              };
+            }
+            {
+              Misc = {
+                style = "row";
+                columns = 2;
+                icon = "mdi-cog-box";
               };
             }
             {
