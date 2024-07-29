@@ -41,6 +41,15 @@ in {
     permittedInsecurePackages = ["squid-6.8"];
   };
 
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      icu
+      libz
+      stdenv.cc.cc.lib
+    ];
+  };
+
   networking = {
     hostName = cfg.hostname;
     firewall.enable = true;
