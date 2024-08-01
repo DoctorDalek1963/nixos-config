@@ -20,11 +20,13 @@ in {
       firefly-iii = {
         enable = true;
 
-        package = pkgs.firefly-iii.overrideAttrs {
-          patches = [
-            ./dashboard-redirect-home.patch
-          ];
-        };
+        package = pkgs.firefly-iii.overrideAttrs (oldAttrs: {
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.fd pkgs.sd];
+
+          preBuild = ''
+            fd . -e twig . -X sd -F "route('index')" "route('home')"
+          '';
+        });
 
         inherit (config.services.nginx) group;
 
