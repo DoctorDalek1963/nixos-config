@@ -242,16 +242,14 @@
 
                 desktopEnvironments = {
                   background = ./files/desktop-backgrounds/virtualbox.jpg;
-                  cinnamon = {
+                  gnome = {
                     enable = true;
-                    menuIcon = ./files/icons/nix-snowflake-black.svg;
-                    theme = {
-                      gtk = "Mint-Y-Orange";
-                      cursor = "Bibata-Original-Classic";
-                    };
+                    theme = "catppuccin-adaptive-macchiato-mauve";
                   };
                 };
-                # firefox.enable = true;
+
+                firefox.enable = true;
+
                 # rclone = {
                 #   enable = true;
                 #   automounts = [
@@ -262,6 +260,7 @@
                 #     }
                 #   ];
                 # };
+
                 terminalTools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
                 miscPrograms.xremap = false;
               };
