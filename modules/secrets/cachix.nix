@@ -20,9 +20,10 @@ in {
     #   compressionLevel = 5;
     # };
 
+    # Don't forget to update these in iso/default.nix as well!
     nix.settings = {
       substituters = [
-        "https://cache.nixos.org/"
+        "https://cache.nixos.org"
         "https://nix-community.cachix.org"
         "https://doctordalek1963.cachix.org"
       ];
