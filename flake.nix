@@ -51,14 +51,21 @@
     ...
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      flake.nixosConfigurations = {
+      flake.nixosConfigurations = rec {
         iso = let
           system = "x86_64-linux";
         in
           nixpkgs.lib.nixosSystem {
             inherit system;
             specialArgs = {inherit self inputs system;};
-            modules = ["${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix" ./iso];
+            modules = [
+              "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+              ./iso
+
+              # Include everything for VirtualBox so it doesn't have to
+              # download tons from the cache every time I test an install
+              # {environment.systemPackages = VirtualBox-NixOS.config.environment.systemPackages;}
+            ];
           };
 
         "Alex-NixOS" = nixpkgs.lib.nixosSystem {
