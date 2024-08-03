@@ -4,6 +4,8 @@
 
 # Blockers
 
+- Plymouth
+
 ## Rebecca
 - Minimal Firefox
 
