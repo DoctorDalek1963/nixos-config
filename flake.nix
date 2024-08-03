@@ -20,6 +20,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -255,6 +256,8 @@
             {
               setup = {
                 hostname = "VirtualBox-NixOS";
+
+                impermanence.enable = true;
 
                 virtualBox.guest.enable = true;
 

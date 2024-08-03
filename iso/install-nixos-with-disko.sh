@@ -60,8 +60,17 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 	sudo disko --mode disko "machines/${TARGET_HOST}/disko.nix"
 
 	# Rsync my nix-config to the target install
-	sudo mkdir -p "/mnt/etc/nixos"
-	sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
+	set +e
+	has_persist="$(grep -Po '/persist' "machines/${TARGET_HOST}/disko.nix" | uniq)"
+	set -e
+
+	if [[ -n "$has_persist" ]]; then
+		sudo mkdir -p "/mnt/persist/etc/nixos"
+		sudo rsync -a --delete "/iso/config/" "/mnt/persist/etc/nixos"
+	else
+		sudo mkdir -p "/mnt/etc/nixos"
+		sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
+	fi
 
 	sudo nixos-install --flake ".#${TARGET_HOST}"
 else

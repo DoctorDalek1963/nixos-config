@@ -23,29 +23,47 @@
                 randomEncryption = true;
               };
             };
-            nixos = {
+            luks = {
               size = "100%";
               content = {
-                type = "btrfs";
-                extraArgs = ["-f" "--label" "NixOS"];
-                subvolumes = let
-                  mount-options = compression-level: ["compress=zstd:${compression-level}" "noatime"];
-                in {
-                  "/rootfs" = {
-                    mountOptions = mount-options "2";
-                    mountpoint = "/";
-                  };
-                  "/home" = {
-                    mountOptions = mount-options "2";
-                    mountpoint = "/home";
-                  };
-                  "/home/.snapshots" = {
-                    mountOptions = mount-options "5";
-                    mountpoint = "/home/.snapshots";
-                  };
-                  "/nix" = {
-                    mountOptions = mount-options "2";
-                    mountpoint = "/nix";
+                type = "luks";
+                name = "cryptroot";
+                passwordFile = "/tmp/password";
+                settings.allowDiscards = true;
+
+                content = {
+                  type = "btrfs";
+                  extraArgs = ["-f" "--label" "nixos"];
+
+                  postCreateHook = ''
+                    mount -t btrfs /dev/disk/by-label/nixos /mnt
+                    btrfs subvolume snapshot -r /mnt /mnt/rootfs-blank
+                    umount /mnt
+                  '';
+
+                  subvolumes = let
+                    mount-options = compression-level: ["compress=zstd:${compression-level}" "noatime"];
+                  in {
+                    "/rootfs" = {
+                      mountOptions = mount-options "2";
+                      mountpoint = "/";
+                    };
+                    "/nix" = {
+                      mountOptions = mount-options "2";
+                      mountpoint = "/nix";
+                    };
+                    "/persist" = {
+                      mountOptions = mount-options "2";
+                      mountpoint = "/persist";
+                    };
+                    "/persist/home" = {
+                      mountOptions = mount-options "2";
+                      mountpoint = "/persist/home";
+                    };
+                    "/persist/home/.snapshots" = {
+                      mountOptions = mount-options "5";
+                      mountpoint = "/persist/home/.snapshots";
+                    };
                   };
                 };
               };
@@ -55,4 +73,6 @@
       };
     };
   };
+
+  fileSystems."/persist".neededForBoot = true;
 }

@@ -29,6 +29,7 @@ in {
     ./modules/development
     ./modules/gaming
     ./modules/openRGB
+    ./modules/impermanence
     ./modules/homeServer
     ./modules/pam
     ./modules/printing
@@ -239,6 +240,11 @@ in {
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
       };
+    };
+
+    # === Impermanence
+    impermanence = {
+      enable = defaultFalse;
     };
 
     # === Passwords
