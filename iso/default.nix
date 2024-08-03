@@ -6,21 +6,14 @@
   inputs,
   ...
 }: let
-  install-nixos-with-disko = pkgs.callPackage ({stdenvNoCC}:
-    stdenvNoCC.mkDerivation {
-      name = "install-nixos-with-disko";
-      dontUnpack = true;
-
-      buildPhase = ''
-        cp ${./install-nixos-with-disko} ./install-nixos-with-disko
-        substituteInPlace ./install-nixos-with-disko \
-          --replace DISKOCOMMAND "${inputs.disko.packages."${system}".disko}/bin/disko"
-      '';
-
-      installPhase = ''
-        install -Dm555 ./install-nixos-with-disko $out/bin/install-nixos-with-disko
-      '';
-    }) {};
+  install-nixos-with-disko = pkgs.writeShellApplication {
+    name = "install-nixos-with-disko";
+    runtimeInputs = [
+      inputs.disko.packages."${system}".disko
+      pkgs.rsync
+    ];
+    text = builtins.readFile ./install-nixos-with-disko;
+  };
 
   connect-wifi = let
     nmcli = "${pkgs.networkmanager}/bin/nmcli";
@@ -41,10 +34,8 @@ in {
   environment.systemPackages = [
     pkgs.git
     pkgs.neovim
-    pkgs.rsync
     install-nixos-with-disko
     connect-wifi
-    inputs.disko.packages."${system}".disko
   ];
 
   # Allow ISO to connect to WiFi
