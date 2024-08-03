@@ -12,7 +12,7 @@
       inputs.disko.packages."${system}".disko
       pkgs.rsync
     ];
-    text = builtins.readFile ./install-nixos-with-disko;
+    text = builtins.readFile ./install-nixos-with-disko.sh;
   };
 
   connect-wifi = let
