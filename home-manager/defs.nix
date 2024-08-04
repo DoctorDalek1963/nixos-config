@@ -194,7 +194,10 @@
               };
             };
 
-            firefox.enable = true;
+            firefox = {
+              enable = true;
+              minimal = true;
+            };
 
             # rclone = {
             #   enable = true;

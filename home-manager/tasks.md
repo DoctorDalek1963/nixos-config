@@ -6,9 +6,6 @@
 
 - Plymouth
 
-## Rebecca
-- Minimal Firefox
-
 ## Amelia
 - rclone bisync points
 - Ungoogled Chromium
