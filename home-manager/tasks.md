@@ -4,8 +4,6 @@
 
 # Blockers
 
-- Plymouth
-
 ## Amelia
 - rclone bisync points
 - Ungoogled Chromium

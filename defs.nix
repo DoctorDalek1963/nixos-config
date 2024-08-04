@@ -204,6 +204,8 @@
       ./setup.nix
       ./machines/VirtualBox-NixOS
       {
+        # boot.plymouth.enable = true;
+
         setup = {
           hostname = "VirtualBox-NixOS";
 
