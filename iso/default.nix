@@ -30,12 +30,34 @@
       ${nmcli} connection modify "$1" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$2"
       ${nmcli} connection up "$1"
     '';
+
+  set-password = pkgs.writeShellScriptBin "set-password" ''
+    if [[ -z "$1" ]]; then
+      echo "Usage: $0 FILENAME"
+      exit 1
+    fi
+
+    filename="$1"
+
+    read -rs -p "Enter password: " first_password
+    echo
+    read -rs -p "Enter password again: " second_password
+    echo
+
+    if [[ "$first_password" = "$second_password" ]]; then
+      echo -n "$first_password" > "$filename"
+      echo "Successfully wrote password to $filename"
+    else
+      printf "\033[31;1mERROR!\033[0m Passwords did not match"
+    fi
+  '';
 in {
   environment.systemPackages = [
     pkgs.git
     pkgs.neovim
     install-nixos-with-disko
     connect-wifi
+    set-password
   ];
 
   # Allow ISO to connect to WiFi
@@ -64,6 +86,21 @@ in {
     ];
   };
 
+  systemd.services.copy-nixos-config-to-tmp = {
+    description = "Copy /iso/nixos-config to /tmp/nixos-config";
+
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.writeShellScript "copy-nixos-config-to-tmp" ''
+        ${pkgs.rsync}/bin/rsync -av --delete "/iso/nixos-config/" "/tmp/nixos-config"
+        chmod -R ug+w /tmp/nixos-config
+        chown -R nixos:users /tmp/nixos-config
+      ''}";
+    };
+  };
+
   isoImage = {
     # Slightly larger ISO image size, but significantly faster build times
     squashfsCompression = "gzip -Xcompression-level 1";
@@ -82,7 +119,7 @@ in {
             src = self;
             filter = path: type: ! (excludeFilter path type);
           };
-        target = "/config";
+        target = "/nixos-config";
       }
     ];
   };

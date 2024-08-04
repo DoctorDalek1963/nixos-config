@@ -134,6 +134,7 @@ in {
     # === Firefox
     firefox = {
       enable = defaultFalse;
+      minimal = defaultFalse;
       enableExtensions = defaultTrue;
     };
 

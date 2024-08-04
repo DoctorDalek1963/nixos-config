@@ -4,30 +4,43 @@
 set -euo pipefail
 TARGET_HOST="${1:-}"
 
-cd /iso/config
+print_error() {
+	printf "\033[31;1mERROR!\033[0m "
+}
+
+print_warning() {
+	printf "\033[33;1mWARNING!\033[0m "
+}
+
+cd /tmp/nixos-config
 
 if [[ "$(id -u)" -eq 0 ]]; then
-	echo "ERROR! $(basename "${0}") should be run as a regular user"
+	print_error
+	echo "$(basename "${0}") should be run as a regular user"
 	exit 1
 fi
 
 if [[ -z "$TARGET_HOST" ]]; then
-	echo "ERROR! $(basename "${0}") requires a hostname as the first argument"
+	print_error
+	echo "$(basename "${0}") requires a hostname as the first argument"
 	exit 1
 fi
 
 if [[ ! -e "machines/${TARGET_HOST}/disko.nix" ]]; then
-	echo "ERROR! $(basename "${0}") could not find the required machines/${TARGET_HOST}/disko.nix"
+	print_error
+	echo "$(basename "${0}") could not find the required machines/${TARGET_HOST}/disko.nix"
 	exit 1
 fi
 
 if [[ ! -e "sops-secrets/key.txt" ]]; then
-	echo "ERROR! $(basename "${0}") could not find the system wide sops key in /iso/config/sops-secrets/key.txt"
+	print_error
+	echo "$(basename "${0}") could not find the system wide sops key in /tmp/nixos-config/sops-secrets/key.txt"
 	exit 1
 fi
 
 if [[ ! -e "home-manager/sops-secrets/keys/dyson.txt" ]]; then
-	echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/sops-secrets/keys/dyson.txt"
+	print_warning
+	echo "$(basename "${0}") could not find the user-level sops key for dyson in /tmp/nixos-config/home-manager/sops-secrets/keys/dyson.txt"
 
 	read -p "Do you want to continue without this secret key? [y/N]" -n 1 -r
 	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -43,14 +56,16 @@ set -e
 if [[ -n "$password_files" ]]; then
 	while IFS= read -r password_file; do
 		if [[ ! -f "$password_file" ]]; then
-			echo "ERROR! ${TARGET_HOST} requires a LUKS password in ${password_file} but this file was not found"
-			echo "Please write to this file with \`echo -n \"password\" > ${password_file}\` and try again"
+			print_error
+			echo "${TARGET_HOST} requires a LUKS password in ${password_file} but this file was not found"
+			echo "Please write to this file with \`set-password ${password_file}\` and try again"
 			exit 1
 		fi
 	done <<< "$password_files"
 fi
 
-echo "WARNING! All the disks on this machine are about to get wiped"
+print_warning
+echo "All the disks on this machine are about to get wiped"
 echo "         NixOS will be re-installed and this machine will become ${TARGET_HOST}"
 echo "         This is a destructive operation"
 echo
@@ -66,10 +81,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
 	if [[ -n "$has_persist" ]]; then
 		sudo mkdir -p "/mnt/persist/etc/nixos"
-		sudo rsync -a --delete "/iso/config/" "/mnt/persist/etc/nixos"
+		sudo rsync -a --delete "/tmp/nixos-config/" "/mnt/persist/etc/nixos"
 	else
 		sudo mkdir -p "/mnt/etc/nixos"
-		sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
+		sudo rsync -a --delete "/tmp/nixos-config/" "/mnt/etc/nixos"
 	fi
 
 	sudo nixos-install --flake ".#${TARGET_HOST}"
