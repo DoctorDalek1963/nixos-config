@@ -58,7 +58,7 @@ if [[ -n "$password_files" ]]; then
 		if [[ ! -f "$password_file" ]]; then
 			print_error
 			echo "${TARGET_HOST} requires a LUKS password in ${password_file} but this file was not found"
-			echo "Please write to this file with \`echo -n \"password\" > ${password_file}\` and try again"
+			echo "Please write to this file with \`set-password ${password_file}\` and try again"
 			exit 1
 		fi
 	done <<< "$password_files"
