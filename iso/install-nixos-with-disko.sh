@@ -4,7 +4,7 @@
 set -euo pipefail
 TARGET_HOST="${1:-}"
 
-cd /iso/config
+cd /tmp/nixos-config
 
 if [[ "$(id -u)" -eq 0 ]]; then
 	echo "ERROR! $(basename "${0}") should be run as a regular user"
@@ -22,12 +22,12 @@ if [[ ! -e "machines/${TARGET_HOST}/disko.nix" ]]; then
 fi
 
 if [[ ! -e "sops-secrets/key.txt" ]]; then
-	echo "ERROR! $(basename "${0}") could not find the system wide sops key in /iso/config/sops-secrets/key.txt"
+	echo "ERROR! $(basename "${0}") could not find the system wide sops key in /tmp/nixos-config/sops-secrets/key.txt"
 	exit 1
 fi
 
 if [[ ! -e "home-manager/sops-secrets/keys/dyson.txt" ]]; then
-	echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /iso/config/home-manager/sops-secrets/keys/dyson.txt"
+	echo "WARNING! $(basename "${0}") could not find the user-level sops key for dyson in /tmp/nixos-config/home-manager/sops-secrets/keys/dyson.txt"
 
 	read -p "Do you want to continue without this secret key? [y/N]" -n 1 -r
 	if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -61,7 +61,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 
 	# Rsync my nix-config to the target install
 	sudo mkdir -p "/mnt/etc/nixos"
-	sudo rsync -a --delete "/iso/config/" "/mnt/etc/nixos"
+	sudo rsync -a --delete "/tmp/nixos-config/" "/mnt/etc/nixos"
 
 	sudo nixos-install --flake ".#${TARGET_HOST}"
 else

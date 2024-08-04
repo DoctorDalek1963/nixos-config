@@ -64,6 +64,21 @@ in {
     ];
   };
 
+  systemd.services.copy-nixos-config-to-tmp = {
+    description = "Copy /iso/nixos-config to /tmp/nixos-config";
+
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.writeShellScript "copy-nixos-config-to-tmp" ''
+        ${pkgs.rsync}/bin/rsync -av --delete "/iso/nixos-config/" "/tmp/nixos-config"
+        chmod -R ug+w /tmp/nixos-config
+        chown -R nixos:users /tmp/nixos-config
+      ''}";
+    };
+  };
+
   isoImage = {
     # Slightly larger ISO image size, but significantly faster build times
     squashfsCompression = "gzip -Xcompression-level 1";
@@ -82,7 +97,7 @@ in {
             src = self;
             filter = path: type: ! (excludeFilter path type);
           };
-        target = "/config";
+        target = "/nixos-config";
       }
     ];
   };
