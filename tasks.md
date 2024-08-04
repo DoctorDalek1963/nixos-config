@@ -1,6 +1,5 @@
 # ISO
 
-- Add script to enter LUKS password without printing it on screen
 - 1. Add flags to install-nixos-with-disko to run `nixos-enter --command "cd /etc/nixos && nix develop --command just post-install username"`
   2. Allow for multiple users
 
