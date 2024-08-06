@@ -92,6 +92,7 @@ in {
       coreutils
       file
       git
+      screen
       vim
       wget
     ])
