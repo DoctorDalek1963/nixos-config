@@ -69,53 +69,37 @@ in {
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "ch_hotspotshield") {
-        "openvpn/ch_hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "gb_airvpn") {
+        "openvpn/gb_airvpn/ca" = {
           mode = "0644";
         };
-        "openvpn/ch_hotspotshield/cert" = {
+        "openvpn/gb_airvpn/cert" = {
           mode = "0644";
         };
-        "openvpn/ch_hotspotshield/key" = {
+        "openvpn/gb_airvpn/key" = {
           mode = "0644";
         };
-        "openvpn/ch_hotspotshield/ca" = {
-          mode = "0644";
-        };
-      }
-      // optSet (vpnEnabled "gb_hotspotshield") {
-        "openvpn/gb_hotspotshield/user-pass" = {
-          mode = "0644";
-        };
-        "openvpn/gb_hotspotshield/cert" = {
-          mode = "0644";
-        };
-        "openvpn/gb_hotspotshield/key" = {
-          mode = "0644";
-        };
-        "openvpn/gb_hotspotshield/ca" = {
+        "openvpn/gb_airvpn/tls-crypt" = {
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "us_hotspotshield") {
-        "openvpn/us_hotspotshield/user-pass" = {
+      // optSet (vpnEnabled "us_airvpn") {
+        "openvpn/us_airvpn/ca" = {
           mode = "0644";
         };
-        "openvpn/us_hotspotshield/cert" = {
+        "openvpn/us_airvpn/cert" = {
           mode = "0644";
         };
-        "openvpn/us_hotspotshield/key" = {
+        "openvpn/us_airvpn/key" = {
           mode = "0644";
         };
-        "openvpn/us_hotspotshield/ca" = {
+        "openvpn/us_airvpn/tls-crypt" = {
           mode = "0644";
         };
       };
 
     networking.networkmanager.plugins = [pkgs.networkmanager-openvpn];
 
-    # To generate .ovpn files for other locations, follow the guidance on
-    # https://support.hotspotshield.com/hc/en-us/articles/360046865972-How-do-I-install-Hotspot-Shield-on-OpenVPN-devices
     environment.etc = let
       build-airvpn-ovpn = country: {
         "openvpn/${country}_airvpn.ovpn".text = ''
@@ -145,42 +129,10 @@ in {
           tls-crypt ${config.sops.secrets."openvpn/${country}_airvpn/tls-crypt".path}
         '';
       };
-
-      build-hss-ovpn = country: remote: {
-        "openvpn/${country}_hotspotshield.ovpn".text = ''
-          client
-          dev tun
-          proto udp
-          remote ${remote} 8041
-          verify-x509-name ${remote} name
-          resolv-retry infinite
-          remote-random
-          nobind
-          tun-mtu 1500
-          tun-mtu-extra 32
-          mssfix 1450
-          persist-key
-          persist-tun
-          ping 15
-          ping-restart 0
-          reneg-sec 0
-          remote-cert-tls server
-          comp-noadapt
-          auth-user-pass ${config.sops.secrets."openvpn/${country}_hotspotshield/user-pass".path}
-          auth sha256
-          cipher AES-128-CBC
-          verb 3
-
-          cert ${config.sops.secrets."openvpn/${country}_hotspotshield/cert".path}
-          key ${config.sops.secrets."openvpn/${country}_hotspotshield/key".path}
-          ca ${config.sops.secrets."openvpn/${country}_hotspotshield/ca".path}
-        '';
-      };
     in
       optSet (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
-      // optSet (vpnEnabled "ch_hotspotshield") (build-hss-ovpn "ch" "metal-band.us")
-      // optSet (vpnEnabled "gb_hotspotshield") (build-hss-ovpn "gb" "penfactory.us")
-      // optSet (vpnEnabled "us_hotspotshield") (build-hss-ovpn "us" "universitycalendar.us");
+      // optSet (vpnEnabled "gb_airvpn") (build-airvpn-ovpn "gb")
+      // optSet (vpnEnabled "us_airvpn") (build-airvpn-ovpn "us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {
