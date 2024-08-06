@@ -231,7 +231,7 @@
             enable = true;
             theme = (nixpkgs.legacyPackages."x86_64-linux".callPackage
               ./modules/displayManagers/sddm/themes/sugar-light.nix {})
-            {background = ./home-manager/files/desktop-backgrounds/nixos-simple-light-grey.png;};
+            {background = ./home-manager/files/desktop-backgrounds/nixos-catppuccin-latte.png;};
           };
         };
       }
