@@ -4,6 +4,9 @@
 
 # Blockers
 
+## Rebecca
+- Add certain apps on Cinnamon taskbar
+
 ## Amelia
 - rclone bisync points
 - Ungoogled Chromium
