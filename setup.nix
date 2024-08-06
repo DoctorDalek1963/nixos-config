@@ -99,13 +99,14 @@ in {
     # === Gaming
     gaming = {
       enable = defaultFalse;
+      emulators = {
+        ps3 = defaultTrue;
+      };
+      lutris = defaultTrue;
+      minecraft = defaultTrue;
       steam = {
         enable = defaultTrue;
         enableProtonGE = defaultTrue;
-      };
-      lutris = defaultTrue;
-      emulators = {
-        ps3 = defaultTrue;
       };
     };
 
