@@ -20,7 +20,7 @@
       }
     ];
 
-  allUsers = ["dyson" "pi"];
+  allUsers = ["dyson" "pi" "rebecca"];
 in {
   assertions = [
     {

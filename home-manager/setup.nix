@@ -54,7 +54,6 @@ in {
     };
 
     isLaptop = defaultFalse;
-    hasDvdDrive = defaultFalse;
 
     # === Shell and terminal stuff
     shells = {

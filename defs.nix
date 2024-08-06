@@ -197,6 +197,45 @@
     ];
   };
 
+  "Sasha-NixOS" = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    specialArgs = {inherit inputs;};
+    modules = [
+      ./setup.nix
+      ./machines/Sasha-NixOS
+      {
+        boot.plymouth.enable = true;
+
+        setup = {
+          hostname = "Sasha-NixOS";
+
+          printing = {
+            enable = true;
+            users = ["dyson" "rebecca"];
+            specificPrinters.canonPixmaMG3250 = true;
+          };
+
+          secrets = {
+            enable = true;
+            userPasswords.enable = true;
+            networking = {
+              enable = true;
+              simpleWifiNetworkNames = ["HOME"];
+            };
+          };
+
+          desktopEnvironments.cinnamon.enable = true;
+          displayManagers.sddm = {
+            enable = true;
+            theme = (nixpkgs.legacyPackages."x86_64-linux".callPackage
+              ./modules/displayManagers/sddm/themes/sugar-light.nix {})
+            {background = ./home-manager/files/desktop-backgrounds/nixos-simple-light-grey.jpg;};
+          };
+        };
+      }
+    ];
+  };
+
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
     system = "x86_64-linux";
     specialArgs = {inherit inputs;};

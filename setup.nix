@@ -278,6 +278,7 @@ in {
         users = {
           dyson = defaultTrue;
           pi = defaultTrue;
+          rebecca = defaultTrue;
         };
       };
       networking = {
@@ -335,6 +336,7 @@ in {
     users = {
       dyson = defaultTrue;
       pi = defaultFalse;
+      rebecca = defaultFalse;
     };
 
     # === VirtualBox

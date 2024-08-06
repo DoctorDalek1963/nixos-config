@@ -89,7 +89,7 @@
       ];
     };
 
-  "${username}@Sasha-Ubuntu" = let
+  "${username}@Sasha-NixOS" = let
     system = "x86_64-linux";
   in
     home-manager.lib.homeManagerConfiguration {
@@ -100,9 +100,100 @@
         {
           setup = {
             inherit username;
-            hostname = "Sasha-Ubuntu";
-            isNixOS = false;
-            hasDvdDrive = true;
+            hostname = "Sasha-NixOS";
+            isNixOS = true;
+
+            desktopEnvironments = {
+              background = {
+                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+              };
+              cinnamon = {
+                enable = true;
+                mesonIcon = ./files/icons/nix-snowflake-black.svg;
+                theme = {
+                  gtk = "Mint-Y-Orange";
+                  cursor = "Bibata-Original-Classic";
+                };
+              };
+            };
+
+            terminalTools = {
+              theme = "catppuccin-macchiato";
+              useThemeInTerminalItself = true;
+              nvim = "small";
+            };
+
+            rclone = {
+              enable = true;
+              automounts = [
+                {
+                  remote = "OneDrive";
+                  mountpoint = "/home/${username}/OneDrive";
+                }
+              ];
+            };
+
+            firefox = {
+              enable = true;
+              minimal = true;
+            };
+
+            miscPrograms = {
+              handbrake = true;
+              rustdesk = true;
+              vlc = true;
+            };
+          };
+        }
+      ];
+    };
+
+  "rebecca@Sasha-NixOS" = let
+    system = "x86_64-linux";
+  in
+    home-manager.lib.homeManagerConfiguration {
+      pkgs = mkPkgs system;
+      extraSpecialArgs = extraSpecialArgs // {inherit system;};
+      modules = [
+        ./setup.nix
+        {
+          setup = {
+            username = "rebecca";
+            hostname = "Sasha-NixOS";
+            isNixOS = true;
+
+            desktopEnvironments = {
+              background = {
+                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+              };
+              cinnamon = {
+                enable = true;
+                mesonIcon = ./files/icons/nix-snowflake-black.svg;
+                theme = {
+                  gtk = "Mint-Y-Orange";
+                  cursor = "Bibata-Original-Classic";
+                };
+              };
+            };
+
+            terminalTools.nvim = "small";
+
+            firefox = {
+              enable = true;
+              minimal = true;
+            };
+
+            miscPrograms = {
+              rustdesk = true;
+              vlc = true;
+            };
+
+            office = {
+              libreoffice = true;
+              onlyoffice = true;
+            };
           };
         }
       ];
