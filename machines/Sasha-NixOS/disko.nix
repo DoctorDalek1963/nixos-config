@@ -16,6 +16,13 @@
               mountpoint = "/boot";
             };
           };
+          swap = {
+            size = "8G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+            };
+          };
           nixos = {
             size = "100%";
             content = {

@@ -209,6 +209,8 @@
         setup = {
           hostname = "Sasha-NixOS";
 
+          users.rebecca = true;
+
           printing = {
             enable = true;
             users = ["dyson" "rebecca"];

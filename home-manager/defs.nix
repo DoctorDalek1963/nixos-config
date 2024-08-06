@@ -110,7 +110,7 @@
               };
               cinnamon = {
                 enable = true;
-                mesonIcon = ./files/icons/nix-snowflake-black.svg;
+                menuIcon = ./files/icons/nix-snowflake-black.svg;
                 theme = {
                   gtk = "Mint-Y-Orange";
                   cursor = "Bibata-Original-Classic";
@@ -170,7 +170,7 @@
               };
               cinnamon = {
                 enable = true;
-                mesonIcon = ./files/icons/nix-snowflake-black.svg;
+                menuIcon = ./files/icons/nix-snowflake-black.svg;
                 theme = {
                   gtk = "Mint-Y-Orange";
                   cursor = "Bibata-Original-Classic";
