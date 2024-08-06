@@ -20,8 +20,8 @@
 
             desktopEnvironments = {
               background = {
-                light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
-                dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
               };
               gnome = {
                 enable = true;
@@ -216,8 +216,8 @@
 
             desktopEnvironments = {
               background = {
-                light = ./files/desktop-backgrounds/outer-wilds-sun.jpg;
-                dark = ./files/desktop-backgrounds/outer-wilds.jpg;
+                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
               };
               gnome = {
                 enable = true;
