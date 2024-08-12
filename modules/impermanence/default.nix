@@ -21,24 +21,24 @@ in {
       enable = true;
       hideMounts = true;
 
-      directories = [
-        "/etc/nixos"
-        "/var/log"
-        "/var/lib/bluetooth"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
+      directories =
+        [
+          "/etc/nixos"
+          "/var/log"
+          "/var/lib/bluetooth"
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+        ]
+        ++ cfg.keepDirs;
 
-        # "/etc/NetworkManager/system-connections"
+      # {
+      #   directory = "/var/lib/colord";
+      #   user = "colord";
+      #   group = "colord";
+      #   mode = "u=rwx,g=rx,o=";
+      # }
 
-        # {
-        #   directory = "/var/lib/colord";
-        #   user = "colord";
-        #   group = "colord";
-        #   mode = "u=rwx,g=rx,o=";
-        # }
-      ];
-
-      files = ["/etc/machine-id"];
+      files = ["/etc/machine-id"] ++ cfg.keepFiles;
     };
 
     # "We trust you have received the usual lecture..."

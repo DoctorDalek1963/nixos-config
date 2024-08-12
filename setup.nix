@@ -243,8 +243,16 @@ in {
     };
 
     # === Impermanence
-    impermanence = {
+    impermanence = let
+      keepList = mkOption {
+        type = types.listOf (types.either types.nonEmptyStr types.submodule);
+        default = [];
+      };
+    in {
       enable = defaultFalse;
+
+      keepDirs = keepList;
+      keepFiles = keepList;
     };
 
     # === Passwords
