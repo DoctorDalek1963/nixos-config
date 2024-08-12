@@ -11,6 +11,7 @@
     {
       dyson = "1000";
       pi = "1001";
+      rebecca = "1002";
     }
     .${config.home.username};
 

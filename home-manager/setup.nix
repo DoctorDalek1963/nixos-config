@@ -29,6 +29,7 @@
     ./modules/firefox
     ./modules/maths
     ./modules/miscPrograms
+    ./modules/office
     ./modules/programming
     ./modules/rclone
     ./modules/secrets
@@ -53,7 +54,6 @@ in {
     };
 
     isLaptop = defaultFalse;
-    hasDvdDrive = defaultFalse;
 
     # === Shell and terminal stuff
     shells = {
@@ -165,6 +165,12 @@ in {
       vlc = defaultFalse;
       xremap = defaultFalse;
       zoom = defaultFalse;
+    };
+
+    # === Office suite
+    office = {
+      libreoffice = defaultFalse;
+      onlyoffice = defaultFalse;
     };
 
     # === Programming

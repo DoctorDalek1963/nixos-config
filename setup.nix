@@ -100,13 +100,14 @@ in {
     # === Gaming
     gaming = {
       enable = defaultFalse;
+      emulators = {
+        ps3 = defaultTrue;
+      };
+      lutris = defaultTrue;
+      minecraft = defaultTrue;
       steam = {
         enable = defaultTrue;
         enableProtonGE = defaultTrue;
-      };
-      lutris = defaultTrue;
-      emulators = {
-        ps3 = defaultTrue;
       };
     };
 
@@ -220,7 +221,7 @@ in {
             description = ''
               The unqualified name of the OpenVPN config file to be used for transmission.
 
-              All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_hotspotshield", then the relevant systemd service would expect to find /etc/openvpn/gb_hotspotshield.ovpn".
+              All files are expected to be /etc/openvpn/something.ovpn, so if this option was set to "gh_airvpn", then the relevant systemd service would expect to find /etc/openvpn/gb_airvpn.ovpn".
             '';
           };
           thirdOctet = mkOption {
@@ -291,6 +292,7 @@ in {
         users = {
           dyson = defaultTrue;
           pi = defaultTrue;
+          rebecca = defaultTrue;
         };
       };
       networking = {
@@ -298,7 +300,7 @@ in {
         simpleWifiNetworkNames = mkOption {
           type = types.listOf types.nonEmptyStr;
           default = ["HOME"];
-          description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret environment.env file.'';
+          description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret networking.env file.'';
         };
       };
       vpn = {
@@ -316,15 +318,15 @@ in {
           });
           default = [
             {
-              vpnName = "ch_hotspotshield";
+              vpnName = "ch_airvpn";
               users = ["dyson"];
             }
             {
-              vpnName = "gb_hotspotshield";
+              vpnName = "gb_airvpn";
               users = ["dyson"];
             }
             {
-              vpnName = "us_hotspotshield";
+              vpnName = "us_airvpn";
               users = ["dyson"];
             }
           ];
@@ -348,6 +350,7 @@ in {
     users = {
       dyson = defaultTrue;
       pi = defaultFalse;
+      rebecca = defaultFalse;
     };
 
     # === VirtualBox
