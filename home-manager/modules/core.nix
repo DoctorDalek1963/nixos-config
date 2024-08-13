@@ -49,7 +49,6 @@
         # Firefox extensions
         "dashlane"
         "enhancer-for-youtube"
-        "tampermonkey"
 
         # Microsoft fonts
         "corefonts"

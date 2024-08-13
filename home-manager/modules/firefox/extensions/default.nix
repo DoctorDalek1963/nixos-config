@@ -18,7 +18,7 @@
       github-file-icons
       refined-github
       rust-search-extension
-      tampermonkey # Unfree
+      violentmonkey
 
       # YouTube
       dearrow
