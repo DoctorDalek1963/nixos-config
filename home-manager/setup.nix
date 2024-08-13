@@ -72,6 +72,7 @@ in {
       useThemeInTerminalItself = defaultFalse;
 
       # Need custom config
+      aria2 = defaultTrue;
       bat = defaultTrue;
       btop = {
         enable = defaultTrue;

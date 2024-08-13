@@ -8,6 +8,7 @@
   inherit (config.consts) nvimPkg nvimPath;
 in {
   imports = [
+    ./aria2.nix
     ./bat.nix
     ./btop.nix
     ./comma.nix
