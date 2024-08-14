@@ -46,7 +46,7 @@ build-raspi-sd:
 
 # push all store paths for Bert-NixOS to Cachix
 cachix-push-raspi:
-	nom build {{justfile_directory()}}#nixosConfigurations.Bert-NixOS.config.system.build.toplevel --keep-going --json | jq -r '.[].drvPath' | cachix push doctordalek1963
+	cachix watch-exec doctordalek1963 nom -- build {{justfile_directory()}}#nixosConfigurations.Bert-NixOS.config.system.build.toplevel --keep-going --json | jq -r '.[].drvPath' | cachix push doctordalek1963
 
 # bootstrap home-manager
 bootstrap-home-manager:
