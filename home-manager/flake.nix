@@ -11,6 +11,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lintrans.url = "github:DoctorDalek1963/lintrans";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";

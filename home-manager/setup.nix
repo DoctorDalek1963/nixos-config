@@ -149,6 +149,7 @@ in {
     maths = {
       enable = defaultFalse;
 
+      lintrans = defaultTrue;
       octave = defaultTrue;
       sage = defaultTrue;
       tikzit = defaultTrue;
