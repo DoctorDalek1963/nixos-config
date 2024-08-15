@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  inputs,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -16,8 +15,6 @@
   };
 in {
   imports = [
-    inputs.lix-module.nixosModules.default
-
     ./modules/core.nix
 
     ./modules/graphical
