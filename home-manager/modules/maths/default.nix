@@ -15,6 +15,7 @@ in {
       lib.optional cfg.lintrans inputs.lintrans.packages."${system}".default
       ++ lib.optional cfg.octave pkgs.octaveFull
       ++ lib.optional cfg.tikzit pkgs.tikzit
+      ++ lib.optional cfg.weylus pkgs.weylus
       ++ lib.optional cfg.zotero pkgs.zotero;
   };
 }

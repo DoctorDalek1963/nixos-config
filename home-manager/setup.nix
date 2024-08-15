@@ -153,6 +153,7 @@ in {
       octave = defaultTrue;
       sage = defaultTrue;
       tikzit = defaultTrue;
+      weylus = defaultTrue;
       zotero = defaultTrue;
     };
 
