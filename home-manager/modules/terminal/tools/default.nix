@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (config.consts.lib) optItemList;
-  tt = config.setup.terminalTools;
+  tt = config.setup.terminal.tools;
   inherit (config.consts) nvimPkg nvimPath;
 in {
   imports = [

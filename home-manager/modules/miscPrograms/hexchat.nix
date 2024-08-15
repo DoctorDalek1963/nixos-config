@@ -27,7 +27,7 @@
           '';
         };
     }
-    .${cfg.terminalTools.theme}
+    .${cfg.terminal.theme}
     or null;
 in {
   config = lib.mkIf cfg.miscPrograms.hexchat {

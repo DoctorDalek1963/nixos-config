@@ -23,8 +23,7 @@
     ./modules/activation.nix
     ./modules/fonts.nix
 
-    ./modules/shells
-    ./modules/terminalTools
+    ./modules/terminal
     ./modules/desktopEnvironments
     ./modules/firefox
     ./modules/maths
@@ -56,46 +55,53 @@ in {
     isLaptop = defaultFalse;
 
     # === Shell and terminal stuff
-    shells = {
-      bash = defaultTrue;
-    };
-    defaultShell = mkOption {
-      default = "bash";
-      type = types.enum valid-shells;
-    };
 
-    terminalTools = {
+    terminal = {
+      shells = {
+        bash = defaultTrue;
+      };
+      defaultShell = mkOption {
+        default = "bash";
+        type = types.enum valid-shells;
+      };
+
+      emulators = {
+        terminator = defaultTrue;
+      };
+
       theme = mkOption {
         type = types.enum valid-terminal-themes;
         default = "onedark";
       };
       useThemeInTerminalItself = defaultFalse;
 
-      # Need custom config
-      aria2 = defaultTrue;
-      bat = defaultTrue;
-      btop = {
-        enable = defaultTrue;
-        gpuSupport = defaultTrue;
-      };
-      comma = defaultTrue;
-      delta = defaultTrue;
-      fd = defaultTrue;
-      fzf = defaultTrue;
-      git = defaultTrue;
-      nvim = mkOption {
-        type = types.enum ["basic" "small" "medium" "full"];
-        default = "medium";
-      };
-      ripgrep = defaultTrue;
+      tools = {
+        # Need custom config
+        aria2 = defaultTrue;
+        bat = defaultTrue;
+        btop = {
+          enable = defaultTrue;
+          gpuSupport = defaultTrue;
+        };
+        comma = defaultTrue;
+        delta = defaultTrue;
+        fd = defaultTrue;
+        fzf = defaultTrue;
+        git = defaultTrue;
+        nvim = mkOption {
+          type = types.enum ["basic" "small" "medium" "full"];
+          default = "medium";
+        };
+        ripgrep = defaultTrue;
 
-      # Just install the packages
-      eza = defaultTrue;
-      hyperfine = defaultTrue;
-      sad = defaultTrue;
-      sd = defaultTrue;
-      tldr = defaultTrue;
-      yt-dlp = defaultFalse;
+        # Just install the packages
+        eza = defaultTrue;
+        hyperfine = defaultTrue;
+        sad = defaultTrue;
+        sd = defaultTrue;
+        tldr = defaultTrue;
+        yt-dlp = defaultFalse;
+      };
     };
 
     # === Desktop stuff

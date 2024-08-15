@@ -11,7 +11,7 @@
   in
     lib.strings.concatStringsSep "\n" indented-lines;
 
-  inherit (config.setup.terminalTools) theme useThemeInTerminalItself;
+  inherit (config.setup.terminal) theme useThemeInTerminalItself emulators;
 
   common = fontSize:
     indent 2 ''
@@ -193,7 +193,7 @@
 
   profiles = lib.strings.concatStringsSep "\n" (lib.lists.flatten [default-and-dark transparent light white]);
 in {
-  config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
+  config = lib.mkIf emulators.terminator {
     home.packages = [pkgs.terminator];
 
     xdg.configFile."terminator/config".text = ''

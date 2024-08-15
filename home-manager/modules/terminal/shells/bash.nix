@@ -15,7 +15,7 @@
     sparseCheckout = ["contrib/completion/git-prompt.sh"];
   };
 in {
-  config = lib.mkIf config.setup.shells.bash {
+  config = lib.mkIf config.setup.terminal.shells.bash {
     home = {
       packages = [pkgs.complete-alias];
       sessionVariables.EXTENDED_PS1 = 1;
@@ -185,7 +185,7 @@ in {
           rghist = "cat ~/.bash_history | rg --";
         }
         // (
-          if config.setup.terminalTools.eza
+          if config.setup.terminal.tools.eza
           then {
             ls = "eza";
             ll = "eza --long --all --mounts --icons=auto --group --header --git";

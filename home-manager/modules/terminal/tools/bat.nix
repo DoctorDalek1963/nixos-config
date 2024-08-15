@@ -24,10 +24,10 @@
         };
       };
     }
-    .${config.setup.terminalTools.theme};
+    .${config.setup.terminal.theme};
 in {
   programs.bat = {
-    enable = config.setup.terminalTools.bat;
+    enable = config.setup.terminal.tools.bat;
     config = {
       theme = theme.name;
       italic-text = "always";

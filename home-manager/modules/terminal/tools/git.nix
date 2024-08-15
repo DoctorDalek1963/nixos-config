@@ -1,6 +1,6 @@
 {config, ...}: {
   programs.git = {
-    enable = config.setup.terminalTools.git;
+    enable = config.setup.terminal.tools.git;
     userName = "DoctorDalek1963";
     userEmail = "dyson.dyson@icloud.com";
     aliases = {
@@ -37,7 +37,7 @@
       signByDefault = true;
     };
     delta = {
-      enable = config.setup.terminalTools.delta;
+      enable = config.setup.terminal.tools.delta;
       options = {
         navigate = true;
         light = false;
@@ -46,7 +46,7 @@
             onedark = "OneHalfDark";
             catppuccin-macchiato = "catppuccin-macchiato";
           }
-          .${config.setup.terminalTools.theme};
+          .${config.setup.terminal.theme};
         line-numbers = true;
       };
     };

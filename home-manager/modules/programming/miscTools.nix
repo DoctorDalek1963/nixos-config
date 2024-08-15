@@ -24,7 +24,7 @@ in {
       enable = mt.direnv;
       nix-direnv.enable = mt.direnv;
 
-      enableBashIntegration = config.setup.shells.bash;
+      enableBashIntegration = config.setup.terminal.shells.bash;
     };
 
     gh = {

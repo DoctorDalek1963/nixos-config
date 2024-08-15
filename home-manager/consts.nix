@@ -21,7 +21,7 @@
       medium = inputs.nixvim-flake.packages.${system}.nvim-medium;
       full = inputs.nixvim-flake.packages.${system}.nvim-full;
     }
-    .${config.setup.terminalTools.nvim};
+    .${config.setup.terminal.tools.nvim};
 in {
   # Here we can define constant values that can be referenced from any other files
   options.consts = {

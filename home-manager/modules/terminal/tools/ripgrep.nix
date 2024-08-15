@@ -1,6 +1,6 @@
 {config, ...}: {
   programs.ripgrep = {
-    enable = config.setup.terminalTools.ripgrep;
+    enable = config.setup.terminal.tools.ripgrep;
     arguments = [
       "--max-columns=150"
       "--max-columns-preview"

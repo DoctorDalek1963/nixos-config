@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  cfg = config.setup.terminalTools.btop;
+  cfg = config.setup.terminal.tools.btop;
 
   package =
     if cfg.gpuSupport
@@ -34,7 +34,7 @@
         };
       };
     }
-    .${config.setup.terminalTools.theme};
+    .${config.setup.terminal.theme};
 in {
   programs.btop = {
     inherit (cfg) enable;

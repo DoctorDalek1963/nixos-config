@@ -29,10 +29,10 @@
               };
             };
 
-            terminalTools = {
+            terminal = {
               theme = "catppuccin-macchiato";
               useThemeInTerminalItself = true;
-              yt-dlp = true;
+              tools.yt-dlp = true;
             };
 
             firefox.enable = true;
@@ -79,9 +79,9 @@
             username = "pi";
             hostname = "Bert-NixOS";
             isNixOS = true;
-            terminalTools = {
+            terminal = {
               theme = "catppuccin-macchiato";
-              btop.gpuSupport = false;
+              tools.btop.gpuSupport = false;
             };
             programming.miscTools.git-all = false;
           };
@@ -118,10 +118,10 @@
               };
             };
 
-            terminalTools = {
+            terminal = {
               theme = "catppuccin-macchiato";
               useThemeInTerminalItself = true;
-              nvim = "small";
+              tools.nvim = "small";
             };
 
             rclone = {
@@ -178,7 +178,7 @@
               };
             };
 
-            terminalTools.nvim = "small";
+            terminal.tools.nvim = "small";
 
             firefox = {
               enable = true;
@@ -225,10 +225,10 @@
               };
             };
 
-            terminalTools = {
+            terminal = {
               theme = "catppuccin-macchiato";
               useThemeInTerminalItself = true;
-              yt-dlp = true;
+              tools.yt-dlp = true;
             };
 
             firefox.enable = true;
@@ -301,7 +301,7 @@
             #   ];
             # };
 
-            terminalTools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
+            terminal.tools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
             miscPrograms.xremap = false;
           };
         }
