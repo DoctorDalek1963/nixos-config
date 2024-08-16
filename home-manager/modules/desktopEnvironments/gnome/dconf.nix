@@ -7,6 +7,8 @@
   inherit (lib.hm.gvariant) mkTuple mkUint32;
   inherit (config.setup.desktopEnvironments) background;
 
+  cfgTE = config.setup.terminal.emulators;
+
   light-path =
     if builtins.isPath background
     then background
@@ -20,13 +22,24 @@ in {
     dconf = {
       enable = true;
       settings = {
-        "org/gnome/desktop/applications/terminal" = {
-          exec = "${pkgs.terminator}/bin/terminator";
-          exec-arg = "-x";
-        };
+        "org/gnome/desktop/applications/terminal" =
+          if cfgTE.wezterm
+          then {
+            exec = "${pkgs.wezterm}/bin/wezterm";
+            exec-arg = "start";
+          }
+          else if cfgTE.terminator
+          then {
+            exec = "${pkgs.terminator}/bin/terminator";
+            exec-arg = "-x";
+          }
+          else {};
 
         "org/gnome/shell" = {
-          favorite-apps = ["terminator.desktop" "firefox.desktop"];
+          favorite-apps =
+            lib.optional cfgTE.wezterm "org.wezfurlong.wezterm.desktop"
+            ++ lib.optional cfgTE.terminator "terminator.desktop"
+            ++ ["firefox.desktop"];
         };
 
         "org/gnome/desktop/background" = {
