@@ -64,6 +64,10 @@ in {
         default = "bash";
         type = types.enum valid-shells;
       };
+      shellAliases = mkOption {
+        default = {};
+        type = types.attrsOf types.nonEmptyStr;
+      };
 
       emulators = {
         terminator = defaultFalse;
@@ -95,9 +99,12 @@ in {
         };
         comma = defaultTrue;
         delta = defaultTrue;
+        direnv = defaultTrue;
         fd = defaultTrue;
         fzf = defaultTrue;
         git = defaultTrue;
+        git-all = defaultTrue;
+        gh = defaultTrue;
         nvim = mkOption {
           type = types.enum ["basic" "small" "medium" "full"];
           default = "medium";
@@ -107,6 +114,7 @@ in {
         # Just install the packages
         eza = defaultTrue;
         hyperfine = defaultTrue;
+        just = defaultTrue;
         sad = defaultTrue;
         sd = defaultTrue;
         tldr = defaultTrue;
@@ -195,11 +203,6 @@ in {
     # === Programming
     programming = {
       miscTools = {
-        direnv = defaultTrue;
-        git-all = defaultTrue;
-        gh = defaultTrue;
-        just = defaultTrue;
-        pre-commit = defaultTrue;
       };
 
       haskell = defaultFalse;

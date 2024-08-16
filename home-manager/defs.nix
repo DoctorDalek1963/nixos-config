@@ -81,9 +81,11 @@
             isNixOS = true;
             terminal = {
               theme = "catppuccin-macchiato";
-              tools.btop.gpuSupport = false;
+              tools = {
+                btop.gpuSupport = false;
+                git-all = false;
+              };
             };
-            programming.miscTools.git-all = false;
           };
         }
       ];

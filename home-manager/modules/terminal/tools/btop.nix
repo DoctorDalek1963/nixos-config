@@ -36,16 +36,18 @@
     }
     .${config.setup.terminal.theme};
 in {
-  programs.btop = {
-    inherit (cfg) enable;
-    inherit package;
-    settings = {
-      color_theme = theme.name;
-      theme_background = true;
-      update_ms = 500;
-      proc_tree = true;
+  config = lib.mkIf cfg.enable {
+    programs.btop = {
+      enable = true;
+      inherit package;
+      settings = {
+        color_theme = theme.name;
+        theme_background = true;
+        update_ms = 500;
+        proc_tree = true;
+      };
     };
-  };
 
-  xdg.configFile = lib.mkIf (theme.theme-file != null) theme.theme-file;
+    xdg.configFile = lib.mkIf (theme.theme-file != null) theme.theme-file;
+  };
 }

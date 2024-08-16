@@ -1,9 +1,9 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: let
-  inherit (config.consts.lib) optItemList;
   tt = config.setup.terminal.tools;
   inherit (config.consts) nvimPkg nvimPath;
 in {
@@ -13,21 +13,25 @@ in {
     ./btop.nix
     ./comma.nix
     ./delta.nix
+    ./direnv.nix
+    ./eza.nix
     ./fd.nix
     ./fzf.nix
+    ./gh.nix
+    ./git-all.nix
     ./git.nix
+    ./just.nix
     ./ripgrep.nix
   ];
 
   home = {
     packages =
       [nvimPkg]
-      ++ optItemList tt.eza pkgs.eza
-      ++ optItemList tt.hyperfine pkgs.hyperfine
-      ++ optItemList tt.sad pkgs.sad
-      ++ optItemList tt.sd pkgs.sd
-      ++ optItemList tt.tldr pkgs.tldr
-      ++ optItemList tt.yt-dlp pkgs.yt-dlp;
+      ++ lib.optional tt.hyperfine pkgs.hyperfine
+      ++ lib.optional tt.sad pkgs.sad
+      ++ lib.optional tt.sd pkgs.sd
+      ++ lib.optional tt.tldr pkgs.tldr
+      ++ lib.optional tt.yt-dlp pkgs.yt-dlp;
 
     sessionVariables.EDITOR = nvimPath;
   };
