@@ -74,6 +74,11 @@ in {
         type = types.enum ["terminator" "wezterm"];
       };
 
+      multiplexer = mkOption {
+        default = "zellij";
+        type = types.enum ["none" "zellij"];
+      };
+
       theme = mkOption {
         type = types.enum valid-terminal-themes;
         default = "onedark";

@@ -49,6 +49,7 @@ in {
             keys = {
               { key = 'F11', action = act.ToggleFullScreen },
               { key = 'Backspace', mods = 'CTRL', action = act.SendKey {key = 'w', mods = 'CTRL'} },
+              { key = 'x', mods = 'CTRL|SHIFT', action = act.DisableDefaultAssignment }
             },
 
             scrollback_lines = 7500,
