@@ -1,3 +1,3 @@
 {
-  imports = [./terminator.nix];
+  imports = [./terminator.nix ./wezterm.nix];
 }

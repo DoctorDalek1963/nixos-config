@@ -67,6 +67,11 @@ in {
 
       emulators = {
         terminator = defaultTrue;
+        wezterm = defaultTrue;
+      };
+      defaultEmulator = mkOption {
+        default = "wezterm";
+        type = types.enum ["terminator" "wezterm"];
       };
 
       theme = mkOption {
