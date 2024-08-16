@@ -50,6 +50,7 @@
             maths.enable = true;
 
             programming = {
+              python = true;
               rust = true;
             };
 
@@ -248,6 +249,7 @@
             maths.enable = true;
 
             programming = {
+              python = true;
               rust = true;
             };
 
