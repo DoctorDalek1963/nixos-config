@@ -66,7 +66,7 @@ in {
       };
 
       emulators = {
-        terminator = defaultTrue;
+        terminator = defaultFalse;
         wezterm = defaultTrue;
       };
       defaultEmulator = mkOption {
