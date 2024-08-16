@@ -87,7 +87,6 @@ in {
         type = types.enum valid-terminal-themes;
         default = "onedark";
       };
-      useThemeInTerminalItself = defaultFalse;
 
       tools = {
         # Need custom config

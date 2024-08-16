@@ -31,7 +31,6 @@
 
             terminal = {
               theme = "catppuccin-macchiato";
-              useThemeInTerminalItself = true;
               tools.yt-dlp = true;
             };
 
@@ -123,7 +122,6 @@
 
             terminal = {
               theme = "catppuccin-macchiato";
-              useThemeInTerminalItself = true;
               tools.nvim = "small";
             };
 
@@ -230,7 +228,6 @@
 
             terminal = {
               theme = "catppuccin-macchiato";
-              useThemeInTerminalItself = true;
               tools.yt-dlp = true;
             };
 
