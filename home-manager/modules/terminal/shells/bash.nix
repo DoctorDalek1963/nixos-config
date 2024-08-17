@@ -164,24 +164,18 @@ in {
 
         bind -s 'set completion-ignore-case on'
 
-        trySource "${pkgs.complete-alias}/bin/complete_alias"
-        complete -F _complete_alias b
-        complete -F _complete_alias g
-        complete -F _complete_alias j
-        complete -F _complete_alias n
-        complete -F _complete_alias p
-        complete -F _complete_alias ca
-        complete -F _complete_alias jl
+        source "${pkgs.complete-alias}/bin/complete_alias"
         complete -F _complete_alias rclone
         ${
-          if config.setup.programming.nix
-          then
-            # bash
-            ''
-              complete -F _complete_alias nhh
-              complete -F _complete_alias nhos
-            ''
-          else ""
+          lib.strings.concatStringsSep "\n" (
+            builtins.map (alias: "complete -F _complete_alias ${alias}") (
+              builtins.attrNames (
+                lib.filterAttrs
+                (_name: value: !(lib.strings.hasInfix "|" value))
+                config.setup.terminal.shellAliases
+              )
+            )
+          )
         }
 
         buildPrompt() {
