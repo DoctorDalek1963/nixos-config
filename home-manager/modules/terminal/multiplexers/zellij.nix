@@ -21,11 +21,12 @@ in {
       ''
         keybinds {
             normal {
-                // I'd love to use "Ctrl Shift x" or "Ctrl X" here, but Zellij
-                // doesn't seem to understand that. This current method allows
-                // both Ctrl+x and Ctrl+Shift+x, which is suboptimal, but good
-                // enough for now.
-                bind "Ctrl x" { ToggleFocusFullscreen; }
+                // I'd love to use "Ctrl Shift x" here, but Zellij doesn't seem
+                // to understand that. I'm currently remapping Ctrl+Shift+x to
+                // Alt+x in WezTerm, which gets picked up here. This method frees
+                // up Ctrl+x for other things, but also allows Alt+x, which I
+                // previously never used anyway.
+                bind "Alt x" { ToggleFocusFullscreen; }
             }
         }
       '';

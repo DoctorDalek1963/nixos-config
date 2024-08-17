@@ -55,7 +55,9 @@ in {
             keys = {
               { key = 'F11', action = act.ToggleFullScreen },
               { key = 'Backspace', mods = 'CTRL', action = act.SendKey {key = 'w', mods = 'CTRL'} },
-              { key = 'x', mods = 'CTRL|SHIFT', action = act.DisableDefaultAssignment }
+
+              -- Zellij can't pick up two modifiers in one keybind for some reason
+              { key = 'x', mods = 'CTRL|SHIFT', action = act.SendKey {key = 'x', mods = 'ALT'} }
             },
 
             scrollback_lines = 7500,
