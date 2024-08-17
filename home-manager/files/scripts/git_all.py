@@ -11,12 +11,12 @@ import rich
 
 def info(string: str) -> None:
     """Pretty print an info message."""
-    rich.print(f"[#31edf7][ {string} ][/#31edf7]")
+    rich.print(f"[cyan][ {string} ][/cyan]")
 
 
 def warning(string: str) -> None:
     """Pretty print a warning message."""
-    rich.print(f"[#e01414][ {string} ][/#e01414]")
+    rich.print(f"[red][ {string} ][/red]")
 
 
 def git_one_dir(
@@ -105,14 +105,14 @@ def status(direc: str) -> None:
     results = git_all(direc, "status", pipe=True)
 
     for directory, output in results.items():
-        string = f"[underline #31edf7]{directory}:[/underline #31edf7]"
+        string = f"[bold cyan]{directory}:[/bold cyan]"
 
         if (("up to date" in output) or ("up-to-date" in output)) and (
             "nothing to commit" in output
         ):
-            string += " [#25f904]Clean[/#25f904]"
+            string += " [green]Clean[/green]"
         else:
-            string += f"\n[#e01414]{output}[/#e01414]"
+            string += f"\n[red]{output}[/red]"
 
         rich.print(string)
         print()

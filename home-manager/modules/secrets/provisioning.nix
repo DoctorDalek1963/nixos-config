@@ -20,7 +20,7 @@
     then secrets
     else {};
 
-  git-ssh-secrets = secretsIf cfg.terminalTools.git {
+  git-ssh-secrets = secretsIf cfg.terminal.tools.git {
     "ssh/github_main/passphrase" = {};
     "ssh/github_main/keys/github_main" = {
       path = "${homedir}/.ssh/github_main";

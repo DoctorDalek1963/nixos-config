@@ -15,7 +15,7 @@
     sparseCheckout = ["contrib/completion/git-prompt.sh"];
   };
 in {
-  config = lib.mkIf config.setup.shells.bash {
+  config = lib.mkIf config.setup.terminal.shells.bash {
     home = {
       packages = [pkgs.complete-alias];
       sessionVariables.EXTENDED_PS1 = 1;
@@ -129,23 +129,15 @@ in {
           home-manager = "nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager";
 
           # Single letters
-          b = "bat";
           c = "cat";
-          g = "git";
-          j = "just";
-          n = "nix";
-          p = "python3";
           t = "touch";
           v = nvimPath;
           x = "exit";
 
           # Two letters
-          ca = "cargo";
           cl = "clear";
-          jl = "julia";
           ps = "ps auxf";
           rm = "rm -v";
-          rs = "evcxr";
 
           nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
 
@@ -153,91 +145,33 @@ in {
           nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
           nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
 
-          ipy = "python3 -m IPython";
-          jnb = "jupyter notebook";
-          pnb = "julia -e 'import Pluto; Pluto.run()'";
-          pip = "python3 -m pip";
-          pup = "python3 -m pip install --upgrade pip";
-          pmhttp = "python3 -m http.server";
-          clippy = "cat ${homedir}/.cargo/clippy.conf | xargs cargo clippy --all-features --";
-
-          rclone = "rclone --progress --bwlimit=\"09:00,256 23:00,off\"";
-
           resetwifi = "nmcli networking off && nmcli networking on";
-
-          gp = "git push";
-          gpfwl = "git push --force-with-lease";
-          gpx = "git push && exit";
-          gst = "git status";
-          ga = "git add -A";
-          gf = "git fetch";
-          gpl = "git pull";
-          gfpl = "git fetch && git pull";
-          gl = "git log";
-
-          gstall = "git-all status";
-          gfall = "git-all fetch";
-          gplall = "git-all pull";
-          gfplall = "git-all fetch && git-all pull";
-          gpall = "git-all push";
-
-          # Search long-form history
-          rghist = "cat ~/.bash_history | rg --";
         }
-        // (
-          if config.setup.terminalTools.eza
-          then {
-            ls = "eza";
-            ll = "eza --long --all --mounts --icons=auto --group --header --git";
-          }
-          else {
-            ls = "ls --color=auto";
-            ll = "ls -la";
-            la = "ls -a";
-            lh = "ls -lah";
-          }
-        )
-        // (
-          if config.setup.programming.nix
-          then {
-            nhos = "FLAKE=/etc/nixos nh os";
-            nhh = "FLAKE=/etc/nixos/home-manager nh home";
-          }
-          else {}
-        );
+        // config.setup.terminal.shellAliases;
       bashrcExtra = ''
         # Use ble.sh for syntax highlighting and other improvements to the line editor
         [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh
 
-        trySource() {
-            if [ -f "$1" ]; then
-                . "$1"
-            fi
-        }
-
-        trySource "${homedir}/.cargo/env"
-
         bind -s 'set completion-ignore-case on'
 
-        trySource "${pkgs.complete-alias}/bin/complete_alias"
-        complete -F _complete_alias b
-        complete -F _complete_alias g
-        complete -F _complete_alias j
-        complete -F _complete_alias n
-        complete -F _complete_alias p
-        complete -F _complete_alias ca
-        complete -F _complete_alias jl
-        complete -F _complete_alias rclone
+        source "${pkgs.complete-alias}/bin/complete_alias"
         ${
-          if config.setup.programming.nix
-          then
-            # bash
-            ''
-              complete -F _complete_alias nhh
-              complete -F _complete_alias nhos
-            ''
-          else ""
+          lib.strings.concatStringsSep "\n" (
+            builtins.map (alias: "complete -F _complete_alias ${alias}") (
+              builtins.attrNames (
+                lib.filterAttrs
+                (_name: value: !(lib.strings.hasInfix "|" value))
+                config.setup.terminal.shellAliases
+              )
+            )
+          )
         }
+
+        # Automatically attach to a running Zellij session, but only when
+        # connecting over SSH
+        if [ -n "$SSH_CLIENT" ]; then
+            export ZELLIJ_AUTO_ATTACH=true
+        fi
 
         buildPrompt() {
             local exit_code="$?" # We need this first to catch it

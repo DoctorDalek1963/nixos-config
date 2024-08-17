@@ -4,7 +4,7 @@
   ...
 }: {
   # Taken from https://gitlab.com/LovingMelody/configsreborn/-/blob/760960bcf340a0a5773d9b764c7f58d0b050f084/modules/home/aria2/default.nix
-  config = lib.mkIf config.setup.terminalTools.aria2 {
+  config = lib.mkIf config.setup.terminal.tools.aria2 {
     programs.aria2 = {
       enable = true;
       settings = {
