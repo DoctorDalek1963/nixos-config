@@ -145,8 +145,6 @@ in {
           nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
           nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
 
-          rclone = "rclone --progress --bwlimit=\"09:00,256 23:00,off\"";
-
           resetwifi = "nmcli networking off && nmcli networking on";
         }
         // config.setup.terminal.shellAliases;
@@ -157,7 +155,6 @@ in {
         bind -s 'set completion-ignore-case on'
 
         source "${pkgs.complete-alias}/bin/complete_alias"
-        complete -F _complete_alias rclone
         ${
           lib.strings.concatStringsSep "\n" (
             builtins.map (alias: "complete -F _complete_alias ${alias}") (
