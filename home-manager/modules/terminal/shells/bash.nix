@@ -167,6 +167,12 @@ in {
           )
         }
 
+        # Automatically attach to a running Zellij session, but only when
+        # connecting over SSH
+        if [ -n "$SSH_CLIENT" ]; then
+            export ZELLIJ_AUTO_ATTACH=true
+        fi
+
         buildPrompt() {
             local exit_code="$?" # We need this first to catch it
 
