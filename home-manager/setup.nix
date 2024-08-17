@@ -108,6 +108,7 @@ in {
           type = types.enum ["basic" "small" "medium" "full"];
           default = "medium";
         };
+        lazygit = defaultTrue;
         ripgrep = defaultTrue;
 
         # Just install the packages

@@ -21,6 +21,7 @@ in {
     ./git-all.nix
     ./git.nix
     ./just.nix
+    ./lazygit.nix
     ./ripgrep.nix
   ];
 
