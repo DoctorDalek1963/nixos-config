@@ -154,14 +154,6 @@ in {
         # Use ble.sh for syntax highlighting and other improvements to the line editor
         [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh
 
-        trySource() {
-            if [ -f "$1" ]; then
-                . "$1"
-            fi
-        }
-
-        trySource "${homedir}/.cargo/env"
-
         bind -s 'set completion-ignore-case on'
 
         source "${pkgs.complete-alias}/bin/complete_alias"
