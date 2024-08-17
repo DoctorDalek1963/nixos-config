@@ -27,6 +27,12 @@ in {
         ''
           local act = wezterm.action
 
+          -- Start in fullscreen
+          wezterm.on("gui-startup", function()
+            local tab, pane, window = wezterm.mux.spawn_window{}
+            window:gui_window():toggle_fullscreen()
+          end)
+
           return {
             font = wezterm.font('Hack Nerd Font Mono'),
             font_size = 10,
