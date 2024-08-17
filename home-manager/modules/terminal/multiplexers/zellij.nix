@@ -12,6 +12,7 @@ in {
 
       settings = {
         theme = "catppuccin-macchiato";
+        default_mode = "locked";
       };
     };
 
@@ -26,6 +27,17 @@ in {
                 // Alt+x in WezTerm, which gets picked up here. This method frees
                 // up Ctrl+x for other things, but also allows Alt+x, which I
                 // previously never used anyway.
+                bind "Alt x" { ToggleFocusFullscreen; }
+            }
+
+            // Even in locked mode, I want basic navigation
+            locked {
+                bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+                bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+                bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+                bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+
+                // See above
                 bind "Alt x" { ToggleFocusFullscreen; }
             }
         }

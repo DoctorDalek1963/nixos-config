@@ -54,7 +54,6 @@ in {
 
             keys = {
               { key = 'F11', action = act.ToggleFullScreen },
-              { key = 'Backspace', mods = 'CTRL', action = act.SendKey {key = 'w', mods = 'CTRL'} },
 
               -- Zellij can't pick up two modifiers in one keybind for some reason
               { key = 'x', mods = 'CTRL|SHIFT', action = act.SendKey {key = 'x', mods = 'ALT'} }
