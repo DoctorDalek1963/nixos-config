@@ -44,7 +44,9 @@ in {
     # "We trust you have received the usual lecture..."
     security.sudo.extraConfig = "Defaults lecture = never";
 
-    # programs.fuse.userAllowOther = true;
+    # Allow other users to access things through bind mounts. Used by
+    # home-manager impermanence for sudo operations and the like
+    programs.fuse.userAllowOther = true;
 
     # This script does the actual wipe of the system
     # So if it doesn't run, the btrfs system effectively acts like a normal system
