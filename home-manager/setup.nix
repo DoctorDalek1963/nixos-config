@@ -23,8 +23,7 @@
     ./modules/activation.nix
     ./modules/fonts.nix
 
-    ./modules/shells
-    ./modules/terminalTools
+    ./modules/terminal
     ./modules/desktopEnvironments
     ./modules/firefox
     ./modules/maths
@@ -56,45 +55,71 @@ in {
     isLaptop = defaultFalse;
 
     # === Shell and terminal stuff
-    shells = {
-      bash = defaultTrue;
-    };
-    defaultShell = mkOption {
-      default = "bash";
-      type = types.enum valid-shells;
-    };
 
-    terminalTools = {
+    terminal = {
+      shells = {
+        bash = defaultTrue;
+      };
+      defaultShell = mkOption {
+        default = "bash";
+        type = types.enum valid-shells;
+      };
+      shellAliases = mkOption {
+        default = {};
+        type = types.attrsOf types.nonEmptyStr;
+      };
+
+      emulators = {
+        terminator = defaultFalse;
+        wezterm = defaultTrue;
+      };
+      defaultEmulator = mkOption {
+        default = "wezterm";
+        type = types.enum ["terminator" "wezterm"];
+      };
+
+      multiplexer = mkOption {
+        default = "zellij";
+        type = types.enum ["none" "zellij"];
+      };
+
       theme = mkOption {
         type = types.enum valid-terminal-themes;
         default = "onedark";
       };
-      useThemeInTerminalItself = defaultFalse;
 
-      # Need custom config
-      bat = defaultTrue;
-      btop = {
-        enable = defaultTrue;
-        gpuSupport = defaultTrue;
-      };
-      comma = defaultTrue;
-      delta = defaultTrue;
-      fd = defaultTrue;
-      fzf = defaultTrue;
-      git = defaultTrue;
-      nvim = mkOption {
-        type = types.enum ["basic" "small" "medium" "full"];
-        default = "medium";
-      };
-      ripgrep = defaultTrue;
+      tools = {
+        # Need custom config
+        aria2 = defaultTrue;
+        bat = defaultTrue;
+        btop = {
+          enable = defaultTrue;
+          gpuSupport = defaultTrue;
+        };
+        comma = defaultTrue;
+        delta = defaultTrue;
+        direnv = defaultTrue;
+        fd = defaultTrue;
+        fzf = defaultTrue;
+        git = defaultTrue;
+        git-all = defaultTrue;
+        gh = defaultTrue;
+        nvim = mkOption {
+          type = types.enum ["basic" "small" "medium" "full"];
+          default = "medium";
+        };
+        lazygit = defaultTrue;
+        ripgrep = defaultTrue;
 
-      # Just install the packages
-      eza = defaultTrue;
-      hyperfine = defaultTrue;
-      sad = defaultTrue;
-      sd = defaultTrue;
-      tldr = defaultTrue;
-      yt-dlp = defaultFalse;
+        # Just install the packages
+        eza = defaultTrue;
+        hyperfine = defaultTrue;
+        just = defaultTrue;
+        sad = defaultTrue;
+        sd = defaultTrue;
+        tldr = defaultTrue;
+        yt-dlp = defaultFalse;
+      };
     };
 
     # === Desktop stuff
@@ -148,9 +173,11 @@ in {
     maths = {
       enable = defaultFalse;
 
+      lintrans = defaultTrue;
       octave = defaultTrue;
       sage = defaultTrue;
       tikzit = defaultTrue;
+      weylus = defaultTrue;
       zotero = defaultTrue;
     };
 
@@ -176,11 +203,6 @@ in {
     # === Programming
     programming = {
       miscTools = {
-        direnv = defaultTrue;
-        git-all = defaultTrue;
-        gh = defaultTrue;
-        just = defaultTrue;
-        pre-commit = defaultTrue;
       };
 
       haskell = defaultFalse;

@@ -7,6 +7,21 @@
   inherit (lib.hm.gvariant) mkTuple mkUint32;
   inherit (config.setup.desktopEnvironments) background;
 
+  cfgTE = config.setup.terminal.emulators;
+
+  terminal-emulator =
+    if cfgTE.wezterm
+    then {
+      bin = "${pkgs.wezterm}/bin/wezterm";
+      exec-arg = "start";
+    }
+    else if cfgTE.terminator
+    then {
+      bin = "${pkgs.terminator}/bin/terminator";
+      exec-arg = "-x";
+    }
+    else {};
+
   light-path =
     if builtins.isPath background
     then background
@@ -21,12 +36,15 @@ in {
       enable = true;
       settings = {
         "org/gnome/desktop/applications/terminal" = {
-          exec = "${pkgs.terminator}/bin/terminator";
-          exec-arg = "-x";
+          exec = terminal-emulator.bin;
+          inherit (terminal-emulator) exec-arg;
         };
 
         "org/gnome/shell" = {
-          favorite-apps = ["terminator.desktop" "firefox.desktop"];
+          favorite-apps =
+            lib.optional cfgTE.wezterm "org.wezfurlong.wezterm.desktop"
+            ++ lib.optional cfgTE.terminator "terminator.desktop"
+            ++ ["firefox.desktop"];
         };
 
         "org/gnome/desktop/background" = {
@@ -169,7 +187,7 @@ in {
         "org/gnome/settings-daemon/plugins/media-keys" = {
           area-screenshot-clip = ["<Shift><Super>s"];
           custom-keybindings = [
-            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" # Terminator
+            "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" # Open terminal
           ];
           home = ["<Super>e"];
           terminal = ["<Primary><Alt>t"];
@@ -180,8 +198,8 @@ in {
 
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
           binding = "<Control><Alt>t";
-          command = "${pkgs.terminator}/bin/terminator";
-          name = "Open Terminator";
+          command = terminal-emulator.bin;
+          name = "Open Terminal";
         };
 
         "org/gnome/shell/weather" = {

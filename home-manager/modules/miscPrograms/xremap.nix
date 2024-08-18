@@ -71,10 +71,17 @@
       };
     }
     {
-      condition = config.setup.desktopEnvironments.gnome.enable;
+      condition = config.setup.terminal.defaultEmulator == "terminator";
       keymap = {
         name = "Terminator";
         remap.alt-t.launch = [soa-bin "terminator" "${pkgs.terminator}/bin/terminator" "--class"];
+      };
+    }
+    {
+      condition = config.setup.terminal.defaultEmulator == "wezterm";
+      keymap = {
+        name = "WezTerm";
+        remap.alt-t.launch = [soa-bin "wezterm" "${pkgs.wezterm}/bin/wezterm" "--class"];
       };
     }
   ];

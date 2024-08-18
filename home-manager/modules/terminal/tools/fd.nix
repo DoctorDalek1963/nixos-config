@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  config = lib.mkIf config.setup.terminalTools.fd {
+  config = lib.mkIf config.setup.terminal.tools.fd {
     home.packages = [pkgs.fd];
     xdg.configFile = {
       "fd/ignore".text = ''

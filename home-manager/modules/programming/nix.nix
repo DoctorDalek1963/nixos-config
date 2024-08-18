@@ -14,5 +14,11 @@
       nvd
       statix
     ];
+
+    setup.terminal.shellAliases = {
+      n = "nix";
+      nhos = "FLAKE=/etc/nixos ${pkgs.nh}/bin/nh os";
+      nhh = "FLAKE=/etc/nixos/home-manager ${pkgs.nh}/bin/nh home";
+    };
   };
 }

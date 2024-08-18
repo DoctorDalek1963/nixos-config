@@ -12,25 +12,35 @@
       sha256 = "sha256-5k4PXB2DY98/BukWML/o1BX8M8kb0hwHXpBqUeL4AbU=";
     };
   };
+
+  python =
+    pkgs.python3.withPackages
+    (ps:
+      (with ps; [
+        ipython
+        jedi
+        jupyter
+
+        bitstring
+        matplotlib
+        numpy
+        sympy
+      ])
+      ++ [probcalc]);
+
+  python-bin = "${python}/bin/python";
 in {
   config = lib.mkIf config.setup.programming.python {
     home = {
-      packages = [
-        (pkgs.python3.withPackages
-          (ps:
-            with ps;
-              [
-                ipython
-                jedi
-
-                bitstring
-                matplotlib
-                numpy
-                sympy
-              ]
-              ++ [probcalc]))
-      ];
+      packages = [python];
       file.".ipython/profile_default/ipython_config.py".source = ../../files/ipython_config.py;
+    };
+
+    setup.terminal.shellAliases = {
+      p = "python";
+      ipy = "${python-bin} -m IPython";
+      jnb = "${python-bin} -m jupyter notebook";
+      pmhttp = "${python-bin} -m http.server";
     };
   };
 }

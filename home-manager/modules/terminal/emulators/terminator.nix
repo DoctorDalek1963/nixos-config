@@ -11,7 +11,7 @@
   in
     lib.strings.concatStringsSep "\n" indented-lines;
 
-  inherit (config.setup.terminalTools) theme useThemeInTerminalItself;
+  inherit (config.setup.terminal) theme emulators;
 
   common = fontSize:
     indent 2 ''
@@ -153,21 +153,11 @@
     }
     .${theme};
 
-  default-and-dark =
-    if useThemeInTerminalItself
-    then ''
-      [[default]]
-      ${common 10}
-      ${themed-dark.dark}
-    ''
-    else ''
-      [[default]]
-      ${common 10}
-        foreground_color = "#ffffff"
-      [[${themed-dark.name}]]
-      ${common 10}
-      ${themed-dark.dark}
-    '';
+  default-and-dark = ''
+    [[default]]
+    ${common 10}
+    ${themed-dark.dark}
+  '';
 
   transparent = ''
     [[transparent]]
@@ -193,7 +183,7 @@
 
   profiles = lib.strings.concatStringsSep "\n" (lib.lists.flatten [default-and-dark transparent light white]);
 in {
-  config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
+  config = lib.mkIf emulators.terminator {
     home.packages = [pkgs.terminator];
 
     xdg.configFile."terminator/config".text = ''

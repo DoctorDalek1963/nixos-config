@@ -15,6 +15,8 @@ in {
 
       # Enable flakes
       experimental-features = ["nix-command" "flakes"];
+
+      trusted-users = ["root" "@wheel"];
     };
 
     # Garbage collect old packages every two weeks
