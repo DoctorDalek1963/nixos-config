@@ -69,27 +69,34 @@ in {
 
           # We first mount the btrfs rootfs to /mnt so we can manipulate btrfs subvolumes
           mount -o subvol=/ /dev/mapper/cryptroot /mnt
-          btrfs subvolume list -o /mnt/rootfs
 
-          # While we're tempted to just delete /root and create a new snapshot
-          # from /rootfs-blank, /rootfs is already populated at this point with a
-          # number of subvolumes, which makes `btrfs subvolume delete` fail, so
-          # we remove them first
+          # Move the current /rootfs subvolume to an old_roots folder so that
+          # it can be restored later if needed
+          if [[ -e /mnt/rootfs ]]; then
+              mkdir -p /mnt/old_roots
+              timestamp=$(date --date="@$(stat -c %Y /mnt/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
+              mv /mnt/rootfs "/mnt/old_roots/$timestamp"
+          fi
 
-          btrfs subvolume list -o /mnt/rootfs |
-          cut -f9 -d' ' |
-          while read subvolume; do
-            echo "deleting /$subvolume subvolume..."
-            btrfs subvolume delete "/mnt/$subvolume"
-          done &&
-          echo "deleting /rootfs subvolume..." &&
-          btrfs subvolume delete /mnt/rootfs
+          # While we're tempted to just delete /rootfs and create a new
+          # subvolume, /rootfs is already populated at this point with a number
+          # of subvolumes, which makes `btrfs subvolume delete` fail, so we
+          # remove them first
+          delete_subvolume_recursively() {
+              IFS=$'\n'
+              for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+                  delete_subvolume_recursively "/mnt/$i"
+              done
+              btrfs subvolume delete "$1"
+          }
 
-          echo "restoring blank /rootfs subvolume..."
-          btrfs subvolume snapshot /mnt/rootfs-blank /mnt/rootfs
+          # Now delete all /rootfs subvolumes from more than 14 days ago
+          for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +14); do
+              delete_subvolume_recursively "$i"
+          done
 
-          # Once we're done rolling back to a blank snapshot,
-          # we can unmount /mnt and continue on the boot process
+          # Then create a new, empty /rootfs and continue the boot process
+          btrfs subvolume create /mnt/rootfs
           umount /mnt
         '';
       };

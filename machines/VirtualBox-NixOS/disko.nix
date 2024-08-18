@@ -35,12 +35,6 @@
                   type = "btrfs";
                   extraArgs = ["-f" "--label" "nixos"];
 
-                  postCreateHook = ''
-                    mount -t btrfs /dev/disk/by-label/nixos /mnt
-                    btrfs subvolume snapshot -r /mnt /mnt/rootfs-blank
-                    umount /mnt
-                  '';
-
                   subvolumes = let
                     mount-options = compression-level: ["compress=zstd:${compression-level}" "noatime"];
                   in {
