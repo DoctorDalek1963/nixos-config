@@ -45,8 +45,11 @@ in {
     security.sudo.extraConfig = "Defaults lecture = never";
 
     # Allow other users to access things through bind mounts. Used by
-    # home-manager impermanence for sudo operations and the like
-    programs.fuse.userAllowOther = true;
+    # home-manager impermanence for sudo operations and the like.
+    # !! Currently, this breaks the boot sequence by making the initrd systemd
+    # !! hang on applying kernel variables. It seems like maybe this option is
+    # !! blocking the prompt to enter the LUKS password, but I'm not sure.
+    # programs.fuse.userAllowOther = true;
 
     # This script does the actual wipe of the system
     # So if it doesn't run, the btrfs system effectively acts like a normal system
