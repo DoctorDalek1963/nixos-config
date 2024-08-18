@@ -278,6 +278,8 @@
             hostname = "VirtualBox-NixOS";
             isNixOS = true;
 
+            impermanence.enable = true;
+
             desktopEnvironments = {
               background = ./files/desktop-backgrounds/virtualbox.jpg;
               gnome = {
