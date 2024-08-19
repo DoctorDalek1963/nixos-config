@@ -126,7 +126,6 @@ in {
           # NixOS management
           cdnc = "cd /etc/nixos";
           cdhm = "cd /etc/nixos/home-manager";
-          home-manager = "nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager";
 
           # Single letters
           c = "cat";

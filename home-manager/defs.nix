@@ -1,311 +1,230 @@
-{
-  home-manager,
-  username,
-  mkPkgs,
-  extraSpecialArgs,
-}: {
-  "${username}@Alex-NixOS" = let
-    system = "x86_64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
+{osConfig}: {
+  Alex-NixOS.dyson.setup = {
+    username = "dyson";
+    inherit (osConfig.setup) hostname;
+
+    desktopEnvironments = {
+      background = {
+        light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+        dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+      };
+      gnome = {
+        enable = true;
+        theme = "catppuccin-adaptive-macchiato-mauve";
+      };
+    };
+
+    terminal = {
+      theme = "catppuccin-macchiato";
+      tools.yt-dlp = true;
+    };
+
+    firefox.enable = true;
+
+    rclone = {
+      enable = true;
+      automounts = [
         {
-          setup = {
-            inherit username;
-            hostname = "Alex-NixOS";
-            isNixOS = true;
-
-            desktopEnvironments = {
-              background = {
-                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
-              };
-              gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
-              };
-            };
-
-            terminal = {
-              theme = "catppuccin-macchiato";
-              tools.yt-dlp = true;
-            };
-
-            firefox.enable = true;
-
-            rclone = {
-              enable = true;
-              automounts = [
-                {
-                  remote = "OneDrive";
-                  mountpoint = "/home/${username}/OneDrive";
-                }
-              ];
-            };
-
-            maths.enable = true;
-
-            programming = {
-              python = true;
-              rust = true;
-            };
-
-            miscPrograms = {
-              hexchat = true;
-              obsidian = true;
-              rustdesk = true;
-              supersonic = true;
-              vlc = true;
-              xremap = true;
-            };
-          };
+          remote = "OneDrive";
+          mountpoint = "/home/dyson/OneDrive";
         }
       ];
     };
 
-  "pi@Bert-NixOS" = let
-    system = "aarch64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
-        {
-          setup = {
-            username = "pi";
-            hostname = "Bert-NixOS";
-            isNixOS = true;
-            terminal = {
-              theme = "catppuccin-macchiato";
-              tools = {
-                btop.gpuSupport = false;
-                git-all = false;
-              };
-            };
+    maths.enable = true;
+
+    programming = {
+      python = true;
+      rust = true;
+    };
+
+    miscPrograms = {
+      hexchat = true;
+      obsidian = true;
+      rustdesk = true;
+      supersonic = true;
+      vlc = true;
+      xremap = true;
+    };
+  };
+
+  Bert-NixOS.pi.setup = {
+    username = "pi";
+    inherit (osConfig.setup) hostname;
+    terminal = {
+      theme = "catppuccin-macchiato";
+      tools = {
+        btop.gpuSupport = false;
+        git-all = false;
+      };
+    };
+  };
+
+  Sasha-NixOS = {
+    dyson.setup = {
+      username = "dyson";
+      inherit (osConfig.setup) hostname;
+
+      desktopEnvironments = {
+        background = {
+          light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+        };
+        cinnamon = {
+          enable = true;
+          menuIcon = ./files/icons/nix-snowflake-black.svg;
+          theme = {
+            gtk = "Mint-Y-Orange";
+            cursor = "Bibata-Original-Classic";
           };
+        };
+      };
+
+      terminal = {
+        theme = "catppuccin-macchiato";
+        tools.nvim = "small";
+      };
+
+      rclone = {
+        enable = true;
+        automounts = [
+          {
+            remote = "OneDrive";
+            mountpoint = "/home/dyson/OneDrive";
+          }
+        ];
+      };
+
+      firefox = {
+        enable = true;
+        minimal = true;
+      };
+
+      miscPrograms = {
+        handbrake = true;
+        rustdesk = true;
+        vlc = true;
+      };
+    };
+
+    rebecca.setup = {
+      username = "rebecca";
+      inherit (osConfig.setup) hostname;
+
+      desktopEnvironments = {
+        background = {
+          light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+        };
+        cinnamon = {
+          enable = true;
+          menuIcon = ./files/icons/nix-snowflake-black.svg;
+          theme = {
+            gtk = "Mint-Y-Orange";
+            cursor = "Bibata-Original-Classic";
+          };
+        };
+      };
+
+      terminal.tools.nvim = "small";
+
+      firefox = {
+        enable = true;
+        minimal = true;
+      };
+
+      miscPrograms = {
+        rustdesk = true;
+        vlc = true;
+      };
+
+      office = {
+        libreoffice = true;
+        onlyoffice = true;
+      };
+    };
+  };
+
+  Harold-NixOS.dyson.setup = {
+    username = "dyson";
+    inherit (osConfig.setup) hostname;
+    isLaptop = true;
+
+    desktopEnvironments = {
+      background = {
+        light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
+        dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+      };
+      gnome = {
+        enable = true;
+        theme = "catppuccin-adaptive-macchiato-mauve";
+      };
+    };
+
+    terminal = {
+      theme = "catppuccin-macchiato";
+      tools.yt-dlp = true;
+    };
+
+    firefox.enable = true;
+
+    rclone = {
+      enable = true;
+      automounts = [
+        {
+          remote = "OneDrive";
+          mountpoint = "/home/dyson/OneDrive";
         }
       ];
     };
 
-  "${username}@Sasha-NixOS" = let
-    system = "x86_64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
-        {
-          setup = {
-            inherit username;
-            hostname = "Sasha-NixOS";
-            isNixOS = true;
+    maths.enable = true;
 
-            desktopEnvironments = {
-              background = {
-                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
-              };
-              cinnamon = {
-                enable = true;
-                menuIcon = ./files/icons/nix-snowflake-black.svg;
-                theme = {
-                  gtk = "Mint-Y-Orange";
-                  cursor = "Bibata-Original-Classic";
-                };
-              };
-            };
-
-            terminal = {
-              theme = "catppuccin-macchiato";
-              tools.nvim = "small";
-            };
-
-            rclone = {
-              enable = true;
-              automounts = [
-                {
-                  remote = "OneDrive";
-                  mountpoint = "/home/${username}/OneDrive";
-                }
-              ];
-            };
-
-            firefox = {
-              enable = true;
-              minimal = true;
-            };
-
-            miscPrograms = {
-              handbrake = true;
-              rustdesk = true;
-              vlc = true;
-            };
-          };
-        }
-      ];
+    programming = {
+      python = true;
+      rust = true;
     };
 
-  "rebecca@Sasha-NixOS" = let
-    system = "x86_64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
-        {
-          setup = {
-            username = "rebecca";
-            hostname = "Sasha-NixOS";
-            isNixOS = true;
+    miscPrograms = {
+      discord = true;
+      hexchat = true;
+      obsidian = true;
+      rustdesk = true;
+      supersonic = true;
+      vlc = true;
+      xremap = true;
+    };
+  };
 
-            desktopEnvironments = {
-              background = {
-                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
-              };
-              cinnamon = {
-                enable = true;
-                menuIcon = ./files/icons/nix-snowflake-black.svg;
-                theme = {
-                  gtk = "Mint-Y-Orange";
-                  cursor = "Bibata-Original-Classic";
-                };
-              };
-            };
+  VirtualBox-NixOS.dyson.setup = {
+    username = "dyson";
+    inherit (osConfig.setup) hostname;
 
-            terminal.tools.nvim = "small";
-
-            firefox = {
-              enable = true;
-              minimal = true;
-            };
-
-            miscPrograms = {
-              rustdesk = true;
-              vlc = true;
-            };
-
-            office = {
-              libreoffice = true;
-              onlyoffice = true;
-            };
-          };
-        }
-      ];
+    desktopEnvironments = {
+      background = ./files/desktop-backgrounds/virtualbox.jpg;
+      gnome = {
+        enable = true;
+        theme = "catppuccin-adaptive-macchiato-mauve";
+      };
     };
 
-  "${username}@Harold-NixOS" = let
-    system = "x86_64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
-        {
-          setup = {
-            inherit username;
-            hostname = "Harold-NixOS";
-            isNixOS = true;
-            isLaptop = true;
-
-            desktopEnvironments = {
-              background = {
-                light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-                dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
-              };
-              gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
-              };
-            };
-
-            terminal = {
-              theme = "catppuccin-macchiato";
-              tools.yt-dlp = true;
-            };
-
-            firefox.enable = true;
-
-            rclone = {
-              enable = true;
-              automounts = [
-                {
-                  remote = "OneDrive";
-                  mountpoint = "/home/${username}/OneDrive";
-                }
-              ];
-            };
-
-            maths.enable = true;
-
-            programming = {
-              python = true;
-              rust = true;
-            };
-
-            miscPrograms = {
-              discord = true;
-              hexchat = true;
-              obsidian = true;
-              rustdesk = true;
-              supersonic = true;
-              vlc = true;
-              xremap = true;
-            };
-          };
-        }
-      ];
+    firefox = {
+      enable = true;
+      minimal = true;
     };
 
-  "${username}@VirtualBox-NixOS" = let
-    system = "x86_64-linux";
-  in
-    home-manager.lib.homeManagerConfiguration {
-      pkgs = mkPkgs system;
-      extraSpecialArgs = extraSpecialArgs // {inherit system;};
-      modules = [
-        ./setup.nix
-        {
-          setup = {
-            inherit username;
-            hostname = "VirtualBox-NixOS";
-            isNixOS = true;
+    # rclone = {
+    #   enable = true;
+    #   automounts = [
+    #     {
+    #       remote = "OneDrive";
+    #       mountpoint = "/home/dyson/OneDrive";
+    #       readonly = true;
+    #     }
+    #   ];
+    # };
 
-            desktopEnvironments = {
-              background = ./files/desktop-backgrounds/virtualbox.jpg;
-              gnome = {
-                enable = true;
-                theme = "catppuccin-adaptive-macchiato-mauve";
-              };
-            };
-
-            firefox = {
-              enable = true;
-              minimal = true;
-            };
-
-            # rclone = {
-            #   enable = true;
-            #   automounts = [
-            #     {
-            #       remote = "OneDrive";
-            #       mountpoint = "/home/${username}/OneDrive";
-            #       readonly = true;
-            #     }
-            #   ];
-            # };
-
-            terminal.tools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
-            miscPrograms.xremap = false;
-          };
-        }
-      ];
-    };
+    terminal.tools.nvim = "small"; # My custom themes and hotkeys, but no LSPs
+    miscPrograms.xremap = false;
+  };
 }

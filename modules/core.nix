@@ -2,6 +2,8 @@
   pkgs,
   lib,
   config,
+  inputs,
+  system,
   ...
 }: let
   cfg = config.setup;
@@ -27,20 +29,47 @@ in {
     };
   };
 
-  nixpkgs.config = {
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        # Gaming
-        "steam"
-        "steam-original"
-        "steam-run"
-        "xow_dongle-firmware" # Needed for xone driver
+  nixpkgs = {
+    overlays = [
+      # Access unstable packages through pkgs.unstable
+      (_final: _prev: {
+        unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      })
+      inputs.nur.overlay
+    ];
 
-        # Printing
-        "cnijfilter" # Canon Pixma driver
-      ];
+    config = {
+      # These are lists of allowed unfree and insecure packages respectively.
+      # They are allowed on any host (since this is core.nix), but they're
+      # only actually installed by certain modules.
+      allowUnfreePredicate = pkg:
+        builtins.elem (lib.getName pkg) [
+          # === System-wide
+          # Gaming
+          "steam"
+          "steam-original"
+          "steam-run"
+          "xow_dongle-firmware" # Needed for xone driver
 
-    permittedInsecurePackages = ["squid-6.8"];
+          # Printing
+          "cnijfilter" # Canon Pixma driver
+
+          # === home-manager
+          "discord"
+          "libsciter" # For RustDesk
+          "obsidian"
+
+          # Firefox extensions
+          "dashlane"
+          "enhancer-for-youtube"
+
+          # Microsoft fonts
+          "corefonts"
+          "vista-fonts"
+        ];
+
+      permittedInsecurePackages = ["squid-6.8"];
+    };
   };
 
   programs.nix-ld = {

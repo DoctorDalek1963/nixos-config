@@ -19,9 +19,9 @@
       ];
     };
 
-  "Alex-NixOS" = nixpkgs.lib.nixosSystem {
+  "Alex-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs;};
+    specialArgs = {inherit inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -153,9 +153,9 @@
       ];
     };
 
-  "Harold-NixOS" = nixpkgs.lib.nixosSystem {
+  "Harold-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs;};
+    specialArgs = {inherit inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -199,9 +199,9 @@
     ];
   };
 
-  "Sasha-NixOS" = nixpkgs.lib.nixosSystem {
+  "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs;};
+    specialArgs = {inherit inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -241,9 +241,9 @@
     ];
   };
 
-  "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem {
+  "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs;};
+    specialArgs = {inherit inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
