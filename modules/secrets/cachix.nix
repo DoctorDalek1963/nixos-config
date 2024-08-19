@@ -25,10 +25,12 @@ in {
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
+        "https://cache.lix.systems"
         "https://doctordalek1963.cachix.org"
       ];
       trusted-public-keys = [
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
         "doctordalek1963.cachix.org-1:ide2OUuSBdJY4mSTyIanZaafJhcHNA5fFh6P633b8EI="
       ];
     };
