@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  osConfig,
   ...
 }: let
   cfg = config.setup.impermanence;
@@ -10,10 +11,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.persistence."/persist${config.home.homeDirectory}" = {
-      # This requires `programs.fuse.userAllowOther = true;` in the NixOS
-      # config, but that breaks initrd. See /modules/impermanence/default.nix
-      # allowOther = true;
-      allowOther = false;
+      # See /modules/impermanence/default.nix
+      allowOther = !osConfig.programs.fuse.userAllowOther;
 
       directories = cfg.keepDirs;
       files = cfg.keepFiles;
