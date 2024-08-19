@@ -16,6 +16,7 @@
 in {
   imports = [
     ./modules/core.nix
+    ./modules/home-manager.nix
 
     ./modules/graphical
     ./modules/laptop
