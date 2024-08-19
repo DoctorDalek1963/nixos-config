@@ -869,6 +869,7 @@
       "original": {
         "owner": "DoctorDalek1963",
         "repo": "nixvim-config",
+        "rev": "3cdb8bd5c335548a9129901ad084900ab237c4a6",
         "type": "github"
       }
     },

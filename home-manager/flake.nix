@@ -16,7 +16,7 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
+    nixvim-flake.url = "github:DoctorDalek1963/nixvim-config/3cdb8bd5c335548a9129901ad084900ab237c4a6";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
