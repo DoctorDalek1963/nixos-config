@@ -16,6 +16,9 @@ in {
         # VirtualBox needs particular kernel modules that don't always compile
         # on newer kernels, but should work on the latest LTS kernel
         boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+
+        # nh wants the name of the specialisation in /etc/specialisation
+        environment.etc."specialisation".text = "virtualbox";
       };
     })
     (mkIf (!cfg.asSpecialisation) {
