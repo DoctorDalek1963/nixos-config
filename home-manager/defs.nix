@@ -200,8 +200,6 @@
     username = "dyson";
     inherit (osConfig.setup) hostname;
 
-    impermanence.enable = true;
-
     desktopEnvironments = {
       background = ./files/desktop-backgrounds/virtualbox.jpg;
       gnome = {
