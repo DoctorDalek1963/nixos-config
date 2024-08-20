@@ -11,6 +11,7 @@
     runtimeInputs = [
       inputs.disko.packages."${system}".disko
       pkgs.rsync
+      pkgs.nix-output-monitor
     ];
     text = builtins.readFile ./install-nixos-with-disko.sh;
   };
