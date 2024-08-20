@@ -202,9 +202,6 @@ in {
 
     # === Programming
     programming = {
-      miscTools = {
-      };
-
       haskell = defaultFalse;
       julia = defaultFalse;
       python = defaultFalse;
