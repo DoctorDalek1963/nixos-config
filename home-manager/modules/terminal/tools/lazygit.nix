@@ -18,6 +18,9 @@ in {
       };
     };
 
-    setup.terminal.shellAliases.lg = "${config.programs.lazygit.package}/bin/lazygit";
+    setup = {
+      terminal.shellAliases.lg = "${config.programs.lazygit.package}/bin/lazygit";
+      impermanence.keepFiles = [".local/state/lazygit/state.yml"];
+    };
   };
 }
