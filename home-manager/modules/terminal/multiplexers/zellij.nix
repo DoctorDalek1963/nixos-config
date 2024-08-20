@@ -37,7 +37,9 @@ in {
                 bind "Alt j" "Alt Down" { MoveFocus "Down"; }
                 bind "Alt k" "Alt Up" { MoveFocus "Up"; }
 
-                // See above
+                bind "Alt n" { NewPane; }
+
+                // See "Alt x" in normal block
                 bind "Alt x" { ToggleFocusFullscreen; }
             }
         }
