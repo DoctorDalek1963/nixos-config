@@ -9,7 +9,7 @@
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
-
+    backupFileExtension = "hm-backup";
     extraSpecialArgs = {inherit inputs system;};
 
     sharedModules = [../home-manager/setup.nix];
