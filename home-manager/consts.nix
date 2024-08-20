@@ -17,9 +17,9 @@
   nvim-pkg =
     {
       basic = pkgs.neovim;
-      small = inputs.nixvim-flake.packages.${system}.nvim-small;
-      medium = inputs.nixvim-flake.packages.${system}.nvim-medium;
-      full = inputs.nixvim-flake.packages.${system}.nvim-full;
+      small = inputs.nixvim-config.packages.${system}.nvim-small;
+      medium = inputs.nixvim-config.packages.${system}.nvim-medium;
+      full = inputs.nixvim-config.packages.${system}.nvim-full;
     }
     .${config.setup.terminal.tools.nvim};
 in {
