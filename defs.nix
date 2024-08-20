@@ -264,7 +264,10 @@
         setup = {
           hostname = "VirtualBox-NixOS";
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            debug = true;
+          };
 
           virtualBox.guest.enable = true;
 

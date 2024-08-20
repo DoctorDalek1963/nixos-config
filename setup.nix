@@ -249,6 +249,7 @@ in {
       };
     in {
       enable = defaultFalse;
+      debug = defaultFalse;
 
       keepDirs = keepList;
       keepFiles = keepList;
