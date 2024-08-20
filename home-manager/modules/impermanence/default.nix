@@ -12,7 +12,7 @@ in {
     ./extras.nix
   ];
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf osConfig.setup.impermanence.enable {
     home.persistence."/persist${config.home.homeDirectory}" = {
       # See /modules/impermanence/default.nix
       allowOther = !osConfig.programs.fuse.userAllowOther;

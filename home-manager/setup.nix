@@ -177,8 +177,6 @@ in {
         default = [];
       };
     in {
-      enable = defaultFalse;
-
       keepDirs = keepList;
       keepFiles = keepList;
     };
