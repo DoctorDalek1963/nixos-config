@@ -217,8 +217,6 @@
       ./setup.nix
       ./machines/Sasha-NixOS
       {
-        boot.plymouth.enable = true;
-
         setup = {
           hostname = "Sasha-NixOS";
 
@@ -259,8 +257,6 @@
       ./setup.nix
       ./machines/VirtualBox-NixOS
       {
-        # boot.plymouth.enable = true;
-
         setup = {
           hostname = "VirtualBox-NixOS";
 
