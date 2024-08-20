@@ -1,8 +1,6 @@
 {
   pkgs,
-  lib,
   config,
-  inputs,
   ...
 }: {
   home = {
@@ -36,37 +34,25 @@
     };
   };
 
-  nixpkgs.config = {
-    # These are lists of allowed unfree and insecure packages respectively.
-    # They are allowed on any host (since this is core.nix), but they're
-    # only actually installed by certain modules.
-    allowUnfreePredicate = pkg:
-      builtins.elem (lib.getName pkg) [
-        "discord"
-        "libsciter" # For RustDesk
-        "obsidian"
+  targets.genericLinux.enable = false;
 
-        # Firefox extensions
-        "dashlane"
-        "enhancer-for-youtube"
+  xdg.userDirs = let
+    home = "${config.home.homeDirectory}";
+  in {
+    enable = true;
+    createDirectories = true;
 
-        # Microsoft fonts
-        "corefonts"
-        "vista-fonts"
-      ];
+    download = "${home}/Downloads";
+    music = "${home}/Music";
+    pictures = "${home}/Pictures";
+    videos = "${home}/Videos";
 
-    permittedInsecurePackages = [];
+    desktop = null;
+    documents = null;
+    publicShare = null;
+    templates = null;
   };
 
-  nix = {
-    package = pkgs.lix;
-
-    # Use these flake inputs for system-wide flake registry
-    registry = lib.mkForce (lib.mapAttrs (_: value: {flake = value;}) inputs);
-
-    # Enable flakes
-    settings.experimental-features = ["nix-command" "flakes"];
-  };
-
-  targets.genericLinux.enable = !config.setup.isNixOS;
+  # Stuff tends to collect in my Downloads, so I'm intentionally not persisting it
+  setup.impermanence.keepDirs = ["Music" "Pictures" "Videos"];
 }

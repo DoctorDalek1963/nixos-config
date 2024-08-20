@@ -17,5 +17,14 @@ in {
       ++ lib.optional cfg.tikzit pkgs.tikzit
       ++ lib.optional cfg.weylus pkgs.weylus
       ++ lib.optional cfg.zotero pkgs.zotero;
+
+    setup.impermanence = {
+      keepFiles = lib.optional cfg.octave ".local/share/octave/history";
+
+      keepDirs =
+        [".cache/mathlib"] # Mathlib for Lean 4, which I only use in devShells
+        ++ lib.optional cfg.lintrans ".lintrans"
+        ++ lib.optionals cfg.zotero [".zotero/zotero" "Zotero"];
+    };
   };
 }

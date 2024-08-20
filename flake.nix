@@ -4,13 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
+    nur.url = "github:nix-community/nur";
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,6 +20,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -40,6 +41,23 @@
     };
     wordle = {
       url = "github:DoctorDalek1963/wordle";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # home-manager stuff
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    lintrans.url = "github:DoctorDalek1963/lintrans";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim-flake.url = "github:DoctorDalek1963/nixvim-config";
+    xremap = {
+      url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -69,7 +87,7 @@
         system,
         ...
       }: let
-        pkgs = import nixpkgs {inherit system;};
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
         devShells.default = pkgs.mkShell {
           nativeBuildInputs =

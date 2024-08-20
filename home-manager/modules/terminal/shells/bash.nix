@@ -16,6 +16,17 @@
   };
 in {
   config = lib.mkIf config.setup.terminal.shells.bash {
+    setup.impermanence = {
+      keepFiles = [".bash_history"];
+      keepDirs = [
+        ".cache/blesh/${let
+          list = lib.strings.split "\\." pkgs.blesh.version;
+          major = builtins.elemAt list 0;
+          minor = builtins.elemAt list 2;
+        in "${major}.${minor}"}"
+      ];
+    };
+
     home = {
       packages = [pkgs.complete-alias];
       sessionVariables.EXTENDED_PS1 = 1;
@@ -126,7 +137,6 @@ in {
           # NixOS management
           cdnc = "cd /etc/nixos";
           cdhm = "cd /etc/nixos/home-manager";
-          home-manager = "nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager";
 
           # Single letters
           c = "cat";

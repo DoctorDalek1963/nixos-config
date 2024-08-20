@@ -23,6 +23,7 @@ in {
     ./just.nix
     ./lazygit.nix
     ./ripgrep.nix
+    ./tldr.nix
   ];
 
   home = {
@@ -31,7 +32,6 @@ in {
       ++ lib.optional tt.hyperfine pkgs.hyperfine
       ++ lib.optional tt.sad pkgs.sad
       ++ lib.optional tt.sd pkgs.sd
-      ++ lib.optional tt.tldr pkgs.tldr
       ++ lib.optional tt.yt-dlp pkgs.yt-dlp;
 
     sessionVariables.EDITOR = nvimPath;

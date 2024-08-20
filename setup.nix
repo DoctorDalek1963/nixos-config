@@ -16,6 +16,7 @@
 in {
   imports = [
     ./modules/core.nix
+    ./modules/home-manager.nix
 
     ./modules/graphical
     ./modules/laptop
@@ -26,6 +27,7 @@ in {
     ./modules/development
     ./modules/gaming
     ./modules/openRGB
+    ./modules/impermanence
     ./modules/homeServer
     ./modules/pam
     ./modules/printing
@@ -237,6 +239,20 @@ in {
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
       };
+    };
+
+    # === Impermanence
+    impermanence = let
+      keepList = mkOption {
+        type = types.listOf (types.either types.nonEmptyStr types.submodule);
+        default = [];
+      };
+    in {
+      enable = defaultFalse;
+      debug = defaultFalse;
+
+      keepDirs = keepList;
+      keepFiles = keepList;
     };
 
     # === Passwords

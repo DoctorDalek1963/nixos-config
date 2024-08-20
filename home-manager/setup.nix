@@ -26,6 +26,7 @@
     ./modules/terminal
     ./modules/desktopEnvironments
     ./modules/firefox
+    ./modules/impermanence
     ./modules/maths
     ./modules/miscPrograms
     ./modules/office
@@ -167,6 +168,17 @@ in {
     fonts = {
       hackNerdFont = defaultTrue;
       microsoftFonts = defaultFalse;
+    };
+
+    # === Impermanence
+    impermanence = let
+      keepList = mkOption {
+        type = types.listOf (types.either types.nonEmptyStr (types.submodule {}));
+        default = [];
+      };
+    in {
+      keepDirs = keepList;
+      keepFiles = keepList;
     };
 
     # === Maths

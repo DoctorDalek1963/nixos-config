@@ -1,18 +1,20 @@
 {
   pkgs,
+  lib,
   config,
   ...
 }: let
-  inherit (config.consts.lib) optItemList;
   mp = config.setup.miscPrograms;
 in {
   imports = [./discord.nix ./hexchat.nix ./xremap.nix];
 
   home.packages =
-    optItemList mp.handbrake pkgs.handbrake
-    ++ optItemList mp.obsidian pkgs.obsidian
-    ++ optItemList mp.rustdesk pkgs.rustdesk
-    ++ optItemList mp.supersonic pkgs.supersonic
-    ++ optItemList mp.vlc pkgs.vlc
-    ++ optItemList mp.zoom pkgs.zoom-us;
+    lib.optional mp.handbrake pkgs.handbrake
+    ++ lib.optional mp.obsidian pkgs.obsidian
+    ++ lib.optional mp.rustdesk pkgs.rustdesk
+    ++ lib.optional mp.supersonic pkgs.supersonic
+    ++ lib.optional mp.vlc pkgs.vlc
+    ++ lib.optional mp.zoom pkgs.zoom-us;
+
+  setup.impermanence.keepDirs = lib.optional mp.obsidian "Obsidian";
 }
