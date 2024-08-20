@@ -35,5 +35,7 @@ in {
           %display unicode_art
         '';
     };
+
+    setup.impermanence.keepFiles = [".sage/ipython-5.0.0/profile_default/history.sqlite"];
   };
 }

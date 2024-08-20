@@ -36,11 +36,18 @@ in {
       file.".ipython/profile_default/ipython_config.py".source = ../../files/ipython_config.py;
     };
 
-    setup.terminal.shellAliases = {
-      p = "python";
-      ipy = "${python-bin} -m IPython";
-      jnb = "${python-bin} -m jupyter notebook";
-      pmhttp = "${python-bin} -m http.server";
+    setup = {
+      impermanence.keepFiles = [
+        ".python_history"
+        ".ipython/profile_default/history.sqlite"
+      ];
+
+      terminal.shellAliases = {
+        p = "python";
+        ipy = "${python-bin} -m IPython";
+        jnb = "${python-bin} -m jupyter notebook";
+        pmhttp = "${python-bin} -m http.server";
+      };
     };
   };
 }

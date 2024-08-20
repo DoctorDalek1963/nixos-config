@@ -18,6 +18,13 @@
     else pkgs.firefox;
 in {
   config = lib.mkIf cfgFf.enable {
+    setup.impermanence = {
+      keepDirs = [
+        ".cache/mozilla/firefox"
+        ".mozilla/firefox/${cfg.username}/storage"
+      ];
+    };
+
     programs.firefox = {
       enable = true;
       package = firefox-package;
@@ -30,7 +37,7 @@ in {
             "browser.contentblocking.category" = "strict"; # Block cookies
 
             "browser.download.always_ask_before_handling_new_types" = true;
-            "browser.download.dir" = "${config.home.homeDirectory}/Downloads";
+            "browser.download.dir" = "${config.xdg.userDirs.download}";
 
             # Configure what the new tab page looks like
             "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;

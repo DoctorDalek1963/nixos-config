@@ -16,6 +16,17 @@
   };
 in {
   config = lib.mkIf config.setup.terminal.shells.bash {
+    setup.impermanence = {
+      keepFiles = [".bash_history"];
+      keepDirs = [
+        ".cache/blesh/${let
+          list = lib.strings.split "\\." pkgs.blesh.version;
+          major = builtins.elemAt list 0;
+          minor = builtins.elemAt list 2;
+        in "${major}.${minor}"}"
+      ];
+    };
+
     home = {
       packages = [pkgs.complete-alias];
       sessionVariables.EXTENDED_PS1 = 1;

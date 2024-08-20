@@ -7,7 +7,10 @@
 }: let
   cfg = config.setup.impermanence;
 in {
-  imports = [inputs.impermanence.nixosModules.home-manager.impermanence];
+  imports = [
+    inputs.impermanence.nixosModules.home-manager.impermanence
+    ./extras.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     home.persistence."/persist${config.home.homeDirectory}" = {

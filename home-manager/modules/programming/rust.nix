@@ -22,10 +22,14 @@
 
     xdg.configFile."evcxr/init.evcxr".text = "use std::mem::{size_of, transmute};";
 
-    setup.terminal.shellAliases = {
-      ca = "cargo";
-      rs = "${pkgs.evcxr}/bin/evcxr";
-      clippy = "cat ${../../files/clippy.conf} | xargs cargo clippy --all-features --";
+    setup = {
+      impermanence.keepFiles = [".cargo/.global-cache"];
+
+      terminal.shellAliases = {
+        ca = "cargo";
+        rs = "${pkgs.evcxr}/bin/evcxr";
+        clippy = "cat ${../../files/clippy.conf} | xargs cargo clippy --all-features --";
+      };
     };
   };
 }
