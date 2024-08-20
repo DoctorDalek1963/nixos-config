@@ -13,9 +13,19 @@
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ./iso
 
-        # Include everything for VirtualBox so it doesn't have to
-        # download tons from the cache every time I test an install
-        # {environment.systemPackages = VirtualBox-NixOS.config.environment.systemPackages;}
+        # Include everything for certain machines so we don't have to download
+        # tons from the cache at installation time
+        {
+          environment.systemPackages = let
+            allPkgs = hostname: users:
+              self.outputs.nixosConfigurations."${hostname}".config.environment.systemPackages
+              ++ (nixpkgs.lib.lists.flatten
+                (builtins.map
+                  (user: self.outputs.nixosConfigurations."${hostname}".config.home-manager.users."${user}".home.packages)
+                  users));
+          in
+            allPkgs "VirtualBox-NixOS" ["dyson"];
+        }
       ];
     };
 
