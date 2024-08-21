@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+
       - uses: nixbuild/nix-quick-install-action@v27
 
       - uses: cachix/cachix-action@v14
@@ -18,14 +23,14 @@ jobs:
         run: nix build .#nixosConfigurations.iso.config.system.build.isoImage --print-build-logs
 
   build-raspi-sd:
-    # I have no idea why this job fails in CI. It works completely fine when
-    # I run it locally, but GitHub Actions doesn't like it, so I'm disabling
-    # it for now.
-    if: false
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+
       - uses: docker/setup-qemu-action@v3
 
       - uses: nixbuild/nix-quick-install-action@v27
