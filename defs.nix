@@ -17,6 +17,7 @@
         # tons from the cache at installation time
         {
           environment.systemPackages = let
+            # deadnix: skip
             allPkgs = hostname: users:
               self.outputs.nixosConfigurations."${hostname}".config.environment.systemPackages
               ++ (nixpkgs.lib.lists.flatten
@@ -24,7 +25,8 @@
                   (user: self.outputs.nixosConfigurations."${hostname}".config.home-manager.users."${user}".home.packages)
                   users));
           in
-            allPkgs "VirtualBox-NixOS" ["dyson"];
+            # allPkgs "VirtualBox-NixOS" ["dyson"];
+            [];
         }
       ];
     };
