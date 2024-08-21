@@ -175,6 +175,8 @@
           hostname = "Harold-NixOS";
           isLaptop = true;
 
+          impermanence.enable = true;
+
           profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
           secrets = {

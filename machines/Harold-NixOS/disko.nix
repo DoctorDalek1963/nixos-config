@@ -16,6 +16,13 @@
               mountpoint = "/boot";
             };
           };
+          swap = {
+            size = "4G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+            };
+          };
           luks = {
             size = "100%";
             content = {
@@ -27,6 +34,7 @@
               content = {
                 type = "btrfs";
                 extraArgs = ["-f" "--label" "NixOS"];
+
                 subvolumes = let
                   mount-options = compression-level: [
                     "compress=zstd:${compression-level}"
@@ -38,17 +46,21 @@
                     mountOptions = mount-options "2";
                     mountpoint = "/";
                   };
-                  "/home" = {
-                    mountOptions = mount-options "2";
-                    mountpoint = "/home";
-                  };
-                  "/home/.snapshots" = {
-                    mountOptions = mount-options "5";
-                    mountpoint = "/home/.snapshots";
-                  };
                   "/nix" = {
                     mountOptions = mount-options "2";
                     mountpoint = "/nix";
+                  };
+                  "/persist" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/persist";
+                  };
+                  "/persist/home" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/persist/home";
+                  };
+                  "/persist/home/.snapshots" = {
+                    mountOptions = mount-options "5";
+                    mountpoint = "/persist/home/.snapshots";
                   };
                 };
               };
@@ -58,4 +70,6 @@
       };
     };
   };
+
+  fileSystems."/persist".neededForBoot = true;
 }
