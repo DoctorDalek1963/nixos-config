@@ -81,7 +81,7 @@
       condition = config.setup.terminal.defaultEmulator == "wezterm";
       keymap = {
         name = "WezTerm";
-        remap.alt-t.launch = [soa-bin "wezterm" "${pkgs.wezterm}/bin/wezterm" "--class"];
+        remap.alt-t.launch = [soa-bin "org.wezfurlong.wezterm" "${pkgs.wezterm}/bin/wezterm" "--class"];
       };
     }
   ];
