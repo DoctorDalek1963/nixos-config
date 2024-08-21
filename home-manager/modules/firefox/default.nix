@@ -21,7 +21,7 @@ in {
     setup.impermanence = {
       keepDirs = [
         ".cache/mozilla/firefox"
-        ".mozilla/firefox/${cfg.username}/storage"
+        ".mozilla/firefox"
       ];
     };
 
