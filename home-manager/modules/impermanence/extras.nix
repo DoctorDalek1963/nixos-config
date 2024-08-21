@@ -34,5 +34,8 @@ in {
     (mkIf osSetup.virtualBox.host.enable {
       setup.impermanence.keepDirs = ["VirtualBox VMs"];
     })
+    (mkIf osSetup.secrets.cachix.enable {
+      setup.impermanence.keepFiles = [".config/cachix/cachix.dhall"];
+    })
   ];
 }
