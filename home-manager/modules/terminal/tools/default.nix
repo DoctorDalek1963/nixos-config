@@ -24,6 +24,7 @@ in {
     ./lazygit.nix
     ./ripgrep.nix
     ./tldr.nix
+    ./yazi.nix
   ];
 
   home = {

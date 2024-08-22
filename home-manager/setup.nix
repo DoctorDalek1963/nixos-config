@@ -111,6 +111,7 @@ in {
         };
         lazygit = defaultTrue;
         ripgrep = defaultTrue;
+        yazi = defaultTrue;
 
         # Just install the packages
         eza = defaultTrue;
