@@ -11,11 +11,22 @@
     SystemAccount=false
   '';
 
-  mkBootCommand = name: icon: "echo -e '${mkGdmUserConf icon}' > /var/lib/AccountsService/users/${name}\n";
-
-  bootCommands = builtins.attrValues (builtins.mapAttrs mkBootCommand config.setup.profilePictures);
+  mkCommand = name: icon: "echo -e '${mkGdmUserConf icon}' > /var/lib/AccountsService/users/${name}";
 in {
   config = lib.mkIf config.setup.displayManagers.gdm.enable {
-    boot.postBootCommands = lib.strings.concatStrings bootCommands;
+    systemd.services.populate-gdm-profile-pictures = {
+      description = "Populate profile pictures in /var/lib/AccountsService for GDM";
+      wantedBy = ["multi-user.target" "accounts-daemon.service"];
+      before = ["accounts-daemon.service"];
+
+      script = ''
+        mkdir -p /var/lib/AccountsService/users
+        ${builtins.concatStringsSep "\n" (
+          builtins.attrValues (
+            builtins.mapAttrs mkCommand config.setup.profilePictures
+          )
+        )}
+      '';
+    };
   };
 }
