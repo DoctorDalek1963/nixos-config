@@ -54,7 +54,10 @@ in {
   config = lib.mkIf cfg.secrets.enable {
     home.packages = [pkgs.openssh];
 
-    setup.impermanence.keepFiles = [".config/sops/age/keys.txt"];
+    setup.impermanence.keepFiles = [
+      ".config/sops/age/keys.txt"
+      ".ssh/known_hosts"
+    ];
 
     sops = {
       defaultSopsFile = ../../sops-secrets/secrets.yaml;
