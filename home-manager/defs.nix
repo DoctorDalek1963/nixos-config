@@ -67,8 +67,8 @@
 
       desktopEnvironments = {
         background = {
-          light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+          light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
+          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
         };
         cinnamon = {
           enable = true;
@@ -152,8 +152,8 @@
 
     desktopEnvironments = {
       background = {
-        light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-        dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
+        light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
+        dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
       gnome = {
         enable = true;
