@@ -153,7 +153,7 @@ in {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
           RestartSec = "5s";
           Restart = "always";
-          RuntimeMaxSec = "3d";
+          RuntimeMaxSec = "24h";
 
           NetworkNamespacePath = "/run/netns/${vpn-netns-name}";
           BindReadOnlyPaths = ["/etc/netns/${vpn-netns-name}/resolv.conf:/etc/resolv.conf"];
