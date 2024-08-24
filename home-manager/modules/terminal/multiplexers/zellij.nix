@@ -45,6 +45,9 @@ in {
         }
       '';
 
-    setup.terminal.shellAliases.z = "${config.programs.zellij.package}/bin/zellij";
+    setup = {
+      terminal.shellAliases.z = "${config.programs.zellij.package}/bin/zellij";
+      impermanence.keepDirs = [".cache/zellij"];
+    };
   };
 }
