@@ -23,7 +23,10 @@
     xdg.configFile."evcxr/init.evcxr".text = "use std::mem::{size_of, transmute};";
 
     setup = {
-      impermanence.keepFiles = [".cargo/.global-cache"];
+      impermanence = {
+        keepFiles = [".cargo/.global-cache"];
+        keepDirs = [".cargo/registry"];
+      };
 
       terminal.shellAliases = {
         ca = "cargo";
