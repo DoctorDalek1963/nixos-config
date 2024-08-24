@@ -1,4 +1,4 @@
-name: Check the flakes
+name: Check the flake
 
 on: push
 
