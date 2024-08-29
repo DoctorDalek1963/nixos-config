@@ -23,7 +23,10 @@
 
         # Wayland, for my use cases, is just not ready.
         # Maybe try again in 2026 or something
-        displayManager.gdm.wayland = lib.mkDefault false;
+        displayManager = {
+          gdm.wayland = lib.mkDefault false;
+          sddm.wayland.enable = lib.mkDefault false;
+        };
       };
     };
 
