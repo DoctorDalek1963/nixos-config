@@ -31,6 +31,9 @@ in {
               else cfg.background.light
             }";
           };
+          "org/cinnamon/desktop/background/slideshow" = {
+            slideshow-enabled = false;
+          };
         };
     };
   };
