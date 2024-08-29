@@ -5,8 +5,8 @@
   ...
 }: let
   inherit (lib.hm.gvariant) mkTuple mkUint32;
-  inherit (config.setup.desktopEnvironments) background;
 
+  cfg = config.setup.desktopEnvironments;
   cfgTE = config.setup.terminal.emulators;
 
   terminal-emulator =
@@ -21,17 +21,15 @@
       exec-arg = "-x";
     }
     else {};
-
-  light-path =
-    if builtins.isPath background
-    then background
-    else background.light;
-  dark-path =
-    if builtins.isPath background
-    then background
-    else background.dark;
 in {
-  config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
+  config = lib.mkIf cfg.gnome.enable {
+    assertions = [
+      {
+        assertion = cfg.background-slideshow-path == null && cfg.background != null;
+        message = "GNOME requires a background. It doesn't support slideshow backgrounds";
+      }
+    ];
+
     dconf = {
       enable = true;
       settings = {
@@ -50,8 +48,16 @@ in {
         "org/gnome/desktop/background" = {
           color-shading-type = "solid";
           picture-options = "zoom";
-          picture-uri = "file://${light-path}";
-          picture-uri-dark = "file://${dark-path}";
+          picture-uri = "file://${
+            if builtins.isPath cfg.background
+            then cfg.background
+            else cfg.background.light
+          }";
+          picture-uri-dark = "file://${
+            if builtins.isPath cfg.background
+            then cfg.background
+            else cfg.background.dark
+          }";
           show-desktop-icons = false;
         };
 

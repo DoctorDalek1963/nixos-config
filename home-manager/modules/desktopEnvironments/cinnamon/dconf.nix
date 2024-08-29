@@ -3,21 +3,35 @@
   config,
   ...
 }: let
-  inherit (config.setup.desktopEnvironments) background;
-
-  background-path =
-    if builtins.isPath background
-    then background
-    else background.light;
+  cfg = config.setup.desktopEnvironments;
 in {
-  config = lib.mkIf config.setup.desktopEnvironments.cinnamon.enable {
+  config = lib.mkIf cfg.cinnamon.enable {
+    assertions = [
+      {
+        assertion = cfg.background-slideshow-path != null || cfg.background != null;
+        message = "Cinnamon requires either a background or a background slideshow path";
+      }
+    ];
+
     dconf = {
       enable = true;
-      settings = {
-        "org/cinnamon/desktop/background" = {
-          picture-uri = "file://${background-path}";
+      settings =
+        if cfg.background-slideshow-path != null
+        then {
+          "org/cinnamon/desktop/background/slideshow" = {
+            slideshow-enabled = true;
+            image-source = "directory://${cfg.background-slideshow-path}";
+          };
+        }
+        else {
+          "org/cinnamon/desktop/background" = {
+            picture-uri = "file://${
+              if builtins.isPath cfg.background
+              then cfg.background
+              else cfg.background.light
+            }";
+          };
         };
-      };
     };
   };
 }

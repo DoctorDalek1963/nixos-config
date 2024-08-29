@@ -126,14 +126,21 @@ in {
 
     # === Desktop stuff
     desktopEnvironments = {
+      # Either one path, a light/dark pair of paths, or a slideshow path
       background = mkOption {
-        type = types.either types.path (types.submodule {
+        type = types.nullOr (types.either types.path (types.submodule {
           options = {
             light = mkOption {type = types.path;};
             dark = mkOption {type = types.path;};
           };
-        });
+        }));
+        default = null;
       };
+      background-slideshow-path = mkOption {
+        type = types.nullOr types.nonEmptyStr;
+        default = null;
+      };
+
       cinnamon = {
         enable = defaultFalse;
         menuIcon = mkOption {

@@ -112,10 +112,7 @@
       inherit (osConfig.setup) hostname;
 
       desktopEnvironments = {
-        background = {
-          light = ./files/desktop-backgrounds/nixos-catppuccin-latte.png;
-          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato.png;
-        };
+        background-slideshow-path = "/home/rebecca/Pictures/Wallpaper Slideshow";
         cinnamon = {
           enable = true;
           menuIcon = ./files/icons/nix-snowflake-black.svg;
