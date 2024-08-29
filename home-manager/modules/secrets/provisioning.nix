@@ -2,18 +2,13 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   homedir = config.home.homeDirectory;
   cfg = config.setup;
 
-  uid =
-    {
-      dyson = "1000";
-      pi = "1001";
-      rebecca = "1002";
-    }
-    .${config.home.username};
+  inherit (osConfig.users.users.${config.home.username}) uid;
 
   secretsIf = condition: secrets:
     if condition
@@ -62,13 +57,13 @@ in {
     sops = {
       defaultSopsFile = ../../sops-secrets/secrets.yaml;
 
-      # FIXME: This is bad because we don't want to hardcode the UID, but
+      # This is suboptimal because we don't want to hardcode the UID, but
       # sops-nix seems to have no way of knowing where it will link things at
       # build time, so it can't reference paths to secrets which are not
       # symlinked elsewhere, like SSH key passphrases. See ./keychain.nix for
       # why we need this.
-      defaultSymlinkPath = "/run/user/${uid}/secrets";
-      defaultSecretsMountPoint = "/run/user/${uid}/secrets.d";
+      defaultSymlinkPath = "/run/user/${toString uid}/secrets";
+      defaultSecretsMountPoint = "/run/user/${toString uid}/secrets.d";
 
       age = {
         keyFile = "/etc/nixos/home-manager/sops-secrets/key.txt";
