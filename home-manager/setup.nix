@@ -26,6 +26,7 @@
     ./modules/terminal
     ./modules/desktopEnvironments
     ./modules/firefox
+    ./modules/graphical
     ./modules/impermanence
     ./modules/maths
     ./modules/miscPrograms
