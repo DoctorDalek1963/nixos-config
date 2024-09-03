@@ -8,22 +8,16 @@
     (pkgs.callPackage ./thanatophobia.nix {})
   ];
 
-  optionalExtensions =
-    if config.setup.miscPrograms.xremap
-    then with pkgs.gnomeExtensions; [activate-window-by-title xremap]
-    else [];
-
-  optionalExtensionsNames =
-    (
-      if config.setup.rclone.enable
-      then ["rclone-manager@germanztz.com"]
-      else []
-    )
-    ++ (
-      if config.setup.miscPrograms.xremap
-      then ["activate-window-by-title@lucaswerkmeister.de" "xremap@k0kubun.com"]
-      else []
-    );
+  optionalExtensions = lib.optionals config.setup.miscPrograms.xremap [
+    {
+      uuid = "activate-window-by-title@lucaswerkmeister.de";
+      pkg = pkgs.gnomeExtensions.activate-window-by-title;
+    }
+    {
+      uuid = "xremap@k0kubun.com";
+      pkg = pkgs.gnomeExtensions.xremap;
+    }
+  ];
 
   gnomeCfg = config.setup.desktopEnvironments.gnome;
 in {
@@ -39,7 +33,13 @@ in {
         panel-date-format
       ])
       ++ extraExtensions
-      ++ optionalExtensions;
+      ++ (map ({
+        # deadnix: skip
+        uuid,
+        pkg,
+      }:
+        pkg)
+      optionalExtensions);
 
     dconf.settings = {
       "org/gnome/shell" = {
@@ -68,7 +68,13 @@ in {
             "panel-date-format@keiii.github.com"
             "thanatophobia@yatx.one"
           ]
-          ++ optionalExtensionsNames;
+          ++ (map ({
+            uuid,
+            # deadnix: skip
+            pkg,
+          }:
+            uuid)
+          optionalExtensions);
       };
 
       "org/gnome/shell/extensions/caffeine" = {
