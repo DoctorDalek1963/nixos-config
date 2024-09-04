@@ -55,6 +55,7 @@ in {
           "light-style@gnome-shell-extensions.gcampax.github.com"
           "native-window-placement@gnome-shell-extensions.gcampax.github.com"
           "window-list@gnome-shell-extensions.gcampax.github.com"
+          "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         ];
         enabled-extensions =
           [
@@ -62,7 +63,6 @@ in {
             "places-menu@gnome-shell-extensions.gcampax.github.com"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
-            "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
 
             "appindicatorsupport@rgcjonas.gmail.com"
             "caffeine@patapon.info"
