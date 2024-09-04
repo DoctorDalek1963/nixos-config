@@ -10,6 +10,12 @@
     };
 
     xdg.configFile = {
+      "easyeffects/output/Nothing.json".text = lib.generators.toJSON {} {
+        output = {
+          blocklist = [];
+          plugins_order = [];
+        };
+      };
       "easyeffects/output/BasicAutogain.json".text = lib.generators.toJSON {} {
         output = {
           "autogain#0" = {
