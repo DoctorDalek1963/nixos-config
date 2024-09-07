@@ -1,9 +1,6 @@
 {
-  pkgs,
   lib,
   config,
-  inputs,
-  system,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -13,15 +10,6 @@
       type = types.listOf types.str;
       default = strings;
     };
-
-  nvim-pkg =
-    {
-      basic = pkgs.neovim;
-      small = inputs.nixvim-config.packages.${system}.nvim-small;
-      medium = inputs.nixvim-config.packages.${system}.nvim-medium;
-      full = inputs.nixvim-config.packages.${system}.nvim-full;
-    }
-    .${config.setup.terminal.tools.nvim};
 in {
   # Here we can define constant values that can be referenced from any other files
   options.consts = {
@@ -39,14 +27,12 @@ in {
 
     valid-shells = stringList ["bash"];
 
-    nvimPkg = mkOption {
-      type = types.package;
-      default = nvim-pkg;
-    };
+    # Defined in modules/terminal/tools/nvim.nix
+    nvimPkg = mkOption {type = types.package;};
 
     nvimPath = mkOption {
       type = types.nonEmptyStr;
-      default = "${nvim-pkg}/bin/nvim";
+      default = "${config.consts.nvimPkg}/bin/nvim";
     };
   };
 }

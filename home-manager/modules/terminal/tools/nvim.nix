@@ -2,6 +2,7 @@
   pkgs,
   config,
   system,
+  inputs,
   ...
 }: let
   nvim-extend = pkgs.writeShellApplication {
@@ -23,6 +24,15 @@
     '';
   };
 in {
+  consts.nvimPkg =
+    {
+      basic = pkgs.neovim;
+      small = inputs.nixvim-config.packages.${system}.nvim-small;
+      medium = inputs.nixvim-config.packages.${system}.nvim-medium;
+      full = inputs.nixvim-config.packages.${system}.nvim-full;
+    }
+    .${config.setup.terminal.tools.nvim};
+
   setup.terminal.shellAliases = {
     v = config.consts.nvimPath;
 
