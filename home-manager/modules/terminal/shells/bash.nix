@@ -141,20 +141,12 @@ in {
           # Single letters
           c = "cat";
           t = "touch";
-          v = nvimPath;
           x = "exit";
 
           # Two letters
           cl = "clear";
           ps = "ps auxf";
           rm = "rm -v";
-
-          nvim-dev = "nix run ${homedir}/repos/nixvim-config --";
-
-          nvim-tiny = "nix run github:DoctorDalek1963/nixvim-config#nvim-tiny";
-          nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
-          nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
-          nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
 
           resetwifi = "nmcli networking off && nmcli networking on";
         }

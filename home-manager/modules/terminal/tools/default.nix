@@ -22,6 +22,7 @@ in {
     ./git.nix
     ./just.nix
     ./lazygit.nix
+    ./nvim.nix
     ./ripgrep.nix
     ./tldr.nix
     ./yazi.nix
