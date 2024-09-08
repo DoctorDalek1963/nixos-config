@@ -12,7 +12,10 @@
       TMPDIR=$(mktemp -d)
       cat > "$TMPDIR/flake.nix" << EOF
       {
-        outputs = {nixvim-config, ...}: {
+        outputs = {nixvim-config, ...}: let
+          pkgs = nixvim-config.inputs.nixpkgs.legacyPackages.${system};
+          inherit (pkgs) lib;
+        in {
           packages.${system}.default =
             nixvim-config.packages.${system}.nvim-medium.extend
             {$1};
