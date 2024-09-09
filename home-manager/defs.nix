@@ -34,6 +34,7 @@
     maths.enable = true;
 
     programming = {
+      haskell = true;
       python = true;
       rust = true;
     };
@@ -178,6 +179,7 @@
     maths.enable = true;
 
     programming = {
+      haskell = true;
       python = true;
       rust = true;
     };
