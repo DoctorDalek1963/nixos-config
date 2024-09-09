@@ -1,7 +1,7 @@
 {
   services.snapper = {
-    cleanupInterval = "0/6:00:00";
-    snapshotInterval = "0/6:00:00";
+    cleanupInterval = "4/6:00:00";
+    snapshotInterval = "4/6:00:00";
 
     configs.home = {
       SUBVOLUME = "/home";
