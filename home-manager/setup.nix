@@ -205,11 +205,11 @@ in {
     # === Misc programs
     miscPrograms = {
       discord = defaultFalse;
+      feishin = defaultFalse; # Subsonic music player
       handbrake = defaultFalse; # DVD ripper
       hexchat = defaultFalse;
       obsidian = defaultFalse;
       rustdesk = defaultFalse;
-      supersonic = defaultFalse;
       vlc = defaultFalse;
       xremap = defaultFalse;
       zoom = defaultFalse;

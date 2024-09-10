@@ -40,10 +40,10 @@
     };
 
     miscPrograms = {
+      feishin = true;
       hexchat = true;
       obsidian = true;
       rustdesk = true;
-      supersonic = true;
       vlc = true;
       xremap = true;
     };
@@ -186,10 +186,10 @@
 
     miscPrograms = {
       discord = true;
+      feishin = true;
       hexchat = true;
       obsidian = true;
       rustdesk = true;
-      supersonic = true;
       vlc = true;
       xremap = true;
     };
