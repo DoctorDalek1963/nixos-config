@@ -18,5 +18,7 @@ in {
       authKeyFile = config.sops.secrets."tailscale/${config.setup.hostname}".path;
       extraDaemonFlags = ["--no-logs-no-support"];
     };
+
+    setup.impermanence.keepDirs = ["/var/lib/tailscale"];
   };
 }
