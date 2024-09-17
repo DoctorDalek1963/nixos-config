@@ -15,5 +15,5 @@ in {
     ++ lib.optional mp.vlc pkgs.vlc
     ++ lib.optional mp.zoom pkgs.zoom-us;
 
-  setup.impermanence.keepDirs = lib.optional mp.obsidian "Obsidian";
+  setup.impermanence.keepDirs = lib.optionals mp.obsidian ["Obsidian" ".config/obsidian"];
 }
