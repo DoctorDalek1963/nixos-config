@@ -107,7 +107,7 @@ in {
         git-all = defaultTrue;
         gh = defaultTrue;
         nvim = mkOption {
-          type = types.enum ["basic" "small" "medium" "full"];
+          type = types.enum ["stock" "tiny" "small" "medium" "full"];
           default = "medium";
         };
         lazygit = defaultTrue;

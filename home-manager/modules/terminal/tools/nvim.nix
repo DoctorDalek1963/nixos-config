@@ -29,7 +29,8 @@
 in {
   consts.nvimPkg =
     {
-      basic = pkgs.neovim;
+      stock = pkgs.neovim;
+      tiny = inputs.nixvim-config.packages.${system}.nvim-tiny;
       small = inputs.nixvim-config.packages.${system}.nvim-small;
       medium = inputs.nixvim-config.packages.${system}.nvim-medium;
       full = inputs.nixvim-config.packages.${system}.nvim-full;
