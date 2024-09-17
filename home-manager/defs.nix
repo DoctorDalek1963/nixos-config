@@ -186,7 +186,6 @@
     };
 
     miscPrograms = {
-      discord = true;
       feishin = true;
       hexchat = true;
       obsidian = true;
