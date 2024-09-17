@@ -57,6 +57,7 @@
       tools = {
         btop.gpuSupport = false;
         git-all = false;
+        nvim = "tiny";
       };
     };
   };
