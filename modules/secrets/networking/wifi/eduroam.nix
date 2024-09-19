@@ -29,7 +29,7 @@
     '';
   };
 in {
-  config = lib.mkIf (cfg.enable && cfg.networking.enable) {
+  config = lib.mkIf (cfg.enable && cfg.networking.enable && cfg.networking.complex.eduroam) {
     sops.secrets."networking/complex/eduroam.env" = {
       mode = "0644";
     };

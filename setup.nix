@@ -301,6 +301,9 @@ in {
           default = ["HOME"];
           description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret networking.env file.'';
         };
+        complex = {
+          eduroam = defaultTrue;
+        };
       };
       vpn = {
         enable = defaultFalse;
