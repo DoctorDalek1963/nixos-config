@@ -25,7 +25,7 @@
 
       nmcli connection delete eduroam || true
       nmcli connection add type wifi con-name eduroam ifname "$wifi_device" ssid eduroam
-      nmcli connection modify eduroam 802-1x.identity "$(get_identity)" 802-1x.password "$(get_password)" 802-1x.eap peap 802-1x.phase2-auth mschapv2 802-1x.ca-cert /etc/ssl/certs/ca-certificates.crt
+      nmcli connection modify eduroam 802-1x.eap peap 802-1x.identity "$(get_identity)" 802-1x.phase2-auth mschapv2 802-1x.ca-cert /etc/ssl/certs/ca-certificates.crt 802-1x.password "$(get_password)" 802-11-wireless-security.key-mgmt wpa-eap
     '';
   };
 in {
