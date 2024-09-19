@@ -3,7 +3,7 @@
   config,
   ...
 }: {
-  imports = [./vpn.nix ./wifi.nix];
+  imports = [./vpn.nix ./wifi];
 
   config = {
     setup.impermanence.keepDirs =

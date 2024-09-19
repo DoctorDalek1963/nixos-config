@@ -17,10 +17,10 @@
       '')
     cfg.networking.simpleWifiNetworkNames;
     getFromEnv = type: ''
-      ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=)\S+" ${config.sops.secrets."networking.env".path}
+      ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=)\S+" ${config.sops.secrets."networking/simple.env".path}
     '';
   in
-    pkgs.writeShellScriptBin "add-wifi-networks" ''
+    pkgs.writeShellScriptBin "add-wifi-networks-simple" ''
       wifi_device="$(${nmcli} device | ${pkgs.gawk}/bin/awk '$2 == "wifi" {print $1}')"
 
       get_ssid() {
@@ -34,16 +34,16 @@
     '';
 in {
   config = lib.mkIf (cfg.enable && cfg.networking.enable) {
-    sops.secrets."networking.env" = {
+    sops.secrets."networking/simple.env" = {
       mode = "0644";
     };
 
-    systemd.services.networkmanager-declarative-wifi = {
+    systemd.services.networkmanager-declarative-wifi-simple = {
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
         RestartSec = "3s";
-        ExecStart = "${bash-script}/bin/add-wifi-networks";
+        ExecStart = "${bash-script}/bin/add-wifi-networks-simple";
       };
       wantedBy = ["network-online.target"];
     };
