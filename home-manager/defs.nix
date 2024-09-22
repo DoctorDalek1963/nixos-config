@@ -47,6 +47,8 @@
       vlc = true;
       xremap = true;
     };
+
+    office.onlyoffice = true;
   };
 
   Bert-NixOS.pi.setup = {
@@ -193,6 +195,8 @@
       vlc = true;
       xremap = true;
     };
+
+    office.onlyoffice = true;
   };
 
   VirtualBox-NixOS.dyson.setup = {
