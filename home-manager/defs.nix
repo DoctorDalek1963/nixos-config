@@ -39,13 +39,16 @@
       rust = true;
     };
 
-    misc.programs = {
-      feishin = true;
-      hexchat = true;
-      obsidian = true;
-      rustdesk = true;
-      vlc = true;
-      xremap = true;
+    misc = {
+      programs = {
+        feishin = true;
+        hexchat = true;
+        obsidian = true;
+        rustdesk = true;
+        vlc = true;
+        xremap = true;
+      };
+      services.safeeyes = true;
     };
 
     office.onlyoffice = true;

@@ -215,6 +215,10 @@ in {
         xremap = defaultFalse;
         zoom = defaultFalse;
       };
+
+      services = {
+        safeeyes = defaultFalse;
+      };
     };
 
     # === Office suite
