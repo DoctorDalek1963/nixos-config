@@ -87,7 +87,7 @@
   ];
 in {
   services.xremap = {
-    enable = config.setup.miscPrograms.xremap;
+    enable = config.setup.misc.programs.xremap;
     withGnome = true;
     config = {
       keymap = lib.lists.flatten (builtins.map ({

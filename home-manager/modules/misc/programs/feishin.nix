@@ -26,7 +26,7 @@
     fi
   '';
 in {
-  config = lib.mkIf config.setup.miscPrograms.feishin {
+  config = lib.mkIf config.setup.misc.programs.feishin {
     home = {
       packages = [pkgs.feishin];
 

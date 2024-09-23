@@ -30,7 +30,7 @@
     .${cfg.terminal.theme}
     or null;
 in {
-  config = lib.mkIf cfg.miscPrograms.hexchat {
+  config = lib.mkIf cfg.misc.programs.hexchat {
     programs.hexchat = rec {
       enable = true;
       theme = hexchat-theme;
@@ -143,7 +143,7 @@ in {
       };
     };
 
-    home.activation = lib.mkIf (cfg.secrets.enable && cfg.miscPrograms.hexchat) {
+    home.activation = lib.mkIf (cfg.secrets.enable && cfg.misc.programs.hexchat) {
       populateHexchatPasswords = let
         raw-python-script = pkgs.writeScript "populate-hexchat-passwords" ''
           #!/usr/bin/env python

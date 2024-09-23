@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  mp = config.setup.miscPrograms;
+  mp = config.setup.misc.programs;
 in {
   imports = [./discord.nix ./feishin.nix ./hexchat.nix ./xremap.nix];
 

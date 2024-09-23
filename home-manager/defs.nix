@@ -39,7 +39,7 @@
       rust = true;
     };
 
-    miscPrograms = {
+    misc.programs = {
       feishin = true;
       hexchat = true;
       obsidian = true;
@@ -104,7 +104,7 @@
         minimal = true;
       };
 
-      miscPrograms = {
+      misc.programs = {
         handbrake = true;
         rustdesk = true;
         vlc = true;
@@ -134,7 +134,7 @@
         minimal = true;
       };
 
-      miscPrograms = {
+      misc.programs = {
         rustdesk = true;
         vlc = true;
       };
@@ -187,7 +187,7 @@
       rust = true;
     };
 
-    miscPrograms = {
+    misc.programs = {
       feishin = true;
       hexchat = true;
       obsidian = true;

@@ -9,7 +9,7 @@
   ];
 
   optionalExtensions =
-    lib.optionals config.setup.miscPrograms.xremap [
+    lib.optionals config.setup.misc.programs.xremap [
       {
         uuid = "activate-window-by-title@lucaswerkmeister.de";
         pkg = pkgs.gnomeExtensions.activate-window-by-title;

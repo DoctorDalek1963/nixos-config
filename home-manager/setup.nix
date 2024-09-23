@@ -29,7 +29,7 @@
     ./modules/graphical
     ./modules/impermanence
     ./modules/maths
-    ./modules/miscPrograms
+    ./modules/misc
     ./modules/office
     ./modules/programming
     ./modules/rclone
@@ -202,17 +202,19 @@ in {
       zotero = defaultTrue;
     };
 
-    # === Misc programs
-    miscPrograms = {
-      discord = defaultFalse;
-      feishin = defaultFalse; # Subsonic music player
-      handbrake = defaultFalse; # DVD ripper
-      hexchat = defaultFalse;
-      obsidian = defaultFalse;
-      rustdesk = defaultFalse;
-      vlc = defaultFalse;
-      xremap = defaultFalse;
-      zoom = defaultFalse;
+    # === Misc stuff
+    misc = {
+      programs = {
+        discord = defaultFalse;
+        feishin = defaultFalse; # Subsonic music player
+        handbrake = defaultFalse; # DVD ripper
+        hexchat = defaultFalse;
+        obsidian = defaultFalse;
+        rustdesk = defaultFalse;
+        vlc = defaultFalse;
+        xremap = defaultFalse;
+        zoom = defaultFalse;
+      };
     };
 
     # === Office suite

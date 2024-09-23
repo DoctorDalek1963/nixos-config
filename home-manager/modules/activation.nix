@@ -26,7 +26,7 @@
       cfg.rclone.automounts));
 
   restartSopsNix = fillIf cfg.secrets.enable {restartSopsNix = mkSystemdRestart "sops-nix";};
-  restartXremap = fillIf cfg.miscPrograms.xremap {restartXremap = mkSystemdRestart "xremap";};
+  restartXremap = fillIf cfg.misc.programs.xremap {restartXremap = mkSystemdRestart "xremap";};
 in {
   home.activation = restartRcloneMounts // restartSopsNix // restartXremap;
 }
