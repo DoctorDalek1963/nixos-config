@@ -33,6 +33,7 @@ in {
         caffeine
         clipboard-indicator
         dash-to-dock
+        gnome-bedtime
         lock-keys
         night-theme-switcher
         panel-date-format
@@ -68,6 +69,7 @@ in {
             "caffeine@patapon.info"
             "clipboard-indicator@tudmotu.com"
             "dash-to-dock@micxgx.gmail.com"
+            "gnomebedtime@ionutbortis.gmail.com"
             "lockkeys@vaina.lt"
             "nightthemeswitcher@romainvigier.fr"
             "panel-date-format@keiii.github.com"
@@ -80,6 +82,18 @@ in {
           }:
             uuid)
           optionalExtensions);
+      };
+
+      "/org/gnome/shell/extensions/bedtime-mode" = {
+        automatic-schedule = true;
+        schedule-start-hours = 22;
+        schedule-start-minutes = 45;
+        schedule-end-hours = 7;
+        schedule-end-minutes = 0;
+
+        ondemand-button-visibility = "never";
+        color-tone-preset = "grayscale";
+        color-tone-factor = 100;
       };
 
       "org/gnome/shell/extensions/caffeine" = {
