@@ -84,10 +84,10 @@ in {
           optionalExtensions);
       };
 
-      "/org/gnome/shell/extensions/bedtime-mode" = {
+      "org/gnome/shell/extensions/bedtime-mode" = {
         automatic-schedule = true;
         schedule-start-hours = 22;
-        schedule-start-minutes = 45;
+        schedule-start-minutes = 15;
         schedule-end-hours = 7;
         schedule-end-minutes = 0;
 
