@@ -209,6 +209,7 @@ in {
         feishin = defaultFalse; # Subsonic music player
         handbrake = defaultFalse; # DVD ripper
         hexchat = defaultFalse;
+        ms-teams = defaultFalse;
         obsidian = defaultFalse;
         rustdesk = defaultFalse;
         vlc = defaultFalse;

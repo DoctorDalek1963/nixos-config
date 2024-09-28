@@ -43,6 +43,7 @@
       programs = {
         feishin = true;
         hexchat = true;
+        ms-teams = true;
         obsidian = true;
         rustdesk = true;
         vlc = true;
@@ -193,6 +194,7 @@
     misc.programs = {
       feishin = true;
       hexchat = true;
+      ms-teams = true;
       obsidian = true;
       rustdesk = true;
       vlc = true;
