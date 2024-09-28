@@ -24,6 +24,8 @@
         bitstring
         matplotlib
         numpy
+        pandas
+        scipy
         sympy
       ])
       ++ [probcalc]);
