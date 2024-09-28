@@ -101,6 +101,7 @@ in {
       terminal.shellAliases = {
         p = "python";
         ipy = "${python-bin} -m IPython";
+        jlb = "${python-bin} -m jupyter lab";
         jnb = "${python-bin} -m jupyter notebook";
         pmhttp = "${python-bin} -m http.server";
       };
