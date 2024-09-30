@@ -1,9 +1,17 @@
 {
   lib,
+  config,
   osConfig,
   ...
 }: {
-  config = lib.mkIf osConfig.setup.isGraphical {
+  config = lib.mkIf config.setup.misc.services.easyeffects {
+    assertions = [
+      {
+        assertion = config.setup.misc.services.easyeffects -> osConfig.setup.isGraphical;
+        message = "config.setup.misc.services.easyeffects requires osConfig.setup.isGraphical, since non-graphical machines don't have audio";
+      }
+    ];
+
     services.easyeffects = {
       enable = true;
       preset = "BasicAutogain";

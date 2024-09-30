@@ -26,7 +26,6 @@
     ./modules/terminal
     ./modules/desktopEnvironments
     ./modules/firefox
-    ./modules/graphical
     ./modules/impermanence
     ./modules/maths
     ./modules/misc
@@ -218,6 +217,7 @@ in {
       };
 
       services = {
+        easyeffects = defaultFalse;
         safeeyes = defaultFalse;
       };
     };
