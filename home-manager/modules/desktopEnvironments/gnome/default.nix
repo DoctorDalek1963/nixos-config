@@ -10,5 +10,7 @@
 
   config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.gnome.gnome-tweaks];
+
+    setup.impermanence.keepDirs = [".local/share/keyrings"];
   };
 }
