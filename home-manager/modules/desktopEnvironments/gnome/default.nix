@@ -11,6 +11,14 @@
   config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.gnome.gnome-tweaks];
 
-    setup.impermanence.keepDirs = [".local/share/keyrings"];
+    setup.impermanence.keepDirs = [
+      ".local/share/keyrings"
+
+      # GNOME Online Accounts
+      ".config/goa-1.0"
+
+      ".config/evolution/sources"
+      ".cache/evolution"
+    ];
   };
 }
