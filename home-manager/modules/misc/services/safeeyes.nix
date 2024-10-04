@@ -7,12 +7,25 @@
   safeeyes-config-json = (pkgs.formats.json {}).generate "safeeyes-config.json" {
     allow_postpone = true;
     postpone_duration = 1;
-    plugins = [
-      {
-        id = "donotdisturb";
-        enabled = false;
-      }
-    ];
+    plugins =
+      [
+        {
+          id = "donotdisturb";
+          enabled = false;
+        }
+      ]
+      ++ (map (name: {
+          id = name;
+          enabled = true;
+        }) [
+          "audiblealert"
+          "healthstats"
+          "mediacontrol"
+          "notification"
+          "screensaver"
+          "smartpause"
+          "trayicon"
+        ]);
   };
 
   path = "${config.xdg.configHome}/safeeyes/safeeyes.json";
