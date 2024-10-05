@@ -93,7 +93,7 @@ in {
 
         ondemand-button-visibility = "never";
         color-tone-preset = "grayscale";
-        color-tone-factor = 100;
+        color-tone-factor = 80;
       };
 
       "org/gnome/shell/extensions/caffeine" = {
