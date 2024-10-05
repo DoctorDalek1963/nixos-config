@@ -83,8 +83,8 @@
       ga = "git add -A";
       gf = "git fetch";
       gpl = "git pull";
-      gfpl = "git fetch && git pull";
-      gl = "git log";
+      # gfpl = "git fetch && git pull";
+      gflg = "git fetch && git lg";
     };
   };
 }
