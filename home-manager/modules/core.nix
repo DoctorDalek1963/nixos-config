@@ -42,17 +42,17 @@
     enable = true;
     createDirectories = true;
 
+    documents = "${home}/Documents";
     download = "${home}/Downloads";
     music = "${home}/Music";
     pictures = "${home}/Pictures";
     videos = "${home}/Videos";
 
     desktop = null;
-    documents = null;
     publicShare = null;
     templates = null;
   };
 
   # Stuff tends to collect in my Downloads, so I'm intentionally not persisting it
-  setup.impermanence.keepDirs = ["Music" "Pictures" "Videos"];
+  setup.impermanence.keepDirs = ["Documents" "Music" "Pictures" "Videos"];
 }
