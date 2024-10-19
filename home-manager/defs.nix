@@ -14,10 +14,7 @@
       };
     };
 
-    terminal = {
-      theme = "catppuccin-macchiato";
-      tools.yt-dlp = true;
-    };
+    terminal.tools.yt-dlp = true;
 
     firefox.enable = true;
 
@@ -62,7 +59,6 @@
     username = "pi";
     inherit (osConfig.setup) hostname;
     terminal = {
-      theme = "catppuccin-macchiato";
       tools = {
         btop.gpuSupport = false;
         git-all = false;
@@ -91,10 +87,7 @@
         };
       };
 
-      terminal = {
-        theme = "catppuccin-macchiato";
-        tools.nvim = "small";
-      };
+      terminal.tools.nvim = "small";
 
       rclone = {
         enable = true;
@@ -169,10 +162,7 @@
       };
     };
 
-    terminal = {
-      theme = "catppuccin-macchiato";
-      tools.yt-dlp = true;
-    };
+    terminal.tools.yt-dlp = true;
 
     firefox.enable = true;
 

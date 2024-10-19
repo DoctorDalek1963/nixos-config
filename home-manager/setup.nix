@@ -86,7 +86,7 @@ in {
 
       theme = mkOption {
         type = types.enum valid-terminal-themes;
-        default = "onedark";
+        default = "catppuccin-macchiato";
       };
 
       tools = {
