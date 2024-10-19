@@ -21,7 +21,7 @@ in {
       trusted-users = ["root" "@wheel"];
     };
 
-    # Garbage collect old packages every two weeks
+    # Garbage collect old packages every week
     gc = {
       automatic = true;
       dates = "weekly";
