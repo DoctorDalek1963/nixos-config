@@ -54,7 +54,7 @@
           printing = {
             enable = true;
             users = ["dyson"];
-            specificPrinters.canonPixmaMG3250 = true;
+            # specificPrinters.canonPixmaMG3250 = true;
           };
 
           secrets = {
