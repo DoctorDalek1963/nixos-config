@@ -9,9 +9,8 @@ in {
   config = lib.mkIf cfg.enable {
     environment.cinnamon.excludePackages = with pkgs; [
       blueberry
-      warpinator
+      cinnamon.warpinator
     ];
-
     services = {
       xserver.desktopManager.cinnamon.enable = cfg.enable;
       cinnamon.apps.enable = true;

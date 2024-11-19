@@ -1,6 +1,9 @@
 {
+  pkgs,
   lib,
   config,
+  inputs,
+  system,
   ...
 }: let
   cfg = config.setup.homeServer;
@@ -312,6 +315,12 @@ in {
 
       homepage-dashboard = {
         enable = true;
+
+        # We need at least 0.9.3 to support the myspeed widget type
+        package =
+          if lib.versionAtLeast pkgs.homepage-dashboard.version "0.9.3"
+          then abort "homepage-dashboard.version in stable nixpkgs is >= 0.9.3. nixpkgs-unstable is now unnecessary here"
+          else inputs.nixpkgs-unstable.legacyPackages."${system}".homepage-dashboard;
 
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
         listenPort = cfg.ports.homepage;
