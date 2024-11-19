@@ -35,7 +35,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Alex-NixOS
       {
@@ -169,7 +169,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Harold-NixOS
       {
@@ -217,7 +217,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Sasha-NixOS
       {
@@ -257,7 +257,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/VirtualBox-NixOS
       {

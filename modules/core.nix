@@ -32,9 +32,9 @@ in {
   nixpkgs = {
     overlays = [
       # Access unstable packages through pkgs.unstable
-      (_final: _prev: {
-        unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      })
+      # (_final: _prev: {
+      #   unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      # })
       inputs.nur.overlay
     ];
 
@@ -47,8 +47,7 @@ in {
           # === System-wide
           # Gaming
           "steam"
-          "steam-original"
-          "steam-run"
+          "steam-unwrapped"
           "xow_dongle-firmware" # Needed for xone driver
 
           # Printing
@@ -68,7 +67,11 @@ in {
           "vista-fonts"
         ];
 
-      permittedInsecurePackages = ["squid-6.8"];
+      permittedInsecurePackages = [
+        # HTTP proxy used on home server. It's okay because it's only
+        # accessible to devices on my tailnet and not the public internet
+        "squid-6.10"
+      ];
     };
   };
 

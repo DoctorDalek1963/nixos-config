@@ -26,7 +26,6 @@
     };
 
     # Enable sound
-    sound.enable = lib.mkDefault true;
     hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
   };
