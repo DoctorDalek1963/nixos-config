@@ -26,6 +26,7 @@ in {
     ./ripgrep.nix
     ./tldr.nix
     ./yazi.nix
+    ./zoxide.nix
   ];
 
   home = {
