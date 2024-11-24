@@ -1,13 +1,13 @@
 # Infrastructure
 - [Scrutiny](https://github.com/AnalogJ/scrutiny) for measuring hard drive health
-- [ntfy](https://github.com/binwiederhier/ntfy) for notifications
 - [Unmanic](https://github.com/Unmanic/unmanic) for keeping file storage tidy and well organised?
+- [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) for dashboards and graphs
 
 # Storage
 - [Nextcloud](https://nextcloud.com/) for cloud data storage
 - [PhotoPrism](https://www.photoprism.app/) for cloud photo storage
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) for password management
-- [Paperless-ngx](https://docs.paperless-ngx.com/) for scanning and preserving documents
+- [Paperless-ngx](https://docs.paperless-ngx.com/) for scanning and preserving documents (with [Gotenberg](https://gotenberg.dev/) to help convert to PDF?)
 - [Kopia](https://github.com/kopia/kopia) for backups?
 
 # Home automation
