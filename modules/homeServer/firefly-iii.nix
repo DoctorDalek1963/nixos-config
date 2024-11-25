@@ -53,7 +53,7 @@ in {
 
       mysql = {
         enable = true;
-        package = pkgs.mysql;
+        package = pkgs.mariadb;
 
         ensureDatabases = [config.services.firefly-iii.settings.DB_DATABASE];
         ensureUsers = [
