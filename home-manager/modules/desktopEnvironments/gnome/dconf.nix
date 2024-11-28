@@ -74,6 +74,7 @@ in {
         };
 
         "org/gnome/desktop/interface" = {
+          accent-color = "purple";
           clock-format = "12h";
           clock-show-seconds = true;
           font-hinting = "slight";
