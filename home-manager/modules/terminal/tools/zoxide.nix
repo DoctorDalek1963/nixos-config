@@ -12,5 +12,7 @@ in {
 
       enableBashIntegration = cfg.shells.bash;
     };
+
+    setup.impermanence.keepDirs = [".local/share/zoxide"];
   };
 }
