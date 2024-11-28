@@ -10,6 +10,10 @@
       enableBashIntegration = config.setup.terminal.shells.bash;
     };
 
-    setup.impermanence.keepDirs = [".local/share/direnv"];
+    setup = {
+      impermanence.keepDirs = [".local/share/direnv"];
+
+      terminal.shellAliases.ndr = "nix-direnv-reload";
+    };
   };
 }
