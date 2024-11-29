@@ -50,8 +50,12 @@
       };
       catppuccin-adaptive-macchiato-mauve = {
         pkgs = with pkgs; [
-          catppuccin-cursors.latteDark # Light mode
+          # For some reason, latteLight actually has dark coloured cursors. It
+          # seems like the template uses the "base" and "text" colours from the
+          # palette and no-one considered that Latte has a light base and dark text
+          catppuccin-cursors.latteLight # Light mode
           catppuccin-cursors.macchiatoLight # Dark mode
+
           (catppuccin-gtk.override {
             accents = ["mauve"];
             size =
@@ -70,6 +74,7 @@
             tweaks = ["rimless"];
             variant = "macchiato"; # Dark mode
           })
+
           # We can't currently install catppuccin-papirus-folders with multiple
           # flavors because they collide. I don't know why this happens or how
           # else to fix it
@@ -83,7 +88,7 @@
           })
         ];
         cursors = {
-          light = "catppuccin-latte-dark-cursors";
+          light = "catppuccin-latte-light-cursors";
           dark = "catppuccin-macchiato-light-cursors";
         };
         gtk =
