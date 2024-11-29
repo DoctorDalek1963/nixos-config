@@ -12,6 +12,12 @@
     }
     ."${cfg.theme}";
 
+  cursor-theme =
+    {
+      "catppuccin-macchiato" = "catppuccin-macchiato-light-cursors";
+    }
+    ."${cfg.theme}";
+
   default-cursor-style =
     if config.setup.isLaptop
     then "SteadyBlock"
@@ -46,6 +52,7 @@ in {
             cursor_blink_ease_out = 'Constant',
             cursor_blink_rate = 650,
             default_cursor_style = '${default-cursor-style}',
+            xcursor_theme = "${cursor-theme}";
 
             enable_scroll_bar = false,
 
