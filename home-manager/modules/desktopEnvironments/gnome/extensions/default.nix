@@ -55,13 +55,13 @@ in {
           "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
           "light-style@gnome-shell-extensions.gcampax.github.com"
           "native-window-placement@gnome-shell-extensions.gcampax.github.com"
+          "places-menu@gnome-shell-extensions.gcampax.github.com"
           "window-list@gnome-shell-extensions.gcampax.github.com"
           "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
         ];
         enabled-extensions =
           [
             # Built-in to GNOME 45+
-            "places-menu@gnome-shell-extensions.gcampax.github.com"
             "drive-menu@gnome-shell-extensions.gcampax.github.com"
             "user-theme@gnome-shell-extensions.gcampax.github.com"
 
