@@ -5,16 +5,16 @@
   lib,
   ...
 }:
-pkgs.stdenv.mkDerivation rec {
+pkgs.stdenv.mkDerivation {
   pname = "gnome-shell-extension-thanatophobia";
-  version = "13";
+  version = "14";
 
   # This is my fork, built to work with GNOME 45+
   src = pkgs.fetchFromGitHub {
     owner = "DoctorDalek1963";
     repo = "thanatophobia";
-    rev = "d0257d45c16eeddea9e66ed0c0687964384135b7";
-    hash = "sha256-8XLpjBqQivPndApA1X3KcV2ItSEmFDolevS26ec1DB8=";
+    rev = "9dac41a24ece88b8603680446ba93aef725b380b";
+    hash = "sha256-um87ibE8RR+kMjAT6CNlSec12ObMMhQqMiRqUDgJ0JM=";
   };
 
   nativeBuildInputs = [pkgs.buildPackages.glib];

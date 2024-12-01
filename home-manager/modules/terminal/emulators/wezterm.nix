@@ -12,6 +12,12 @@
     }
     ."${cfg.theme}";
 
+  cursor-theme =
+    {
+      "catppuccin-macchiato" = "catppuccin-macchiato-light-cursors";
+    }
+    ."${cfg.theme}";
+
   default-cursor-style =
     if config.setup.isLaptop
     then "SteadyBlock"
@@ -34,6 +40,11 @@ in {
           end)
 
           return {
+            -- FIXME: This line is temporary and we should be able to remove it
+            -- when the next release of Wezterm gets merged into stable
+            -- See https://github.com/NixOS/nixpkgs/issues/336069 and https://github.com/wez/wezterm/issues/5990
+            front_end = 'WebGpu',
+
             font = wezterm.font('Hack Nerd Font Mono'),
             font_size = 10,
 
@@ -46,6 +57,7 @@ in {
             cursor_blink_ease_out = 'Constant',
             cursor_blink_rate = 650,
             default_cursor_style = '${default-cursor-style}',
+            xcursor_theme = "${cursor-theme}";
 
             enable_scroll_bar = false,
 
