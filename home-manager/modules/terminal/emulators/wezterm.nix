@@ -40,6 +40,11 @@ in {
           end)
 
           return {
+            -- FIXME: This line is temporary and we should be able to remove it
+            -- when the next release of Wezterm gets merged into stable
+            -- See https://github.com/NixOS/nixpkgs/issues/336069 and https://github.com/wez/wezterm/issues/5990
+            front_end = 'WebGpu',
+
             font = wezterm.font('Hack Nerd Font Mono'),
             font_size = 10,
 
