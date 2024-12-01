@@ -3,8 +3,6 @@
   config,
   ...
 }: {
-  imports = [./wayland.nix];
-
   config = lib.mkIf config.setup.isGraphical {
     services = {
       # Audio with pipewire
