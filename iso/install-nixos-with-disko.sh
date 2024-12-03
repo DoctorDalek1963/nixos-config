@@ -87,7 +87,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 		sudo rsync -a --delete "/tmp/nixos-config/" "/mnt/etc/nixos"
 	fi
 
-	sudo nixos-install --flake ".#${TARGET_HOST}" --show-trace --verbose |& nom
+	sudo nixos-install --flake ".#${TARGET_HOST}" --show-trace --verbose
 else
 	echo "Cancelling installation"
 	exit 1
