@@ -46,10 +46,7 @@
         vlc = true;
         xremap = true;
       };
-      services = {
-        easyeffects = true;
-        safeeyes = true;
-      };
+      services.easyeffects = true;
     };
 
     office.onlyoffice = true;
