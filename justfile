@@ -51,10 +51,6 @@ cachix-push-system name:
 # push all store paths for Bert-NixOS to Cachix
 cachix-push-raspi: (cachix-push-system "Bert-NixOS")
 
-# bootstrap home-manager
-bootstrap-home-manager:
-	nix run /etc/nixos/home-manager -- --flake /etc/nixos/home-manager switch
-
 # set the git remote to use my SSH key
 set-git-remote:
 	git remote rm origin
@@ -66,7 +62,6 @@ post-install user='dyson':
 	chmod -R u+w /etc/nixos
 	sudo nixos-rebuild switch
 	@just set-git-remote
-	@just bootstrap-home-manager
 
 # copy sops keys to ~/.config/sops/age/keys.txt (WILL OVERWRITE)
 copy-sops-keys:
