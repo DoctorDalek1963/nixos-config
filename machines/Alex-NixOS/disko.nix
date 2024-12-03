@@ -16,6 +16,13 @@
               mountpoint = "/boot";
             };
           };
+          swap = {
+            size = "8G";
+            content = {
+              type = "swap";
+              randomEncryption = true;
+            };
+          };
           luks = {
             size = "100%";
             content = {
@@ -27,6 +34,7 @@
               content = {
                 type = "btrfs";
                 extraArgs = ["-f" "--label" "NixOS"];
+
                 subvolumes = let
                   mount-options = compression-level: [
                     "compress=zstd:${compression-level}"
@@ -38,20 +46,24 @@
                     mountOptions = mount-options "2";
                     mountpoint = "/";
                   };
-                  "/home" = {
+                  "/nix" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/nix";
+                  };
+                  "/persist" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/persist";
+                  };
+                  "/persist/home" = {
                     # We have enough space to afford not to compress /home,
                     # since this is where all my games are stored and I don't
                     # need the performance hit of compression
                     mountOptions = ["discard=async" "noatime"];
-                    mountpoint = "/home";
+                    mountpoint = "/persist/home";
                   };
-                  "/home/.snapshots" = {
+                  "/persist/home/.snapshots" = {
                     mountOptions = mount-options "5";
-                    mountpoint = "/home/.snapshots";
-                  };
-                  "/nix" = {
-                    mountOptions = mount-options "2";
-                    mountpoint = "/nix";
+                    mountpoint = "/persist/home/.snapshots";
                   };
                 };
               };
@@ -61,4 +73,6 @@
       };
     };
   };
+
+  fileSystems."/persist".neededForBoot = true;
 }

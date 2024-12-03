@@ -42,6 +42,8 @@
         setup = {
           hostname = "Alex-NixOS";
 
+          impermanence.enable = true;
+
           virtualBox.host = {
             enable = true;
             users = ["dyson"];
