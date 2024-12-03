@@ -16,7 +16,7 @@
 }: let
   inherit (readarr) version;
 
-  dotnet-runtime = dotnetCorePackages.aspnetcore_6_0;
+  dotnet-runtime = dotnetCorePackages.aspnetcore_8_0;
 
   prePatchedSource = stdenvNoCC.mkDerivation {
     name = "speakarr-${version}-pre-patched-source";
@@ -25,7 +25,7 @@
       owner = "Readarr";
       repo = "Readarr";
       rev = "v${version}";
-      hash = "sha256-ZLY7GjK5/+AkUjlVKBfQbOT2woJDyETLdXB8+uEnQCk=";
+      hash = "sha256-EZy0YeHCtsI18WJhTNUisBsbtIR+eJqI9jNCziQZAh8=";
     };
 
     nativeBuildInputs = [
@@ -100,7 +100,7 @@ in
     nugetDeps = ./nuget-deps.nix;
 
     dotnetBuildFlags = ["-p:Deterministic=false"];
-    dotnetInstallFlags = ["--framework=net6.0"];
+    dotnetInstallFlags = ["--framework=net8.0"];
 
     inherit dotnet-runtime;
 
@@ -112,15 +112,22 @@ in
       rm src/NuGet.config
     '';
 
+    # TODO: Something weird happens in dotnetBuildHook where
+    # Selenium.WebDriver.ChromeDriver.targets tries to "chmod +x nuget.Something/fallback/selenium.webdriver.chromedriver/versionNumber/driver/linux64/chromedriver"
+    # but that path points to the nix store so it's immutable, but I can't copy
+    # a mutable version in during preBuild, and postBuild is never hit, so I
+    # don't know how to fix this error
+
     postInstall = ''
       cp -rv ${frontend}/share/UI $out/lib/speakarr/
     '';
 
     passthru = {
       # Fetch the dependencies to generate nuget-deps.nix like so, in the prePatchedSource:
+      # nix-shell -p 'with dotnetCorePackages; combinePackages [aspnetcore_8_0 sdk_8_0]'
       # dotnet clean src/Speakarr.sln -c Release
       # dotnet restore src/Speakarr.sln -p:Configuration=Release -p:Platform=Posix -t:PublishAllRids --packages nuget-pkgs
-      # nuget2nix --directory nuget-pkgs/ --nuget-config src/NuGet.config > nuget-deps.nix
+      # nix run github:winterqt/nuget2nix -- --directory nuget-pkgs/ --nuget-config src/NuGet.config > nuget-deps.nix
       # Where nuget2nix comes from the flake at github:winterqt/nuget2nix
 
       # updateScript = ./update.sh;

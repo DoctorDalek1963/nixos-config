@@ -2237,11 +2237,11 @@
       };
     }
     {
-      name = "braces___braces_3.0.2.tgz";
+      name = "braces___braces_3.0.3.tgz";
       path = fetchurl {
-        name = "braces___braces_3.0.2.tgz";
-        url = "https://registry.yarnpkg.com/braces/-/braces-3.0.2.tgz";
-        sha512 = "b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==";
+        name = "braces___braces_3.0.3.tgz";
+        url = "https://registry.yarnpkg.com/braces/-/braces-3.0.3.tgz";
+        sha512 = "yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==";
       };
     }
     {
@@ -3517,11 +3517,11 @@
       };
     }
     {
-      name = "fill_range___fill_range_7.0.1.tgz";
+      name = "fill_range___fill_range_7.1.1.tgz";
       path = fetchurl {
-        name = "fill_range___fill_range_7.0.1.tgz";
-        url = "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz";
-        sha512 = "qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==";
+        name = "fill_range___fill_range_7.1.1.tgz";
+        url = "https://registry.yarnpkg.com/fill-range/-/fill-range-7.1.1.tgz";
+        sha512 = "YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==";
       };
     }
     {
@@ -7869,11 +7869,11 @@
       };
     }
     {
-      name = "ws___ws_7.5.9.tgz";
+      name = "ws___ws_7.5.10.tgz";
       path = fetchurl {
-        name = "ws___ws_7.5.9.tgz";
-        url = "https://registry.yarnpkg.com/ws/-/ws-7.5.9.tgz";
-        sha512 = "F+P9Jil7UiSKSkppIiD94dN07AwvFixvLIj1Og1Rl9GGMuNipJnV9JzjD6XuqmAeiswGvUmNLjr5cFuXwNS77Q==";
+        name = "ws___ws_7.5.10.tgz";
+        url = "https://registry.yarnpkg.com/ws/-/ws-7.5.10.tgz";
+        sha512 = "+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==";
       };
     }
     {

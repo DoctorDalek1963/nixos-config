@@ -1,17 +1,21 @@
+diff --git a/src/NzbDrone.Automation.Test/AutomationTest.cs b/src/NzbDrone.Automation.Test/AutomationTest.cs
+index 3351ceaac..b23ec4443 100644
 --- a/src/NzbDrone.Automation.Test/AutomationTest.cs
 +++ b/src/NzbDrone.Automation.Test/AutomationTest.cs
 @@ -48,7 +48,7 @@ public void SmokeTestSetup()
              _runner.KillAll();
-             _runner.Start();
+             _runner.Start(true);
  
 -            driver.Url = "http://localhost:8787";
 +            driver.Url = "http://localhost:8282";
  
              var page = new PageBase(driver);
              page.WaitForNoSpinner();
+diff --git a/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs b/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs
+index 233405df2..722045a18 100644
 --- a/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs
 +++ b/src/NzbDrone.Common.Test/ConfigFileProviderTest.cs
-@@ -49,7 +49,7 @@ protected void WithMockConfigFile(string configFile)
+@@ -71,7 +71,7 @@ protected void WithMockConfigFile(string configFile)
          public void GetValue_Success()
          {
              const string key = "Port";
@@ -20,7 +24,7 @@
  
              var result = Subject.GetValue(key, value);
  
-@@ -60,7 +60,7 @@ public void GetValue_Success()
+@@ -82,7 +82,7 @@ public void GetValue_Success()
          public void GetInt_Success()
          {
              const string key = "Port";
@@ -29,7 +33,7 @@
  
              var result = Subject.GetValueInt(key, value);
  
-@@ -89,7 +89,7 @@ public void GetLaunchBrowser_Success()
+@@ -111,7 +111,7 @@ public void GetLaunchBrowser_Success()
          [Test]
          public void GetPort_Success()
          {
@@ -38,6 +42,8 @@
  
              var result = Subject.Port;
  
+diff --git a/src/NzbDrone.Console/ConsoleApp.cs b/src/NzbDrone.Console/ConsoleApp.cs
+index 7355ad07b..228be6aa9 100644
 --- a/src/NzbDrone.Console/ConsoleApp.cs
 +++ b/src/NzbDrone.Console/ConsoleApp.cs
 @@ -53,7 +53,7 @@ public static void Main(string[] args)
@@ -58,28 +64,34 @@
                      Exit(ExitCodes.RecoverableFailure, startupArgs);
                  }
                  else
+diff --git a/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs b/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs
+index a8e33524f..d5de922c3 100644
 --- a/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs
 +++ b/src/NzbDrone.Core/Configuration/ConfigFileProvider.cs
-@@ -150,7 +150,7 @@ public string BindAddress
+@@ -167,7 +167,7 @@ public string BindAddress
              }
          }
  
--        public int Port => GetValueInt("Port", 8787);
-+        public int Port => GetValueInt("Port", 8282);
+-        public int Port => _serverOptions.Port ?? GetValueInt("Port", 8787);
++        public int Port => _serverOptions.Port ?? GetValueInt("Port", 8282);
  
-         public int SslPort => GetValueInt("SslPort", 6868);
+         public int SslPort => _serverOptions.SslPort ?? GetValueInt("SslPort", 6868);
  
+diff --git a/src/NzbDrone.Host/Bootstrap.cs b/src/NzbDrone.Host/Bootstrap.cs
+index 74535a4f2..a275f9e9f 100644
 --- a/src/NzbDrone.Host/Bootstrap.cs
 +++ b/src/NzbDrone.Host/Bootstrap.cs
-@@ -132,7 +132,7 @@ public static IHostBuilder CreateConsoleHostBuilder(string[] args, StartupContex
+@@ -138,7 +138,7 @@ public static IHostBuilder CreateConsoleHostBuilder(string[] args, StartupContex
              var config = GetConfiguration(context);
  
-             var bindAddress = config.GetValue(nameof(ConfigFileProvider.BindAddress), "*");
--            var port = config.GetValue(nameof(ConfigFileProvider.Port), 8787);
-+            var port = config.GetValue(nameof(ConfigFileProvider.Port), 8282);
-             var sslPort = config.GetValue(nameof(ConfigFileProvider.SslPort), 6868);
-             var enableSsl = config.GetValue(nameof(ConfigFileProvider.EnableSsl), false);
-             var sslCertPath = config.GetValue<string>(nameof(ConfigFileProvider.SslCertPath));
+             var bindAddress = config.GetValue<string>($"Readarr:Server:{nameof(ServerOptions.BindAddress)}") ?? config.GetValue(nameof(ConfigFileProvider.BindAddress), "*");
+-            var port = config.GetValue<int?>($"Readarr:Server:{nameof(ServerOptions.Port)}") ?? config.GetValue(nameof(ConfigFileProvider.Port), 8787);
++            var port = config.GetValue<int?>($"Readarr:Server:{nameof(ServerOptions.Port)}") ?? config.GetValue(nameof(ConfigFileProvider.Port), 8282);
+             var sslPort = config.GetValue<int?>($"Readarr:Server:{nameof(ServerOptions.SslPort)}") ?? config.GetValue(nameof(ConfigFileProvider.SslPort), 6868);
+             var enableSsl = config.GetValue<bool?>($"Readarr:Server:{nameof(ServerOptions.EnableSsl)}") ?? config.GetValue(nameof(ConfigFileProvider.EnableSsl), false);
+             var sslCertPath = config.GetValue<string>($"Readarr:Server:{nameof(ServerOptions.SslCertPath)}") ?? config.GetValue<string>(nameof(ConfigFileProvider.SslCertPath));
+diff --git a/src/NzbDrone.Host/Startup.cs b/src/NzbDrone.Host/Startup.cs
+index 8a07f532e..7b11c2391 100644
 --- a/src/NzbDrone.Host/Startup.cs
 +++ b/src/NzbDrone.Host/Startup.cs
 @@ -150,7 +150,7 @@ public void ConfigureServices(IServiceCollection services)
@@ -91,6 +103,8 @@
                      }
                  });
  
+diff --git a/src/NzbDrone.Integration.Test/IntegrationTest.cs b/src/NzbDrone.Integration.Test/IntegrationTest.cs
+index 58028c17a..af343eef3 100644
 --- a/src/NzbDrone.Integration.Test/IntegrationTest.cs
 +++ b/src/NzbDrone.Integration.Test/IntegrationTest.cs
 @@ -15,7 +15,7 @@ namespace NzbDrone.Integration.Test
@@ -102,6 +116,8 @@
  
          protected NzbDroneRunner _runner;
  
+diff --git a/src/NzbDrone.Integration.Test/IntegrationTestBase.cs b/src/NzbDrone.Integration.Test/IntegrationTestBase.cs
+index 2ac032adb..a86618e3e 100644
 --- a/src/NzbDrone.Integration.Test/IntegrationTestBase.cs
 +++ b/src/NzbDrone.Integration.Test/IntegrationTestBase.cs
 @@ -172,7 +172,7 @@ protected async Task ConnectSignalR()
@@ -113,6 +129,8 @@
                      {
                          options.AccessTokenProvider = () => Task.FromResult(ApiKey);
                      })
+diff --git a/src/NzbDrone.Test.Common/NzbDroneRunner.cs b/src/NzbDrone.Test.Common/NzbDroneRunner.cs
+index da893427b..f1606bc2b 100644
 --- a/src/NzbDrone.Test.Common/NzbDroneRunner.cs
 +++ b/src/NzbDrone.Test.Common/NzbDroneRunner.cs
 @@ -29,7 +29,7 @@ public class NzbDroneRunner
@@ -124,6 +142,8 @@
          {
              _processProvider = new ProcessProvider(logger);
              _restClient = new RestClient($"http://localhost:{port}/api/v1");
+diff --git a/src/Readarr.Api.V1/openapi.json b/src/Readarr.Api.V1/openapi.json
+index 9e93d68ba..1e09199ae 100644
 --- a/src/Readarr.Api.V1/openapi.json
 +++ b/src/Readarr.Api.V1/openapi.json
 @@ -21,7 +21,7 @@
