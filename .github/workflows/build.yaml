@@ -23,6 +23,7 @@ jobs:
         run: nix build .#nixosConfigurations.iso.config.system.build.isoImage --print-build-logs
 
   build-raspi-sd:
+    if: false # Bert-NixOS currently fails to build because of Speakarr and deviceTree problems
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
