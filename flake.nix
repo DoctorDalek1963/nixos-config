@@ -52,7 +52,10 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixvim-config.url = "github:DoctorDalek1963/nixvim-config";
+    nixvim-config = {
+      url = "github:DoctorDalek1963/nixvim-config";
+      inputs.nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses stable nixpkgs
+    };
     xremap = {
       url = "github:xremap/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
