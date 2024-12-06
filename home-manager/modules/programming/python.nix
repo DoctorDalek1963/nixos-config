@@ -23,8 +23,10 @@
 
         bitstring
         matplotlib
+        networkx
         numpy
         pandas
+        scikit-learn
         scipy
         sympy
       ])
@@ -70,6 +72,8 @@ in {
             import scipy
 
             import sympy as sp
+
+            import networkx as nx
 
             import bitstring
 
