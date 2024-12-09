@@ -3,7 +3,7 @@
   lib,
   config,
   inputs,
-  system,
+  # system,
   ...
 }: let
   cfg = config.setup;
