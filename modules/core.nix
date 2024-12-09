@@ -35,7 +35,7 @@ in {
       # (_final: _prev: {
       #   unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
       # })
-      inputs.nur.overlay
+      inputs.nur.overlays.default
     ];
 
     config = {
