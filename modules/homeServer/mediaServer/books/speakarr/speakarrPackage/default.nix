@@ -1,4 +1,4 @@
-# This script was adapted from nixpkgs' Readarr definition
+# This script was heavily adapted from nixpkgs' Readarr definition
 {
   stdenvNoCC,
   lib,
@@ -39,9 +39,20 @@
       ./colours.patch
       ./port.patch
       ./warnings-as-errors.patch
+
+      # Currently (2024-12-11, Readarr v0.4.1.2648), we have to remove all
+      # mentions of NzbDrone.Automation.Test because it relies on Selenium,
+      # which breaks the build because the dotnet build system tries to `chmod
+      # +x` a file in a dependency, but that file's in the Nix store, so that
+      # doesn't work, but I can't intercept it and copy the file first because
+      # it all happens inside dotnetBuildHook
+      # TODO: Remove this once it becomes unnecessary
+      ./remove-selenium-test.patch
     ];
 
     buildPhase = ''
+      fd -X sd -F 'net6.0' 'net8.0'
+
       fd -X sd --flags c "readarr" "speakarr"
       fd -X sd --flags c "Readarr" "Speakarr"
       fd -X sd --flags c "READARR" "SPEAKARR"
@@ -112,12 +123,6 @@ in
       rm src/NuGet.config
     '';
 
-    # TODO: Something weird happens in dotnetBuildHook where
-    # Selenium.WebDriver.ChromeDriver.targets tries to "chmod +x nuget.Something/fallback/selenium.webdriver.chromedriver/versionNumber/driver/linux64/chromedriver"
-    # but that path points to the nix store so it's immutable, but I can't copy
-    # a mutable version in during preBuild, and postBuild is never hit, so I
-    # don't know how to fix this error
-
     postInstall = ''
       cp -rv ${frontend}/share/UI $out/lib/speakarr/
     '';
@@ -128,7 +133,6 @@ in
       # dotnet clean src/Speakarr.sln -c Release
       # dotnet restore src/Speakarr.sln -p:Configuration=Release -p:Platform=Posix -t:PublishAllRids --packages nuget-pkgs
       # nix run github:winterqt/nuget2nix -- --directory nuget-pkgs/ --nuget-config src/NuGet.config > nuget-deps.nix
-      # Where nuget2nix comes from the flake at github:winterqt/nuget2nix
 
       # updateScript = ./update.sh;
       tests.smoke-test = nixosTests.readarr;

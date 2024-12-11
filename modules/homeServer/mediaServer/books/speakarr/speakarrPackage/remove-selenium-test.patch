@@ -1,0 +1,376 @@
+diff --git a/src/Directory.Packages.props b/src/Directory.Packages.props
+index 9f3f84be5..d2ebf26ef 100644
+--- a/src/Directory.Packages.props
++++ b/src/Directory.Packages.props
+@@ -41,8 +41,6 @@
+     <PackageVersion Include="PdfSharpCore" Version="1.3.32" />
+     <PackageVersion Include="RestSharp.Serializers.SystemTextJson" Version="106.15.0" />
+     <PackageVersion Include="RestSharp" Version="106.15.0" />
+-    <PackageVersion Include="Selenium.Support" Version="3.141.0" />
+-    <PackageVersion Include="Selenium.WebDriver.ChromeDriver" Version="91.0.4472.10100" />
+     <PackageVersion Include="Sentry" Version="3.31.0" />
+     <PackageVersion Include="SharpZipLib" Version="1.4.2" />
+     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.5" />
+@@ -66,4 +64,4 @@
+     <PackageVersion Include="System.ValueTuple" Version="4.5.0" />
+     <PackageVersion Include="TagLibSharp-Lidarr" Version="2.2.0.19" />
+   </ItemGroup>
+-</Project>
+\ No newline at end of file
++</Project>
+diff --git a/src/NzbDrone.Automation.Test/AutomationTest.cs b/src/NzbDrone.Automation.Test/AutomationTest.cs
+deleted file mode 100644
+index b23ec4443..000000000
+--- a/src/NzbDrone.Automation.Test/AutomationTest.cs
++++ /dev/null
+@@ -1,93 +0,0 @@
+-using System;
+-using System.Collections.Generic;
+-using System.Linq;
+-using FluentAssertions;
+-using NLog;
+-using NLog.Config;
+-using NLog.Targets;
+-using NUnit.Framework;
+-using NzbDrone.Automation.Test.PageModel;
+-using NzbDrone.Common.EnvironmentInfo;
+-using NzbDrone.Test.Common;
+-using OpenQA.Selenium;
+-using OpenQA.Selenium.Chrome;
+-using OpenQA.Selenium.Remote;
+-
+-namespace NzbDrone.Automation.Test
+-{
+-    [TestFixture]
+-    [AutomationTest]
+-    public abstract class AutomationTest
+-    {
+-        private NzbDroneRunner _runner;
+-        protected RemoteWebDriver driver;
+-
+-        public AutomationTest()
+-        {
+-            new StartupContext();
+-
+-            LogManager.Configuration = new LoggingConfiguration();
+-            var consoleTarget = new ConsoleTarget { Layout = "${level}: ${message} ${exception}" };
+-            LogManager.Configuration.AddTarget(consoleTarget.GetType().Name, consoleTarget);
+-            LogManager.Configuration.LoggingRules.Add(new LoggingRule("*", NLog.LogLevel.Trace, consoleTarget));
+-        }
+-
+-        [OneTimeSetUp]
+-        public void SmokeTestSetup()
+-        {
+-            var options = new ChromeOptions();
+-            options.AddArguments("--headless");
+-            var service = ChromeDriverService.CreateDefaultService();
+-
+-            // Timeout as windows automation tests seem to take alot longer to get going
+-            driver = new ChromeDriver(service, options, new TimeSpan(0, 3, 0));
+-
+-            driver.Manage().Window.Size = new System.Drawing.Size(1920, 1080);
+-
+-            _runner = new NzbDroneRunner(LogManager.GetCurrentClassLogger(), null);
+-            _runner.KillAll();
+-            _runner.Start(true);
+-
+-            driver.Url = "http://localhost:8282";
+-
+-            var page = new PageBase(driver);
+-            page.WaitForNoSpinner();
+-
+-            driver.ExecuteScript("window.Readarr.NameViews = true;");
+-
+-            GetPageErrors().Should().BeEmpty();
+-        }
+-
+-        protected IEnumerable<string> GetPageErrors()
+-        {
+-            return driver.FindElements(By.CssSelector("#errors div"))
+-                .Select(e => e.Text);
+-        }
+-
+-        protected void TakeScreenshot(string name)
+-        {
+-            try
+-            {
+-                var image = ((ITakesScreenshot)driver).GetScreenshot();
+-                image.SaveAsFile($"./{name}_test_screenshot.png", ScreenshotImageFormat.Png);
+-            }
+-            catch (Exception ex)
+-            {
+-                Console.WriteLine($"Failed to save screenshot {name}, {ex.Message}");
+-            }
+-        }
+-
+-        [OneTimeTearDown]
+-        public void SmokeTestTearDown()
+-        {
+-            _runner.KillAll();
+-            driver.Quit();
+-        }
+-
+-        [TearDown]
+-        public void AutomationTearDown()
+-        {
+-            GetPageErrors().Should().BeEmpty();
+-        }
+-    }
+-}
+diff --git a/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs b/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs
+deleted file mode 100644
+index 2ed2fac7e..000000000
+--- a/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs
++++ /dev/null
+@@ -1,12 +0,0 @@
+-﻿using NUnit.Framework;
+-
+-namespace NzbDrone.Automation.Test
+-{
+-    public class AutomationTestAttribute : CategoryAttribute
+-    {
+-        public AutomationTestAttribute()
+-            : base("AutomationTest")
+-        {
+-        }
+-    }
+-}
+diff --git a/src/NzbDrone.Automation.Test/MainPagesTest.cs b/src/NzbDrone.Automation.Test/MainPagesTest.cs
+deleted file mode 100644
+index d21a898cf..000000000
+--- a/src/NzbDrone.Automation.Test/MainPagesTest.cs
++++ /dev/null
+@@ -1,94 +0,0 @@
+-using System.Reflection;
+-using FluentAssertions;
+-using NUnit.Framework;
+-using NzbDrone.Automation.Test.PageModel;
+-using OpenQA.Selenium;
+-
+-namespace NzbDrone.Automation.Test
+-{
+-    [TestFixture]
+-    public class MainPagesTest : AutomationTest
+-    {
+-        private PageBase _page;
+-
+-        [SetUp]
+-        public void Setup()
+-        {
+-            _page = new PageBase(driver);
+-        }
+-
+-        [Test]
+-        public void author_page()
+-        {
+-            _page.LibraryNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-
+-            var imageName = MethodBase.GetCurrentMethod().Name;
+-            TakeScreenshot(imageName);
+-
+-            _page.Find(By.CssSelector("div[class*='AuthorIndex']")).Should().NotBeNull();
+-        }
+-
+-        [Test]
+-        public void calendar_page()
+-        {
+-            _page.CalendarNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-
+-            var imageName = MethodBase.GetCurrentMethod().Name;
+-            TakeScreenshot(imageName);
+-
+-            _page.Find(By.CssSelector("div[class*='CalendarPage']")).Should().NotBeNull();
+-        }
+-
+-        [Test]
+-        public void activity_page()
+-        {
+-            _page.ActivityNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-
+-            var imageName = MethodBase.GetCurrentMethod().Name;
+-            TakeScreenshot(imageName);
+-
+-            _page.Find(By.LinkText("Queue")).Should().NotBeNull();
+-            _page.Find(By.LinkText("History")).Should().NotBeNull();
+-            _page.Find(By.LinkText("Blocklist")).Should().NotBeNull();
+-        }
+-
+-        [Test]
+-        public void wanted_page()
+-        {
+-            _page.WantedNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-
+-            _page.Find(By.LinkText("Missing")).Should().NotBeNull();
+-            _page.Find(By.LinkText("Cutoff Unmet")).Should().NotBeNull();
+-        }
+-
+-        [Test]
+-        public void system_page()
+-        {
+-            _page.SystemNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-
+-            var imageName = MethodBase.GetCurrentMethod().Name;
+-            TakeScreenshot(imageName);
+-
+-            _page.Find(By.CssSelector("div[class*='Health']")).Should().NotBeNull();
+-        }
+-
+-        [Test]
+-        public void add_author_page()
+-        {
+-            _page.LibraryNavIcon.Click();
+-            _page.WaitForNoSpinner();
+-            _page.Find(By.LinkText("Add New")).Click();
+-            _page.WaitForNoSpinner();
+-
+-            var imageName = MethodBase.GetCurrentMethod().Name;
+-            TakeScreenshot(imageName);
+-
+-            _page.Find(By.CssSelector("input[class*='AddNewItem-searchInput']")).Should().NotBeNull();
+-        }
+-    }
+-}
+diff --git a/src/NzbDrone.Automation.Test/PageModel/PageBase.cs b/src/NzbDrone.Automation.Test/PageModel/PageBase.cs
+deleted file mode 100644
+index 575aba7d0..000000000
+--- a/src/NzbDrone.Automation.Test/PageModel/PageBase.cs
++++ /dev/null
+@@ -1,66 +0,0 @@
+-using System;
+-using System.Threading;
+-using OpenQA.Selenium;
+-using OpenQA.Selenium.Remote;
+-using OpenQA.Selenium.Support.UI;
+-
+-namespace NzbDrone.Automation.Test.PageModel
+-{
+-    public class PageBase
+-    {
+-        private readonly RemoteWebDriver _driver;
+-
+-        public PageBase(RemoteWebDriver driver)
+-        {
+-            _driver = driver;
+-            driver.Manage().Window.Maximize();
+-        }
+-
+-        public IWebElement FindByClass(string className, int timeout = 5)
+-        {
+-            return Find(By.ClassName(className), timeout);
+-        }
+-
+-        public IWebElement Find(By by, int timeout = 5)
+-        {
+-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+-            return wait.Until(d => d.FindElement(by));
+-        }
+-
+-        public void WaitForNoSpinner(int timeout = 30)
+-        {
+-            //give the spinner some time to show up.
+-            Thread.Sleep(200);
+-
+-            var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(timeout));
+-            wait.Until(d =>
+-            {
+-                try
+-                {
+-                    var element = d.FindElement(By.ClassName("followingBalls"));
+-                    return !element.Displayed;
+-                }
+-                catch (StaleElementReferenceException)
+-                {
+-                    return true;
+-                }
+-                catch (NoSuchElementException)
+-                {
+-                    return true;
+-                }
+-            });
+-        }
+-
+-        public IWebElement LibraryNavIcon => Find(By.LinkText("Library"));
+-
+-        public IWebElement CalendarNavIcon => Find(By.LinkText("Calendar"));
+-
+-        public IWebElement ActivityNavIcon => Find(By.LinkText("Activity"));
+-
+-        public IWebElement WantedNavIcon => Find(By.LinkText("Wanted"));
+-
+-        public IWebElement SettingNavIcon => Find(By.LinkText("Settings"));
+-
+-        public IWebElement SystemNavIcon => Find(By.PartialLinkText("System"));
+-    }
+-}
+diff --git a/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj b/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj
+deleted file mode 100644
+index 2a5833eeb..000000000
+--- a/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj
++++ /dev/null
+@@ -1,12 +0,0 @@
+-﻿<Project Sdk="Microsoft.NET.Sdk">
+-  <PropertyGroup>
+-    <TargetFrameworks>net6.0</TargetFrameworks>
+-  </PropertyGroup>
+-  <ItemGroup>
+-    <PackageReference Include="Selenium.Support" />
+-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" />
+-  </ItemGroup>
+-  <ItemGroup>
+-    <ProjectReference Include="..\NzbDrone.Test.Common\Readarr.Test.Common.csproj" />
+-  </ItemGroup>
+-</Project>
+diff --git a/src/Readarr.sln b/src/Readarr.sln
+index 8dd62e63f..89072b86f 100644
+--- a/src/Readarr.sln
++++ b/src/Readarr.sln
+@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Http", "Readarr.Htt
+ EndProject
+ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Api.Test", "NzbDrone.Api.Test\Readarr.Api.Test.csproj", "{E2EA47B1-6996-417D-A6EC-28C4F202715C}"
+ EndProject
+-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Automation.Test", "NzbDrone.Automation.Test\Readarr.Automation.Test.csproj", "{2356C987-F992-4084-9DA2-5DAD1DA35E85}"
+-EndProject
+ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Common.Test", "NzbDrone.Common.Test\Readarr.Common.Test.csproj", "{A628FEA4-75CC-4039-8823-27258C55D2BF}"
+ EndProject
+ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Common", "NzbDrone.Common\Readarr.Common.csproj", "{74BF1D46-710C-42C1-82DD-34B42C58F843}"
+@@ -102,14 +100,6 @@ Global
+ 		{E2EA47B1-6996-417D-A6EC-28C4F202715C}.Release|Posix.Build.0 = Release|Any CPU
+ 		{E2EA47B1-6996-417D-A6EC-28C4F202715C}.Release|Windows.ActiveCfg = Release|Any CPU
+ 		{E2EA47B1-6996-417D-A6EC-28C4F202715C}.Release|Windows.Build.0 = Release|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Debug|Posix.ActiveCfg = Debug|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Debug|Posix.Build.0 = Debug|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Debug|Windows.ActiveCfg = Debug|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Debug|Windows.Build.0 = Debug|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Release|Posix.ActiveCfg = Release|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Release|Posix.Build.0 = Release|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Release|Windows.ActiveCfg = Release|Any CPU
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85}.Release|Windows.Build.0 = Release|Any CPU
+ 		{A628FEA4-75CC-4039-8823-27258C55D2BF}.Debug|Posix.ActiveCfg = Debug|Any CPU
+ 		{A628FEA4-75CC-4039-8823-27258C55D2BF}.Debug|Posix.Build.0 = Debug|Any CPU
+ 		{A628FEA4-75CC-4039-8823-27258C55D2BF}.Debug|Windows.ActiveCfg = Debug|Any CPU
+@@ -284,7 +274,6 @@ Global
+ 		{47697CDB-27B6-4B05-B4F8-0CBE6F6EDF97} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+ 		{4EACDBBC-BCD7-4765-A57B-3E08331E4749} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+ 		{E2EA47B1-6996-417D-A6EC-28C4F202715C} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+-		{2356C987-F992-4084-9DA2-5DAD1DA35E85} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+ 		{A628FEA4-75CC-4039-8823-27258C55D2BF} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+ 		{AEA9EE9A-19BF-45CB-93D9-52CA443FD313} = {486ADF86-DD89-4E19-B805-9D94F19800D9}
+ 		{04ECC74F-C340-4987-863E-757FB62D27C9} = {57A04B72-8088-4F75-A582-1158CF8291F7}
+diff --git a/test.sh b/test.sh
+index e38f76817..341345707 100755
+--- a/test.sh
++++ b/test.sh
+@@ -4,7 +4,7 @@ TYPE=$2
+ COVERAGE=$3
+ WHERE="Category!=ManualTest"
+ TEST_PATTERN="*Test.dll"
+-FILES=( "Readarr.Api.Test.dll" "Readarr.Automation.Test.dll" "Readarr.Common.Test.dll" "Readarr.Core.Test.dll" "Readarr.Host.Test.dll" "Readarr.Integration.Test.dll" "Readarr.Libraries.Test.dll" "Readarr.Mono.Test.dll" "Readarr.Update.Test.dll" "Readarr.Windows.Test.dll" )
++FILES=( "Readarr.Api.Test.dll" "Readarr.Common.Test.dll" "Readarr.Core.Test.dll" "Readarr.Host.Test.dll" "Readarr.Integration.Test.dll" "Readarr.Libraries.Test.dll" "Readarr.Mono.Test.dll" "Readarr.Update.Test.dll" "Readarr.Windows.Test.dll" )
+ ASSMEBLIES=""
+ TEST_LOG_FILE="TestLog.txt"
+ 
