@@ -113,9 +113,9 @@
       apply-overlays-dtmerge.enable = true;
       fkms-3d.enable = true; # rudolf
       leds = {
-        act.disable = true;
+        # act.disable = true;
         eth.disable = true;
-        pwr.disable = true;
+        # pwr.disable = true;
       };
     };
     deviceTree = {
