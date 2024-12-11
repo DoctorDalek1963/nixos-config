@@ -9,23 +9,33 @@ in {
     services.unbound = {
       enable = true;
 
-      settings.server = {
-        port = cfg.ports.unbound;
+      settings = {
+        # Use unbound-control command to do things at runtime
+        remote-control = {
+          control-enable = true;
 
-        prefetch = true;
-        num-threads = 4;
+          control-interface = ["127.0.0.1" "::1"];
+          control-use-cert = false;
+        };
 
-        so-reuseport = true;
+        server = {
+          port = cfg.ports.unbound;
 
-        msg-cache-slabs = 4;
-        rrset-cache-slabs = 4;
-        infra-cache-slabs = 4;
-        key-cache-slabs = 4;
+          prefetch = true;
+          num-threads = 4;
 
-        rrset-cache-size = "50m";
-        msg-cache-size = "25m";
+          so-reuseport = true;
 
-        outgoing-range = 200;
+          msg-cache-slabs = 4;
+          rrset-cache-slabs = 4;
+          infra-cache-slabs = 4;
+          key-cache-slabs = 4;
+
+          rrset-cache-size = "50m";
+          msg-cache-size = "25m";
+
+          outgoing-range = 200;
+        };
       };
     };
   };
