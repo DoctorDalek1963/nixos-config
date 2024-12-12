@@ -15,5 +15,7 @@ in {
       enable = true;
       inherit package;
     };
+
+    setup.impermanence.keepDirs = ["/var/lib/OpenRGB"];
   };
 }

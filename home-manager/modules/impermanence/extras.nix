@@ -31,6 +31,9 @@ in {
         ".cache/rpcs3"
       ];
     })
+    (mkIf osSetup.openRGB.enable {
+      setup.impermanence.keepDirs = [".config/OpenRGB"];
+    })
     (mkIf osSetup.virtualBox.host.enable {
       setup.impermanence.keepDirs = ["VirtualBox VMs"];
     })
