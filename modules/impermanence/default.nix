@@ -90,6 +90,9 @@ in {
                 mkdir -p /mnt/old_roots
                 timestamp=$(date --date="@$(stat -c %Y /mnt/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
                 mv /mnt/rootfs "/mnt/old_roots/$timestamp"
+
+                # Carrying around old swapfiles really clogs up the drive
+                rm -f "/mnt/old_roots/$timestamp/swapfile"
             fi
 
             # While we're tempted to just delete /rootfs and create a new
