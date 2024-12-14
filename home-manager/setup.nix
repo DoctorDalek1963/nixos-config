@@ -116,6 +116,7 @@ in {
 
         # Just install the packages
         eza = defaultTrue;
+        fastfetch = defaultTrue;
         hyperfine = defaultTrue;
         just = defaultTrue;
         sad = defaultTrue;

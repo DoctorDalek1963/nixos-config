@@ -32,6 +32,7 @@ in {
   home = {
     packages =
       [nvimPkg]
+      ++ lib.optional tt.fastfetch pkgs.fastfetch
       ++ lib.optional tt.hyperfine pkgs.hyperfine
       ++ lib.optional tt.sad pkgs.sad
       ++ lib.optional tt.sd pkgs.sd
