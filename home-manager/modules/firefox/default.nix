@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   cfg = config.setup;
@@ -10,7 +11,7 @@
   extensions = import ./extensions {inherit pkgs lib config;};
 
   firefox-package =
-    if (cfgFf.enableExtensions && cfg.desktopEnvironments.gnome.enable)
+    if (cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable)
     then
       (pkgs.firefox.override {
         nativeMessagingHosts = [pkgs.gnome-browser-connector];

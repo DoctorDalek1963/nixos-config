@@ -2,11 +2,12 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   cfg = config.setup.desktopEnvironments.cinnamon;
 in {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.cinnamon.enable {
     home.activation.insertCinnamonMenuIcon = let
       jsonDir = "${config.xdg.configHome}/cinnamon/spices/menu@cinnamon.org";
       menuIcon =

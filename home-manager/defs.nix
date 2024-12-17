@@ -8,10 +8,7 @@
         light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
-      gnome = {
-        enable = true;
-        theme = "catppuccin-adaptive-macchiato-mauve";
-      };
+      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
     };
 
     terminal.tools.yt-dlp = true;
@@ -75,7 +72,6 @@
           dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
         };
         cinnamon = {
-          enable = true;
           menuIcon = ./files/icons/nix-snowflake-black.svg;
           theme = {
             gtk = "Mint-Y-Orange";
@@ -115,7 +111,6 @@
       desktopEnvironments = {
         background-slideshow-path = "/home/rebecca/Pictures/Wallpaper Slideshow";
         cinnamon = {
-          enable = true;
           menuIcon = ./files/icons/nix-snowflake-black.svg;
           theme = {
             gtk = "Mint-Y-Orange";
@@ -153,10 +148,7 @@
         light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
-      gnome = {
-        enable = true;
-        theme = "catppuccin-adaptive-macchiato-mauve";
-      };
+      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
     };
 
     terminal.tools.yt-dlp = true;
@@ -203,10 +195,7 @@
 
     desktopEnvironments = {
       background = ./files/desktop-backgrounds/virtualbox.jpg;
-      gnome = {
-        enable = true;
-        theme = "catppuccin-adaptive-macchiato-mauve";
-      };
+      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
     };
 
     firefox = {

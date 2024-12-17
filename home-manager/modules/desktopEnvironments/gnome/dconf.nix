@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   inherit (lib.hm.gvariant) mkTuple mkUint32;
@@ -22,7 +23,7 @@
     }
     else {};
 in {
-  config = lib.mkIf cfg.gnome.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     assertions = [
       {
         assertion = cfg.background-slideshow-path == null && cfg.background != null;

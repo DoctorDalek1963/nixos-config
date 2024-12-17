@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   extraExtensions = [
@@ -23,10 +24,8 @@
       uuid = "eepresetselector@ulville.github.io";
       pkg = pkgs.gnomeExtensions.easyeffects-preset-selector;
     };
-
-  gnomeCfg = config.setup.desktopEnvironments.gnome;
 in {
-  config = lib.mkIf (gnomeCfg.enable && gnomeCfg.enableExtensions) {
+  config = lib.mkIf (osConfig.setup.desktopEnvironments.gnome.enable && config.setup.desktopEnvironments.gnome.enableExtensions) {
     home.packages =
       (with pkgs.gnomeExtensions; [
         appindicator

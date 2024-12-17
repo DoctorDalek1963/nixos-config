@@ -3,12 +3,12 @@
 {
   pkgs,
   lib,
-  config,
+  osConfig,
   ...
 }: {
   imports = [./dconf.nix ./extensions ./themes.nix];
 
-  config = lib.mkIf config.setup.desktopEnvironments.gnome.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.gnome-tweaks];
 
     xdg.mimeApps = {

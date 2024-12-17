@@ -1,11 +1,12 @@
 {
   lib,
   config,
+  osConfig,
   ...
 }: let
   cfg = config.setup.desktopEnvironments;
 in {
-  config = lib.mkIf cfg.cinnamon.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.cinnamon.enable {
     assertions = [
       {
         assertion = cfg.background-slideshow-path != null || cfg.background != null;

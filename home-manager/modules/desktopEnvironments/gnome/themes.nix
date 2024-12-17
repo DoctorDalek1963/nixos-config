@@ -2,9 +2,10 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
-  gnomeCfg = config.setup.desktopEnvironments.gnome;
+  cfg = config.setup.desktopEnvironments.gnome;
   inherit (config.setup) isLaptop;
 
   theme =
@@ -107,7 +108,7 @@
         };
       };
     }
-    .${gnomeCfg.theme};
+    .${cfg.theme};
 
   # Create the gsettings command to switch to the theme of the specified mode
   gsettingsSetCommand = mode:
@@ -119,11 +120,11 @@
       ''gsettings set org.gnome.shell.extensions.user-theme name         "${theme.gtk.${mode}}"''
     ];
 in {
-  config = lib.mkIf gnomeCfg.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     home.packages = theme.pkgs;
 
     dconf.settings =
-      if gnomeCfg.enableExtensions
+      if cfg.enableExtensions
       then {
         "org/gnome/shell/extensions/nightthemeswitcher/commands" = {
           enabled = true;

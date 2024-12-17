@@ -1,14 +1,15 @@
 {
   lib,
   config,
+  osConfig,
   ...
 }: let
-  cinnamonCfg = config.setup.desktopEnvironments.cinnamon;
+  cfg = config.setup.desktopEnvironments.cinnamon;
 
-  cursor-theme = cinnamonCfg.theme.cursor;
-  gtk-theme = cinnamonCfg.theme.gtk;
+  cursor-theme = cfg.theme.cursor;
+  gtk-theme = cfg.theme.gtk;
 in {
-  config = lib.mkIf cinnamonCfg.enable {
+  config = lib.mkIf osConfig.setup.desktopEnvironments.cinnamon.enable {
     dconf.settings = {
       "org/cinnamon/desktop/interface" = {
         inherit gtk-theme cursor-theme;

@@ -144,7 +144,6 @@ in {
       };
 
       cinnamon = {
-        enable = defaultFalse;
         menuIcon = mkOption {
           type = types.nullOr types.path;
           default = null;
@@ -159,7 +158,6 @@ in {
         };
       };
       gnome = {
-        enable = defaultFalse;
         enableExtensions = defaultTrue;
         theme = mkOption {
           type = types.enum valid-gnome-themes;
