@@ -34,10 +34,12 @@ in {
           local act = wezterm.action
 
           -- Start in fullscreen
-          wezterm.on("gui-startup", function()
-            local tab, pane, window = wezterm.mux.spawn_window{}
-            window:gui_window():toggle_fullscreen()
-          end)
+          if os.getenv("XDG_CURRENT_DESKTOP") ~= "Hyprland" then
+            wezterm.on("gui-startup", function()
+              local tab, pane, window = wezterm.mux.spawn_window{}
+              window:gui_window():toggle_fullscreen()
+            end)
+          end
 
           return {
             -- FIXME: This line is temporary and we should be able to remove it
