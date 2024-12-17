@@ -76,6 +76,7 @@ in {
         enable = defaultFalse;
         minimal = defaultTrue;
       };
+      hyprland.enable = defaultFalse;
     };
 
     displayManagers = {
