@@ -6,10 +6,6 @@
   ...
 }: let
   cfgTE = config.setup.terminal.emulators;
-
-  wpctl = "${pkgs.wireplumber}/bin/wpctl";
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
-  hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
 in {
   imports = [./clipboard.nix ./waybar.nix ./wofi.nix];
 
@@ -20,7 +16,11 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
 
-      settings = {
+      settings = let
+        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+        playerctl = "${pkgs.playerctl}/bin/playerctl";
+        hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
+      in {
         monitor = ", preferred, auto, auto";
 
         "$mod" = "SUPER";
