@@ -100,7 +100,7 @@ in {
           )
           # Mute button
           ++ [
-            ", Xf86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+            ", Xf86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
             ", Xf86AudioPlay, exec, ${playerctl} play-pause"
             ", Xf86AudioPrev, exec, ${playerctl} previous"
             ", Xf86AudioNext, exec, ${playerctl} next"
@@ -110,8 +110,10 @@ in {
         binde =
           # Volume controls
           [
-            ", Xf86AudioRaiseVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-            ", Xf86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            ", Xf86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
+            ", Xf86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
+            "CTRL, up, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
+            "CTRL, down, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
           ];
       };
 
