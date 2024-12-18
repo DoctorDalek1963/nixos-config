@@ -11,7 +11,7 @@
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
 in {
-  imports = [./clipboard.nix ./wofi.nix];
+  imports = [./clipboard.nix ./waybar.nix ./wofi.nix];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     # Hint Electron apps to use Wayland
