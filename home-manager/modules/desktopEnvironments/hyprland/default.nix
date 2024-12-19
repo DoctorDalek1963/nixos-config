@@ -37,15 +37,59 @@ in {
           kb_layout = "gb";
           kb_options = "caps:escape, compose:menu";
           numlock_by_default = true;
+
+          # Hovering over a window won't focus it until you click
+          follow_mouse = 2;
         };
 
-        general.layout = "dwindle";
+        general = {
+          border_size = 2;
+          gaps_in = 5;
+          gaps_out = 10;
+
+          layout = "dwindle";
+        };
+
+        decoration = {
+          rounding = 7;
+
+          dim_inactive = true;
+          dim_strength = 0.15;
+        };
+
+        gestures = {
+          workspace_swipe = true;
+          workspace_swipe_fingers = 4;
+        };
+
+        misc = {
+          disable_hyprland_logo = true;
+          force_default_wallpaper = 0;
+
+          # If one window is fullscreen and another window is opened,
+          # then disable fullscreen
+          new_window_takes_over_fullscreen = 2;
+        };
+
+        animation = [
+          "windows, 1, 2.5, easeInOutQuart"
+          "workspaces, 1, 2.5, easeInOutQuart"
+        ];
+
+        bezier = [
+          "easeInOutSine, 0.37, 0, 0.63, 1"
+          "easeInOutQuad, 0.45, 0, 0.55, 1"
+          "easeInOutCubic, 0.65, 0, 0.35, 1"
+          "easeInOutQuart, 0.76, 0, 0.24, 1"
+          "easeInOutQuint, 0.83, 0, 0.17, 1"
+        ];
 
         bind =
           # General window management
           [
             "$mod, Q, killactive,"
             "$mod SHIFT, F, fullscreen, 1"
+            "$mod ALT, F, togglefloating,"
           ]
           # Spawn new windows
           ++ [
