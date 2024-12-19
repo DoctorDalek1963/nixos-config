@@ -16,6 +16,11 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
 
+      systemd = {
+        enable = !osConfig.programs.hyprland.withUWSM;
+        variables = ["--all"];
+      };
+
       settings = let
         wpctl = "${pkgs.wireplumber}/bin/wpctl";
         playerctl = "${pkgs.playerctl}/bin/playerctl";
@@ -164,8 +169,6 @@ in {
       };
 
       plugins = [];
-
-      systemd.variables = ["--all"];
     };
   };
 }

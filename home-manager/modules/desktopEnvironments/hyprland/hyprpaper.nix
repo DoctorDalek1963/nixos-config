@@ -7,6 +7,10 @@
   cfg = config.setup.desktopEnvironments;
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
+    wayland.windowManager.hyprland.settings.exec-once = [
+      "${config.services.hyprpaper.package}/bin/hyprpaper"
+    ];
+
     services.hyprpaper = {
       enable = true;
       settings = {
