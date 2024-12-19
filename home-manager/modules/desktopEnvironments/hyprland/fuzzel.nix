@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   osConfig,
@@ -17,6 +18,7 @@
           font = "Hack Nerd Font Mono";
           use-bold = true;
           icons-enabled = true;
+          terminal = "${pkgs.wezterm}/bin/wezterm start --always-new-process";
         };
       };
     };

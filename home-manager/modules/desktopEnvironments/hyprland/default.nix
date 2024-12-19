@@ -33,7 +33,7 @@ in {
         "$terminal" =
           if cfgTE.wezterm
           # FIXME: We should be able to remove "[float; tile]" after the next Wezterm release
-          then "[float; tile] ${pkgs.wezterm}/bin/wezterm start --always-new-process"
+          then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
           else if cfgTE.terminator
           then "${pkgs.terminator}/bin/terminator -x"
           else abort "Please enable a terminal emulator";

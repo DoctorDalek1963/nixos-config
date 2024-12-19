@@ -47,6 +47,11 @@ in {
             -- See https://github.com/NixOS/nixpkgs/issues/336069 and https://github.com/wez/wezterm/issues/5990
             front_end = 'WebGpu',
 
+            -- FIXME: Hyprland and Wezterm really just don't get along, but it
+            -- works fine if we force it to use Xwayland. Hopefully this line can
+            -- be removed with the next version of Wezterm
+            enable_wayland = false,
+
             font = wezterm.font('Hack Nerd Font Mono'),
             font_size = 10,
 
