@@ -66,11 +66,11 @@ in {
           pulseaudio = {
             format = "{icon} {volume}%";
             format-icons = {
-              default = ["\uf026" "\uf027" "\uf028"];
+              default = ["" "" ""];
             };
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
             on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-            format-muted = "\uf00d {volume}%";
+            format-muted = " {volume}%";
           };
         }
       ];
