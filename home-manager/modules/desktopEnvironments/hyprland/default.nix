@@ -7,7 +7,7 @@
 }: let
   cfgTE = config.setup.terminal.emulators;
 in {
-  imports = [./clipboard.nix ./hyprpaper.nix ./waybar.nix ./wofi.nix];
+  imports = [./clipboard.nix ./fuzzel.nix ./hyprpaper.nix ./waybar.nix];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     # Hint Electron apps to use Wayland
