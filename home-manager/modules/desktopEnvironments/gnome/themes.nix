@@ -51,10 +51,7 @@
       };
       catppuccin-adaptive-macchiato-mauve = {
         pkgs = with pkgs; [
-          # For some reason, latteLight actually has dark coloured cursors. It
-          # seems like the template uses the "base" and "text" colours from the
-          # palette and no-one considered that Latte has a light base and dark text
-          catppuccin-cursors.latteLight # Light mode
+          catppuccin-cursors.latteDark # Light mode
           catppuccin-cursors.macchiatoLight # Dark mode
 
           (catppuccin-gtk.override {
@@ -89,7 +86,7 @@
           })
         ];
         cursors = {
-          light = "catppuccin-latte-light-cursors";
+          light = "catppuccin-latte-dark-cursors";
           dark = "catppuccin-macchiato-light-cursors";
         };
         gtk =
