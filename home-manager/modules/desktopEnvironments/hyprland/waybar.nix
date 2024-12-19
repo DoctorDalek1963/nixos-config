@@ -45,6 +45,24 @@ in {
               "custom/power"
             ];
 
+          "custom/clock" = {
+            format = "{}";
+            exec = ''${pkgs.coreutils}/bin/date +"%-I:%M:%S %p, %A %d %B 12,0%y"'';
+            interval = 1;
+          };
+
+          tray = {
+            icon-size = 20;
+            spacing = 10;
+            show-passive-items = true;
+          };
+
+          "custom/current-age" = {
+            format = "{}";
+            exec = "${current-age}/bin/current-age";
+            interval = 1;
+          };
+
           pulseaudio = {
             format = "{icon} {volume}%";
             format-icons = {
@@ -53,18 +71,6 @@ in {
             on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
             on-click-right = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
             format-muted = "\uf00d {volume}%";
-          };
-
-          "custom/clock" = {
-            format = "{}";
-            exec = ''${pkgs.coreutils}/bin/date +"%-I:%M:%S %p, %A %d %B 12,0%y"'';
-            interval = 1;
-          };
-
-          "custom/current-age" = {
-            format = "{}";
-            exec = "${current-age}/bin/current-age";
-            interval = 1;
           };
         }
       ];
