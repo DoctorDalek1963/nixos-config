@@ -101,6 +101,7 @@ in {
             "$mod, T, exec, $terminal"
             # "$mod, E, exec, $fileManager"
             "$mod, F, exec, ${config.programs.firefox.package}/bin/firefox"
+            "$mod, O, exec, ${pkgs.obsidian}/bin/obsidian"
           ]
           # Move focus
           ++ [
