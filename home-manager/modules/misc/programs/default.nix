@@ -6,7 +6,7 @@
 }: let
   mp = config.setup.misc.programs;
 in {
-  imports = [./discord.nix ./feishin.nix ./hexchat.nix ./ms-teams.nix ./xremap.nix];
+  imports = [./discord.nix ./evince.nix ./feishin.nix ./hexchat.nix ./ms-teams.nix ./xremap.nix];
 
   home.packages =
     lib.optional mp.handbrake pkgs.handbrake

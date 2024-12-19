@@ -11,13 +11,6 @@
   config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     home.packages = [pkgs.gnome-tweaks];
 
-    xdg.mimeApps = {
-      enable = true;
-      defaultApplications = {
-        "application/pdf" = ["org.gnome.Evince.desktop"];
-      };
-    };
-
     setup.impermanence.keepDirs = [
       ".local/share/keyrings"
 

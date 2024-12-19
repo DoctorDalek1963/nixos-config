@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  osConfig,
   inputs,
   ...
 }: let
@@ -205,6 +206,9 @@ in {
     misc = {
       programs = {
         discord = defaultFalse;
+        evince = mkOption {
+          default = osConfig.setup.isGraphical;
+        };
         feishin = defaultFalse; # Subsonic music player
         handbrake = defaultFalse; # DVD ripper
         hexchat = defaultFalse;
