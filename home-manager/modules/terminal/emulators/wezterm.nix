@@ -33,15 +33,7 @@ in {
         ''
           local act = wezterm.action
 
-          -- Start in fullscreen
-          if os.getenv("XDG_CURRENT_DESKTOP") ~= "Hyprland" then
-            wezterm.on("gui-startup", function()
-              local tab, pane, window = wezterm.mux.spawn_window{}
-              window:gui_window():toggle_fullscreen()
-            end)
-          end
-
-          return {
+          config = {
             -- FIXME: This line is temporary and we should be able to remove it
             -- when the next release of Wezterm gets merged into stable
             -- See https://github.com/NixOS/nixpkgs/issues/336069 and https://github.com/wez/wezterm/issues/5990
@@ -91,6 +83,18 @@ in {
               fade_out_function = 'Ease',
             },
           }
+
+          -- Start in fullscreen
+          if os.getenv("XDG_CURRENT_DESKTOP") == "Hyprland" then
+            config.window_background_opacity = 0.9
+          else
+            wezterm.on("gui-startup", function()
+              local tab, pane, window = wezterm.mux.spawn_window{}
+              window:gui_window():toggle_fullscreen()
+            end)
+          end
+
+          return config
         '';
     };
   };

@@ -42,7 +42,7 @@ in {
       inherit package;
       settings = {
         color_theme = theme.name;
-        theme_background = true;
+        theme_background = false;
         update_ms = 500;
         proc_tree = true;
       };
