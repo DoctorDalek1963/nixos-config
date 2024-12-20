@@ -5,6 +5,8 @@
   osConfig,
   ...
 }: let
+  cfgTE = config.setup.terminal.emulators;
+
   colors =
     {
       "catppuccin-macchiato-mauve" = {
@@ -36,7 +38,12 @@ in {
           font = "Hack Nerd Font Mono";
           use-bold = true;
           icons-enabled = true;
-          terminal = "${pkgs.wezterm}/bin/wezterm start --always-new-process";
+          terminal =
+            if cfgTE.wezterm
+            then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
+            else if cfgTE.terminator
+            then "${pkgs.terminator}/bin/terminator -x"
+            else abort "Please enable a terminal emulator";
         };
 
         inherit colors;
