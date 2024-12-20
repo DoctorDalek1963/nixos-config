@@ -14,6 +14,6 @@
 
     sharedModules = [../home-manager/setup.nix];
 
-    users = (import ../home-manager/defs.nix {osConfig = config;})."${config.setup.hostname}";
+    users = (import ../home-manager/defs.nix)."${config.setup.hostname}";
   };
 }

@@ -6,7 +6,7 @@
   ...
 }: let
   cfg = config.setup.desktopEnvironments.gnome;
-  inherit (config.setup) isLaptop;
+  inherit (osConfig.setup) isLaptop;
 
   theme =
     {

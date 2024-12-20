@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  osConfig,
   ...
 }: let
   cfg = config.setup.terminal;
@@ -19,7 +20,7 @@
     ."${cfg.theme}";
 
   default-cursor-style =
-    if config.setup.isLaptop
+    if osConfig.setup.isLaptop
     then "SteadyBlock"
     else "BlinkingBlock";
 in {
