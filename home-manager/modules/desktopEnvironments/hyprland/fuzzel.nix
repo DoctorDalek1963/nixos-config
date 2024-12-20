@@ -8,7 +8,7 @@
   colors =
     {
       "catppuccin-macchiato-mauve" = {
-        background = "24274add";
+        background = "24273add";
         text = "cad4f5ff";
         prompt = "b9c0e0ff";
         placeholder = "8088a2ff";
