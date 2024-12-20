@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }: let
   switch-or-activate = pkgs.writeShellScriptBin "switch-or-activate" ''
@@ -88,7 +89,12 @@
 in {
   services.xremap = {
     enable = config.setup.misc.programs.xremap;
-    withGnome = true;
+
+    withGnome = osConfig.setup.desktopEnvironments.gnome.enable;
+
+    # I don't actually use xremap with Hyprland
+    # withHypr = osConfig.setup.desktopEnvironments.hyprland.enable;
+
     config = {
       keymap = lib.lists.flatten (builtins.map ({
         condition,
