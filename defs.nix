@@ -84,8 +84,11 @@
             users = ["dyson"];
           };
 
-          desktopEnvironments.gnome.enable = true;
-          displayManagers.gdm.enable = true;
+          desktopEnvironments.hyprland.enable = true;
+          displayManagers.sddm = {
+            enable = true;
+            theme = "catppuccin-macchiato";
+          };
         };
       }
     ];
