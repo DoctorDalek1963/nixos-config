@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkOption types;
-  inherit (config.consts) valid-gnome-themes valid-terminal-themes valid-shells;
+  inherit (config.consts) valid-gnome-themes valid-hyprland-themes valid-terminal-themes valid-shells;
 
   defaultTrue = mkOption {
     default = true;
@@ -162,6 +162,11 @@ in {
         enableExtensions = defaultTrue;
         theme = mkOption {
           type = types.enum valid-gnome-themes;
+        };
+      };
+      hyprland = {
+        theme = mkOption {
+          type = types.enum valid-hyprland-themes;
         };
       };
     };

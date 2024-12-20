@@ -9,6 +9,7 @@
         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
       gnome.theme = "catppuccin-adaptive-macchiato-mauve";
+      hyprland.theme = "catppuccin-macchiato-mauve";
     };
 
     terminal.tools.yt-dlp = true;
