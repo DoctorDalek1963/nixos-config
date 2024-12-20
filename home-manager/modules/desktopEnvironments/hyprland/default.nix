@@ -6,6 +6,7 @@
   ...
 }: let
   cfgTE = config.setup.terminal.emulators;
+  cfgTT = config.setup.terminal.tools;
 in {
   imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hyprpaper.nix ./waybar.nix];
 
@@ -36,6 +37,11 @@ in {
           else if cfgTE.terminator
           then "${pkgs.terminator}/bin/terminator -x"
           else abort "Please enable a terminal emulator";
+
+        "$fileManager" =
+          if cfgTT.yazi
+          then "$terminal ${config.programs.yazi.package}/bin/yazi"
+          else abort "Please enable a file manager";
 
         input = {
           kb_layout = "gb";
@@ -100,7 +106,7 @@ in {
           # Spawn new windows
           ++ [
             "$mod, T, exec, $terminal"
-            # "$mod, E, exec, $fileManager"
+            "$mod, E, exec, $fileManager"
             "$mod, F, exec, ${config.programs.firefox.package}/bin/firefox"
             "$mod, O, exec, ${pkgs.obsidian}/bin/obsidian"
           ]
