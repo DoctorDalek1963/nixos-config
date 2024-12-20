@@ -94,6 +94,8 @@ in {
             "$mod, Q, killactive,"
             "$mod SHIFT, F, fullscreen, 1"
             "$mod ALT, F, togglefloating,"
+            "$mod, up, fullscreen, 1"
+            "$mod, down, fullscreenstate, 0"
           ]
           # Spawn new windows
           ++ [
@@ -104,10 +106,6 @@ in {
           ]
           # Move focus
           ++ [
-            "$mod, left, movefocus, l"
-            "$mod, down, movefocus, d"
-            "$mod, up, movefocus, u"
-            "$mod, right, movefocus, r"
             "$mod, H, movefocus, l"
             "$mod, J, movefocus, d"
             "$mod, K, movefocus, u"
@@ -115,10 +113,6 @@ in {
           ]
           # Move windows
           ++ [
-            "$mod SHIFT, left, movewindow, l"
-            "$mod SHIFT, down, movewindow, d"
-            "$mod SHIFT, up, movewindow, u"
-            "$mod SHIFT, right, movewindow, r"
             "$mod SHIFT, H, movewindow, l"
             "$mod SHIFT, J, movewindow, d"
             "$mod SHIFT, K, movewindow, u"
