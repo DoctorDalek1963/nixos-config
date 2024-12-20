@@ -46,14 +46,6 @@ in {
     username = mkOption {
       type = types.nonEmptyStr;
     };
-    hostname = mkOption {
-      type = types.nonEmptyStr;
-    };
-    isNixOS = mkOption {
-      type = types.bool;
-    };
-
-    isLaptop = defaultFalse;
 
     # === Shell and terminal stuff
 

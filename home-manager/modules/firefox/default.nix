@@ -108,7 +108,7 @@ in {
             "findbar.highlightAll" = true;
 
             # Set device name
-            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox on ${cfg.hostname}";
+            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox on ${osConfig.setup.hostname}";
 
             # Auto-play DRM-controlled HTML5 content
             "media.eme.enabled" = true;
@@ -186,7 +186,7 @@ in {
             "findbar.highlightAll" = true;
 
             # Set device name
-            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox (basic profile) on ${cfg.hostname}";
+            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox (basic profile) on ${osConfig.setup.hostname}";
 
             "reader.color_scheme" = "light";
           };

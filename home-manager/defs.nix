@@ -1,7 +1,6 @@
-{osConfig}: {
+{
   Alex-NixOS.dyson.setup = {
     username = "dyson";
-    inherit (osConfig.setup) hostname;
 
     desktopEnvironments = {
       background = {
@@ -51,7 +50,7 @@
 
   Bert-NixOS.pi.setup = {
     username = "pi";
-    inherit (osConfig.setup) hostname;
+
     terminal = {
       tools = {
         btop.gpuSupport = false;
@@ -64,7 +63,6 @@
   Sasha-NixOS = {
     dyson.setup = {
       username = "dyson";
-      inherit (osConfig.setup) hostname;
 
       desktopEnvironments = {
         background = {
@@ -106,7 +104,6 @@
 
     rebecca.setup = {
       username = "rebecca";
-      inherit (osConfig.setup) hostname;
 
       desktopEnvironments = {
         background-slideshow-path = "/home/rebecca/Pictures/Wallpaper Slideshow";
@@ -140,8 +137,6 @@
 
   Harold-NixOS.dyson.setup = {
     username = "dyson";
-    inherit (osConfig.setup) hostname;
-    isLaptop = true;
 
     desktopEnvironments = {
       background = {
@@ -191,7 +186,6 @@
 
   VirtualBox-NixOS.dyson.setup = {
     username = "dyson";
-    inherit (osConfig.setup) hostname;
 
     desktopEnvironments = {
       background = ./files/desktop-backgrounds/virtualbox.jpg;
