@@ -86,7 +86,7 @@ in {
       sddm = {
         enable = defaultFalse;
         theme = mkOption {
-          type = types.nullOr types.package;
+          type = types.enum ["catppuccin-macchiato" "sugar-light-nixos-simple-blue"];
         };
       };
     };
