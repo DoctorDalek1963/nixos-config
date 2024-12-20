@@ -28,6 +28,8 @@ in {
                 // up Ctrl+x for other things, but also allows Alt+x, which I
                 // previously never used anyway.
                 bind "Alt x" { ToggleFocusFullscreen; }
+
+                bind "Alt q" { CloseFocus; }
             }
 
             // Even in locked mode, I want basic navigation
@@ -38,6 +40,7 @@ in {
                 bind "Alt k" "Alt Up" { MoveFocus "Up"; }
 
                 bind "Alt n" { NewPane; }
+                bind "Alt q" { CloseFocus; }
 
                 // See "Alt x" in normal block
                 bind "Alt x" { ToggleFocusFullscreen; }
