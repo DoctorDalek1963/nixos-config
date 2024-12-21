@@ -18,14 +18,14 @@
             package = pkgs.catppuccin-gtk.override {
               accents = ["mauve"];
               size =
-                if config.setup.isLaptop
+                if osConfig.setup.isLaptop
                 then "compact"
                 else "standard";
               tweaks = ["rimless"];
               variant = "macchiato"; # Dark mode
             };
             name =
-              if config.setup.isLaptop
+              if osConfig.setup.isLaptop
               then "catppuccin-macchiato-mauve-compact+rimless"
               else "catppuccin-macchiato-mauve-standard+rimless";
           };

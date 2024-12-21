@@ -40,7 +40,7 @@ in {
               "network"
               "power-profiles-daemon"
             ]
-            ++ lib.optional config.setup.isLaptop "battery"
+            ++ lib.optional osConfig.setup.isLaptop "battery"
             ++ [
               "custom/power"
             ];
