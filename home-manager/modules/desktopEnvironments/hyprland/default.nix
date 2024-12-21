@@ -66,7 +66,18 @@ in {
 
         "$fileManager" =
           if cfgTT.yazi
-          then "$terminal ${config.programs.yazi.package}/bin/yazi"
+          then
+            (
+              # I know this is horrible, but I want to pass a custom config
+              # param to Wezterm only when using Wezterm and Yazi together so
+              # that Super+Q closes the terminal immediately, and this is the
+              # easiest way to do that
+              if cfgTE.wezterm
+              then "${pkgs.wezterm}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.yazi.package}/bin/yazi"
+              else if cfgTE.terminator
+              then "${pkgs.terminator}/bin/terminator -x ${config.programs.yazi.package}/bin/yazi"
+              else abort "Please enable a terminal emulator"
+            )
           else abort "Please enable a file manager";
 
         input = {
