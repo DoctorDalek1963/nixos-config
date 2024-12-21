@@ -30,8 +30,11 @@ in {
   imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hypridle.nix ./hyprlock.nix ./hyprpaper.nix ./waybar.nix];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    # Hint Electron apps to use Wayland
-    home.sessionVariables.NIXOS_OZONE_WL = "1";
+    home = {
+      # Hint Electron apps to use Wayland
+      sessionVariables.NIXOS_OZONE_WL = "1";
+      packages = [pkgs.hyprpolkitagent];
+    };
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -46,6 +49,8 @@ in {
         playerctl = "${pkgs.playerctl}/bin/playerctl";
         hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
       in {
+        exec-once = ["systemctl --user start hyprpolkitagent"];
+
         monitor = ", preferred, auto, auto";
 
         "$mod" = "SUPER";
