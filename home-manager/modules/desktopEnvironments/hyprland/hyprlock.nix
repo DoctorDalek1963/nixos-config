@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   osConfig,
@@ -20,7 +21,7 @@
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.bind = [
-      "$mod CTRL, L, exec, ${config.programs.hyprlock.package}/bin/hyprlock"
+      "$mod CTRL, L, exec, ${pkgs.playerctl}/bin/playerctl pause && ${config.programs.hyprlock.package}/bin/hyprlock"
     ];
 
     programs.hyprlock = {
