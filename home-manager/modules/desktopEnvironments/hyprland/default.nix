@@ -27,7 +27,7 @@
     }
     .${config.setup.desktopEnvironments.hyprland.theme};
 in {
-  imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hyprlock.nix ./hyprpaper.nix ./waybar.nix];
+  imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hypridle.nix ./hyprlock.nix ./hyprpaper.nix ./waybar.nix];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     # Hint Electron apps to use Wayland
