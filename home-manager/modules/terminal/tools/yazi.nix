@@ -11,7 +11,23 @@ in {
       enable = true;
       enableBashIntegration = cfg.shells.bash;
 
+      keymap.manager.prepend_keymap = [
+        {
+          on = ["g" "r"];
+          run = "cd ~/repos";
+          desc = "Go to the repos directory";
+        }
+        {
+          on = ["g" "n"];
+          run = "cd /etc/nixos";
+          desc = "Go to the NixOS directory";
+        }
+      ];
+
       settings = lib.mkMerge [
+        (lib.mkIf true {
+          manager.show_hidden = true;
+        })
         (lib.mkIf config.setup.misc.programs.vlc {
           open.prepend_rules = [
             {
