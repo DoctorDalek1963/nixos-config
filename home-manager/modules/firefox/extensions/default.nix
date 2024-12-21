@@ -31,6 +31,7 @@
       darkreader
       dashlane # Unfree
       foxyproxy-standard
+      vimium
       wayback-machine
       whowrotethat
       zotero-connector
