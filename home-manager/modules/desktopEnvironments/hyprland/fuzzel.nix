@@ -30,6 +30,8 @@ in {
       bind = ["$mod, R, exec, ${config.programs.fuzzel.package}/bin/fuzzel"];
     };
 
+    setup.impermanence.keepFiles = [".cache/fuzzel"];
+
     programs.fuzzel = {
       enable = true;
 
