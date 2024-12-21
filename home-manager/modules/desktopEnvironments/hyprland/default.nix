@@ -203,8 +203,6 @@ in {
             "CTRL, down, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
           ];
       };
-
-      plugins = [];
     };
   };
 }
