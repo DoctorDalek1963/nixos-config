@@ -51,6 +51,8 @@ in {
       in {
         exec-once = ["systemctl --user start hyprpolkitagent"];
 
+        env = ["NIXOS_OZONE_WL,1"];
+
         monitor = ", preferred, auto, auto";
 
         "$mod" = "SUPER";
