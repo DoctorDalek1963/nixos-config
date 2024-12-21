@@ -126,9 +126,10 @@ in {
           # General window management
           [
             "$mod, Q, killactive,"
-            "$mod SHIFT, F, fullscreen, 1"
             "$mod ALT, F, togglefloating,"
+            ", F11, fullscreen, 2"
             "$mod, up, fullscreen, 1"
+            "$mod SHIFT, up, fullscreen, 2"
             "$mod, down, fullscreenstate, 0"
           ]
           # Spawn new windows
