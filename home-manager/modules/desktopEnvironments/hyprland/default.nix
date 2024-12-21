@@ -7,6 +7,15 @@
 }: let
   cfgTE = config.setup.terminal.emulators;
   cfgTT = config.setup.terminal.tools;
+
+  theme-colors =
+    {
+      "catppuccin-macchiato-mauve" = {
+        "col.active_border" = "rgba(c6a0f6ff) rgba(b7bdf8ff) 45deg";
+        "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
+      };
+    }
+    .${config.setup.desktopEnvironments.hyprland.theme};
 in {
   imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hyprlock.nix ./hyprpaper.nix ./waybar.nix];
 
@@ -53,11 +62,14 @@ in {
         };
 
         general = {
-          border_size = 2;
           gaps_in = 5;
           gaps_out = 10;
 
           layout = "dwindle";
+
+          border_size = 2;
+          resize_on_border = true;
+          inherit (theme-colors) "col.active_border" "col.inactive_border";
         };
 
         decoration = {
