@@ -43,6 +43,11 @@ in {
           color = theme.fallback_color;
         };
 
+        auth = {
+          "pam:enabled" = true;
+          "pam:module" = "hyprlock";
+        };
+
         input-field = {
           size = "300, 50";
           position = "0, 0";
@@ -53,6 +58,7 @@ in {
           fade_on_empty = true;
 
           placeholder_text = "";
+          fail_text = "Incorrect password ($ATTEMPTS fails)";
 
           inherit (theme) font_color inner_color outer_color fail_color;
         };
