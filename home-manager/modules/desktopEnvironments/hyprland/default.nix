@@ -5,13 +5,23 @@
   osConfig,
   ...
 }: let
-  cfgTE = config.setup.terminal.emulators;
-  cfgTT = config.setup.terminal.tools;
+  cfg = config.setup;
+  cfgTE = cfg.terminal.emulators;
+  cfgTT = cfg.terminal.tools;
+  cfgB = cfg.desktopEnvironments.hyprland.borderStyle;
 
   theme-colors =
     {
-      "catppuccin-macchiato-mauve" = {
-        "col.active_border" = "rgba(c6a0f6ff) rgba(b7bdf8ff) 45deg";
+      "catppuccin-macchiato-mauve" = let
+        active_colours =
+          if cfgB.rainbow
+          then ["ed8796" "f5a97f" "eed49f" "a6da95" "8aadf4" "c6a0f6"] # Red, Peach, Yellow, Green, Blue, Mauve
+          else ["c6a0f6" "b7bdf8"]; # Mauve to Lavender
+      in {
+        "col.active_border" = "${
+          lib.concatStringsSep " "
+          (builtins.map (colour: "rgba(${colour}ff)") active_colours)
+        } 45deg";
         "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
       };
     }
@@ -93,12 +103,18 @@ in {
           new_window_takes_over_fullscreen = 2;
         };
 
-        animation = [
-          "windows, 1, 2.5, easeInOutQuart"
-          "workspaces, 1, 2.5, easeInOutQuart"
-        ];
+        animation =
+          [
+            "windows, 1, 2.5, easeInOutQuart"
+            "workspaces, 1, 2.5, easeInOutQuart"
+          ]
+          ++ (
+            lib.optional cfgB.animateGradientAngle.enable
+            "borderangle, 1, ${toString (10 * cfgB.animateGradientAngle.speedSecs)}, linear, loop"
+          );
 
         bezier = [
+          "linear, 0, 0, 1, 1"
           "easeInOutSine, 0.37, 0, 0.63, 1"
           "easeInOutQuad, 0.45, 0, 0.55, 1"
           "easeInOutCubic, 0.65, 0, 0.35, 1"

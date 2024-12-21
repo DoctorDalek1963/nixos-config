@@ -160,6 +160,21 @@ in {
         theme = mkOption {
           type = types.enum valid-hyprland-themes;
         };
+        borderStyle = {
+          rainbow = defaultTrue;
+          animateGradientAngle = {
+            enable = mkOption {
+              type = types.bool;
+              default =
+                config.setup.desktopEnvironments.hyprland.borderStyle.rainbow
+                && !osConfig.setup.isLaptop;
+            };
+            speedSecs = mkOption {
+              type = types.int;
+              default = 10;
+            };
+          };
+        };
       };
     };
 
