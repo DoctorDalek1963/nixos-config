@@ -202,6 +202,12 @@ in {
             "CTRL, up, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
             "CTRL, down, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
           ];
+
+        # Mouse binds
+        bindm = [
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
       };
     };
   };
