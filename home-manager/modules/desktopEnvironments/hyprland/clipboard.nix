@@ -17,7 +17,7 @@
         "float, class:(clipse)"
         "size 622 652, class:(clipse)"
       ];
-      bind = ["SUPER, V, exec, $launchPrefix ${config.programs.wezterm.package}/bin/wezterm start --always-new-process --class clipse ${clipse}"];
+      bind = ["SUPER, V, exec, $launchPrefix ${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process --class clipse ${clipse}"];
     };
   };
 }
