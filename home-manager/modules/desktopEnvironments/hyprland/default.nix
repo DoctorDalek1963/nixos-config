@@ -57,6 +57,11 @@ in {
 
         "$mod" = "SUPER";
 
+        "$launchPrefix" =
+          if osConfig.programs.hyprland.withUWSM
+          then "${osConfig.programs.uwsm.package}/bin/uwsm app --"
+          else "";
+
         "$terminal" =
           if cfgTE.wezterm
           then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
@@ -152,10 +157,10 @@ in {
           ]
           # Spawn new windows
           ++ [
-            "$mod, T, exec, $terminal"
-            "$mod, E, exec, $fileManager"
-            "$mod, F, exec, ${config.programs.firefox.package}/bin/firefox"
-            "$mod, O, exec, ${pkgs.obsidian}/bin/obsidian"
+            "$mod, T, exec, $launchPrefix $terminal"
+            "$mod, E, exec, $launchPrefix $fileManager"
+            "$mod, F, exec, $launchPrefix ${config.programs.firefox.package}/bin/firefox"
+            "$mod, O, exec, $launchPrefix ${pkgs.obsidian}/bin/obsidian"
           ]
           # Move focus
           ++ [

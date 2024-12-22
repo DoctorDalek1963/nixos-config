@@ -27,7 +27,7 @@
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
-      bind = ["$mod, R, exec, ${config.programs.fuzzel.package}/bin/fuzzel"];
+      bind = ["$mod, R, exec, $launchPrefix ${config.programs.fuzzel.package}/bin/fuzzel"];
     };
 
     setup.impermanence.keepFiles = [".cache/fuzzel"];
@@ -36,7 +36,9 @@ in {
       enable = true;
 
       settings = {
-        main = {
+        main = let
+          hyprlandLaunchPrefix = config.wayland.windowManager.hyprland.settings."$launchPrefix";
+        in {
           font = "Hack Nerd Font Mono";
           use-bold = true;
           icons-enabled = true;
@@ -46,6 +48,8 @@ in {
             else if cfgTE.terminator
             then "${pkgs.terminator}/bin/terminator -x"
             else abort "Please enable a terminal emulator";
+
+          launch-prefix = lib.mkIf (hyprlandLaunchPrefix != "") hyprlandLaunchPrefix;
         };
 
         inherit colors;
