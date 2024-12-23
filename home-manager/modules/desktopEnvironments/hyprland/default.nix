@@ -27,7 +27,15 @@
     }
     .${config.setup.desktopEnvironments.hyprland.theme};
 in {
-  imports = [./clipboard.nix ./fuzzel.nix ./gtk.nix ./hypridle.nix ./hyprlock.nix ./hyprpaper.nix ./waybar.nix];
+  imports = [
+    ./clipboard.nix
+    ./fuzzel.nix
+    ./gtk.nix
+    ./hypridle.nix
+    ./hyprlock.nix
+    ./hyprpanel.nix
+    ./hyprpaper.nix
+  ];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home = {
