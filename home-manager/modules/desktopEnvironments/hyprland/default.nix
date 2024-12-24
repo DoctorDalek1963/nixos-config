@@ -227,7 +227,14 @@ in {
             ", Xf86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
             "CTRL, up, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
             "CTRL, down, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
-          ];
+          ]
+          # Brightness controls
+          ++ (let
+            brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
+          in [
+            ", XF86MonBrightnessUp, exec, ${brightnessctl} set +5%"
+            ", XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
+          ]);
 
         # Mouse binds
         bindm = [
