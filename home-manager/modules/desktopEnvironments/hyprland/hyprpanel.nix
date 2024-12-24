@@ -52,6 +52,8 @@ in {
       "bar.notifications.hideCountWhenZero" = true;
       "notifications.position" = "top";
 
+      "bar.network.showWifiInfo" = true;
+      "bar.network.truncation" = false;
       "bar.launcher.autoDetectIcon" = false;
       "bar.launcher.icon" = " "; # "\uf313\u2009"
 
