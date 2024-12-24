@@ -8,7 +8,15 @@
   ...
 }: let
   cfgTE = config.setup.terminal.emulators;
-  # TODO: Define colour schemes for panel
+
+  colours =
+    {
+      "catppuccin-macchiato-mauve" = {
+        bar-background = "#181826"; # Crust
+        button-background = "#363a4f"; # Surface 0
+      };
+    }
+    .${config.setup.desktopEnvironments.hyprland.theme};
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home.packages = [inputs.hyprpanel.packages.${system}.hyprpanel];
@@ -49,17 +57,21 @@ in {
 
       "theme.font.size" = "1rem";
       "theme.bar.floating" = true;
-      "theme.bar.transparent" = true;
+      "theme.bar.transparent" = false;
+      "theme.bar.buttons.enableBorders" = false;
 
       "theme.bar.outer_spacing" = "0.3em";
       "theme.bar.margin_top" = "0.2em";
       "theme.bar.margin_sides" = "0.2em";
       "theme.bar.margin_bottom" = "-0.2em";
       "theme.bar.dropdownGap" = "2.5em";
-      "theme.bar.buttons.enableBorders" = true;
       "theme.bar.buttons.padding_x" = "0.5rem";
       "theme.bar.buttons.padding_y" = "0.3rem";
+      "theme.bar.buttons.y_margins" = "0.4em";
       "theme.bar.buttons.spacing" = "0.3em";
+
+      "theme.bar.background" = colours.bar-background;
+      "theme.bar.buttons.background" = colours.button-background;
     };
   };
 }
