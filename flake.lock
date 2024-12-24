@@ -1118,11 +1118,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1734917903,
-        "narHash": "sha256-Ufwzx9HK9YtZKm8e2PsaA9cPlIYMf7bOPdJ+GOsBPXs=",
+        "lastModified": 1734999520,
+        "narHash": "sha256-uEhP4B8fzWqKLglWV2LCy2L09kGfufNdVYdSkl5OG8c=",
         "owner": "DoctorDalek1963",
         "repo": "hyprpanel",
-        "rev": "ba37b6ae756c2cbabff36b1b8cdb0bd28d75bdf3",
+        "rev": "ba64248b1214c60f263834e3d1944b31adc391fb",
         "type": "github"
       },
       "original": {

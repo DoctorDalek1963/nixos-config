@@ -8,15 +8,14 @@
   ...
 }: let
   cfgTE = config.setup.terminal.emulators;
-  hyprpanel = inputs.hyprpanel.packages.${system}.default;
   # TODO: Define colour schemes for panel
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    home.packages = [hyprpanel];
-    wayland.windowManager.hyprland.settings.exec-once = ["${hyprpanel}/bin/hyprpanel"];
+    home.packages = [inputs.hyprpanel.packages.${system}.hyprpanel];
+    wayland.windowManager.hyprland.settings.exec-once = ["hyprpanel"];
 
     xdg.configFile."hyprpanel/config.json".source = pkgs.writers.writeJSON "hyprpanel-config.json" {
-      # "hyprpanel.restartCommand" = "${hyprpanel} -q; ${hyprpanel}";
+      "hyprpanel.restartCommand" = "hyprpanel -q; hyprpanel";
       "terminal" =
         if cfgTE.wezterm
         then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
