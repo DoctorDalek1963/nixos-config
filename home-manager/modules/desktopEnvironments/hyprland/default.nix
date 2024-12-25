@@ -10,6 +10,33 @@
   cfgTT = cfg.terminal.tools;
   cfgB = cfg.desktopEnvironments.hyprland.borderStyle;
 
+  hypr-gamemode-sh = pkgs.writeShellApplication {
+    name = "hypr-gamemode.sh";
+
+    runtimeInputs = [
+      pkgs.gawk
+      config.wayland.windowManager.hyprland.package
+    ];
+
+    text = ''
+      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1 {print $2}')
+      if [ "$HYPRGAMEMODE" = 1 ] ; then
+          hyprctl --batch "\
+              keyword animations:enabled 0;\
+              keyword decoration:shadow:enabled 0;\
+              keyword decoration:blur:enabled 0;\
+              keyword general:gaps_in 0;\
+              keyword general:gaps_out 0;\
+              keyword general:border_size 1;\
+              keyword decoration:rounding 0;\
+              keyword decoration:dim_inactive 0;\
+              keyword general:allow_tearing 1"
+      else
+          hyprctl reload
+      fi
+    '';
+  };
+
   theme-colors =
     {
       "catppuccin-macchiato-mauve" = let
@@ -164,6 +191,7 @@ in {
             "$mod, up, fullscreen, 1"
             "$mod SHIFT, up, fullscreen, 2"
             "$mod, down, fullscreenstate, 0"
+            "$mod, F12, exec, ${hypr-gamemode-sh}/bin/hypr-gamemode.sh"
           ]
           # Spawn new windows
           ++ [
