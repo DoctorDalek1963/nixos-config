@@ -54,6 +54,9 @@ in {
       })
       cfg.automounts);
 
-    setup.terminal.shellAliases.rclone = ''${pkgs.rclone}/bin/rclone --progress --bwlimit="09:00,256 23:00,off"'';
+    setup = {
+      terminal.shellAliases.rclone = ''${pkgs.rclone}/bin/rclone --progress --bwlimit="09:00,256 23:00,off"'';
+      impermanence.keepDirs = [".config/rclone"];
+    };
   };
 }
