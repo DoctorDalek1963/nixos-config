@@ -57,8 +57,12 @@ in {
       "bar.launcher.autoDetectIcon" = false;
       "bar.launcher.icon" = " "; # "\uf313\u2009"
 
-      "theme.font.size" = "1rem";
-      "theme.bar.floating" = true;
+      "theme.font.size" =
+        if osConfig.setup.isLaptop
+        then "1rem"
+        else "0.85rem";
+      "theme.font.weight" = 600;
+      "theme.bar.floating" = false;
       "theme.bar.transparent" = false;
       "theme.bar.buttons.enableBorders" = false;
 
