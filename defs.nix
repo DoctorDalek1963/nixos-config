@@ -84,8 +84,11 @@
             users = ["dyson"];
           };
 
-          desktopEnvironments.gnome.enable = true;
-          displayManagers.gdm.enable = true;
+          desktopEnvironments.hyprland.enable = true;
+          displayManagers.sddm = {
+            enable = true;
+            theme = "catppuccin-macchiato";
+          };
         };
       }
     ];
@@ -209,8 +212,11 @@
             users = ["dyson"];
           };
 
-          desktopEnvironments.gnome.enable = true;
-          displayManagers.gdm.enable = true;
+          desktopEnvironments.hyprland.enable = true;
+          displayManagers.sddm = {
+            enable = true;
+            theme = "catppuccin-macchiato";
+          };
         };
       }
     ];
@@ -247,9 +253,7 @@
           desktopEnvironments.cinnamon.enable = true;
           displayManagers.sddm = {
             enable = true;
-            theme = (nixpkgs.legacyPackages."x86_64-linux".callPackage
-              ./modules/displayManagers/sddm/themes/sugar-light.nix {})
-            {background = ./home-manager/files/desktop-backgrounds/nixos-simple-blue.png;};
+            theme = "sugar-light-nixos-simple-blue";
           };
         };
       }

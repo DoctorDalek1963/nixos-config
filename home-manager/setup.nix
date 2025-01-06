@@ -1,11 +1,12 @@
 {
   lib,
   config,
+  osConfig,
   inputs,
   ...
 }: let
   inherit (lib) mkOption types;
-  inherit (config.consts) valid-gnome-themes valid-terminal-themes valid-shells;
+  inherit (config.consts) valid-gnome-themes valid-hyprland-themes valid-terminal-themes valid-shells;
 
   defaultTrue = mkOption {
     default = true;
@@ -155,6 +156,26 @@ in {
           type = types.enum valid-gnome-themes;
         };
       };
+      hyprland = {
+        theme = mkOption {
+          type = types.enum valid-hyprland-themes;
+        };
+        borderStyle = {
+          rainbow = defaultTrue;
+          animateGradientAngle = {
+            enable = mkOption {
+              type = types.bool;
+              default =
+                config.setup.desktopEnvironments.hyprland.borderStyle.rainbow
+                && !osConfig.setup.isLaptop;
+            };
+            speedSecs = mkOption {
+              type = types.int;
+              default = 10;
+            };
+          };
+        };
+      };
     };
 
     # === Firefox
@@ -197,6 +218,9 @@ in {
     misc = {
       programs = {
         discord = defaultFalse;
+        evince = mkOption {
+          default = osConfig.setup.isGraphical;
+        };
         feishin = defaultFalse; # Subsonic music player
         handbrake = defaultFalse; # DVD ripper
         hexchat = defaultFalse;
