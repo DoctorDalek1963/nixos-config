@@ -9,8 +9,18 @@
     name = "nvim-extend";
     runtimeInputs = [pkgs.mktemp pkgs.nix];
     text = ''
-      TMPDIR=$(mktemp -d)
-      cat > "$TMPDIR/flake.nix" << EOF
+      if [ $# -lt 1 ]; then
+        echo "Usage: nvim-extend '<config options>'"
+        echo
+        echo "Examples:   (note the ; at the end)"
+        echo "  nvim-extend 'setup.lang.c_cpp = true;'"
+        echo "  nvim-extend 'setup.lang = {dockerfile = true; webDev = true;};'"
+        echo "  alias jv=\$(nvim-extend 'setup.lang.jvm = true;')"
+        exit 1
+      fi
+
+      tmpdir=$(mktemp -d)
+      cat > "$tmpdir/flake.nix" << EOF
       {
         outputs = {nixvim-config, ...}: let
           pkgs = nixvim-config.inputs.nixpkgs.legacyPackages.${system};
@@ -22,8 +32,19 @@
         };
       }
       EOF
-      echo "$(nix build "$TMPDIR" --quiet --no-link --print-out-paths --inputs-from /etc/nixos 2> /dev/null)"/bin/nvim
-      rm -rf "$TMPDIR"
+
+      set +e
+      store_path="$(nix build "$tmpdir" --quiet --no-link --print-out-paths --inputs-from /etc/nixos 2> /dev/null)"
+      set -e
+
+      rm -rf "$tmpdir"
+
+      if [ -n "$store_path" ]; then
+        echo "$store_path/bin/nvim"
+      else
+        echo "ERROR: nixvim extension failed to build"
+        exit 1
+      fi
     '';
   };
 in {
