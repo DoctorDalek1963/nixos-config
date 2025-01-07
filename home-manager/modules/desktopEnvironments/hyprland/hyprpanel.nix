@@ -103,6 +103,9 @@
     "theme.bar.buttons.bluetooth.text" = colours.teal;
     "theme.bar.buttons.bluetooth.icon" = colours.teal;
     "theme.bar.buttons.bluetooth.border" = colours.teal;
+
+    "theme.bar.buttons.systray.background" = colours.button-background;
+    "theme.bar.menus.menu.systray.dropdownmenu.background" = colours.button-background;
   };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
