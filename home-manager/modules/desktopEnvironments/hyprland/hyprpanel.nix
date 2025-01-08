@@ -89,6 +89,11 @@
     "theme.bar.buttons.notifications.icon" = colours.light-blue;
     "theme.bar.buttons.notifications.border" = colours.light-blue;
 
+    "theme.bar.buttons.battery.background" = colours.button-background;
+    "theme.bar.buttons.battery.text" = colours.yellow;
+    "theme.bar.buttons.battery.icon" = colours.yellow;
+    "theme.bar.buttons.battery.border" = colours.yellow;
+
     "theme.bar.buttons.network.background" = colours.button-background;
     "theme.bar.buttons.network.text" = colours.purple;
     "theme.bar.buttons.network.icon" = colours.purple;
@@ -98,11 +103,6 @@
     "theme.bar.buttons.bluetooth.text" = colours.teal;
     "theme.bar.buttons.bluetooth.icon" = colours.teal;
     "theme.bar.buttons.bluetooth.border" = colours.teal;
-
-    "theme.bar.buttons.battery.background" = colours.button-background;
-    "theme.bar.buttons.battery.text" = colours.yellow;
-    "theme.bar.buttons.battery.icon" = colours.yellow;
-    "theme.bar.buttons.battery.border" = colours.yellow;
   };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
@@ -123,9 +123,9 @@ in {
             left = ["workspaces" "windowtitle"];
             middle = ["clock" "notifications"];
             right =
-              ["systray" "volume" "network" "bluetooth"]
+              ["systray" "volume"]
               ++ (lib.optional osConfig.setup.isLaptop "battery")
-              ++ ["dashboard"];
+              ++ ["network" "bluetooth" "dashboard"];
           };
         };
 
