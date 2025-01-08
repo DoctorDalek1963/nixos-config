@@ -206,6 +206,8 @@ in {
             "$mod, J, movefocus, d"
             "$mod, K, movefocus, u"
             "$mod, L, movefocus, r"
+            "$mod, left, movefocus, l"
+            "$mod, right, movefocus, r"
           ]
           # Move windows
           ++ [
