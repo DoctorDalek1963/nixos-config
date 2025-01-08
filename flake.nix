@@ -98,20 +98,18 @@
         pkgs = nixpkgs.legacyPackages.${system};
       in {
         devShells.default = pkgs.mkShell {
-          nativeBuildInputs =
-            (with pkgs; [
-              # Secrets
-              age
-              sops
+          nativeBuildInputs = with pkgs; [
+            # Secrets
+            age
+            sops
 
-              # Build ISO with justfile
-              just
-              fd
-              nix-output-monitor
-              jq
-              cachix
-            ])
-            ++ [inputs.disko.packages."${system}".disko];
+            # Build ISO with justfile
+            just
+            fd
+            nix-output-monitor
+            jq
+            cachix
+          ];
           shellHook = ''
             ${config.pre-commit.installationScript}
           '';
