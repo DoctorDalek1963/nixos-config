@@ -13,7 +13,7 @@
   terminal-emulator =
     if cfgTE.wezterm
     then {
-      bin = "${pkgs.wezterm}/bin/wezterm";
+      bin = "${config.programs.wezterm.package}/bin/wezterm";
       exec-arg = "start";
     }
     else if cfgTE.terminator

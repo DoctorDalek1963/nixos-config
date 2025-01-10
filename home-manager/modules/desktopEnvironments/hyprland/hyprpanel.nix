@@ -116,7 +116,7 @@ in {
         "hyprpanel.restartCommand" = "hyprpanel -q; hyprpanel";
         "terminal" =
           if cfgTE.wezterm
-          then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
+          then "${config.programs.wezterm.package}/bin/wezterm start --always-new-process"
           else if cfgTE.terminator
           then "${pkgs.terminator}/bin/terminator -x"
           else abort "Please enable a terminal emulator";

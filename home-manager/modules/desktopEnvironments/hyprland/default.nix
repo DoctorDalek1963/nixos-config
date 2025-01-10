@@ -99,7 +99,7 @@ in {
 
         "$terminal" =
           if cfgTE.wezterm
-          then "${pkgs.wezterm}/bin/wezterm start --always-new-process"
+          then "${config.programs.wezterm.package}/bin/wezterm start --always-new-process"
           else if cfgTE.terminator
           then "${pkgs.terminator}/bin/terminator -x"
           else abort "Please enable a terminal emulator";
@@ -113,7 +113,7 @@ in {
               # that Super+Q closes the terminal immediately, and this is the
               # easiest way to do that
               if cfgTE.wezterm
-              then "${pkgs.wezterm}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.yazi.package}/bin/yazi"
+              then "${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.yazi.package}/bin/yazi"
               else if cfgTE.terminator
               then "${pkgs.terminator}/bin/terminator -x ${config.programs.yazi.package}/bin/yazi"
               else abort "Please enable a terminal emulator"
