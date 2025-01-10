@@ -3,7 +3,7 @@
   lib,
   config,
   inputs,
-  # system,
+  system,
   ...
 }: let
   cfg = config.setup;
@@ -32,9 +32,9 @@ in {
   nixpkgs = {
     overlays = [
       # Access unstable packages through pkgs.unstable
-      # (_final: _prev: {
-      #   unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      # })
+      (_final: _prev: {
+        unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      })
       inputs.nur.overlays.default
     ];
 
