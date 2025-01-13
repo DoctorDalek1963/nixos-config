@@ -57,6 +57,7 @@ in {
             "browser.startup.page" = 3; # Restore tabs when opening
             "browser.tabs.inTitlebar" = 1;
             "browser.tabs.warnOnClose" = true;
+            "browser.fullscreen.autohide" = false; # Don't hide tabs in fullscreen
             "browser.toolbars.bookmarks.visibility" = "never"; # Disable the bookmarks bar
 
             # Enable translations
