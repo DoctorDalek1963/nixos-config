@@ -11,5 +11,7 @@
     programs.gamemode.enable = true;
 
     environment.systemPackages = with pkgs; [ludusavi mangohud];
+
+    systemd.extraConfig = "DefaultLimitNOFILE=${toString (2048 * 64)}:${toString (2048 * 256)}";
   };
 }
