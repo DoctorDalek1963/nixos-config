@@ -27,6 +27,15 @@ in {
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
+
+    registry.nixpkgs-unstable = {
+      from = {
+        type = "indirect";
+        id = "nixpkgs-unstable";
+      };
+      flake = inputs.nixpkgs-unstable;
+      exact = true;
+    };
   };
 
   nixpkgs = {
