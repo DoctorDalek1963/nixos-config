@@ -28,10 +28,10 @@ in {
       options = "--delete-older-than 14d";
     };
 
-    registry.nixpkgs-unstable = {
+    registry.unstable = {
       from = {
         type = "indirect";
-        id = "nixpkgs-unstable";
+        id = "unstable";
       };
       flake = inputs.nixpkgs-unstable;
       exact = true;
