@@ -192,6 +192,8 @@ in {
             ", F11, fullscreen, 2"
             "$mod, up, fullscreen, 1"
             "$mod SHIFT, up, fullscreen, 2"
+            "$mod, X, fullscreen, 1"
+            "$mod SHIFT, X, fullscreen, 2"
             "$mod, down, fullscreenstate, 0"
             "$mod, F12, exec, ${hypr-gamemode-sh}/bin/hypr-gamemode.sh"
           ]
