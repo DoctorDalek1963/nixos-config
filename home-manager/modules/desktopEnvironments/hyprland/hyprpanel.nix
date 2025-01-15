@@ -135,6 +135,7 @@ in {
         "bar.workspaces.show_numbered" = true;
         "bar.workspaces.numbered_active_indicator" = "highlight";
         "bar.workspaces.workspaces" = 1;
+        "bar.workspaces.ignored" = -99; # Special workspace
 
         "bar.clock.format" = "%-I:%M:%S %p, %A %-d %B 12,0%y";
         "menus.clock.weather.enabled" = false;

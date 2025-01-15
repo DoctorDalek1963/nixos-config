@@ -182,6 +182,8 @@ in {
           "easeInOutQuint, 0.83, 0, 0.17, 1"
         ];
 
+        windowrulev2 = ["float, onworkspace:s[1]"];
+
         bind =
           # General window management
           [
@@ -241,6 +243,11 @@ in {
               )
               10)
           )
+          # Move focus or window to special workspace
+          ++ [
+            "$mod, grave, togglespecialworkspace"
+            "$mod SHIFT, grave, movetoworkspace, special"
+          ]
           # Mute button
           ++ [
             ", Xf86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
