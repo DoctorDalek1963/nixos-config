@@ -182,7 +182,7 @@ in {
           "easeInOutQuint, 0.83, 0, 0.17, 1"
         ];
 
-        windowrulev2 = ["float, onworkspace:s[1]"];
+        windowrulev2 = ["float, size <60% <60%, onworkspace:s[1]"];
 
         bind =
           # General window management
