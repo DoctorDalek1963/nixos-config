@@ -61,7 +61,7 @@ in {
           ble-face filename_block=fg=yellow,bg=black,underline
           ble-face filename_character=fg=white,bg=black,underline
           ble-face filename_directory=fg=navy,underline
-          ble-face filename_directory_sticky=fg=white,bg=navy,underline
+          ble-face filename_directory_sticky=fg=black,bg=navy,underline
           ble-face filename_executable=fg=green,underline
           ble-face filename_link=fg=cyan,underline
           ble-face filename_ls_colors=underline
