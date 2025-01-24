@@ -200,6 +200,7 @@ in {
           # Spawn new windows
           ++ [
             "$mod, T, exec, $launchPrefix $terminal"
+            "$mod SHIFT, T, exec, [float; size 50% 50%] $launchPrefix $terminal"
             "$mod, E, exec, $launchPrefix $fileManager"
             "$mod, F, exec, $launchPrefix ${config.programs.firefox.package}/bin/firefox"
             "$mod, O, exec, $launchPrefix ${pkgs.obsidian}/bin/obsidian"
