@@ -203,19 +203,27 @@ in {
             fi
 
             if [ $EXTENDED_PS1 -ne 0 ]; then
-                # Add git information and $ to prompt
-                GIT_PS1_SHOWDIRTYSTATE=true
-                GIT_PS1_SHOWSTASHSTATE=true
-                GIT_PS1_SHOWUNTRACKEDFILES=true
-                GIT_PS1_SHOWUPSTREAM="auto"
-                GIT_PS1_HIDE_IF_PWD_IGNORED=true
-
-                . ${git-prompt-repo}/contrib/completion/git-prompt.sh
-
-                if [ "$color_prompt" = yes ]; then
-                    PS1="$PS1\[\033[01;31m\]$(__git_ps1 " [%s]")\[\033[00m\]"
+                if [[ "$PWD" == *nixpkgs* ]]; then
+                    if [ "$color_prompt" = yes ]; then
+                        PS1="$PS1 \[\033[01;31m\][git-prompt disabled]\[\033[00m\]"
+                    else
+                        PS1="$PS1 [git-prompt disabled]"
+                    fi
                 else
-                    PS1="$PS1$(__git_ps1 " [%s]")"
+                    # Add git information to prompt
+                    GIT_PS1_SHOWDIRTYSTATE=true
+                    GIT_PS1_SHOWSTASHSTATE=true
+                    GIT_PS1_SHOWUNTRACKEDFILES=true
+                    GIT_PS1_SHOWUPSTREAM="auto"
+                    GIT_PS1_HIDE_IF_PWD_IGNORED=true
+
+                    . ${git-prompt-repo}/contrib/completion/git-prompt.sh
+
+                    if [ "$color_prompt" = yes ]; then
+                        PS1="$PS1\[\033[01;31m\]$(__git_ps1 " [%s]")\[\033[00m\]"
+                    else
+                        PS1="$PS1$(__git_ps1 " [%s]")"
+                    fi
                 fi
             fi
 
