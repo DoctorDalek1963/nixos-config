@@ -193,7 +193,7 @@ in {
                     color_prompt=
                 fi
             else
-              color_prompt=yes
+                color_prompt=yes
             fi
 
             if [ "$color_prompt" = yes ]; then
