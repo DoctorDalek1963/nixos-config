@@ -10,8 +10,8 @@
   git-prompt-repo = pkgs.fetchFromGitHub {
     owner = "git";
     repo = "git";
-    rev = "v2.46.0";
-    hash = "sha256-Jxsxkh+V9h0NQpFxlPJ5SALESm4p1URRby9b8VaO+5k=";
+    rev = "v2.48.1";
+    hash = "sha256-FwkyDATQABKFLXEPp9flVUqdsnhiaACq6t6y3szSjWk=";
     sparseCheckout = ["contrib/completion/git-prompt.sh"];
   };
 in {
