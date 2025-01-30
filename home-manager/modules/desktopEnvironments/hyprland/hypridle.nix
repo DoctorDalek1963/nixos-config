@@ -4,7 +4,7 @@
   osConfig,
   ...
 }: {
-  config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
+  config = lib.mkIf (osConfig.setup.desktopEnvironments.hyprland.enable && osConfig.setup.isLaptop) {
     wayland.windowManager.hyprland.settings.exec-once = [
       "${config.services.hypridle.package}/bin/hypridle"
     ];
