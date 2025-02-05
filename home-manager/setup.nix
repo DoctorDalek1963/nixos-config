@@ -224,6 +224,9 @@ in {
         feishin = defaultFalse; # Subsonic music player
         handbrake = defaultFalse; # DVD ripper
         hexchat = defaultFalse;
+        loupe = mkOption {
+          default = osConfig.setup.isGraphical;
+        };
         ms-teams = defaultFalse;
         obsidian = defaultFalse;
         rustdesk = defaultFalse;
