@@ -22,8 +22,10 @@
         enable = true;
         device = "nodev";
         efiSupport = true;
+        timeoutStyle = "hidden";
       };
       efi.canTouchEfiVariables = true;
+      timeout = 2;
     };
   };
 
