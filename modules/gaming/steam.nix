@@ -15,7 +15,13 @@ in {
 
       steam = {
         enable = true;
+
         gamescopeSession.enable = true;
+
+        protontricks = {
+          enable = true;
+          # package = pkgs.unstable.protontricks;
+        };
 
         extraCompatPackages =
           if cfg.steam.enableProtonGE
