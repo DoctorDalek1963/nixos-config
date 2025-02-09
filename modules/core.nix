@@ -28,6 +28,7 @@ in {
       options = "--delete-older-than 14d";
     };
 
+    # Use unstable packages on the command line with `nix shell unstable#pkgName`
     registry.unstable = {
       from = {
         type = "indirect";
