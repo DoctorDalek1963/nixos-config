@@ -2,6 +2,7 @@
   description = "DoctorDalek1963's NixOS flake";
 
   inputs = {
+    # Core
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur = {
@@ -13,12 +14,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Repo management
     flake-parts.url = "github:hercules-ci/flake-parts";
     pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Hardware and device management
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
