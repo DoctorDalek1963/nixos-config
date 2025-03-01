@@ -18,11 +18,24 @@
       };
     }
     .${cfg.hyprland.theme};
+
+  pauseCommand = "${pkgs.playerctl}/bin/playerctl pause";
+  lockCommand = "${config.programs.hyprlock.package}/bin/hyprlock";
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    wayland.windowManager.hyprland.settings.bind = [
-      "$mod CTRL, L, exec, ${pkgs.playerctl}/bin/playerctl pause && ${config.programs.hyprlock.package}/bin/hyprlock"
-    ];
+    wayland.windowManager.hyprland.settings = {
+      bind = [
+        "$mod CTRL, L, exec, ${pauseCommand}"
+        "$mod CTRL, L, exec, ${lockCommand}"
+      ];
+
+      # Lock and unlock with laptop lid
+      # FIXME: Why doesn't this work?
+      bindl = lib.optionals osConfig.setup.isLaptop [
+        ", switch:[Lid Switch], exec, ${pauseCommand}"
+        ", switch:[Lid Switch], exec, ${lockCommand}"
+      ];
+    };
 
     programs.hyprlock = {
       enable = true;
