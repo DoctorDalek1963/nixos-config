@@ -89,7 +89,7 @@ in {
 
         env = ["NIXOS_OZONE_WL,1"];
 
-        monitor = [", preferred, auto, 1"];
+        monitor = [", preferred, auto, 1, vrr, 2"];
 
         "$mod" = "SUPER";
 
