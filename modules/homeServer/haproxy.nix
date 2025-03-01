@@ -6,20 +6,22 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  mkProxy = service: haproxyPort: servicePort: ''
+  mkProxy = service: haproxyPort: servicePort: extraBackendOpts: ''
     frontend ${service}
         bind :${toString haproxyPort}
         bind :${toString haproxyPort} ssl crt /etc/tailscale-certificates/${cfg.domainName}/combined.pem
         http-request redirect scheme https code 301 unless { ssl_fc }
         default_backend ${service}-backend
+        option logasap
 
     backend ${service}-backend
         server ${service}_server 127.0.0.1:${toString servicePort}
+        ${extraBackendOpts}
   '';
 
-  optProxy = cond: service: haproxyPort: servicePort:
+  optProxy = cond: service: haproxyPort: servicePort: extraBackendOpts:
     if cond
-    then mkProxy service haproxyPort servicePort
+    then mkProxy service haproxyPort servicePort extraBackendOpts
     else "";
 in {
   config = lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfgMs.books || cfgMs.movies || cfgMs.telly)) {
@@ -37,6 +39,7 @@ in {
             timeout connect 5s
             timeout server 10s
             timeout http-request 10s
+            timeout tunnel 1h
             log global
 
         ${
@@ -45,6 +48,7 @@ in {
           "myspeed"
           cfg.ports.haproxy.myspeed
           cfg.ports.myspeed
+          ""
         }
 
         ${
@@ -53,6 +57,7 @@ in {
           "audiobookshelf"
           cfg.ports.haproxy.mediaServer.audiobookshelf
           cfg.ports.mediaServer.audiobookshelf
+          "option http-server-close" # No Keep-Alive, hopefully makes websockets better
         }
 
         ${
@@ -61,6 +66,7 @@ in {
           "jellyseerr"
           cfg.ports.haproxy.mediaServer.jellyseerr
           cfg.ports.mediaServer.jellyseerr
+          ""
         }
       '';
     };
