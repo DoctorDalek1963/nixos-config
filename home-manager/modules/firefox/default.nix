@@ -9,14 +9,6 @@
   cfgFf = cfg.firefox;
 
   extensions = import ./extensions {inherit pkgs lib config;};
-
-  firefox-package =
-    if (cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable)
-    then
-      (pkgs.firefox.override {
-        nativeMessagingHosts = [pkgs.gnome-browser-connector];
-      })
-    else pkgs.firefox;
 in {
   config = lib.mkIf cfgFf.enable {
     setup.impermanence = {
@@ -28,7 +20,12 @@ in {
 
     programs.firefox = {
       enable = true;
-      package = firefox-package;
+
+      nativeMessagingHosts =
+        lib.optional
+        (cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable)
+        pkgs.gnome-browser-connector;
+
       profiles = {
         "${cfg.username}" = {
           id = 0;
