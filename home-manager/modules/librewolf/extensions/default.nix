@@ -3,15 +3,16 @@
   lib,
   config,
 }: let
-  cfg = config.setup.firefox;
+  cfg = config.setup.librewolf;
   addons = pkgs.nur.repos.rycee.firefox-addons;
 
   extensions =
     (with addons; [
       # Privacy
+      canvasblocker
       duckduckgo-privacy-essentials
       privacy-badger
-      ublock-origin
+      # ublock-origin # Included by default with LibreWolf with extra block lists
     ])
     ++ (lib.optionals (!cfg.minimal) (with addons; [
       # Programming

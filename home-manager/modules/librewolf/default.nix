@@ -6,7 +6,7 @@
   ...
 }: let
   cfg = config.setup;
-  cfgFf = cfg.firefox;
+  cfgFf = cfg.librewolf;
 
   extensions = import ./extensions {inherit pkgs lib config;};
 in {
@@ -15,10 +15,12 @@ in {
       keepDirs = [
         ".cache/mozilla/firefox"
         ".mozilla/firefox"
+        ".cache/librewolf"
+        ".librewolf"
       ];
     };
 
-    programs.firefox = {
+    programs.librewolf = {
       enable = true;
 
       nativeMessagingHosts =
@@ -107,12 +109,12 @@ in {
             "findbar.highlightAll" = true;
 
             # Set device name
-            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox on ${osConfig.setup.hostname}";
+            "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf on ${osConfig.setup.hostname}";
 
             # Auto-play DRM-controlled HTML5 content
             "media.eme.enabled" = true;
 
-            # Pre-fetching allows Firefox to fetch pages before I click them by
+            # Pre-fetching allows the browser to fetch pages before I click them by
             # guessing which links I might click. It is a privacy concern, but I'm
             # not too fussed and I'd rather have faster load times
             "network.dns.disablePrefetch" = false;
@@ -185,7 +187,7 @@ in {
             "findbar.highlightAll" = true;
 
             # Set device name
-            "identity.fxaccounts.account.device.name" = "${cfg.username}'s Firefox (basic profile) on ${osConfig.setup.hostname}";
+            "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf (basic profile) on ${osConfig.setup.hostname}";
 
             "reader.color_scheme" = "light";
           };
