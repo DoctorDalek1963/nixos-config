@@ -23,8 +23,6 @@ You'll have login to your Google account with GNOME to access Google Calendar. Y
 
 You'll have to login to Firefox to enable Firefox Sync. The device name should already be set up.
 
-Firefox add-ons need to be manually enabled and configured. I won't enumerate all of my add-on settings here, but I'd recommend copying them from another machine.
-
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/flake.nix`.
 
 Copy your sops age keys to `~/.config/sops/age/keys.txt`. The keys should be on separate lines.

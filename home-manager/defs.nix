@@ -13,7 +13,7 @@
 
     terminal.tools.yt-dlp = true;
 
-    firefox.enable = true;
+    librewolf.enable = true;
 
     rclone = {
       enable = true;
@@ -90,7 +90,7 @@
         ];
       };
 
-      firefox = {
+      librewolf = {
         enable = true;
         minimal = true;
       };
@@ -118,7 +118,7 @@
 
       terminal.tools.nvim = "small";
 
-      firefox = {
+      librewolf = {
         enable = true;
         minimal = true;
       };
@@ -149,7 +149,7 @@
 
     terminal.tools.yt-dlp = true;
 
-    firefox.enable = true;
+    librewolf.enable = true;
 
     rclone = {
       enable = true;
@@ -192,7 +192,7 @@
       gnome.theme = "catppuccin-adaptive-macchiato-mauve";
     };
 
-    firefox = {
+    librewolf = {
       enable = true;
       minimal = true;
     };

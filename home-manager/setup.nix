@@ -26,8 +26,8 @@
 
     ./modules/terminal
     ./modules/desktopEnvironments
-    ./modules/firefox
     ./modules/impermanence
+    ./modules/librewolf
     ./modules/maths
     ./modules/misc
     ./modules/office
@@ -178,8 +178,8 @@ in {
       };
     };
 
-    # === Firefox
-    firefox = {
+    # === LibreWolf
+    librewolf = {
       enable = defaultFalse;
       minimal = defaultFalse;
       enableExtensions = defaultTrue;

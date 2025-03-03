@@ -65,10 +65,10 @@
 
   conditional-keymaps = [
     {
-      condition = config.setup.firefox.enable;
+      condition = config.setup.librewolf.enable;
       keymap = {
-        name = "Firefox";
-        remap.alt-c.launch = [soa-bin "Firefox" "${config.programs.firefox.package.outPath}/bin/firefox"];
+        name = "LibreWolf";
+        remap.alt-c.launch = [soa-bin "LibreWolf" "${config.programs.librewolf.package}/bin/librewolf"];
       };
     }
     {
