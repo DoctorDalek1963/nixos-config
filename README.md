@@ -25,6 +25,6 @@ You'll have to login to Firefox to enable Firefox Sync. The device name should a
 
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/flake.nix`.
 
-Copy your sops age keys to `~/.config/sops/age/keys.txt`. The keys should be on separate lines.
+Copy your sops age keys with `just copy-sops-keys`
 
-Add your Cachix auth token with `cachix authtoken "$(sudo cat /run/secrets/cachix/tokens/doctordalek1963)"`
+Add your Cachix auth token with `just cachix-authtoken`
