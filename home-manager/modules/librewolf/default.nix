@@ -87,6 +87,20 @@
       "privacy.trackingprotection.enabled" = true;
       "privacy.trackingprotection.socialtracking.enabled" = true;
 
+      "privacy.clearOnShutdown.cache" = true;
+      "privacy.clearOnShutdown.cookies" = false;
+      "privacy.clearOnShutdown.downloads" = true;
+      "privacy.clearOnShutdown.formdata" = true;
+      "privacy.clearOnShutdown.history" = false;
+      "privacy.clearOnShutdown.offlineApps" = false;
+      "privacy.clearOnShutdown.openWindows" = false;
+      "privacy.clearOnShutdown.sessions" = false;
+      "privacy.clearOnShutdown.siteSettings" = false;
+      "privacy.clearOnShutdown_v2.cache" = true;
+      "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+      "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+      "privacy.clearOnShutdown_v2.siteSettings" = false;
+
       "reader.color_scheme" = "light";
     };
   };
