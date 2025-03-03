@@ -78,9 +78,12 @@
       # by default, but I like to have it
       "webgl.disabled" = false;
 
+      # RFP is a bit too far for me personally, mostly because I like
+      # automatic dark mode
+      "privacy.resistFingerprinting" = false;
+
       "privacy.donottrackheader.enabled" = true;
       "privacy.fingerprintingProtection" = true;
-      "privacy.resistFingerprinting" = true;
       "privacy.query_stripping.enabled" = true;
       "privacy.query_stripping.enabled.pbmode" = true;
       "privacy.trackingprotection.emailtracking.enabled" = true;
