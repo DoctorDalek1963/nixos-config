@@ -32,6 +32,12 @@ in {
         "${cfg.username}" = {
           id = 0;
           inherit extensions;
+
+          search = {
+            default = "DuckDuckGo";
+            privateDefault = "DuckDuckGo";
+          };
+
           settings = {
             "browser.bookmarks.showMobileBookmarks" = true;
             "browser.contentblocking.category" = "strict"; # Block cookies
@@ -49,6 +55,8 @@ in {
             "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
             "browser.newtabpage.activity-stream.showSponsored" = false;
             "browser.newtabpage.activity-stream.telemetry" = false;
+            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" = "";
+            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines" = "";
 
             "browser.search.region" = "GB";
             "browser.search.suggest.enabled" = false; # Don't make suggestions when searching
@@ -105,14 +113,24 @@ in {
             "extensions.ui.plugin.hidden" = false;
             "extensions.ui.sitepermission.hidden" = true;
 
+            # All my extensions are managed with Nix, so I can enable them all
+            # automatically on a fresh install
+            "extensions.autoDisableScopes" = 0;
+
             # Highlight all matches when doing Ctrl-F
             "findbar.highlightAll" = true;
 
+            # Enable Firefox Sync
+            "identity.fxaccounts.enabled" = true;
             # Set device name
             "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf on ${osConfig.setup.hostname}";
 
             # Auto-play DRM-controlled HTML5 content
             "media.eme.enabled" = true;
+
+            # WebGL is a strong fingerprinting vector and LibreWolf disables it
+            # by default, but I like to have it
+            "webgl.disabled" = false;
 
             # Pre-fetching allows the browser to fetch pages before I click them by
             # guessing which links I might click. It is a privacy concern, but I'm
@@ -124,6 +142,7 @@ in {
 
             "privacy.donottrackheader.enabled" = true;
             "privacy.fingerprintingProtection" = true;
+            "privacy.resistFingerprinting" = true;
             "privacy.query_stripping.enabled" = true;
             "privacy.query_stripping.enabled.pbmode" = true;
             "privacy.trackingprotection.emailtracking.enabled" = true;
@@ -140,6 +159,12 @@ in {
         };
         basic = {
           id = 1;
+
+          search = {
+            default = "DuckDuckGo";
+            privateDefault = "DuckDuckGo";
+          };
+
           settings = {
             "browser.download.always_ask_before_handling_new_types" = true;
             "browser.download.dir" = "${config.home.homeDirectory}/Downloads";
@@ -154,6 +179,8 @@ in {
             "browser.newtabpage.activity-stream.section.highlights.includeVisited" = false;
             "browser.newtabpage.activity-stream.showSponsored" = false;
             "browser.newtabpage.activity-stream.telemetry" = false;
+            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.havePinned" = "";
+            "browser.newtabpage.activity-stream.improvesearch.topSiteSearchShortcuts.searchEngines" = "";
 
             "browser.search.region" = "GB";
             "browser.search.suggest.enabled" = false; # Don't make suggestions when searching
@@ -183,11 +210,33 @@ in {
             "extensions.ui.plugin.hidden" = false;
             "extensions.ui.sitepermission.hidden" = true;
 
+            # All my extensions are managed with Nix, so I can enable them all
+            # automatically on a fresh install
+            "extensions.autoDisableScopes" = 0;
+
             # Highlight all matches when doing Ctrl-F
             "findbar.highlightAll" = true;
 
+            # Enable Firefox Sync
+            "identity.fxaccounts.enabled" = true;
             # Set device name
             "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf (basic profile) on ${osConfig.setup.hostname}";
+
+            # Auto-play DRM-controlled HTML5 content
+            "media.eme.enabled" = true;
+
+            # WebGL is a strong fingerprinting vector and LibreWolf disables it
+            # by default, but I like to have it
+            "webgl.disabled" = false;
+
+            "privacy.donottrackheader.enabled" = true;
+            "privacy.fingerprintingProtection" = true;
+            "privacy.resistFingerprinting" = true;
+            "privacy.query_stripping.enabled" = true;
+            "privacy.query_stripping.enabled.pbmode" = true;
+            "privacy.trackingprotection.emailtracking.enabled" = true;
+            "privacy.trackingprotection.enabled" = true;
+            "privacy.trackingprotection.socialtracking.enabled" = true;
 
             "reader.color_scheme" = "light";
           };
