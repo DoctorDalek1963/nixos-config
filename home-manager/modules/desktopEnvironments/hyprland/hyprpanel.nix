@@ -109,7 +109,7 @@
   };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    home.packages = [inputs.hyprpanel.packages.${system}.hyprpanel];
+    home.packages = [inputs.hyprpanel.packages.${system}.default];
     wayland.windowManager.hyprland.settings.exec-once = ["hyprpanel"];
 
     xdg.configFile."hyprpanel/config.json".source = pkgs.writers.writeJSON "hyprpanel-config.json" ({

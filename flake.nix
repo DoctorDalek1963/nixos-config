@@ -55,7 +55,7 @@
 
     lintrans.url = "github:DoctorDalek1963/lintrans";
     hyprpanel = {
-      url = "github:DoctorDalek1963/hyprpanel";
+      url = "github:Jas-SinghFSU/hyprpanel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
