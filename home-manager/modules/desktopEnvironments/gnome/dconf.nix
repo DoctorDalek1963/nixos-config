@@ -43,7 +43,7 @@ in {
           favorite-apps =
             lib.optional cfgTE.wezterm "org.wezfurlong.wezterm.desktop"
             ++ lib.optional cfgTE.terminator "terminator.desktop"
-            ++ ["firefox.desktop"];
+            ++ lib.optional config.setup.librewolf.enable ["librewolf.desktop"];
         };
 
         "org/gnome/desktop/background" = {
