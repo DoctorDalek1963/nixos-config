@@ -37,11 +37,6 @@
     };
   };
 
-  # TODO: Do I even want Refined GitHub with LibreWolf? If not, remove the secret entirely
-  # firefox-secrets = secretsIf cfg.firefox.enable {
-  #   "firefox/extensions/refined_github/personal_access_token" = {};
-  # };
-
   irc-secrets = secretsIf cfg.misc.programs.hexchat {
     "irc/libera/password" = {mode = "0400";};
     "irc/oftc/password" = {mode = "0400";};
@@ -99,7 +94,6 @@ in {
           };
         }
         // git-ssh-secrets
-        # // firefox-secrets
         // irc-secrets;
     };
   };
