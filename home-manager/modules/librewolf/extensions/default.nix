@@ -16,9 +16,6 @@
     ])
     ++ (lib.optionals (!cfg.minimal) (with addons; [
       # Programming
-      github-file-icons
-      refined-github
-      rust-search-extension
       violentmonkey
 
       # YouTube
@@ -34,7 +31,6 @@
       foxyproxy-standard
       vimium
       wayback-machine
-      whowrotethat
       zotero-connector
     ]));
 in
