@@ -22,6 +22,12 @@ in {
         ".factorio"
       ];
     })
+    (mkIf (cfgGaming.enable && cfgGaming.lutris) {
+      setup.impermanence.keepDirs = [
+        ".local/share/lutris"
+        ".local/share/net.lutris.Lutris"
+      ];
+    })
     (mkIf (cfgGaming.enable && cfgGaming.minecraft) {
       setup.impermanence.keepDirs = [".local/share/PrismLauncher"];
     })
