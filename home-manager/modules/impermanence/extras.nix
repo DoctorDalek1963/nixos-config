@@ -26,6 +26,8 @@ in {
       setup.impermanence.keepDirs = [
         ".local/share/lutris"
         ".local/share/net.lutris.Lutris"
+        ".cache/net.lutris.Lutris"
+        ".cache/winetricks"
       ];
     })
     (mkIf (cfgGaming.enable && cfgGaming.minecraft) {
