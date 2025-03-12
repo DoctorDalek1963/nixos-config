@@ -46,10 +46,6 @@ in {
         unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
       })
       inputs.nur.overlays.default
-      # TODO: Remove this after 25.05 is stable
-      (_final: prev: {
-        inherit (prev.unstable) just;
-      })
     ];
 
     config = {
