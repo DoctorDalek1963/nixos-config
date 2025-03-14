@@ -114,7 +114,7 @@
       fkms-3d.enable = true; # rudolf
       leds = {
         # act.disable = true;
-        eth.disable = true;
+        # eth.disable = true;
         # pwr.disable = true;
       };
     };
