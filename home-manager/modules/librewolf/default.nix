@@ -19,6 +19,7 @@
     settings = {
       "browser.download.always_ask_before_handling_new_types" = true;
       "browser.download.dir" = "${config.xdg.userDirs.download}";
+      "browser.download.useDownloadDir" = true;
 
       # Configure what the new tab page looks like
       "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
