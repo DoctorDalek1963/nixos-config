@@ -130,7 +130,10 @@ in {
           follow_mouse = 2;
         };
 
-        "input:touchpad".natural_scroll = true;
+        "input:touchpad" = {
+          middle_button_emulation = true; # Left and right click maps to middle click
+          natural_scroll = true;
+        };
 
         general = {
           gaps_in = 5;
