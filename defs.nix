@@ -54,6 +54,8 @@
 
           binfmt.aarch64 = true;
 
+          # podman.enable = true;
+
           printing = {
             enable = true;
             users = ["dyson"];

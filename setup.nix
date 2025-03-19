@@ -96,6 +96,8 @@ in {
       aarch64 = defaultFalse;
     };
 
+    podman.enable = defaultFalse;
+
     # === Gaming
     gaming = {
       enable = defaultFalse;

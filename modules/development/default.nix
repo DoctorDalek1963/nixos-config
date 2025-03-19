@@ -1,3 +1,3 @@
 {
-  imports = [./binfmt.nix];
+  imports = [./binfmt.nix ./podman.nix];
 }
