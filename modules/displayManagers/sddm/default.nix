@@ -18,11 +18,12 @@ in {
       };
 
       environment.systemPackages = [
-        (pkgs.catppuccin-sddm.override {
-          flavor = "macchiato";
-          # font = "Hack";
-          # fontSize = 10;
-        })
+        ((pkgs.catppuccin-sddm.override {
+            flavor = "macchiato";
+          })
+          .overrideAttrs {
+            patches = [./themes/catppuccin-sddm-custom.patch];
+          })
       ];
     })
     (lib.mkIf (cfg.enable && cfg.theme == "sugar-light-nixos-simple-blue") {

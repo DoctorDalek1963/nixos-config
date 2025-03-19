@@ -1,0 +1,95 @@
+--- a/src/Components/Clock.qml
++++ b/src/Components/Clock.qml
+@@ -1,14 +1,45 @@
+ import QtQuick 2.15
+-import SddmComponents 2.0
+ 
+-Clock {
+-  id: time
+-  color: config.text
+-  timeFont.family: config.Font
+-  dateFont.family: config.Font
++// Copied and tweaked from https://github.com/sddm/sddm/blob/develop/components/2.0/Clock.qml
++// to customise date and time format
++Column {
++  id: container
++
++  property date dateTime: new Date()
++  property color color: "white"
++  property alias timeFont: time.font
++  property alias dateFont: date.font
++
+   anchors {
+     margins: 10
+     top: parent.top
+     right: parent.right
+   }
++
++  Timer {
++    interval: 100; running: true; repeat: true;
++    onTriggered: container.dateTime = new Date()
++  }
++
++  Text {
++    id: time
++    anchors.horizontalCenter: parent.horizontalCenter
++
++    color: container.color
++
++    text : Qt.formatTime(container.dateTime, "h:mm ap")
++
++    font.pointSize: 72
++  }
++
++  Text {
++    id: date
++    anchors.horizontalCenter: parent.horizontalCenter
++
++    color: container.color
++
++    text : Qt.formatDate(container.dateTime, "dddd d MMMM 12,0yy")
++
++    font.pointSize: 24
++  }
+ }
+--- a/src/Components/LoginPanel.qml
++++ b/src/Components/LoginPanel.qml
+@@ -88,7 +88,7 @@ Item {
+       }
+       background: Rectangle {
+         id: buttonBackground
+-        color: config.sapphire
++        color: config.mauve
+         radius: 3
+       }
+       states: [
+@@ -97,7 +97,7 @@ Item {
+           when: loginButton.down
+           PropertyChanges {
+             target: buttonBackground
+-            color: config.teal
++            color: config.pink
+           }
+           PropertyChanges {
+             target: buttonText
+@@ -108,7 +108,7 @@ Item {
+           when: loginButton.hovered
+           PropertyChanges {
+             target: buttonBackground
+-            color: config.teal
++            color: config.pink
+           }
+           PropertyChanges {
+             target: buttonText
+--- a/src/Main.qml
++++ b/src/Main.qml
+@@ -38,6 +38,9 @@ Item {
+     }
+     Clock {
+       id: time
++      color: config.text
++      timeFont.family: config.Font
++      dateFont.family: config.Font
+       visible: config.ClockEnabled == "true" ? true : false
+     }
+     LoginPanel {
