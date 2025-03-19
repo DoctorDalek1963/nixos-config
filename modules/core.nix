@@ -132,11 +132,9 @@ in {
 
   environment.systemPackages =
     (with pkgs; [
-      busybox
       coreutils
       file
       git
-      screen
       vim
       wget
     ])
