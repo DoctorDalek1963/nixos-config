@@ -261,6 +261,13 @@ in {
             ", Xf86AudioPlay, exec, ${playerctl} play-pause"
             ", Xf86AudioPrev, exec, ${playerctl} previous"
             ", Xf86AudioNext, exec, ${playerctl} next"
+          ]
+          # This is absolutely bizarre and I don't understand it, but certain
+          # programs like Dyson Sphere Program don't recognise middle click,
+          # especially middle click drag, until I send them a completely empty
+          # global shortcut like this. Unfathomable.
+          ++ [
+            "CTRL, grave, sendshortcut, ,, class:^(.*?)$"
           ];
 
         # Binds that repeat when held
