@@ -81,6 +81,63 @@
            }
            PropertyChanges {
              target: buttonText
+--- a/src/Components/SessionPanel.qml
++++ b/src/Components/SessionPanel.qml
+@@ -26,23 +26,23 @@ Item {
+       }
+       background: Rectangle {
+         id: sessionEntryBackground
+-        color: config.surface1
++        color: config.surface0
+         radius: 3
+       }
+       states: [
+         State {
+-          name: "hovered"
+-          when: sessionEntry.hovered
++          name: "highlighted"
++          when: highlighted
+           PropertyChanges {
+             target: sessionEntryBackground
+-            color: config.surface2
++            color: config.surface1
+           }
+         }
+       ]
+       transitions: Transition {
+         PropertyAnimation {
+           property: "color"
+-          duration: 300
++          duration: 150
+         }
+       }
+       MouseArea {
+@@ -112,7 +112,7 @@ Item {
+     width: inputWidth + padding * 2
+     x: (sessionButton.width + sessionList.spacing) * -7.6
+     y: -(contentHeight + padding * 2) + sessionButton.height
+-    padding: inputHeight / 10
++    padding: inputHeight / 5
+     background: Rectangle {
+       radius: 5.4
+       color: config.surface0
+@@ -131,14 +131,14 @@ Item {
+           property: "opacity"
+           from: 0
+           to: 1
+-          duration: 400
++          duration: 250
+           easing.type: Easing.OutExpo
+         }
+         NumberAnimation {
+           property: "x"
+           from: sessionPopup.x + (inputWidth * 0.1)
+           to: sessionPopup.x
+-          duration: 500
++          duration: 350
+           easing.type: Easing.OutExpo
+         }
+       }
 --- a/src/Main.qml
 +++ b/src/Main.qml
 @@ -38,6 +38,9 @@ Item {
