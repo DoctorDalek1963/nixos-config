@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [./extra-firmware-config.nix];
@@ -111,15 +112,20 @@
   hardware = {
     raspberry-pi."4" = {
       apply-overlays-dtmerge.enable = true;
-      fkms-3d.enable = true; # rudolf
       leds = {
-        # act.disable = true;
-        # eth.disable = true;
-        # pwr.disable = true;
+        act.disable = true;
+        eth.disable = true;
+        pwr.disable = true;
       };
+
+      fkms-3d.enable = config.setup.isGraphical;
     };
     deviceTree = {
       enable = true;
+
+      # Force generic filter to avoid conflicts between modesetting and
+      # LEDs in nixos-hardware
+      filter = lib.mkForce "*-rpi-4*.dtb";
     };
   };
 }
