@@ -83,7 +83,7 @@
              target: buttonText
 --- a/src/Components/SessionPanel.qml
 +++ b/src/Components/SessionPanel.qml
-@@ -26,23 +26,23 @@ Item {
+@@ -26,10 +26,18 @@ Item {
        }
        background: Rectangle {
          id: sessionEntryBackground
@@ -92,18 +92,18 @@
          radius: 3
        }
        states: [
-         State {
--          name: "hovered"
--          when: sessionEntry.hovered
++        State {
 +          name: "highlighted"
 +          when: highlighted
-           PropertyChanges {
-             target: sessionEntryBackground
--            color: config.surface2
++          PropertyChanges {
++            target: sessionEntryBackground
 +            color: config.surface1
-           }
-         }
-       ]
++          }
++        },
+         State {
+           name: "hovered"
+           when: sessionEntry.hovered
+@@ -42,7 +50,7 @@ Item {
        transitions: Transition {
          PropertyAnimation {
            property: "color"
@@ -112,7 +112,7 @@
          }
        }
        MouseArea {
-@@ -112,7 +112,7 @@ Item {
+@@ -112,7 +120,7 @@ Item {
      width: inputWidth + padding * 2
      x: (sessionButton.width + sessionList.spacing) * -7.6
      y: -(contentHeight + padding * 2) + sessionButton.height
@@ -121,7 +121,7 @@
      background: Rectangle {
        radius: 5.4
        color: config.surface0
-@@ -131,14 +131,14 @@ Item {
+@@ -131,14 +139,14 @@ Item {
            property: "opacity"
            from: 0
            to: 1
