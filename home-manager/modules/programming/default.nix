@@ -1,5 +1,6 @@
 {
   imports = [
+    ./android.nix
     ./haskell.nix
     ./julia.nix
     ./nix.nix
