@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   osConfig,
   ...
 }: {
@@ -14,5 +15,7 @@
       ".local/share/Google"
       ".gradle"
     ];
+
+    home.sessionVariables.ANDROID_AVD_HOME = "${config.home.homeDirectory}/.config/.android/avd";
   };
 }
