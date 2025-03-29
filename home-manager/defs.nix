@@ -31,6 +31,8 @@
       haskell = true;
       python = true;
       rust = true;
+
+      jetbrains = true;
     };
 
     misc = {

@@ -255,6 +255,7 @@ in {
       rust = defaultFalse;
 
       nix = defaultTrue;
+      jetbrains = defaultFalse;
     };
 
     # === Rclone
