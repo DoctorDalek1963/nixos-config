@@ -30,7 +30,7 @@ in {
         auth = {
           enable = true;
           mode = "basic";
-          userDb = ../../../../files/home-server/calibre-server-users.db;
+          userDb = ./calibre-server-users.db;
         };
       };
 

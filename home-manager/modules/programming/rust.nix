@@ -31,7 +31,7 @@
       terminal.shellAliases = {
         ca = "cargo";
         rs = "${pkgs.evcxr}/bin/evcxr";
-        clippy = "cat ${../../files/clippy.conf} | xargs cargo clippy --all-features --";
+        clippy = "cat ${./clippy.conf} | xargs cargo clippy --all-features --";
       };
     };
   };

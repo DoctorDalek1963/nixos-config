@@ -8,7 +8,7 @@
     name = "git-all";
     propagatedBuildInputs = [(pkgs.python3.withPackages (p: [p.rich]))];
     dontUnpack = true;
-    installPhase = "install -Dm755 ${../../../files/scripts/git_all.py} $out/bin/git-all";
+    installPhase = "install -Dm755 ${./git_all.py} $out/bin/git-all";
   };
 in {
   config = lib.mkIf config.setup.terminal.tools.git-all {
