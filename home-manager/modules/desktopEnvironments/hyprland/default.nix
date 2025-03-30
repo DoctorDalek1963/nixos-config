@@ -55,12 +55,13 @@
     .${config.setup.desktopEnvironments.hyprland.theme};
 in {
   imports = [
+    ./waybar
+
     ./clipboard.nix
     ./fuzzel.nix
     ./gtk.nix
     ./hypridle.nix
     ./hyprlock.nix
-    ./hyprpanel.nix
     ./hyprpaper.nix
     ./hyprsunset.nix
   ];
