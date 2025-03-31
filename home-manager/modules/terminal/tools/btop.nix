@@ -48,6 +48,6 @@ in {
       };
     };
 
-    xdg.configFile = lib.mkIf (theme.theme-file != null) theme.theme-file;
+    xdg.configFile = theme.theme-file;
   };
 }

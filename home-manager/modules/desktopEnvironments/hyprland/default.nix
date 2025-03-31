@@ -209,6 +209,13 @@ in {
             "$mod, F, exec, $launchPrefix ${config.programs.librewolf.package}/bin/librewolf"
             "$mod, O, exec, $launchPrefix ${pkgs.obsidian}/bin/obsidian"
           ]
+          ++ lib.optional config.setup.terminal.tools.btop.enable "$mod, B, exec, $launchPrefix ${
+            if cfgTE.wezterm
+            then "${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.btop.package}/bin/btop"
+            else if cfgTE.terminator
+            then "${pkgs.terminator}/bin/terminator -x ${config.programs.btop.package}/bin/btop"
+            else abort "Please enable a terminal emulator"
+          }"
           # Move focus
           ++ [
             "$mod, H, movefocus, l"
