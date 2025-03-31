@@ -106,8 +106,10 @@
           network = {
             format-wifi = "󰖩 {essid} ({signalStrength}%)";
             format-ethernet = "󰈀 {ipaddr} / {cidr}";
-            format-disconnected = "󰖪 {ifname}";
+            format-disconnected = "󰖪 No internet";
             tooltip-format = "{bandwidthUpBytes} 󰜷 {bandwidthDownBytes} 󰜮 ({ifname})";
+
+            on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           };
 
           bluetooth = {};
