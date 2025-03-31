@@ -105,9 +105,9 @@
 
           network = {
             format-wifi = "󰖩 {essid} ({signalStrength}%)";
-            format-ethernet = "󰈀 {ipaddr} / {cidr}";
+            format-ethernet = "󰈀 Wired";
             format-disconnected = "󰖪 No internet";
-            tooltip-format = "{bandwidthUpBytes} 󰜷 {bandwidthDownBytes} 󰜮 ({ifname})";
+            tooltip-format = "{bandwidthUpBytes} 󰜷 {bandwidthDownBytes} 󰜮 ({ipaddr}/{cidr} on {ifname})";
 
             on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           };
@@ -282,7 +282,7 @@
           }
 
           #workspaces > button.active {
-              color: @pink;
+              color: @sapphire;
           }
 
           /* Make the font of workspace buttons bigger and underline the current one */
