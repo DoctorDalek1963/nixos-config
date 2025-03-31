@@ -13,6 +13,7 @@
     programs.waybar = {
       enable = true;
 
+      # See https://github.com/Alexays/Waybar/wiki
       settings = [
         {
           layer = "top";
