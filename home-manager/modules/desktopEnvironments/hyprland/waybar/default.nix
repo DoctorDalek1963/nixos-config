@@ -10,8 +10,6 @@
       "${config.programs.waybar.package}/bin/waybar"
     ];
 
-    # TODO: Enable services.power-profiles-daemon.enable in OS config
-
     programs.waybar = {
       enable = true;
 
@@ -156,7 +154,14 @@
             interval = 5;
           };
 
-          power-profiles-daemon = {};
+          power-profiles-daemon = {
+            format = "{icon} Power: {profile}";
+            format-icons = {
+              balanced = " ";
+              performance = "󱐋";
+              power-saver = "󰌪";
+            };
+          };
 
           battery = {};
 
