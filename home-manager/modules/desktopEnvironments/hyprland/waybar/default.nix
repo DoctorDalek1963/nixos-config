@@ -165,7 +165,17 @@
             };
           };
 
-          battery = {};
+          battery = {
+            format = "{icon} {capacity}%";
+            format-icons = ["󰂎" "󰁻" "󰁽" "󰁿" "󰂁" "󰁹"];
+
+            states = {
+              full = 100;
+              moderate = 65;
+              warning = 30;
+              critical = 15;
+            };
+          };
 
           "group/power" = {
             orientation = "inherit";
@@ -348,8 +358,34 @@
               color: @sapphire;
           }
 
-          #battery {
+          #battery.full {
+              color: @green;
+          }
+          #battery.moderate {
               color: @yellow;
+          }
+          #battery.warning {
+              color: @peach;
+          }
+
+          /* Flash text in battery section when critical and not charging */
+          @keyframes blink {
+              to {
+                  background-color: @red;
+              }
+          }
+          #battery.critical:not(.charging) {
+              color: @text;
+              /* Using steps() instead of linear as a timing function to limit cpu usage */
+              animation-name: blink;
+              animation-duration: 0.5s;
+              animation-timing-function: steps(6);
+              animation-iteration-count: infinite;
+              animation-direction: alternate;
+          }
+
+          #battery.charging, #battery.plugged {
+              color: @sapphire;
           }
 
           #custom-power {
@@ -363,27 +399,6 @@
           }
           #custom-reboot {
               color: @pink;
-          }
-
-          #battery.charging, #battery.plugged {
-              color: @sapphire;
-          }
-
-          /* Flash text in battery section when low and not charging */
-          @keyframes blink {
-              to {
-                  color: @red;
-              }
-          }
-          #battery.critical:not(.charging) {
-              background-color: @maroon;
-
-              /* Using steps() instead of linear as a timing function to limit cpu usage */
-              animation-name: blink;
-              animation-duration: 0.5s;
-              animation-timing-function: steps(12);
-              animation-iteration-count: infinite;
-              animation-direction: alternate;
           }
         '';
     };
