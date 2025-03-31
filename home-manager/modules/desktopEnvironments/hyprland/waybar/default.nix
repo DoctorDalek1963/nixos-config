@@ -10,7 +10,7 @@
       "${config.programs.waybar.package}/bin/waybar"
     ];
 
-    home.packages = [pkgs.power-profiles-daemon];
+    # TODO: Enable services.power-profiles-daemon.enable in OS config
 
     programs.waybar = {
       enable = true;
@@ -31,22 +31,25 @@
             [
               "tray"
               "custom/current-age"
-              "idle_inhibitor"
+            ]
+            ++ lib.optional osConfig.setup.isLaptop "idle_inhibitor"
+            ++ [
               "pulseaudio"
               "network"
             ]
             ++ lib.optional osConfig.setup.hasBluetooth "bluetooth"
             ++ [
+              "group/stats"
               "power-profiles-daemon"
             ]
             ++ lib.optional osConfig.setup.isLaptop "battery"
             ++ [
-              "custom/power"
+              "group/power"
             ];
 
           "hyprland/window" = {
-            format = "{}";
-            max-length = 35;
+            format = "{title}";
+            max-length = 50;
             icon = true;
           };
 
@@ -54,6 +57,7 @@
             format = "{}";
             exec = ''${pkgs.coreutils}/bin/date +"%-I:%M:%S %p, %A %d %B 12,0%y"'';
             interval = 1;
+            tooltip = false;
           };
 
           tray = {
@@ -73,6 +77,7 @@
             format = "󰃮 {}";
             exec = "${current-age}/bin/current-age";
             interval = 1;
+            tooltip-format = "Current age";
           };
 
           idle_inhibitor = {
@@ -81,6 +86,8 @@
               activated = " ";
               deactivated = " ";
             };
+            tooltip-format-activated = "Inhibiting idle";
+            tooltip-format-deactivated = "Not inhibiting idle";
           };
 
           pulseaudio = {
@@ -99,19 +106,97 @@
           };
 
           network = {
-            format-wifi = "󰖩 {ifname}";
-            format-ethernet = "󰈀 {ifname}";
+            format-wifi = "󰖩 {essid} ({signalStrength}%)";
+            format-ethernet = "󰈀 {ipaddr} / {cidr}";
             format-disconnected = "󰖪 {ifname}";
+            tooltip-format = "{bandwidthUpBytes} 󰜷 {bandwidthDownBytes} 󰜮 ({ifname})";
           };
 
           bluetooth = {};
 
+          "group/stats" = {
+            orientation = "inherit";
+            drawer = {
+              transition-duration = 250;
+              children-class = "group-stats-child";
+              transition-left-to-right = false;
+            };
+            modules = [
+              "cpu"
+              "memory"
+              "temperature"
+            ];
+          };
+
+          cpu = {
+            format = " {usage}%";
+            interval = 5;
+          };
+
+          memory = {
+            format = "  {percentage}%";
+            tooltip-format = "{used:0.1f}GiB / {total:0.1f}GiB used";
+          };
+
+          temperature = let
+            # Use `sensors` and the below bash command to find the right
+            # temperature sensor that agrees with btop
+            # for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+            hwmon-path-map = {
+              "Alex-NixOS" = "/sys/class/hwmon/hwmon1/temp1_input";
+            };
+          in {
+            hwmon-path =
+              lib.mkIf
+              (hwmon-path-map ? "${osConfig.setup.hostname}")
+              hwmon-path-map."${osConfig.setup.hostname}";
+
+            format = " {temperatureC}°C";
+            tooltip = false;
+            interval = 5;
+          };
+
+          power-profiles-daemon = {};
+
+          battery = {};
+
+          "group/power" = {
+            orientation = "inherit";
+            drawer = {
+              transition-duration = 250;
+              children-class = "group-power-child";
+              transition-left-to-right = false;
+            };
+            modules = [
+              "custom/power"
+              "custom/logout"
+              "custom/lock"
+              "custom/reboot"
+            ];
+          };
+
           "custom/power" = {
-            "format" = "{icon}";
-            "format-icons" = "";
-            "exec-on-event" = "true";
-            # "on-click" = "TODO: Make power button script";
-            "tooltip-format" = "Power menu";
+            format = "";
+            tooltip-format = "Shutdown";
+            on-click = "/run/current-system/sw/bin/shutdown now";
+          };
+
+          "custom/logout" = {
+            format = "󰍃";
+            tooltip-format = "Logout";
+            on-click = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch exit";
+          };
+
+          "custom/lock" = {
+            format = "󰍁";
+            tooltip-format = "Lock";
+            on-click = "${config.programs.hyprlock.package}/bin/hyprlock";
+          };
+
+          "custom/reboot" = {
+            format = "";
+            tooltip-format = "Reboot";
+            on-click = "/run/current-system/sw/bin/reboot";
           };
         }
       ];
@@ -229,7 +314,7 @@
           }
 
           #pulseaudio.muted {
-              color: @text;
+              color: @teal;
           }
 
           #network {
@@ -238,6 +323,18 @@
 
           #bluetooth {
               color: @teal;
+          }
+
+          #cpu {
+              color: @pink;
+          }
+
+          #memory {
+              color: @teal;
+          }
+
+          #temperature {
+              color: @maroon;
           }
 
           #power-profiles-daemon {
@@ -250,6 +347,15 @@
 
           #custom-power {
               color: @red;
+          }
+          #custom-logout {
+              color: @teal;
+          }
+          #custom-lock {
+              color: @yellow;
+          }
+          #custom-reboot {
+              color: @pink;
           }
 
           #battery.charging, #battery.plugged {
