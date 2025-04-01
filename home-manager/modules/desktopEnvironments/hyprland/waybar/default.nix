@@ -199,7 +199,7 @@
           };
 
           "custom/lock" = {
-            format = "󰍁";
+            format = "󰌾";
             tooltip-format = "Lock";
             on-click = "${config.programs.hyprlock.package}/bin/hyprlock";
           };
