@@ -94,7 +94,7 @@
 
           "custom/clock" = {
             format = "{}";
-            exec = ''${pkgs.coreutils}/bin/date +"%-I:%M:%S %p, %A %d %B 12,0%y"'';
+            exec = ''${pkgs.coreutils}/bin/date +"%-I:%M:%S %p, %A %-d %B 12,0%y"'';
             interval = 1;
             tooltip = false;
           };
