@@ -143,6 +143,7 @@
             # for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
             hwmon-path-map = {
               "Alex-NixOS" = "/sys/class/hwmon/hwmon1/temp1_input";
+              "Harold-NixOS" = "/sys/class/hwmon/hwmon4/temp1_input";
             };
           in {
             hwmon-path =
