@@ -154,7 +154,7 @@
             on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           };
 
-          bluetooth = {
+          bluetooth = lib.mkIf osConfig.setup.hasBluetooth {
             format = "󰂯 {status}";
 
             on-click = "${pkgs.blueberry}/bin/blueberry";
