@@ -160,8 +160,11 @@
             format = "{icon} {capacity}%";
             format-icons = ["󰂎" "󰁻" "󰁽" "󰁿" "󰂁" "󰁹"];
 
+            format-charging = "󱐋{icon} {capacity}%";
+            format-full = "󰚥 {capacity}%";
+
             states = {
-              full = 100;
+              high = 100;
               moderate = 65;
               warning = 30;
               critical = 15;
@@ -345,7 +348,7 @@
               color: @maroon;
           }
 
-          #battery.full {
+          #battery.high {
               color: @green;
           }
           #battery.moderate {
