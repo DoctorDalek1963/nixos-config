@@ -22,6 +22,7 @@ in {
     ./modules/laptop
 
     ./modules/androidTools
+    ./modules/bluetooth
     ./modules/desktopEnvironments
     ./modules/displayManagers
     ./modules/development

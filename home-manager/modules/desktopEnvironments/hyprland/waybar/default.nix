@@ -153,7 +153,11 @@
             on-click = "${pkgs.networkmanagerapplet}/bin/nm-connection-editor";
           };
 
-          bluetooth = {};
+          bluetooth = {
+            format = "󰂯 {status}";
+
+            on-click = "${pkgs.blueberry}/bin/blueberry";
+          };
 
           battery = {
             format = "{icon} {capacity}%";
