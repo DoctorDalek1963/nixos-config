@@ -38,7 +38,6 @@
             ++ lib.optional osConfig.setup.hasBluetooth "bluetooth"
             ++ [
               "group/stats"
-              "power-profiles-daemon"
             ]
             ++ lib.optional osConfig.setup.isLaptop "battery"
             ++ [
@@ -154,15 +153,6 @@
             format = " {temperatureC}°C";
             tooltip = false;
             interval = 5;
-          };
-
-          power-profiles-daemon = {
-            format = "{icon} Power: {profile}";
-            format-icons = {
-              balanced = " ";
-              performance = "󱐋";
-              power-saver = "󰌪";
-            };
           };
 
           battery = {
@@ -352,10 +342,6 @@
 
           #temperature {
               color: @maroon;
-          }
-
-          #power-profiles-daemon {
-              color: @sapphire;
           }
 
           #battery.full {
