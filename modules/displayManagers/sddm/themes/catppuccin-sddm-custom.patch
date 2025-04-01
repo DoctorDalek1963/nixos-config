@@ -9,7 +9,7 @@
 -  color: config.text
 -  timeFont.family: config.Font
 -  dateFont.family: config.Font
-+// Copied and tweaked from https://github.com/sddm/sddm/blob/develop/components/2.0/Clock.qml
++// Copied and tweaked from https://github.com/sddm/sddm/blob/v0.21.0/components/2.0/Clock.qml
 +// to customise date and time format
 +Column {
 +  id: container
