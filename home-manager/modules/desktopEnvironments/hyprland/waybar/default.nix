@@ -31,7 +31,7 @@
               "tray"
               "custom/current-age"
             ]
-            ++ lib.optional osConfig.setup.isLaptop "idle_inhibitor"
+            ++ lib.optional config.services.hypridle.enable "idle_inhibitor"
             ++ [
               "pulseaudio"
               "network"
