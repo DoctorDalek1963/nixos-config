@@ -54,10 +54,6 @@
     };
 
     lintrans.url = "github:DoctorDalek1963/lintrans";
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/hyprpanel";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
