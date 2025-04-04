@@ -58,6 +58,7 @@ in {
     ./waybar
 
     ./clipboard.nix
+    ./dunst.nix
     ./fuzzel.nix
     ./gtk.nix
     ./hypridle.nix
