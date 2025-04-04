@@ -1,12 +1,9 @@
 {
-  pkgs,
   lib,
   config,
   osConfig,
   ...
 }: let
-  cfgTE = config.setup.terminal.emulators;
-
   colors =
     {
       "catppuccin-macchiato-mauve" = {
@@ -42,12 +39,7 @@ in {
           font = "Hack Nerd Font Mono";
           use-bold = true;
           icons-enabled = true;
-          terminal =
-            if cfgTE.wezterm
-            then "${config.programs.wezterm.package}/bin/wezterm start --always-new-process"
-            else if cfgTE.terminator
-            then "${pkgs.terminator}/bin/terminator -x"
-            else abort "Please enable a terminal emulator";
+          terminal = config.wayland.windowManager.hyprland.settings."$terminal";
 
           launch-prefix = lib.mkIf (hyprlandLaunchPrefix != "") hyprlandLaunchPrefix;
         };

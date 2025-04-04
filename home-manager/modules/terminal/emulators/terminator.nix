@@ -11,7 +11,7 @@
   in
     lib.strings.concatStringsSep "\n" indented-lines;
 
-  inherit (config.setup.terminal) theme emulators;
+  cfg = config.setup.terminal;
 
   common = fontSize:
     indent 2 ''
@@ -151,7 +151,7 @@
         };
       };
     }
-    .${theme};
+    .${cfg.theme};
 
   default-and-dark = ''
     [[default]]
@@ -183,7 +183,7 @@
 
   profiles = lib.strings.concatStringsSep "\n" (lib.lists.flatten [default-and-dark transparent light white]);
 in {
-  config = lib.mkIf emulators.terminator {
+  config = lib.mkIf (cfg.emulator == "terminator") {
     home.packages = [pkgs.terminator];
 
     xdg.configFile."terminator/config".text = ''

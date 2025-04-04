@@ -6,7 +6,6 @@
   ...
 }: let
   cfg = config.setup;
-  cfgTE = cfg.terminal.emulators;
   cfgTT = cfg.terminal.tools;
   cfgB = cfg.desktopEnvironments.hyprland.borderStyle;
 
@@ -101,26 +100,22 @@ in {
           else "";
 
         "$terminal" =
-          if cfgTE.wezterm
-          then "${config.programs.wezterm.package}/bin/wezterm start --always-new-process"
-          else if cfgTE.terminator
-          then "${pkgs.terminator}/bin/terminator -x"
-          else abort "Please enable a terminal emulator";
+          {
+            wezterm = "${config.programs.wezterm.package}/bin/wezterm start --always-new-process";
+            terminator = "${pkgs.terminator}/bin/terminator -x";
+          }
+          .${config.setup.terminal.emulator};
+
+        "$launchInTerminal" =
+          {
+            wezterm = ''${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation="NeverPrompt"' start --always-new-process'';
+            terminator = "${pkgs.terminator}/bin/terminator -x";
+          }
+          .${config.setup.terminal.emulator};
 
         "$fileManager" =
           if cfgTT.yazi
-          then
-            (
-              # I know this is horrible, but I want to pass a custom config
-              # param to Wezterm only when using Wezterm and Yazi together so
-              # that Super+Q closes the terminal immediately, and this is the
-              # easiest way to do that
-              if cfgTE.wezterm
-              then "${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.yazi.package}/bin/yazi"
-              else if cfgTE.terminator
-              then "${pkgs.terminator}/bin/terminator -x ${config.programs.yazi.package}/bin/yazi"
-              else abort "Please enable a terminal emulator"
-            )
+          then "$launchPrefix $launchInTerminal ${config.programs.yazi.package}/bin/yazi"
           else abort "Please enable a file manager";
 
         input = {
@@ -211,13 +206,7 @@ in {
             "$mod, F, exec, $launchPrefix ${config.programs.librewolf.package}/bin/librewolf"
             "$mod, O, exec, $launchPrefix ${pkgs.obsidian}/bin/obsidian"
           ]
-          ++ lib.optional config.setup.terminal.tools.btop.enable "$mod, B, exec, $launchPrefix ${
-            if cfgTE.wezterm
-            then "${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation=\"NeverPrompt\"' start --always-new-process ${config.programs.btop.package}/bin/btop"
-            else if cfgTE.terminator
-            then "${pkgs.terminator}/bin/terminator -x ${config.programs.btop.package}/bin/btop"
-            else abort "Please enable a terminal emulator"
-          }"
+          ++ lib.optional config.setup.terminal.tools.btop.enable ''$mod, B, exec, $launchPrefix $launchInTerminal ${config.programs.btop.package}/bin/btop''
           # Move focus
           ++ [
             "$mod, H, movefocus, l"

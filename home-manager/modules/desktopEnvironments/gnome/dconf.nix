@@ -8,20 +8,21 @@
   inherit (lib.hm.gvariant) mkTuple mkUint32;
 
   cfg = config.setup.desktopEnvironments;
-  cfgTE = config.setup.terminal.emulators;
 
   terminal-emulator =
-    if cfgTE.wezterm
-    then {
-      bin = "${config.programs.wezterm.package}/bin/wezterm";
-      exec-arg = "start";
+    {
+      wezterm = {
+        bin = "${config.programs.wezterm.package}/bin/wezterm";
+        exec-arg = "start";
+        desktop = "org.wezfurlong.wezterm.desktop";
+      };
+      terminator = {
+        bin = "${pkgs.terminator}/bin/terminator";
+        exec-arg = "-x";
+        desktop = "terminator.desktop";
+      };
     }
-    else if cfgTE.terminator
-    then {
-      bin = "${pkgs.terminator}/bin/terminator";
-      exec-arg = "-x";
-    }
-    else {};
+    .${config.setup.terminal.emulator};
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     assertions = [
@@ -41,8 +42,7 @@ in {
 
         "org/gnome/shell" = {
           favorite-apps =
-            lib.optional cfgTE.wezterm "org.wezfurlong.wezterm.desktop"
-            ++ lib.optional cfgTE.terminator "terminator.desktop"
+            terminal-emulator.desktop
             ++ lib.optional config.setup.librewolf.enable ["librewolf.desktop"];
         };
 

@@ -63,11 +63,7 @@ in {
         type = types.attrsOf types.nonEmptyStr;
       };
 
-      emulators = {
-        terminator = defaultFalse;
-        wezterm = defaultTrue;
-      };
-      defaultEmulator = mkOption {
+      emulator = mkOption {
         default = "wezterm";
         type = types.enum ["terminator" "wezterm"];
       };

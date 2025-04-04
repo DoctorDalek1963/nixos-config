@@ -25,7 +25,7 @@
     then "SteadyBlock"
     else "BlinkingBlock";
 in {
-  config = lib.mkIf cfg.emulators.wezterm {
+  config = lib.mkIf (cfg.emulator == "wezterm") {
     programs.wezterm = {
       enable = true;
       package = pkgs.unstable.wezterm;
