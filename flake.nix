@@ -61,7 +61,10 @@
     };
     nixvim-config = {
       url = "github:DoctorDalek1963/nixvim-config";
-      # inputs.nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses stable nixpkgs
+      inputs = {
+        # nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses stable nixpkgs
+        flake-parts.follows = "flake-parts";
+      };
     };
     xremap = {
       url = "github:xremap/nix-flake";
