@@ -147,8 +147,6 @@ in {
           cl = "clear";
           ps = "ps auxf";
           rm = "rm -v";
-
-          resetwifi = "nmcli networking off && nmcli networking on";
         }
         // config.setup.terminal.shellAliases;
       bashrcExtra = ''

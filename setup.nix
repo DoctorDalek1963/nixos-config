@@ -22,6 +22,7 @@ in {
     ./modules/laptop
 
     ./modules/androidTools
+    ./modules/bluetooth
     ./modules/desktopEnvironments
     ./modules/displayManagers
     ./modules/development
@@ -43,6 +44,11 @@ in {
     };
     isGraphical = defaultTrue;
     isLaptop = defaultFalse;
+
+    hasBluetooth = mkOption {
+      type = types.bool;
+      default = config.setup.isLaptop;
+    };
 
     # === Basic system config
     ssh = {
