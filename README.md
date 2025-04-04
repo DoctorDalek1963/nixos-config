@@ -1,6 +1,7 @@
 # NixOS Config
 
-**Disclaimer**: This is my personal NixOS configuration. It is not meant as a template and should not be used like one. Feel free to take ideas from my config, but be aware that this is not aimed at NixOS beginners.
+> [!WARNING]
+> This is my personal NixOS configuration. It is not meant as a template and should not be used like one. Feel free to take ideas from my config, but be aware that this is not aimed at NixOS beginners.
 
 ## Installation
 
