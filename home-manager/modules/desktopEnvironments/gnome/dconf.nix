@@ -42,7 +42,7 @@ in {
 
         "org/gnome/shell" = {
           favorite-apps =
-            terminal-emulator.desktop
+            [terminal-emulator.desktop]
             ++ lib.optional config.setup.librewolf.enable ["librewolf.desktop"];
         };
 
