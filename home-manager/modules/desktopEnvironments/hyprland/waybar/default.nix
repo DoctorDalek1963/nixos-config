@@ -4,7 +4,9 @@
   config,
   osConfig,
   ...
-}: {
+}: let
+  launch-btop = lib.mkIf config.setup.terminal.tools.btop.enable "${config.wayland.windowManager.hyprland.settings."$launchInTerminal"} ${config.programs.btop.package}/bin/btop";
+in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
       "${config.programs.waybar.package}/bin/waybar"
@@ -61,6 +63,8 @@
           cpu = {
             format = " {usage}%";
             interval = 5;
+
+            on-click = launch-btop;
           };
 
           temperature = let
@@ -80,11 +84,15 @@
             format = " {temperatureC}°C";
             tooltip = false;
             interval = 5;
+
+            on-click = launch-btop;
           };
 
           memory = {
             format = "  {percentage}%";
             tooltip-format = "{used:0.1f}GiB / {total:0.1f}GiB used";
+
+            on-click = launch-btop;
           };
 
           "hyprland/window" = {
