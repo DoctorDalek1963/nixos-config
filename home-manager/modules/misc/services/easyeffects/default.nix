@@ -1,9 +1,12 @@
 {
+  pkgs,
   lib,
   config,
   osConfig,
   ...
-}: {
+}: let
+  preset-switcher = pkgs.callPackage ./presetSwitcherPackage.nix {};
+in {
   config = lib.mkIf config.setup.misc.services.easyeffects {
     assertions = [
       {
@@ -15,6 +18,22 @@
     services.easyeffects = {
       enable = true;
       preset = "BasicAutogain";
+    };
+
+    systemd.user.services.easyeffects-preset-switcher = {
+      Unit = {
+        Description = "Run the easyeffects-preset-switcher in the systray";
+        After = ["graphical-session.target"];
+      };
+
+      Install = {
+        WantedBy = ["default.target"];
+      };
+
+      Service = {
+        Type = "simple";
+        ExecStart = lib.getExe preset-switcher;
+      };
     };
 
     xdg.configFile = let
