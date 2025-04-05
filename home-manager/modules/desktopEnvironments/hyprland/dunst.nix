@@ -38,6 +38,8 @@ in {
           origin = "top-right";
           offset = "25x25"; # TODO (25.05): Update from XxY to (X, Y) syntax with v1.12
 
+          sort = "update";
+
           browser = "${pkgs.xdg-utils}/bin/xdg-open";
 
           frame_width = config.wayland.windowManager.hyprland.settings.general.border_size;
