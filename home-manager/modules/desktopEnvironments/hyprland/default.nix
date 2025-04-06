@@ -64,6 +64,7 @@ in {
     ./hyprlock.nix
     ./hyprpaper.nix
     ./hyprsunset.nix
+    ./overview.nix
   ];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
