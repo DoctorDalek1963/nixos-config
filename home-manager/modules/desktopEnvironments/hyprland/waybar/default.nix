@@ -90,7 +90,7 @@ in {
 
           memory = {
             format = "  {percentage}%";
-            tooltip-format = "{used:0.1f}GiB / {total:0.1f}GiB used";
+            tooltip-format = "{used:0.1f}GiB / {total:0.1f}GiB used ({swapUsed:0.1f}GiB / {swapTotal:0.1f}GiB swap)";
 
             on-click = launch-btop;
           };
