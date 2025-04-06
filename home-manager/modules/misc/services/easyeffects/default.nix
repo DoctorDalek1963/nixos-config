@@ -33,6 +33,8 @@ in {
       Service = {
         Type = "simple";
         ExecStart = lib.getExe preset-switcher;
+        Restart = "on-failure";
+        RestartSec = "5s";
       };
     };
 
