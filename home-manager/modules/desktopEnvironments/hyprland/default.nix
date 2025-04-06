@@ -167,7 +167,7 @@ in {
 
         animation =
           [
-            "windows, 1, 2.5, easeInOutQuart"
+            "windows, 1, 2.5, overshot"
             "workspaces, 1, 2.5, easeInOutQuart"
           ]
           ++ (
@@ -182,6 +182,7 @@ in {
           "easeInOutCubic, 0.65, 0, 0.35, 1"
           "easeInOutQuart, 0.76, 0, 0.24, 1"
           "easeInOutQuint, 0.83, 0, 0.17, 1"
+          "overshot, 0.05, 0.9, 0.1, 1.1"
         ];
 
         windowrulev2 = ["float, size <60% <60%, onworkspace:s[1]"];
