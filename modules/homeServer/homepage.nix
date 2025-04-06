@@ -10,6 +10,8 @@
   # Information about how the icons work can be found at
   # https://gethomepage.dev/latest/configs/services/#icons
 
+  # TODO (25.05): Redo all config for v0.9 -> v1 update
+
   miscBookmarks = let
     list = lib.optional cfg.firefly-iii.enable {
       "Firefly III" = [
