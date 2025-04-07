@@ -106,12 +106,14 @@ in {
     programs.bash = {
       enable = true;
       enableCompletion = true;
+
       historySize = 1000;
       historyFileSize = -1;
       historyControl = [
         "ignoredups"
         "ignorespace"
       ];
+
       shellOptions = [
         "histappend"
         "checkwinsize"
@@ -119,27 +121,9 @@ in {
         "globstar"
         "checkjobs"
       ];
-      shellAliases =
-        {
-          # Basics
-          grep = "grep --color=auto";
-          diff = "diff --color=auto";
 
-          # NixOS management
-          cdnc = "cd /etc/nixos";
-          cdhm = "cd /etc/nixos/home-manager";
+      inherit (config.setup.terminal) shellAliases;
 
-          # Single letters
-          c = "cat";
-          t = "touch";
-          x = "exit";
-
-          # Two letters
-          cl = "clear";
-          ps = "ps auxf";
-          rm = "rm -v";
-        }
-        // config.setup.terminal.shellAliases;
       bashrcExtra = ''
         # Use ble.sh for syntax highlighting and other improvements to the line editor
         [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh
