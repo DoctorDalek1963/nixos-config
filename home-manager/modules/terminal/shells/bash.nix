@@ -5,7 +5,6 @@
   ...
 }: let
   inherit (config.consts) nvimPath;
-  homedir = config.home.homeDirectory;
 
   git-prompt-repo = pkgs.fetchFromGitHub {
     owner = "git";
@@ -282,26 +281,6 @@ in {
         # We run it through echo to get a newline at the end
         myip() {
             echo $(curl --silent ipinfo.io/ip)
-        }
-
-        # Taken from https://unix.stackexchange.com/a/391698/459068
-        _insert_text_into_terminal() {
-            perl -le 'require "sys/ioctl.ph";
-                    $delay = 0.05;
-                    unless(fork) {
-                        select undef, undef, undef, $delay;
-                        ioctl(STDIN, &TIOCSTI, $_) for split "", join " ", @ARGV;
-                    }' -- "$@";
-        }
-
-        # Fuzzy find in bash history
-        fzh() {
-            local command="$(cat ${homedir}/.bash_history | fzf --tac | awk '{$1=$1};1')"
-            if [ "$command" = "" ]; then
-                return
-            else
-                _insert_text_into_terminal "$command "
-            fi
         }
 
         # Create executable file and open it with nvim
