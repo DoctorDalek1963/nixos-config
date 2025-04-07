@@ -24,7 +24,7 @@
 
       # Two letters
       cl = "clear";
-      ps = "ps auxf";
+      ps = "${pkgs.procps}/bin/ps auxf";
       rm = "rm -v";
 
       resetwifi = let

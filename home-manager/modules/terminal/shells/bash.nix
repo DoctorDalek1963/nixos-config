@@ -242,11 +242,11 @@ in {
         # An easily grepable ps
         psg() {
           if [ "$1" != "" ]; then
-            procs=$(\ps auxf)
+            procs=$(${pkgs.procps}/bin/ps auxf)
             # This just prints the first line of output - the headers of the table
             echo "$procs" | head -n 1
             # This runs ps, filters out this specific grep command, and then greps for whatever I pass as args
-            echo "$procs" | rg -v rg | rg $@
+            echo "$procs" | ${pkgs.ripgrep}/bin/rg -v rg | ${pkgs.ripgrep}/bin/rg $@
           else
             echo "Please supply something to grep for."
           fi
