@@ -294,7 +294,7 @@ in {
         # Easily copy a file
         cclip() {
             if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
-                cat "$1" | wl-copy
+                wl-copy < "$1"
             else
                 cat "$1" | xclip -selection c
             fi
