@@ -168,6 +168,7 @@ in {
         animation =
           [
             "windows, 1, 2.5, overshot"
+            "windowsOut, 1, 2.5, easeInOutQuart"
             "workspaces, 1, 2.5, easeInOutQuart"
           ]
           ++ (
