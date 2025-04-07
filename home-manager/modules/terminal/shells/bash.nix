@@ -5,14 +5,6 @@
   ...
 }: let
   inherit (config.consts) nvimPath;
-
-  git-prompt-repo = pkgs.fetchFromGitHub {
-    owner = "git";
-    repo = "git";
-    rev = "v2.48.1";
-    hash = "sha256-FwkyDATQABKFLXEPp9flVUqdsnhiaACq6t6y3szSjWk=";
-    sparseCheckout = ["contrib/completion/git-prompt.sh"];
-  };
 in {
   config = lib.mkIf config.setup.terminal.shells.bash {
     setup.impermanence = {
@@ -214,7 +206,7 @@ in {
                     GIT_PS1_SHOWUPSTREAM="auto"
                     GIT_PS1_HIDE_IF_PWD_IGNORED=true
 
-                    . ${git-prompt-repo}/contrib/completion/git-prompt.sh
+                    . ${pkgs.git}/share/git/contrib/completion/git-prompt.sh
 
                     if [ "$color_prompt" = yes ]; then
                         PS1="$PS1\[\033[01;31m\]$(__git_ps1 " [%s]")\[\033[00m\]"
