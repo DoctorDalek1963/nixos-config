@@ -10,8 +10,8 @@
   config = {
     setup.terminal.shellAliases = {
       # Basics
-      grep = "grep --color=auto";
-      diff = "diff --color=auto";
+      grep = "${pkgs.gnugrep}/bin/grep --color=auto";
+      diff = "${pkgs.diffutils}/bin/diff --color=auto";
 
       # NixOS management
       cdnc = "cd /etc/nixos";
@@ -25,7 +25,7 @@
       # Two letters
       cl = "clear";
       ps = "${pkgs.procps}/bin/ps auxf";
-      rm = "rm -v";
+      rm = "${pkgs.coreutils}/bin/rm -v";
 
       resetwifi = let
         nmcli = "${pkgs.networkmanager}/bin/nmcli";
