@@ -22,6 +22,18 @@
       };
     }
     .${config.setup.desktopEnvironments.hyprland.theme};
+
+  # Copied from home-manager modules/services/dunst.nix
+  toDunstIni = lib.generators.toINI {
+    mkKeyValue = key: value: let
+      value' =
+        if lib.isBool value
+        then (lib.hm.booleans.yesNo value)
+        else if lib.isString value
+        then ''"${value}"''
+        else toString value;
+    in "${key}=${value'}";
+  };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     services.dunst = {
@@ -45,31 +57,49 @@ in {
           frame_width = config.wayland.windowManager.hyprland.settings.general.border_size;
           corner_radius = config.wayland.windowManager.hyprland.settings.decoration.rounding;
         };
-
-        urgency_low = {
-          background = colors.low_background;
-          frame_color = colors.low_frame;
-          foreground = colors.dark_text;
-        };
-
-        urgency_normal = {
-          background = colors.normal_background;
-          frame_color = colors.normal_frame;
-          foreground = colors.dark_text;
-        };
-
-        urgency_critical = {
-          background = colors.critical_background;
-          frame_color = colors.critical_frame;
-          foreground = colors.dark_text;
-        };
-
-        volume_adjust = {
-          summary = "Volume";
-          stack_tag = "volume-adjust";
-          timeout = 2;
-        };
       };
     };
+
+    xdg.configFile."dunst/dunstrc".text = lib.mkAfter (builtins.concatStringsSep "\n"
+      (map toDunstIni [
+        {
+          easyeffects_preset_switcher_urgency = {
+            summary = "EasyEffects Preset Switcher";
+            urgency = "low";
+          };
+        }
+        {
+          urgency_low = {
+            background = colors.low_background;
+            frame_color = colors.low_frame;
+            foreground = colors.dark_text;
+          };
+
+          urgency_normal = {
+            background = colors.normal_background;
+            frame_color = colors.normal_frame;
+            foreground = colors.dark_text;
+          };
+
+          urgency_critical = {
+            background = colors.critical_background;
+            frame_color = colors.critical_frame;
+            foreground = colors.dark_text;
+          };
+        }
+        {
+          easyeffects_preset_switcher_timeout = {
+            summary = "EasyEffects Preset Switcher";
+            # Regular timeout doesn't work here because it gets overriden by urgency_low
+            override_dbus_timeout = 2;
+          };
+
+          volume_adjust = {
+            summary = "Volume";
+            stack_tag = "volume-adjust";
+            timeout = 2;
+          };
+        }
+      ]));
   };
 }
