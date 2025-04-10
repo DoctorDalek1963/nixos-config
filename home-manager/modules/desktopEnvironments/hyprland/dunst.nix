@@ -63,6 +63,12 @@ in {
           frame_color = colors.critical_frame;
           foreground = colors.dark_text;
         };
+
+        volume_adjust = {
+          summary = "Volume";
+          stack_tag = "volume-adjust";
+          timeout = 2;
+        };
       };
     };
   };

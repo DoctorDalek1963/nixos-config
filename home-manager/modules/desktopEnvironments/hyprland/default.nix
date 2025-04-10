@@ -86,6 +86,26 @@ in {
         wpctl = "${pkgs.wireplumber}/bin/wpctl";
         playerctl = "${pkgs.playerctl}/bin/playerctl";
         hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
+
+        volume-adjust-pkg = pkgs.writeShellApplication {
+          name = "volume-adjust";
+
+          runtimeInputs = with pkgs; [wireplumber coreutils bc dunst];
+
+          text = ''
+            wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$1"
+
+            volume_float="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | tail -1)"
+            volume="$(bc <<< "($volume_float * 100) / 1")"
+
+            progress_hint_float="$(bc -l <<< "($volume / 150) * 100")"
+            progress_hint="$(bc <<< "$progress_hint_float / 1")"
+
+            dunstify "Volume" "$volume / 150" --urgency=low --hints=int:value:"$progress_hint" --hints=string:x-dunst-stack-tag:volume-adjust
+          '';
+        };
+
+        volume-adjust = "${volume-adjust-pkg}/bin/volume-adjust";
       in {
         exec-once = ["systemctl --user start hyprpolkitagent"];
 
@@ -275,10 +295,10 @@ in {
         binde =
           # Volume controls
           [
-            ", Xf86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
-            ", Xf86AudioLowerVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
-            "CTRL, up, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05+"
-            "CTRL, down, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ .05-"
+            ", Xf86AudioRaiseVolume, exec, ${volume-adjust} .05+"
+            ", Xf86AudioLowerVolume, exec, ${volume-adjust} .05-"
+            "CTRL, up, exec, ${volume-adjust} .05+"
+            "CTRL, down, exec, ${volume-adjust} .05-"
           ]
           # Brightness controls
           ++ (let
