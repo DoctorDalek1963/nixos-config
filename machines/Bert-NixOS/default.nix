@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  imports = [./extra-firmware-config.nix];
+  imports = [./disks.nix ./extra-firmware-config.nix ./snapper.nix];
 
   # Most of this config was taken from
   # https://github.com/mcdonc/nixos-pi-zero-2/blob/385daa4529528901a318129c3517f845dce49240/common.nix
