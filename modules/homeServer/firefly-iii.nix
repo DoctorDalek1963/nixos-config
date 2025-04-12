@@ -43,27 +43,9 @@ in {
 
           TRUSTED_PROXIES = "**";
 
-          DB_CONNECTION = "mysql";
-          DB_PORT = config.services.mysql.replication.masterPort;
-          DB_DATABASE = "firefly";
-          DB_USERNAME = config.services.firefly-iii.user;
-          DB_PASSWORD = "";
+          # Make sure "${config.services.firefly-iii.dataDir}/storage/database/database.sqlite" exists
+          DB_CONNECTION = "sqlite";
         };
-      };
-
-      mysql = {
-        enable = true;
-        package = pkgs.mariadb;
-
-        ensureDatabases = [config.services.firefly-iii.settings.DB_DATABASE];
-        ensureUsers = [
-          {
-            name = config.services.firefly-iii.settings.DB_USERNAME;
-            ensurePermissions = {
-              "${config.services.firefly-iii.settings.DB_DATABASE}.*" = "ALL PRIVILEGES";
-            };
-          }
-        ];
       };
 
       nginx.virtualHosts."${cfg.domainName}".locations = {
