@@ -44,6 +44,10 @@ in {
           overwritewebroot = "/nextcloud";
           overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
           htaccess.RewriteBase = "/nextcloud";
+
+          log_type = "syslog";
+          syslog_tag = "Nextcloud";
+          loglevel = 1; # TODO: Set this back to 2 once setup properly to avoid excessive logs
         };
       };
 
