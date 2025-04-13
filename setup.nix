@@ -191,6 +191,8 @@ in {
           transmission = port 9091;
         };
 
+        nextcloud = port 38260;
+
         personalProjects = {
           winter-wonderlights = {
             normal = port 23120;
@@ -238,6 +240,15 @@ in {
               We use a veth system to connect the normal internet to the network namespace used to keep transmission in a VPN. The veth interfaces have the IP addresses 192.168.X.1 and 192.168.X.2, where X is this thirdOctet option.
             '';
           };
+        };
+      };
+
+      nextcloud = {
+        enable = defaultFalse;
+
+        cloudRoot = mkOption {
+          type = types.nonEmptyStr;
+          default = "${config.setup.homeServer.dataRoot}/nextcloud";
         };
       };
 
