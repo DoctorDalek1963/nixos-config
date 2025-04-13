@@ -36,6 +36,8 @@ in {
           dbtype = "sqlite";
         };
 
+        database.createLocally = true;
+
         https = false;
 
         settings = {
