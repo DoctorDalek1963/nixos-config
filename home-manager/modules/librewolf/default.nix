@@ -42,6 +42,8 @@
       "browser.tabs.warnOnClose" = true;
       "browser.toolbars.bookmarks.visibility" = "never"; # Disable the bookmarks bar
 
+      "sidebar.visibility" = "hide-sidebar";
+
       # Enable translations
       "browser.translations.automaticallyPopup" = false;
       "browser.translations.enable" = true;
