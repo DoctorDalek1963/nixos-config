@@ -132,6 +132,8 @@
                 transmission.ovpnName = "ch_airvpn";
               };
 
+              nextcloud.enable = true;
+
               personalProjects = {
                 enable = true;
                 # I only need to enable this around Christmas, when I'm
