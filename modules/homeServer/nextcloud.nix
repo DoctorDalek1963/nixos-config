@@ -36,18 +36,14 @@ in {
           dbtype = "sqlite";
         };
 
-        # https = true;
+        https = false;
 
-        settings = let
-          prot = "http"; # or https
-          host = "127.0.0.1";
-          dir = "/nextcloud";
-        in {
-          overwriteprotocol = prot;
-          overwritehost = host;
-          overwritewebroot = dir;
-          overwrite.cli.url = "${prot}://${host}${dir}/";
-          htaccess.RewriteBase = dir;
+        settings = {
+          overwriteprotocol = "https";
+          overwritehost = "127.0.0.1:${toString cfg.ports.nextcloud}";
+          overwritewebroot = "/nextcloud";
+          overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
+          htaccess.RewriteBase = "/nextcloud";
         };
       };
 
