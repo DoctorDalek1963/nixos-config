@@ -45,6 +45,9 @@ in {
           overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
           htaccess.RewriteBase = "/nextcloud";
 
+          trusted_domains = [cfg.domainName];
+          trusted_proxies = ["127.0.0.1"];
+
           log_type = "syslog";
           syslog_tag = "Nextcloud";
           loglevel = 1; # TODO: Set this back to 2 once setup properly to avoid excessive logs
