@@ -435,7 +435,7 @@ in {
           {
             resources = {
               label = "storage";
-              disk = ["/"];
+              disk = [cfg.dataRoot];
             };
           }
           {
