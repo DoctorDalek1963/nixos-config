@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   inputs,
@@ -43,12 +44,7 @@ in {
       "/winter-wonderlights/docs".return = "301 /winter-wonderlights/docs/ww_effects/index.html";
     };
 
-    boot.postBootCommands = ''
-      if [ ! -d ${env.DATA_DIR} ]; then
-        mkdir -p ${env.DATA_DIR}
-        cp -rv ${inputs.winter-wonderlights}/data/* ${env.DATA_DIR}/
-      fi
-    '';
+    systemd.tmpfiles.rules = ["d ${env.DATA_DIR} 0755 user group - -"];
 
     # The tailscale-certificates.service can take a few seconds to get the
     # certificates initially, but the server requires them. The --require-tls
@@ -58,8 +54,17 @@ in {
     systemd.services.winter-wonderlights-server = {
       serviceConfig = {
         Type = "simple";
+
         Restart = "on-failure";
         RestartSec = "10s";
+
+        ExecStartPre = pkgs.writeShellScript "copy-winter-wonderlights-data-if-empty" ''
+          # If empty
+          if [ -z "$(ls -A ${env.DATA_DIR})" ]; then
+              cp -rv ${inputs.winter-wonderlights}/data/* ${env.DATA_DIR}/
+          fi
+        '';
+
         ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
       wantedBy = ["network-online.target" "tailscale-certificates.service"];

@@ -33,17 +33,16 @@ in {
       };
     };
 
-    systemd.services.lidarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+    systemd = {
+      services.lidarr = {
+        after = ["servarr-config.service"];
+        requires = ["servarr-config.service"];
+      };
+
+      tmpfiles.rules = [
+        "d ${cfgMs.mediaRoot}/music 0775 lidarr media - -"
+        "d ${cfgMs.mediaRoot}/torrents/downloads/music 0775 transmission media - -"
+      ];
     };
-
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/music
-      chown -R lidarr:media ${cfgMs.mediaRoot}/music
-
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/music
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/music
-    '';
   };
 }

@@ -105,12 +105,11 @@ in {
       };
     };
 
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads
-      mkdir -p ${cfgMs.mediaRoot}/torrents/incomplete
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents
-      chmod -R a+r ${cfgMs.mediaRoot}/torrents
-    '';
+    systemd.tmpfiles.rules = [
+      "d ${cfgMs.mediaRoot}/torrents 0775 transmission media - -"
+      "d ${cfgMs.mediaRoot}/torrents/downloads 0775 transmission media - -"
+      "d ${cfgMs.mediaRoot}/torrents/incomplete 0775 transmission media - -"
+    ];
 
     # These service configs were mostly taken from
     # https://github.com/conallprendergast/openvpn-netns-systemd

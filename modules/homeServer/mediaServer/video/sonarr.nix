@@ -33,17 +33,16 @@ in {
       };
     };
 
-    systemd.services.sonarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+    systemd = {
+      services.sonarr = {
+        after = ["servarr-config.service"];
+        requires = ["servarr-config.service"];
+      };
+
+      tmpfiles.rules = [
+        "d ${cfgMs.mediaRoot}/telly 0775 jellyfin media - -"
+        "d ${cfgMs.mediaRoot}/torrents/downloads/telly 0775 transmission media - -"
+      ];
     };
-
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/telly
-      chown -R jellyfin:media ${cfgMs.mediaRoot}/telly
-
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/telly
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/telly
-    '';
   };
 }

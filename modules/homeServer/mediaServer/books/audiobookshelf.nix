@@ -15,9 +15,6 @@ in {
       port = cfg.ports.mediaServer.audiobookshelf;
     };
 
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/audiobooks
-      chown -R audiobookshelf:media ${cfgMs.mediaRoot}/audiobooks
-    '';
+    systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot}/audiobookshelf 0775 audiobookshelf media - -"];
   };
 }

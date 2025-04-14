@@ -11,11 +11,6 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     users.groups.media = {};
 
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}
-      chown root:media ${cfgMs.mediaRoot}
-      chmod -R a+r ${cfgMs.mediaRoot}
-      chmod -R g+w ${cfgMs.mediaRoot}
-    '';
+    systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot} 0775 root media - -"];
   };
 }

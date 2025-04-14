@@ -35,14 +35,13 @@ in {
       };
     };
 
-    systemd.services.bazarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
-    };
+    systemd = {
+      services.bazarr = {
+        after = ["servarr-config.service"];
+        requires = ["servarr-config.service"];
+      };
 
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/subtitles
-      chown -R bazarr:media ${cfgMs.mediaRoot}/subtitles
-    '';
+      tmpfiles.rules = ["d ${cfgMs.mediaRoot}/subtitles 0775 bazarr media - -"];
+    };
   };
 }

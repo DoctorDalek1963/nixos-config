@@ -33,14 +33,13 @@ in {
       };
     };
 
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/ebooks
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/ebooks
-    '';
+    systemd = {
+      services.readarr = {
+        after = ["servarr-config.service"];
+        requires = ["servarr-config.service"];
+      };
 
-    systemd.services.readarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      tmpfiles.rules = ["d ${cfgMs.mediaRoot}/torrents/downloads/ebooks 0775 transmission media - -"];
     };
   };
 }

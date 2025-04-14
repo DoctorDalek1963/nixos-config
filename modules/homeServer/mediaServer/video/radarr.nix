@@ -33,17 +33,16 @@ in {
       };
     };
 
-    systemd.services.radarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+    systemd = {
+      services.radarr = {
+        after = ["servarr-config.service"];
+        requires = ["servarr-config.service"];
+      };
+
+      tmpfiles.rules = [
+        "d ${cfgMs.mediaRoot}/movies 0775 jellyfin media - -"
+        "d ${cfgMs.mediaRoot}/torrents/downloads/movies 0775 transmission media - -"
+      ];
     };
-
-    boot.postBootCommands = ''
-      mkdir -p ${cfgMs.mediaRoot}/movies
-      chown -R jellyfin:media ${cfgMs.mediaRoot}/movies
-
-      mkdir -p ${cfgMs.mediaRoot}/torrents/downloads/movies
-      chown -R transmission:media ${cfgMs.mediaRoot}/torrents/downloads/movies
-    '';
   };
 }

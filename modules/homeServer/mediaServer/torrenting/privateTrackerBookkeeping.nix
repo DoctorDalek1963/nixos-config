@@ -48,7 +48,7 @@
   };
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    boot.postBootCommands = "mkdir -p ${dir}";
+    systemd.tmpfiles.rules = ["d ${dir} 0755 root root - -"];
 
     systemd = {
       services = mkService {
