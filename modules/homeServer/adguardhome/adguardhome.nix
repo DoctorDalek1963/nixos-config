@@ -28,7 +28,8 @@ in {
 
           upstream_dns =
             ["127.0.0.1:${toString cfg.ports.unbound}"]
-            ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
+            ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}"
+            ++ lib.optional config.setup.secrets.tailscale.enable "100.100.100.100";
           bootstrap_dns = upstream_dns;
         };
 
