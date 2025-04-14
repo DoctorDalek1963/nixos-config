@@ -43,7 +43,7 @@ in {
 
         settings = {
           overwriteprotocol = "https";
-          overwritehost = "${config.services.nextcloud.hostName}:${toString cfg.ports.nextcloud}";
+          overwritehost = cfg.domainName;
           overwritewebroot = "/nextcloud";
           overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
           htaccess.RewriteBase = "/nextcloud";
