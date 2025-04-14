@@ -6,6 +6,8 @@
   ...
 }: let
   launch-btop = lib.mkIf config.setup.terminal.tools.btop.enable "${config.wayland.windowManager.hyprland.settings."$launchInTerminal"} ${config.programs.btop.package}/bin/btop";
+
+  hyprctl-exit = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch exit";
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
@@ -202,13 +204,13 @@ in {
           "custom/power" = {
             format = "";
             tooltip-format = "Shutdown";
-            on-click = "/run/current-system/sw/bin/shutdown now";
+            on-click = "${hyprctl-exit}; /run/current-system/sw/bin/shutdown now";
           };
 
           "custom/logout" = {
             format = "󰍃";
             tooltip-format = "Logout";
-            on-click = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch exit";
+            on-click = hyprctl-exit;
           };
 
           "custom/lock" = {
@@ -220,7 +222,7 @@ in {
           "custom/reboot" = {
             format = "";
             tooltip-format = "Reboot";
-            on-click = "/run/current-system/sw/bin/reboot";
+            on-click = "${hyprctl-exit}; /run/current-system/sw/bin/reboot";
           };
         }
       ];
