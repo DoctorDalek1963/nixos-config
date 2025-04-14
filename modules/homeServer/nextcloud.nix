@@ -37,6 +37,7 @@ in {
         };
 
         database.createLocally = true;
+        configureRedis = true;
 
         https = false;
 
