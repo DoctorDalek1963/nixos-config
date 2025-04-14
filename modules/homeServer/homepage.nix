@@ -93,6 +93,25 @@
     then [{Infrastructure = list;}]
     else [];
 
+  storageServices = let
+    # Also Scrutiny and Unmanic
+    list = lib.optional cfg.nextcloud.enable {
+      "Nextcloud" = {
+        icon = "nextcloud-blue.svg";
+        href = "https://${cfg.domainName}/nextcloud";
+        description = "File storage";
+        widget = {
+          type = "nextcloud";
+          url = "https://${cfg.domainName}/nextcloud";
+          key = "{{HOMEPAGE_VAR_NEXTCLOUD_KEY}}";
+        };
+      };
+    };
+  in
+    if builtins.length list > 0
+    then [{Storage = list;}]
+    else [];
+
   mediaServices = let
     list = lib.optionals cfgMs.enable (
       (
@@ -319,7 +338,7 @@ in {
         listenPort = cfg.ports.homepage;
 
         bookmarks = miscBookmarks ++ personalProjectsBookmarks;
-        services = infraServices ++ mediaServices ++ mediaDownloadServices;
+        services = infraServices ++ storageServices ++ mediaServices ++ mediaDownloadServices;
 
         settings = {
           headerStyle = "boxed";
@@ -331,6 +350,13 @@ in {
                 style = "row";
                 columns = 2;
                 icon = "mdi-server";
+              };
+            }
+            {
+              Storage = {
+                style = "row";
+                columns = builtins.length storageServices;
+                icon = "mdi-harddisk";
               };
             }
             {
@@ -409,7 +435,7 @@ in {
           {
             resources = {
               label = "storage";
-              disk = ["/"];
+              disk = [cfg.dataRoot];
             };
           }
           {
