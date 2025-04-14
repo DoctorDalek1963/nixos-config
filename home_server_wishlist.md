@@ -4,7 +4,6 @@
 - [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) for dashboards and graphs
 
 # Storage
-- [Nextcloud](https://nextcloud.com/) for cloud data storage
 - [PhotoPrism](https://www.photoprism.app/) for cloud photo storage
 - [Vaultwarden](https://github.com/dani-garcia/vaultwarden) for password management
 - [Paperless-ngx](https://docs.paperless-ngx.com/) for scanning and preserving documents (with [Gotenberg](https://gotenberg.dev/) to help convert to PDF?)
