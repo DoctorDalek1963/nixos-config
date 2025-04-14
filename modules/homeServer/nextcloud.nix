@@ -53,7 +53,7 @@ in {
 
           log_type = "syslog";
           syslog_tag = "Nextcloud";
-          loglevel = 1; # TODO: Set this back to 2 once setup properly to avoid excessive logs
+          loglevel = 2;
         };
       };
 
@@ -70,7 +70,6 @@ in {
 
           recommendedProxySettings = false;
 
-          # proxy_pass http://127.0.0.1:8080/; # tailing / is important!
           extraConfig = ''
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
