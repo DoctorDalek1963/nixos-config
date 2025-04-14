@@ -9,5 +9,7 @@ in {
 
   config = lib.mkIf (cfg.enable && cfg.myspeed.enable) {
     services.myspeed.enable = true;
+
+    setup.impermanence.keepDirs = ["${config.services.myspeed.dataDir}/data"];
   };
 }

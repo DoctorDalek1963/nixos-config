@@ -6,6 +6,8 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
+    setup.impermanence.keepDirs = [config.services.unbound.stateDir];
+
     services.unbound = {
       enable = true;
 

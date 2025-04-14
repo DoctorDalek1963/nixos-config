@@ -7,6 +7,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
+    setup.impermanence.keepDirs = [config.services.lidarr.dataDir];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/lidarr" = {

@@ -10,6 +10,11 @@
   libraryPath = "${cfgMs.mediaRoot}/ebooks";
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
+    setup.impermanence.keepDirs = [
+      "/var/lib/calibre-server"
+      "/var/lib/calibre-web"
+    ];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/calibre" = {

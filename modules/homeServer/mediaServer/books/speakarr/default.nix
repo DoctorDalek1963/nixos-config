@@ -9,6 +9,8 @@ in {
   imports = [./options.nix];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
+    setup.impermanence.keepDirs = [config.services.speakarr.dataDir];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/speakarr" = {

@@ -8,6 +8,8 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf (cfg.enable && cfg.firefly-iii.enable) {
+    setup.impermanence.keepDirs = [config.services.firefly-iii.dataDir];
+
     sops.secrets = {
       "home-server/firefly-iii/key-file" = {
         mode = "0400";

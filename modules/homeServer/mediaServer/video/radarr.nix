@@ -7,6 +7,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.movies) {
+    setup.impermanence.keepDirs = [config.services.radarr.dataDir];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/radarr" = {

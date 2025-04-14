@@ -8,6 +8,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
+    setup.impermanence.keepDirs = ["/var/lib/navidrome"];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/navidrome" = {
         proxyPass = "http://localhost:${toString cfg.ports.mediaServer.navidrome}";

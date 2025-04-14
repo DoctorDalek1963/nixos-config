@@ -8,6 +8,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
+    setup.impermanence.keepDirs = [config.services.transmission.home];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/transmission" = {
         proxyPass =

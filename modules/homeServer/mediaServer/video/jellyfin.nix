@@ -7,6 +7,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
+    setup.impermanence.keepDirs = [config.services.jellyfin.dataDir];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/jellyfin" = {

@@ -7,6 +7,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
+    setup.impermanence.keepDirs = ["/var/lib/private/prowlarr"];
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/prowlarr" = {

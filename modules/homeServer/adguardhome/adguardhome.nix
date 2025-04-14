@@ -6,6 +6,8 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
+    setup.impermanence.keepDirs = ["/var/lib/private/AdGuardHome"];
+
     services.adguardhome = {
       enable = true;
 

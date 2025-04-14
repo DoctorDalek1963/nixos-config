@@ -8,6 +8,11 @@
   cfgNc = config.setup.homeServer.nextcloud;
 in {
   config = lib.mkIf (cfg.enable && cfgNc.enable) {
+    setup.impermanence.keepDirs = [
+      config.services.nextcloud.home
+      "/var/lib/redis-nextcloud"
+    ];
+
     sops.secrets = {
       "home-server/nextcloud/admin-pass" = {
         mode = "0400";

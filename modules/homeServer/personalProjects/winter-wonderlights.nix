@@ -30,6 +30,8 @@
   winter-wonderlights-server = inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override env;
 in {
   config = lib.mkIf (cfg.enable && cfgPp.enable && cfgPp.winter-wonderlights) {
+    setup.impermanence.keepDirs = env.DATA_DIR;
+
     services.nginx.virtualHosts."${cfg.domainName}".locations = {
       "/winter-wonderlights/" = {
         alias = "${winter-wonderlights-web}/";

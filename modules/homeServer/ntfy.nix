@@ -6,6 +6,8 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf (cfg.enable && cfg.ntfy.enable) {
+    setup.impermanence.keepDirs = ["/var/lib/private/ntfy-sh"];
+
     services.ntfy-sh = {
       enable = true;
 

@@ -7,6 +7,8 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
+    setup.impermanence.keepDirs = ["/var/lib/audiobookshelf"];
+
     services.audiobookshelf = {
       enable = true;
       group = "media";
