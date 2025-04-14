@@ -23,7 +23,7 @@ in {
 
         datadir = cfgNc.cloudRoot;
 
-        hostName = "non-exposed-nextcloud-hostname";
+        hostName = "nextcloud.${cfg.domainName}";
 
         extraAppsEnable = true;
         extraApps = {
