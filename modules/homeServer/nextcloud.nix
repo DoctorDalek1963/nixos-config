@@ -66,7 +66,7 @@ in {
         ];
 
         "${cfg.domainName}".locations."/nextcloud/" = {
-          proxyPass = "http://${config.services.nextcloud.hostName}:${toString cfg.ports.nextcloud}/";
+          proxyPass = "http://127.0.0.1:${toString cfg.ports.nextcloud}/";
 
           # proxy_pass http://127.0.0.1:8080/; # tailing / is important!
           extraConfig = ''
@@ -74,7 +74,7 @@ in {
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-NginX-Proxy true;
             proxy_set_header X-Forwarded-Proto http;
-            proxy_set_header Host $host;
+            proxy_set_header Host ${config.services.nextcloud.hostName};
             proxy_cache_bypass $http_upgrade;
             proxy_redirect off;
           '';
