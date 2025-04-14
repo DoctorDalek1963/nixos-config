@@ -43,7 +43,7 @@ in {
 
         settings = {
           overwriteprotocol = "https";
-          overwritehost = "127.0.0.1:${toString cfg.ports.nextcloud}";
+          overwritehost = "${config.services.nextcloud.hostName}:${toString cfg.ports.nextcloud}";
           overwritewebroot = "/nextcloud";
           overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
           htaccess.RewriteBase = "/nextcloud";
@@ -66,7 +66,7 @@ in {
         ];
 
         "${cfg.domainName}".locations."/nextcloud/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.ports.nextcloud}/";
+          proxyPass = "http://${config.services.nextcloud.hostName}:${toString cfg.ports.nextcloud}/";
 
           # proxy_pass http://127.0.0.1:8080/; # tailing / is important!
           extraConfig = ''
