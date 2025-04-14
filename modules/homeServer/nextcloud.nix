@@ -25,7 +25,6 @@ in {
 
         hostName = "non-exposed-nextcloud-hostname";
 
-        appstoreEnable = false;
         extraAppsEnable = true;
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) calendar contacts tasks;
