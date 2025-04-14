@@ -130,6 +130,13 @@ in {
       domainName = mkOption {
         type = types.nonEmptyStr;
       };
+
+      # NOTE: When using impermanence, we intentionally do not persist dataRoot
+      # or any directories that default to being inside it. This is because
+      # dataRoot is expected to be mapped to a different drive than normal /,
+      # such as an external hard drive or RAID array. As such, it doesn't make
+      # sense to have things on dataRoot persist using the normal mechanism,
+      # since the whole drive should be persistent anyway.
       dataRoot = mkOption {
         type = types.nonEmptyStr;
       };
@@ -214,6 +221,7 @@ in {
       mediaServer = {
         enable = defaultFalse;
 
+        # See dataRoot for note about persisting on impermanent setups
         mediaRoot = mkOption {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/media";
@@ -246,6 +254,7 @@ in {
       nextcloud = {
         enable = defaultFalse;
 
+        # See dataRoot for note about persisting on impermanent setups
         cloudRoot = mkOption {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/nextcloud";
