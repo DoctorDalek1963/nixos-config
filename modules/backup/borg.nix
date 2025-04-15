@@ -35,7 +35,10 @@ in {
         dateFormat = "+%Y-%m-%dT%H:%M:%S";
         inhibitsSleep = true;
         archiveBaseName = "${config.setup.hostname}-auto";
-        # extraArgs = "--remote-path=borg14";
+
+        # TODO (25.05): Uncomment these when the borg service expands extraArgs properly
+        # extraArgs = ["--remote-path=borg14"];
+        # extraCreateArgs = ["--stats" "--checkpoint-interval 600"]
 
         repo = "zh5288@zh5288.rsync.net:nixos-backups";
         encryption = {
