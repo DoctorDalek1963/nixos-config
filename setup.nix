@@ -280,6 +280,24 @@ in {
         default = [];
         description = "The users who are allowed to access the backup server directly.";
       };
+
+      paths = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "The paths that will be included in the backup.";
+      };
+
+      exclude = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "Paths to exclude from the backup.";
+      };
+
+      startAt = mkOption {
+        type = types.either types.str (types.listOf types.str);
+        default = "00:00";
+        description = "When or how often the automatic backup should run.";
+      };
     };
 
     # === Impermanence
