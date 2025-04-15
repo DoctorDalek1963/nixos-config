@@ -22,6 +22,7 @@ in {
     ./modules/laptop
 
     ./modules/androidTools
+    ./modules/backup
     ./modules/bluetooth
     ./modules/desktopEnvironments
     ./modules/displayManagers
@@ -267,6 +268,17 @@ in {
         tictactoe = defaultTrue;
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
+      };
+    };
+
+    # === Backup
+    backup = {
+      enable = defaultFalse;
+
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "The users who are allowed to access the backup server directly.";
       };
     };
 
