@@ -112,6 +112,12 @@
             hostname = "Bert-NixOS";
             isGraphical = false;
 
+            backup = {
+              enable = true;
+              users = ["pi"];
+              startAt = "04:00";
+            };
+
             homeServer = {
               enable = true;
               domainName = "bert-nixos.triceratops-egret.ts.net";

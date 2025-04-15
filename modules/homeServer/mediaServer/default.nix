@@ -14,5 +14,7 @@ in {
     users.groups.media = {};
 
     systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot} 0775 root media - -"];
+
+    setup.backup.paths = [cfgMs.mediaRoot];
   };
 }
