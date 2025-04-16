@@ -298,6 +298,18 @@ in {
         default = "00:00";
         description = "When or how often the automatic backup should run.";
       };
+
+      ntfy = {
+        url = mkOption {
+          type = types.nullOr types.nonEmptyStr;
+          default = null;
+          description = "The URL of the ntfy.sh server to use for sending notifications.";
+        };
+        topic = mkOption {
+          type = types.nonEmptyStr;
+          default = "nixos-backups";
+        };
+      };
     };
 
     # === Impermanence

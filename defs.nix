@@ -121,6 +121,7 @@
               enable = true;
               users = ["pi"];
               startAt = "04:00";
+              ntfy.url = "https://localhost:4001";
             };
 
             homeServer = {
