@@ -44,6 +44,11 @@
 
           impermanence.enable = true;
 
+          backup = {
+            enable = true;
+            users = ["dyson"];
+          };
+
           virtualBox.host = {
             # enable = true;
             asSpecialisation = true;
@@ -194,6 +199,11 @@
           isLaptop = true;
 
           impermanence.enable = true;
+
+          backup = {
+            enable = true;
+            users = ["dyson"];
+          };
 
           profilePictures.dyson = ./files/profile-pictures/dyson.png;
 
