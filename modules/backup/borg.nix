@@ -40,6 +40,21 @@ in {
         # extraArgs = ["--remote-path=borg14"];
         # extraCreateArgs = ["--stats" "--checkpoint-interval 600"]
 
+        # An empty list here makes the service not start automatically, but
+        # only be triggered manually. When we have no paths, we obviously don't
+        # want to do the backup, but we still want to have the script that
+        # wraps borg with these credentials in environment variables.
+        startAt =
+          if builtins.length cfg.paths == 0
+          then []
+          else cfg.startAt;
+
+        compression = "auto,lzma";
+        prune.keep = {
+          daily = 7;
+          weekly = 4;
+        };
+
         repo = "zh5288@zh5288.rsync.net:nixos-backups";
         encryption = {
           mode = "repokey";
@@ -69,27 +84,7 @@ in {
           chmod 0400 $sshKeyDir/rsync_net
 
           export BORG_RSH="ssh -i $sshKeyDir/rsync_net"
-
-          ${
-            # It's nice to have the script that wraps borg with these credentials
-            # in environment variables even on machines that don't have anything
-            # to backup, so we just exit in that case
-            if builtins.length cfg.paths == 0
-            then ''
-              echo "Nothing to backup"
-              exit 0
-            ''
-            else ""
-          }
         '';
-
-        compression = "auto,lzma";
-        inherit (cfg) startAt;
-
-        prune.keep = {
-          daily = 7;
-          weekly = 4;
-        };
       };
     })
     (lib.mkIf (cfg.enable && cfg.ntfy.url != null) {
