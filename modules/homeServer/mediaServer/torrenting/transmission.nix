@@ -8,7 +8,10 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    setup.impermanence.keepDirs = [config.services.transmission.home];
+    setup = {
+      impermanence.keepDirs = [config.services.transmission.home];
+      backup.exclude = ["${cfgMs.mediaRoot}/torrents"];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/transmission" = {
