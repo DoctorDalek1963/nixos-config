@@ -7,6 +7,7 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
+    # TODO: Next time I enable this, add setup.backup.paths for databases etc.
     setup.impermanence.keepDirs = [config.services.jellyfin.dataDir];
 
     services = {

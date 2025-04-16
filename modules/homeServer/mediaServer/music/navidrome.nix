@@ -8,7 +8,14 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
-    setup.impermanence.keepDirs = ["/var/lib/navidrome"];
+    setup = {
+      impermanence.keepDirs = ["/var/lib/navidrome"];
+      backup.paths = [
+        "/var/lib/navidrome.db"
+        "/var/lib/navidrome.db-shm"
+        "/var/lib/navidrome.db-wal"
+      ];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations."/navidrome" = {
