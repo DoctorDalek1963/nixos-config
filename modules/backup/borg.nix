@@ -22,62 +22,72 @@ in {
       mode = "0440";
     };
 
-    services.borgbackup.jobs.automatic-rsync-net =
-      lib.mkIf
-      (cfg.enable && builtins.length cfg.paths > 0) {
-        group = "backup";
+    services.borgbackup.jobs.automatic-rsync-net = lib.mkIf cfg.enable {
+      group = "backup";
 
-        inherit (cfg) paths;
-        exclude = ["/nix"] ++ cfg.exclude;
+      inherit (cfg) paths;
+      exclude = ["/nix"] ++ cfg.exclude;
 
-        doInit = false;
+      doInit = false;
 
-        dateFormat = "+%Y-%m-%dT%H:%M:%S";
-        inhibitsSleep = true;
-        archiveBaseName = "${config.setup.hostname}-auto";
+      dateFormat = "+%Y-%m-%dT%H:%M:%S";
+      inhibitsSleep = true;
+      archiveBaseName = "${config.setup.hostname}-auto";
 
-        # TODO (25.05): Uncomment these when the borg service expands extraArgs properly
-        # extraArgs = ["--remote-path=borg14"];
-        # extraCreateArgs = ["--stats" "--checkpoint-interval 600"]
+      # TODO (25.05): Uncomment these when the borg service expands extraArgs properly
+      # extraArgs = ["--remote-path=borg14"];
+      # extraCreateArgs = ["--stats" "--checkpoint-interval 600"]
 
-        repo = "zh5288@zh5288.rsync.net:nixos-backups";
-        encryption = {
-          mode = "repokey";
-          passCommand = "cat ${config.sops.secrets."borgbackup/repos/rsync.net/nixos-backups/passphrase".path}";
-        };
-
-        environment.BORG_RSH = "ssh -i ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path}";
-
-        # This is bizarre. Basically, the SSH private key for rsync.net has
-        # mode 0440 so that any user in the backup group (like my normal user)
-        # can access it. For those users, this is fine. But for some reason,
-        # when running the systemd service, we get an SSH error that the
-        # permissions are too open.
-
-        # I believe this is because the service is run as root and the private
-        # key is owned by root, but even if I make a new user specifically to
-        # own the key, I still get the permission error. Perhaps it only works
-        # for normal users because I symlink the keys to ~/.ssh.
-
-        # Either way, copying the private key and changing the mode works as a
-        # little hack just for the service.
-        preHook = ''
-          sshKeyDir="$(mktemp -d)"
-          trap "rm -rf $sshKeyDir" EXIT
-
-          cp ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path} $sshKeyDir/rsync_net
-          chmod 0400 $sshKeyDir/rsync_net
-
-          export BORG_RSH="ssh -i $sshKeyDir/rsync_net"
-        '';
-
-        compression = "auto,lzma";
-        inherit (cfg) startAt;
-
-        prune.keep = {
-          daily = 7;
-          weekly = 4;
-        };
+      repo = "zh5288@zh5288.rsync.net:nixos-backups";
+      encryption = {
+        mode = "repokey";
+        passCommand = "cat ${config.sops.secrets."borgbackup/repos/rsync.net/nixos-backups/passphrase".path}";
       };
+
+      environment.BORG_RSH = "ssh -i ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path}";
+
+      # This is bizarre. Basically, the SSH private key for rsync.net has
+      # mode 0440 so that any user in the backup group (like my normal user)
+      # can access it. For those users, this is fine. But for some reason,
+      # when running the systemd service, we get an SSH error that the
+      # permissions are too open.
+
+      # I believe this is because the service is run as root and the private
+      # key is owned by root, but even if I make a new user specifically to
+      # own the key, I still get the permission error. Perhaps it only works
+      # for normal users because I symlink the keys to ~/.ssh.
+
+      # Either way, copying the private key and changing the mode works as a
+      # little hack just for the service.
+      preHook = ''
+        sshKeyDir="$(mktemp -d)"
+        trap "rm -rf $sshKeyDir" EXIT
+
+        cp ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path} $sshKeyDir/rsync_net
+        chmod 0400 $sshKeyDir/rsync_net
+
+        export BORG_RSH="ssh -i $sshKeyDir/rsync_net"
+
+        ${
+          # It's nice to have the script that wraps borg with these credentials
+          # in environment variables even on machines that don't have anything
+          # to backup, so we just exit in that case
+          if builtins.length cfg.paths == 0
+          then ''
+            echo "Nothing to backup"
+            exit 0
+          ''
+          else ""
+        }
+      '';
+
+      compression = "auto,lzma";
+      inherit (cfg) startAt;
+
+      prune.keep = {
+        daily = 7;
+        weekly = 4;
+      };
+    };
   };
 }
