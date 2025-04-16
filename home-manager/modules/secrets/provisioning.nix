@@ -73,11 +73,6 @@ in {
             mode = "0600";
           };
 
-          "ssh/authorized_keys" = {
-            path = "${homedir}/.ssh/authorized_keys";
-            mode = "0600";
-          };
-
           "ssh/config" = {
             path = "${homedir}/.ssh/config";
             mode = "0644";
