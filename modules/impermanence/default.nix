@@ -43,13 +43,20 @@ in {
     # NOTE: This option has broken boots before in VirtualBox-NixOS
     programs.fuse.userAllowOther = true;
 
-    systemd.tmpfiles.rules =
-      builtins.attrValues
-      (builtins.mapAttrs
-        (name: conf: "d /persist${conf.home.homeDirectory} 0700 ${name} users - -")
-        config.home-manager.users);
-
     boot = {
+      postBootCommands = let
+        commands =
+          builtins.attrValues
+          (builtins.mapAttrs (
+              name: conf: ''
+                mkdir -p /persist${conf.home.homeDirectory}
+                chown ${name}:users /persist${conf.home.homeDirectory}
+              ''
+            )
+            config.home-manager.users);
+      in
+        lib.strings.concatStringsSep "\n" commands;
+
       kernelParams = lib.optional cfg.debug "rd.systemd.debug_shell";
 
       initrd.systemd = {
