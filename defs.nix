@@ -284,6 +284,76 @@
   #   ];
   # };
 
+  "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
+    system = "x86_64-linux";
+    specialArgs = {inherit inputs system;};
+    modules = [
+      inputs.lix-module.nixosModules.default
+      ./setup.nix
+      ./machines/Sasha-NixOS
+      {
+        setup = {
+          hostname = "Sasha-NixOS";
+          isGraphical = false;
+
+          impermanence.enable = true;
+
+          backup = {
+            enable = true;
+            users = ["dyson"];
+            startAt = "02:00";
+            ntfy.url = "https://localhost:4001";
+          };
+
+          homeServer = {
+            enable = true;
+            domainName = "sasha-nixos.triceratops-egret.ts.net";
+            dataRoot = "/data";
+
+            adguardhome.enable = true;
+            myspeed.enable = true;
+            ntfy.enable = true;
+
+            firefly-iii.enable = true;
+
+            squid.enable = true;
+
+            mediaServer = {
+              enable = true;
+              transmission.ovpnName = "ch_airvpn";
+            };
+
+            nextcloud.enable = true;
+
+            personalProjects = {
+              enable = true;
+              # This only works on a Raspberry Pi
+              winter-wonderlights = false;
+            };
+          };
+
+          secrets = {
+            enable = true;
+            userPasswords.enable = true;
+            networking = {
+              enable = true;
+              simpleWifiNetworkNames = ["HOME"];
+            };
+            vpn = {
+              enable = true;
+              vpns = [
+                {
+                  vpnName = "ch_airvpn";
+                  users = ["dyson"];
+                }
+              ];
+            };
+          };
+        };
+      }
+    ];
+  };
+
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};

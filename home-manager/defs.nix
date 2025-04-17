@@ -137,6 +137,17 @@
   #   };
   # };
 
+  Sasha-NixOS.dyson.setup = {
+    username = "dyson";
+
+    terminal = {
+      tools = {
+        git-all = false;
+        nvim = "small";
+      };
+    };
+  };
+
   Harold-NixOS.dyson.setup = {
     username = "dyson";
 
