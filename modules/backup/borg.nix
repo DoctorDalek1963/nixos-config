@@ -15,6 +15,11 @@ in {
         })
         cfg.users);
 
+      setup.impermanence.keepDirs = [
+        "/root/.config/borg"
+        "/root/.cache/borg"
+      ];
+
       # The key is also defined in sops-secrets/secrets.yaml but not configured
       # here because it only needs to be available in the rare case where I
       # actually need it for recovery
