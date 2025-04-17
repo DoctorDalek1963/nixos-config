@@ -47,6 +47,7 @@
           backup = {
             enable = true;
             users = ["dyson"];
+            startAt = [];
           };
 
           virtualBox.host = {
@@ -204,6 +205,7 @@
           backup = {
             enable = true;
             users = ["dyson"];
+            startAt = [];
           };
 
           profilePictures.dyson = ./files/profile-pictures/dyson.png;
