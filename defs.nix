@@ -245,44 +245,44 @@
     ];
   };
 
-  "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
-    specialArgs = {inherit inputs system;};
-    modules = [
-      inputs.lix-module.nixosModules.default
-      ./setup.nix
-      # ./machines/Olivia-NixOS # TODO: When I get the actual laptop, implement the machine
-      {
-        setup = {
-          hostname = "Olivia-NixOS";
-          isLaptop = true;
-
-          users.rebecca = true;
-
-          printing = {
-            enable = true;
-            users = ["dyson" "rebecca"];
-            specificPrinters.canonPixmaMG3250 = true;
-          };
-
-          secrets = {
-            enable = true;
-            userPasswords.enable = true;
-            networking = {
-              enable = true;
-              simpleWifiNetworkNames = ["HOME"];
-            };
-          };
-
-          desktopEnvironments.cinnamon.enable = true;
-          displayManagers.sddm = {
-            enable = true;
-            theme = "sugar-light-nixos-simple-blue";
-          };
-        };
-      }
-    ];
-  };
+  # "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
+  #   system = "x86_64-linux";
+  #   specialArgs = {inherit inputs system;};
+  #   modules = [
+  #     inputs.lix-module.nixosModules.default
+  #     ./setup.nix
+  #     # ./machines/Olivia-NixOS # TODO: When I get the actual laptop, implement the machine
+  #     {
+  #       setup = {
+  #         hostname = "Olivia-NixOS";
+  #         isLaptop = true;
+  #
+  #         users.rebecca = true;
+  #
+  #         printing = {
+  #           enable = true;
+  #           users = ["dyson" "rebecca"];
+  #           specificPrinters.canonPixmaMG3250 = true;
+  #         };
+  #
+  #         secrets = {
+  #           enable = true;
+  #           userPasswords.enable = true;
+  #           networking = {
+  #             enable = true;
+  #             simpleWifiNetworkNames = ["HOME"];
+  #           };
+  #         };
+  #
+  #         desktopEnvironments.cinnamon.enable = true;
+  #         displayManagers.sddm = {
+  #           enable = true;
+  #           theme = "sugar-light-nixos-simple-blue";
+  #         };
+  #       };
+  #     }
+  #   ];
+  # };
 
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
