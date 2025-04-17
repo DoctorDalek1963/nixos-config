@@ -11,9 +11,9 @@ in {
     setup = {
       impermanence.keepDirs = ["/var/lib/navidrome"];
       backup.paths = [
-        "/var/lib/navidrome.db"
-        "/var/lib/navidrome.db-shm"
-        "/var/lib/navidrome.db-wal"
+        "/var/lib/navidrome/navidrome.db"
+        "/var/lib/navidrome/navidrome.db-shm"
+        "/var/lib/navidrome/navidrome.db-wal"
       ];
     };
 
