@@ -245,16 +245,17 @@
     ];
   };
 
-  "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
+  "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
-      ./machines/Sasha-NixOS
+      # ./machines/Olivia-NixOS # TODO: When I get the actual laptop, implement the machine
       {
         setup = {
-          hostname = "Sasha-NixOS";
+          hostname = "Olivia-NixOS";
+          isLaptop = true;
 
           users.rebecca = true;
 

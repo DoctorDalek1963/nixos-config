@@ -62,7 +62,7 @@
     };
   };
 
-  Sasha-NixOS = {
+  Olivia-NixOS = {
     dyson.setup = {
       username = "dyson";
 
