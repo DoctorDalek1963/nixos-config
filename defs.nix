@@ -42,7 +42,10 @@
         setup = {
           hostname = "Alex-NixOS";
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
+          };
 
           backup = {
             enable = true;
@@ -200,7 +203,10 @@
           hostname = "Harold-NixOS";
           isLaptop = true;
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
+          };
 
           backup = {
             enable = true;
@@ -296,7 +302,10 @@
           hostname = "Sasha-NixOS";
           isGraphical = false;
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            mainDriveDevice = "/dev/disk/by-partlabel/disk-sda-nixos";
+          };
 
           backup = {
             enable = true;
@@ -368,6 +377,7 @@
           impermanence = {
             enable = true;
             debug = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
           };
 
           virtualBox.guest.enable = true;

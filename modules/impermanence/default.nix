@@ -72,7 +72,7 @@ in {
           wantedBy = ["initrd.target"];
 
           # We want to do this after we've setup LUKS, but before the system mounts /
-          after = ["systemd-cryptsetup@cryptroot.service"];
+          after = lib.mkIf cfg.isEncrypted ["systemd-cryptsetup@cryptroot.service"];
           before = ["sysroot.mount"];
 
           unitConfig.DefaultDependencies = "no";
@@ -82,7 +82,7 @@ in {
             mkdir -p /mnt
 
             # We first mount the btrfs rootfs to /mnt so we can manipulate btrfs subvolumes
-            mount -o subvol=/ /dev/mapper/cryptroot /mnt
+            mount -o subvol=/ ${cfg.mainDriveDevice} /mnt
 
             # Move the current /rootfs subvolume to an old_roots folder so that
             # it can be restored later if needed
