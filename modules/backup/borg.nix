@@ -103,6 +103,7 @@ in {
             "--priority high"
             "--tag floppy_disk"
             ''--title "Auto backup failed"''
+            "${cfg.ntfy.url}/${cfg.ntfy.topic}"
             ''"Automatic BorgBackup to rsync.net for ${config.setup.hostname} failed"''
           ];
         };
@@ -116,6 +117,7 @@ in {
             "--priority low"
             "--tag floppy_disk"
             ''--title "Auto backup successful"''
+            "${cfg.ntfy.url}/${cfg.ntfy.topic}"
             ''"Automatic BorgBackup to rsync.net for ${config.setup.hostname} completed successfully"''
           ];
         };
