@@ -25,7 +25,7 @@
 
   # To deliberately wipe the disk, MAKE BACKUPS, uncomment this block, make
   # sure the device is correct, and run:
-  # nix run github:nix-community/disko -- --mode destroy,format,mount machines/Sasha-NixOS/externalDrives.nix
+  # sudo nix run github:nix-community/disko -- --mode destroy,format,mount machines/Sasha-NixOS/externalDrives.nix
 
   # disko.devices = {
   #   disk.sdb = {
