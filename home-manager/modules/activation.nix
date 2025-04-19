@@ -28,6 +28,14 @@
       mkScript "$DRY_RUN_CMD rm -f ${config.home.homeDirectory}/${filename}";
   };
 
+  # Same as .ssh/known_hosts above
+  rmLibrewolfSearchJson = fillIf osConfig.setup.ssh.enable {
+    rmSshKnownHosts = let
+      filename = ".librewolf/${config.setup.username}/search.json.mozlz4.${osConfig.home-manager.backupFileExtension}";
+    in
+      mkScript "$DRY_RUN_CMD rm -f ${config.home.homeDirectory}/${filename}";
+  };
+
   restartRcloneMounts =
     fillIf cfg.rclone.enable
     (builtins.listToAttrs (builtins.map ({remote, ...}: {
@@ -41,6 +49,7 @@
 in {
   home.activation =
     rmSshKnownHosts
+    // rmLibrewolfSearchJson
     // restartRcloneMounts
     // restartSopsNix
     // restartXremap;
