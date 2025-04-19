@@ -117,16 +117,6 @@ in {
     };
   };
 
-  programs.mosh.enable = cfg.ssh.mosh;
-
-  services.openssh = {
-    inherit (cfg.ssh) enable;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = false;
-    };
-  };
-
   # Use British keyboard in TTYs
   console.keyMap = "uk";
 

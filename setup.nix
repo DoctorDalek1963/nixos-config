@@ -33,6 +33,7 @@ in {
     ./modules/pam
     ./modules/printing
     ./modules/secrets
+    ./modules/ssh
     ./modules/uinput
     ./modules/users
     ./modules/virtualBox
