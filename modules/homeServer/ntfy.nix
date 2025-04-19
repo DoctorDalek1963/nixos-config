@@ -30,6 +30,7 @@ in {
 
     systemd.services.ntfy-sh = {
       after = ["network.target" "tailscale-certificates.service"];
+      requires = ["tailscale-certificates.service"];
       serviceConfig.Group = "certs";
     };
   };
