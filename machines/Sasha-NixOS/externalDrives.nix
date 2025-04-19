@@ -1,7 +1,7 @@
 {
   fileSystems = {
     "/data" = {
-      device = "/dev/sdb1";
+      device = "/dev/disk/by-partlabel/disk-data-data";
       fsType = "btrfs";
       options = [
         "compress=zstd:2"
@@ -10,7 +10,7 @@
       ];
     };
     "/data/.snapshots" = {
-      device = "/dev/sdb1";
+      device = "/dev/disk/by-partlabel/disk-data-data";
       fsType = "btrfs";
       options = [
         "compress=zstd:5"
@@ -28,7 +28,7 @@
   # sudo nix run github:nix-community/disko -- --mode destroy,format,mount machines/Sasha-NixOS/externalDrives.nix
 
   # disko.devices = {
-  #   disk.sdb = {
+  #   disk.data = {
   #     device = "/dev/sdb";
   #     type = "disk";
   #     content = {
