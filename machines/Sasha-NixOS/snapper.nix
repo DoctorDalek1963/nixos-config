@@ -1,12 +1,12 @@
 {
   services.snapper = {
-    cleanupInterval = "0/6:00:00";
-    snapshotInterval = "0/6:00:00";
+    cleanupInterval = "0:00:00";
+    snapshotInterval = "0:00:00";
 
-    configs.home = {
-      SUBVOLUME = "/home";
+    configs.data = {
+      SUBVOLUME = "/data";
       FSTYPE = "btrfs";
-      ALLOW_USERS = ["dyson" "rebecca"];
+      ALLOW_USERS = ["dyson"];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
       TIMELINE_LIMIT_HOURLY = 0;

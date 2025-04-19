@@ -322,6 +322,15 @@ in {
       enable = defaultFalse;
       debug = defaultFalse;
 
+      isEncrypted = mkOption {
+        type = types.bool;
+        default = config.setup.impermanence.mainDriveDevice == "/dev/mapper/cryptroot";
+      };
+
+      mainDriveDevice = mkOption {
+        type = types.nonEmptyStr;
+      };
+
       keepDirs = keepList;
       keepFiles = keepList;
     };

@@ -1,6 +1,6 @@
 {
   disko.devices = {
-    # 2 TB HDD
+    # 350 GB HDD
     disk.sda = {
       device = "/dev/sda";
       type = "disk";
@@ -28,6 +28,7 @@
             content = {
               type = "btrfs";
               extraArgs = ["-f" "--label" "NixOS"];
+
               subvolumes = let
                 mount-options = compression-level: [
                   "compress=zstd:${compression-level}"
@@ -38,17 +39,13 @@
                   mountOptions = mount-options "2";
                   mountpoint = "/";
                 };
-                "/home" = {
-                  mountOptions = ["discard=async" "noatime"];
-                  mountpoint = "/home";
-                };
-                "/home/.snapshots" = {
-                  mountOptions = mount-options "5";
-                  mountpoint = "/home/.snapshots";
-                };
                 "/nix" = {
                   mountOptions = mount-options "2";
                   mountpoint = "/nix";
+                };
+                "/persist" = {
+                  mountOptions = mount-options "2";
+                  mountpoint = "/persist";
                 };
               };
             };
@@ -57,4 +54,6 @@
       };
     };
   };
+
+  fileSystems."/persist".neededForBoot = true;
 }

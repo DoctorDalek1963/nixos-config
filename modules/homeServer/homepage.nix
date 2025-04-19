@@ -429,6 +429,11 @@ in {
                   tempmin = 40;
                   tempmax = 85;
                 };
+                # TODO: Are these temperatures correct?
+                "Sasha-NixOS" = {
+                  tempmin = 40;
+                  tempmax = 85;
+                };
               }
               .${config.setup.hostname};
           }

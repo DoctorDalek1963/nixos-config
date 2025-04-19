@@ -42,7 +42,10 @@
         setup = {
           hostname = "Alex-NixOS";
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
+          };
 
           backup = {
             enable = true;
@@ -200,7 +203,10 @@
           hostname = "Harold-NixOS";
           isLaptop = true;
 
-          impermanence.enable = true;
+          impermanence = {
+            enable = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
+          };
 
           backup = {
             enable = true;
@@ -245,6 +251,45 @@
     ];
   };
 
+  # "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
+  #   system = "x86_64-linux";
+  #   specialArgs = {inherit inputs system;};
+  #   modules = [
+  #     inputs.lix-module.nixosModules.default
+  #     ./setup.nix
+  #     # ./machines/Olivia-NixOS # TODO: When I get the actual laptop, implement the machine
+  #     {
+  #       setup = {
+  #         hostname = "Olivia-NixOS";
+  #         isLaptop = true;
+  #
+  #         users.rebecca = true;
+  #
+  #         printing = {
+  #           enable = true;
+  #           users = ["dyson" "rebecca"];
+  #           specificPrinters.canonPixmaMG3250 = true;
+  #         };
+  #
+  #         secrets = {
+  #           enable = true;
+  #           userPasswords.enable = true;
+  #           networking = {
+  #             enable = true;
+  #             simpleWifiNetworkNames = ["HOME"];
+  #           };
+  #         };
+  #
+  #         desktopEnvironments.cinnamon.enable = true;
+  #         displayManagers.sddm = {
+  #           enable = true;
+  #           theme = "sugar-light-nixos-simple-blue";
+  #         };
+  #       };
+  #     }
+  #   ];
+  # };
+
   "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = {inherit inputs system;};
@@ -255,13 +300,45 @@
       {
         setup = {
           hostname = "Sasha-NixOS";
+          isGraphical = false;
 
-          users.rebecca = true;
-
-          printing = {
+          impermanence = {
             enable = true;
-            users = ["dyson" "rebecca"];
-            specificPrinters.canonPixmaMG3250 = true;
+            mainDriveDevice = "/dev/disk/by-partlabel/disk-sda-nixos";
+          };
+
+          backup = {
+            enable = true;
+            users = ["dyson"];
+            startAt = "02:00";
+            ntfy.url = "https://localhost:4001";
+          };
+
+          homeServer = {
+            enable = true;
+            domainName = "sasha-nixos.triceratops-egret.ts.net";
+            dataRoot = "/data";
+
+            adguardhome.enable = true;
+            myspeed.enable = true;
+            ntfy.enable = true;
+
+            firefly-iii.enable = true;
+
+            squid.enable = true;
+
+            mediaServer = {
+              enable = true;
+              transmission.ovpnName = "ch_airvpn";
+            };
+
+            nextcloud.enable = true;
+
+            personalProjects = {
+              enable = true;
+              # This only works on a Raspberry Pi
+              winter-wonderlights = false;
+            };
           };
 
           secrets = {
@@ -271,12 +348,15 @@
               enable = true;
               simpleWifiNetworkNames = ["HOME"];
             };
-          };
-
-          desktopEnvironments.cinnamon.enable = true;
-          displayManagers.sddm = {
-            enable = true;
-            theme = "sugar-light-nixos-simple-blue";
+            vpn = {
+              enable = true;
+              vpns = [
+                {
+                  vpnName = "ch_airvpn";
+                  users = ["dyson"];
+                }
+              ];
+            };
           };
         };
       }
@@ -297,6 +377,7 @@
           impermanence = {
             enable = true;
             debug = true;
+            mainDriveDevice = "/dev/mapper/cryptroot";
           };
 
           virtualBox.guest.enable = true;
