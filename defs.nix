@@ -278,7 +278,7 @@
             enable = true;
             users = ["dyson"];
             startAt = "02:00";
-            ntfy.url = "https://localhost:4001";
+            ntfy.url = "http://localhost:4000";
           };
 
           homeServer = {
