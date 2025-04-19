@@ -7,7 +7,7 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    setup.impermanence.keepDirs = ["/var/lib/private/prowlarr"];
+    setup.impermanence.keepDirs = ["/var/lib/prowlarr"];
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -33,9 +33,20 @@ in {
       };
     };
 
+    users.users.prowlarr = {
+      isSystemUser = true;
+      group = "media";
+    };
+
     systemd.services.prowlarr = {
       after = ["servarr-config.service"];
       requires = ["servarr-config.service"];
+
+      serviceConfig = {
+        DynamicUser = lib.mkForce false;
+        User = "prowlarr";
+        Group = "media";
+      };
     };
   };
 }
