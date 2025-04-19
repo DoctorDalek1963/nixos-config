@@ -34,6 +34,8 @@ in {
           DefaultTheme = "Auto";
           FFmpegPath = "${pkgs.ffmpeg}/bin/ffmpeg";
           ScanSchedule = "@every 15m";
+
+          TranscodingCacheSize = "500MB";
         };
       };
     };
