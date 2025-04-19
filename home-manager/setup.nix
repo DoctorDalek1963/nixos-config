@@ -190,7 +190,7 @@ in {
     # === Impermanence
     impermanence = let
       keepList = mkOption {
-        type = types.listOf (types.either types.nonEmptyStr (types.submodule {}));
+        type = types.listOf (types.either types.nonEmptyStr types.attrs);
         default = [];
       };
     in {
