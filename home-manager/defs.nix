@@ -137,15 +137,28 @@
   #   };
   # };
 
-  Sasha-NixOS.dyson.setup = {
-    username = "dyson";
+  Sasha-NixOS.dyson = {
+    setup = {
+      username = "dyson";
 
-    terminal = {
-      tools = {
-        git-all = false;
-        nvim = "small";
+      terminal = {
+        tools = {
+          git-all = false;
+          nvim = "small";
+        };
       };
     };
+
+    # For some unknown reason, bindfs seems to often (but not always) create
+    # the mountDir with mode 000 and owned by root:root. This obviously breaks
+    # a lot of things. Using symlinks doesn't completely fix the problem but it
+    # seems to help significantly. Now after booting, /home/dyson/.ssh is owned
+    # by root:root but it stops home-manager-dyson.service, so I just change
+    # the ownership of that directory and restart the service and everything's
+    # fine. Maybe the user doesn't exist early enough? Because once that error
+    # is fixed, every other persistant directory works as intended. What
+    # service or script is creating /home/dyson/.ssh and when?
+    home.persistence."/persist/home/dyson".defaultDirectoryMethod = "symlink";
   };
 
   Harold-NixOS.dyson.setup = {
