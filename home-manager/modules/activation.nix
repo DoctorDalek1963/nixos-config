@@ -18,23 +18,16 @@
 
   cfg = config.setup;
 
-  # This actually removes the file after we back it up. So
-  # known_hosts.hm-backup gets created and deleted every time we switch a new
-  # config. But this is way better than having to manually remove it all the time
-  rmSshKnownHosts = fillIf osConfig.setup.ssh.enable {
-    rmSshKnownHosts = let
-      filename = ".ssh/known_hosts.${osConfig.home-manager.backupFileExtension}";
-    in
-      mkScript "$DRY_RUN_CMD rm -f ${config.home.homeDirectory}/${filename}";
-  };
+  rmHmBackups = let
+    home = config.home.homeDirectory;
+    backupExt = osConfig.home-manager.backupFileExtension;
 
-  # Same as .ssh/known_hosts above
-  rmLibrewolfSearchJson = fillIf osConfig.setup.ssh.enable {
-    rmSshKnownHosts = let
-      filename = ".librewolf/${config.setup.username}/search.json.mozlz4.${osConfig.home-manager.backupFileExtension}";
-    in
-      mkScript "$DRY_RUN_CMD rm -f ${config.home.homeDirectory}/${filename}";
-  };
+    rmBackedUp = filename: "$DRY_RUN_CMD rm -rf ${home}/${filename}.${backupExt}";
+  in
+    lib.hm.dag.entriesBetween "rmHmBackups" ["linkGeneration"] ["writeBoundary"] (
+      lib.optional osConfig.setup.ssh.enable (rmBackedUp ".ssh/known_hosts")
+      ++ lib.optional config.setup.librewolf.enable (rmBackedUp ".librewolf/${config.setup.username}/search.json.mozlz4")
+    );
 
   restartRcloneMounts =
     fillIf cfg.rclone.enable
@@ -48,8 +41,7 @@
   restartXremap = fillIf cfg.misc.programs.xremap {restartXremap = mkSystemdRestart "xremap";};
 in {
   home.activation =
-    rmSshKnownHosts
-    // rmLibrewolfSearchJson
+    rmHmBackups
     // restartRcloneMounts
     // restartSopsNix
     // restartXremap;
