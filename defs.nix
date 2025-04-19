@@ -121,34 +121,9 @@
             hostname = "Bert-NixOS";
             isGraphical = false;
 
-            backup = {
-              enable = true;
-              users = ["pi"];
-              startAt = "02:00";
-              ntfy.url = "https://localhost:4001";
-            };
-
             homeServer = {
               enable = true;
               domainName = "bert-nixos.triceratops-egret.ts.net";
-              dataRoot = "/data";
-
-              adguardhome.enable = true;
-              myspeed.enable = true;
-              ntfy.enable = true;
-
-              firefly-iii.enable = true;
-
-              squid.enable = true;
-
-              mediaServer = {
-                enable = true;
-                movies = false;
-                telly = false;
-                transmission.ovpnName = "ch_airvpn";
-              };
-
-              nextcloud.enable = true;
 
               personalProjects = {
                 enable = true;
@@ -171,15 +146,7 @@
                 enable = true;
                 simpleWifiNetworkNames = ["HOME"];
               };
-              vpn = {
-                enable = true;
-                vpns = [
-                  {
-                    vpnName = "ch_airvpn";
-                    users = ["pi"];
-                  }
-                ];
-              };
+              vpn.enable = false;
             };
 
             users = {
