@@ -121,6 +121,7 @@ in {
               echo "IMPORTANT: Make sure to allow this session to set a dynamic IP"
               echo "Then run this command:"
               echo 'echo "mam_id=loooooongSessionId" | sudo tee ${dir}/mam.cookies'
+              exit 1
             fi
           '';
       };
