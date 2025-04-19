@@ -47,7 +47,10 @@
       umount /mnt
     '';
 in {
-  imports = [inputs.impermanence.nixosModules.impermanence];
+  imports = [
+    inputs.impermanence.nixosModules.impermanence
+    ./users.nix
+  ];
 
   # Taken from https://github.com/nix-community/impermanence and
   # https://gitlab.com/hmajid2301/dotfiles/-/blob/631af0889586323dd106b26b5bd8b7f22852aa37/modules/nixos/system/impermanence/default.nix
