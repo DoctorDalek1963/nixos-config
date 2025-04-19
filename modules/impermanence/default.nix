@@ -5,8 +5,52 @@
   ...
 }: let
   cfg = config.setup.impermanence;
+
+  wipeScript =
+    # bash
+    ''
+      mkdir -p /mnt
+
+      # We first mount the btrfs rootfs to /mnt so we can manipulate btrfs subvolumes
+      mount -o subvol=/ -t btrfs ${cfg.mainDriveDevice} /mnt
+
+      # Move the current /rootfs subvolume to an old_roots folder so that
+      # it can be restored later if needed
+      if [[ -e /mnt/rootfs ]]; then
+          mkdir -p /mnt/old_roots
+          timestamp=$(date --date="@$(stat -c %Y /mnt/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
+          mv /mnt/rootfs "/mnt/old_roots/$timestamp"
+
+          # Carrying around old swapfiles really clogs up the drive
+          rm -f "/mnt/old_roots/$timestamp/swapfile"
+      fi
+
+      # While we're tempted to just delete /rootfs and create a new
+      # subvolume, /rootfs is already populated at this point with a number
+      # of subvolumes, which makes `btrfs subvolume delete` fail, so we
+      # remove them first
+      delete_subvolume_recursively() {
+          IFS=$'\n'
+          for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+              delete_subvolume_recursively "/mnt/$i"
+          done
+          btrfs subvolume delete "$1"
+      }
+
+      # Now delete all /rootfs subvolumes from more than 14 days ago
+      for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +14); do
+          delete_subvolume_recursively "$i"
+      done
+
+      # Then create a new, empty /rootfs and continue the boot process
+      btrfs subvolume create /mnt/rootfs
+      umount /mnt
+    '';
 in {
-  imports = [inputs.impermanence.nixosModules.impermanence];
+  imports = [
+    inputs.impermanence.nixosModules.impermanence
+    ./users.nix
+  ];
 
   # Taken from https://github.com/nix-community/impermanence and
   # https://gitlab.com/hmajid2301/dotfiles/-/blob/631af0889586323dd106b26b5bd8b7f22852aa37/modules/nixos/system/impermanence/default.nix
@@ -43,81 +87,50 @@ in {
     # NOTE: This option has broken boots before in VirtualBox-NixOS
     programs.fuse.userAllowOther = true;
 
-    boot = {
-      postBootCommands = let
-        commands =
-          builtins.attrValues
-          (builtins.mapAttrs (
-              name: conf: ''
-                mkdir -p /persist${conf.home.homeDirectory}
-                chown ${name}:users /persist${conf.home.homeDirectory}
-              ''
-            )
-            config.home-manager.users);
-      in
-        lib.strings.concatStringsSep "\n" commands;
+    boot = lib.mkMerge [
+      {
+        postBootCommands = let
+          commands =
+            builtins.attrValues
+            (builtins.mapAttrs (
+                name: conf: ''
+                  mkdir -p /persist${conf.home.homeDirectory}
+                  chown ${name}:users /persist${conf.home.homeDirectory}
+                ''
+              )
+              config.home-manager.users);
+        in
+          lib.strings.concatStringsSep "\n" commands;
+      }
+      (lib.mkIf cfg.isEncrypted {
+        kernelParams = lib.optional cfg.debug "rd.systemd.debug_shell";
 
-      kernelParams = lib.optional cfg.debug "rd.systemd.debug_shell";
+        initrd.systemd = {
+          enable = true;
+          emergencyAccess = cfg.debug;
 
-      initrd.systemd = {
-        enable = true;
-        emergencyAccess = cfg.debug;
+          # This script does the actual wipe of the system
+          # So if it doesn't run, the btrfs system effectively acts like a normal system
+          # Originally taken from https://github.com/NotAShelf/nyx/blob/2a8273ed3f11a4b4ca027a68405d9eb35eba567b/modules/core/common/system/impermanence/default.nix
+          services.wipe-btrfs-rootfs = {
+            description = "Wipe BTRFS rootfs subvolume";
 
-        # This script does the actual wipe of the system
-        # So if it doesn't run, the btrfs system effectively acts like a normal system
-        # Originally taken from https://github.com/NotAShelf/nyx/blob/2a8273ed3f11a4b4ca027a68405d9eb35eba567b/modules/core/common/system/impermanence/default.nix
-        services.wipe-btrfs-rootfs = {
-          description = "Wipe BTRFS rootfs subvolume";
+            wantedBy = ["initrd.target"];
 
-          wantedBy = ["initrd.target"];
+            # We want to do this after we've setup LUKS, but before the system mounts /
+            after = ["systemd-cryptsetup@cryptroot.service"];
+            before = ["sysroot.mount"];
 
-          # We want to do this after we've setup LUKS, but before the system mounts /
-          after = ["systemd-cryptsetup@cryptroot.service"];
-          before = ["sysroot.mount"];
+            unitConfig.DefaultDependencies = "no";
+            serviceConfig.Type = "oneshot";
 
-          unitConfig.DefaultDependencies = "no";
-          serviceConfig.Type = "oneshot";
-
-          script = ''
-            mkdir -p /mnt
-
-            # We first mount the btrfs rootfs to /mnt so we can manipulate btrfs subvolumes
-            mount -o subvol=/ /dev/mapper/cryptroot /mnt
-
-            # Move the current /rootfs subvolume to an old_roots folder so that
-            # it can be restored later if needed
-            if [[ -e /mnt/rootfs ]]; then
-                mkdir -p /mnt/old_roots
-                timestamp=$(date --date="@$(stat -c %Y /mnt/rootfs)" "+%Y-%m-%-d_%H:%M:%S")
-                mv /mnt/rootfs "/mnt/old_roots/$timestamp"
-
-                # Carrying around old swapfiles really clogs up the drive
-                rm -f "/mnt/old_roots/$timestamp/swapfile"
-            fi
-
-            # While we're tempted to just delete /rootfs and create a new
-            # subvolume, /rootfs is already populated at this point with a number
-            # of subvolumes, which makes `btrfs subvolume delete` fail, so we
-            # remove them first
-            delete_subvolume_recursively() {
-                IFS=$'\n'
-                for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-                    delete_subvolume_recursively "/mnt/$i"
-                done
-                btrfs subvolume delete "$1"
-            }
-
-            # Now delete all /rootfs subvolumes from more than 14 days ago
-            for i in $(find /mnt/old_roots/ -maxdepth 1 -mtime +14); do
-                delete_subvolume_recursively "$i"
-            done
-
-            # Then create a new, empty /rootfs and continue the boot process
-            btrfs subvolume create /mnt/rootfs
-            umount /mnt
-          '';
+            script = wipeScript;
+          };
         };
-      };
-    };
+      })
+      (lib.mkIf (!cfg.isEncrypted) {
+        initrd.postResumeCommands = lib.mkAfter wipeScript;
+      })
+    ];
   };
 }

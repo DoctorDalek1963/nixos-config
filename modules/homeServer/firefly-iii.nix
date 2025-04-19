@@ -8,7 +8,10 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf (cfg.enable && cfg.firefly-iii.enable) {
-    setup.impermanence.keepDirs = [config.services.firefly-iii.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.firefly-iii.dataDir];
+      backup.paths = ["${config.services.firefly-iii.dataDir}/storage/database/database.sqlite"];
+    };
 
     sops.secrets = {
       "home-server/firefly-iii/key-file" = {

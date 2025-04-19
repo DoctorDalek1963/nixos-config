@@ -62,77 +62,88 @@
     };
   };
 
-  Sasha-NixOS = {
-    dyson.setup = {
-      username = "dyson";
+  # Olivia-NixOS = {
+  #   dyson.setup = {
+  #     username = "dyson";
+  #
+  #     desktopEnvironments = {
+  #       background = {
+  #         light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
+  #         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
+  #       };
+  #       cinnamon = {
+  #         menuIcon = ./files/icons/nix-snowflake-black.svg;
+  #         theme = {
+  #           gtk = "Mint-Y-Orange";
+  #           cursor = "Bibata-Original-Classic";
+  #         };
+  #       };
+  #     };
+  #
+  #     terminal.tools.nvim = "small";
+  #
+  #     rclone = {
+  #       enable = true;
+  #       automounts = [
+  #         {
+  #           remote = "OneDrive";
+  #           mountpoint = "/home/dyson/OneDrive";
+  #         }
+  #       ];
+  #     };
+  #
+  #     librewolf = {
+  #       enable = true;
+  #       minimal = true;
+  #     };
+  #
+  #     misc.programs = {
+  #       handbrake = true;
+  #       rustdesk = true;
+  #       vlc = true;
+  #     };
+  #   };
+  #
+  #   rebecca.setup = {
+  #     username = "rebecca";
+  #
+  #     desktopEnvironments = {
+  #       background-slideshow-path = "/home/rebecca/Pictures/Wallpaper Slideshow";
+  #       cinnamon = {
+  #         menuIcon = ./files/icons/nix-snowflake-black.svg;
+  #         theme = {
+  #           gtk = "Mint-Y-Orange";
+  #           cursor = "Bibata-Original-Classic";
+  #         };
+  #       };
+  #     };
+  #
+  #     terminal.tools.nvim = "small";
+  #
+  #     librewolf = {
+  #       enable = true;
+  #       minimal = true;
+  #     };
+  #
+  #     misc.programs = {
+  #       rustdesk = true;
+  #       vlc = true;
+  #     };
+  #
+  #     office = {
+  #       libreoffice = true;
+  #       onlyoffice = true;
+  #     };
+  #   };
+  # };
 
-      desktopEnvironments = {
-        background = {
-          light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
-          dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
-        };
-        cinnamon = {
-          menuIcon = ./files/icons/nix-snowflake-black.svg;
-          theme = {
-            gtk = "Mint-Y-Orange";
-            cursor = "Bibata-Original-Classic";
-          };
-        };
-      };
+  Sasha-NixOS.dyson.setup = {
+    username = "dyson";
 
-      terminal.tools.nvim = "small";
-
-      rclone = {
-        enable = true;
-        automounts = [
-          {
-            remote = "OneDrive";
-            mountpoint = "/home/dyson/OneDrive";
-          }
-        ];
-      };
-
-      librewolf = {
-        enable = true;
-        minimal = true;
-      };
-
-      misc.programs = {
-        handbrake = true;
-        rustdesk = true;
-        vlc = true;
-      };
-    };
-
-    rebecca.setup = {
-      username = "rebecca";
-
-      desktopEnvironments = {
-        background-slideshow-path = "/home/rebecca/Pictures/Wallpaper Slideshow";
-        cinnamon = {
-          menuIcon = ./files/icons/nix-snowflake-black.svg;
-          theme = {
-            gtk = "Mint-Y-Orange";
-            cursor = "Bibata-Original-Classic";
-          };
-        };
-      };
-
-      terminal.tools.nvim = "small";
-
-      librewolf = {
-        enable = true;
-        minimal = true;
-      };
-
-      misc.programs = {
-        rustdesk = true;
-        vlc = true;
-      };
-
-      office = {
-        libreoffice = true;
-        onlyoffice = true;
+    terminal = {
+      tools = {
+        git-all = false;
+        nvim = "small";
       };
     };
   };

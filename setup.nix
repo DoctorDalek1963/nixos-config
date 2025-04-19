@@ -22,6 +22,7 @@ in {
     ./modules/laptop
 
     ./modules/androidTools
+    ./modules/backup
     ./modules/bluetooth
     ./modules/desktopEnvironments
     ./modules/displayManagers
@@ -271,6 +272,47 @@ in {
       };
     };
 
+    # === Backup
+    backup = {
+      enable = defaultFalse;
+
+      users = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "The users who are allowed to access the backup server directly.";
+      };
+
+      paths = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "The paths that will be included in the backup.";
+      };
+
+      exclude = mkOption {
+        type = types.listOf types.nonEmptyStr;
+        default = [];
+        description = "Paths to exclude from the backup.";
+      };
+
+      startAt = mkOption {
+        type = types.either types.str (types.listOf types.str);
+        default = "00:00";
+        description = "When or how often the automatic backup should run.";
+      };
+
+      ntfy = {
+        url = mkOption {
+          type = types.nullOr types.nonEmptyStr;
+          default = null;
+          description = "The URL of the ntfy.sh server to use for sending notifications.";
+        };
+        topic = mkOption {
+          type = types.nonEmptyStr;
+          default = "nixos-backups";
+        };
+      };
+    };
+
     # === Impermanence
     impermanence = let
       keepList = mkOption {
@@ -280,6 +322,15 @@ in {
     in {
       enable = defaultFalse;
       debug = defaultFalse;
+
+      isEncrypted = mkOption {
+        type = types.bool;
+        default = config.setup.impermanence.mainDriveDevice == "/dev/mapper/cryptroot";
+      };
+
+      mainDriveDevice = mkOption {
+        type = types.nonEmptyStr;
+      };
 
       keepDirs = keepList;
       keepFiles = keepList;
