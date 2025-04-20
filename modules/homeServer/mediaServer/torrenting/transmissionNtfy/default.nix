@@ -14,12 +14,15 @@
   group = "ntfy-sh";
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfg.ntfy.enable) {
-    systemd = {
-      tmpfiles.settings."10-transmission-ntfy"."${working-dir}".d = {
+    setup.impermanence.keepDirs = [
+      {
+        directory = working-dir;
         inherit user group;
-        mode = "0700";
-      };
+        mode = "0755";
+      }
+    ];
 
+    systemd = {
       services = {
         transmission-ntfy = {
           description = "Send notifications about Transmission with Ntfy";
@@ -40,6 +43,7 @@ in {
             NPWD = "password";
 
             RUST_BACKTRACE = "full";
+            RUST_LOG = "info";
 
             NTFY_PASSWORD = NPWD; # For ExecStartPre
           };
