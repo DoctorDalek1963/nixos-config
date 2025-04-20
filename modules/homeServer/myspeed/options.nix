@@ -50,10 +50,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.tmpfiles.settings."10-myspeed".${cfg.dataDir}.d = {
-      inherit (cfg) user group;
-      mode = "0755";
-    };
+    # systemd.tmpfiles.settings."10-myspeed".${cfg.dataDir}.d = {
+    #   inherit (cfg) user group;
+    #   mode = "0755";
+    # };
 
     systemd.services.myspeed = {
       description = "MySpeed";

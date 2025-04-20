@@ -12,7 +12,7 @@ in {
 
     setup.impermanence.keepDirs = [
       {
-        directory = "${config.services.myspeed.dataDir}/data";
+        directory = config.services.myspeed.dataDir;
         user = "myspeed";
         group = "myspeed";
         mode = "755";
