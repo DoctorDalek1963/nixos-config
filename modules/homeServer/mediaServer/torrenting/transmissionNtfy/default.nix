@@ -52,8 +52,7 @@ in {
             User = user;
             Group = group;
 
-            # TODO: Why doesn't this work?
-            # ExecStartPre = ["${pkgs.ntfy-sh}/bin/ntfy user add --ignore-exists --role=user transmission-ntfy"];
+            ExecStartPre = ["${pkgs.ntfy-sh}/bin/ntfy user add --ignore-exists --role=user transmission-ntfy"];
             ExecStart = "${transmission-ntfy}/bin/transmission_api_client";
             WorkingDirectory = working-dir;
           };
