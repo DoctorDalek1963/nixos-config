@@ -119,11 +119,11 @@
           {
             "Jellyfin" = {
               icon = "jellyfin.svg";
-              href = "https://${cfg.domainName}/jellyfin";
+              href = "https://${cfg.domainName}:${toString cfg.ports.mediaServer.jellyfin.https}";
               description = "Movie and TV streaming";
               widget = {
                 type = "jellyfin";
-                url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}/jellyfin";
+                url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}";
                 key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
                 enableBlocks = true;
                 enableNowPlaying = true;

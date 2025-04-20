@@ -9,21 +9,32 @@
 
   certDir = "/etc/tailscale-certificates/${cfgHs.domainName}";
 
-  bash-script = pkgs.writeShellScriptBin "tailscale-certificates" ''
-    set -euo pipefail
+  bash-script = pkgs.writeShellApplication {
+    name = "tailscale-certificates";
+    runtimeInputs = with pkgs; [tailscale openssl];
 
-    mkdir -p "${certDir}"
+    text = ''
+      set -euo pipefail
 
-    ${pkgs.tailscale}/bin/tailscale cert \
-      --cert-file "${certDir}/cert.pem" \
-      --key-file "${certDir}/key.pem" \
-      "${cfgHs.domainName}"
+      mkdir -p "${certDir}"
 
-    cat "${certDir}/cert.pem" "${certDir}/key.pem" > "${certDir}/combined.pem"
+      tailscale cert \
+        --cert-file "${certDir}/cert.pem" \
+        --key-file "${certDir}/key.pem" \
+        "${cfgHs.domainName}"
 
-    chown -R root:certs /etc/tailscale-certificates
-    chmod -R g+r /etc/tailscale-certificates
-  '';
+      cat "${certDir}/cert.pem" "${certDir}/key.pem" > "${certDir}/combined.pem"
+
+      openssl pkcs12 -export \
+        -out "${certDir}/combined.p12" \
+        -in "${certDir}/cert.pem" \
+        -inkey "${certDir}/key.pem" \
+        -passout pass:
+
+      chown -R root:certs /etc/tailscale-certificates
+      chmod -R g+r /etc/tailscale-certificates
+    '';
+  };
 in {
   config = lib.mkIf cfgHs.enable {
     assertions = [

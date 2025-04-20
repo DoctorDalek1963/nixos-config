@@ -10,24 +10,15 @@ in {
     # TODO: Next time I enable this, add setup.backup.paths for databases etc.
     setup.impermanence.keepDirs = [config.services.jellyfin.dataDir];
 
-    services = {
-      nginx.virtualHosts."${cfg.domainName}".locations = {
-        "/jellyfin" = {
-          proxyPass = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}";
-          extraConfig = ''
-            proxy_pass_request_headers on;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection $http_connection;
-            proxy_buffering off;
-          '';
-        };
-      };
-
-      jellyfin = {
-        enable = true;
-        user = "jellyfin";
-        group = "media";
-      };
+    # NOTE: On a fresh install, you first need to connect to
+    # http://{ip_address}:8096 and add libraries, then enable HTTPS and set the
+    # certificate path to combined.p12
+    services.jellyfin = {
+      enable = true;
+      user = "jellyfin";
+      group = "media";
     };
+
+    users.users.jellyfin.extraGroups = ["certs"];
   };
 }
