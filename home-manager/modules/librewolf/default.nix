@@ -121,6 +121,8 @@ in {
       ];
     };
 
+    home.file.".librewolf/${cfg.username}/search.json.mozlz4".force = lib.mkForce true;
+
     programs.librewolf = {
       enable = true;
 
