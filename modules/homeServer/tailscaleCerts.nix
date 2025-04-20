@@ -49,7 +49,7 @@ in {
     systemd = {
       services.tailscale-certificates = {
         serviceConfig = {
-          Type = "simple";
+          Type = "oneshot";
           Restart = "on-failure";
           RestartSec = "3s";
           ExecStart = "${bash-script}/bin/tailscale-certificates";
