@@ -14,6 +14,7 @@
     setup.terminal.shellAliases = {
       n = "nix";
       nhos = "FLAKE=/etc/nixos ${pkgs.nh}/bin/nh os";
+      nhcl = "${pkgs.nh}/bin/nh clean all --nogcroots";
     };
   };
 }
