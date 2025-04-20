@@ -153,10 +153,18 @@ in {
         bindsTo = [openvpn-ns-service];
         after = [openvpn-ns-service "create-transmission-veth.service"];
         requires = [openvpn-ns-service "create-transmission-veth.service"];
+
         serviceConfig = {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
+
           RestartSec = "5s";
           Restart = "always";
+
+          # Don't notify dependents of failure. Sometimes transmission fails a
+          # couple times before succeeding, but we don't want that to stop any
+          # services that depend on it
+          RestartMode = "direct";
+
           RuntimeMaxSec = "24h";
 
           NetworkNamespacePath = "/run/netns/${vpn-netns-name}";
