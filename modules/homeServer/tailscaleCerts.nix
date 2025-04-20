@@ -44,6 +44,15 @@ in {
       }
     ];
 
+    setup.impermanence.keepDirs = [
+      {
+        directory = certDir;
+        user = "root";
+        group = "certs";
+        mode = "0755";
+      }
+    ];
+
     users.groups.certs = {};
 
     systemd = {
