@@ -74,6 +74,11 @@ in {
     systemd.services.haproxy = {
       after = ["network.target" "tailscale-certificates.service"];
       requires = ["tailscale-certificates.service"];
+
+      serviceConfig = {
+        Restart = "always";
+        RestartSec = 5;
+      };
     };
   };
 }
