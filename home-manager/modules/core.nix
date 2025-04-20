@@ -1,6 +1,8 @@
 {
   pkgs,
+  lib,
   config,
+  osConfig,
   ...
 }: {
   home = {
@@ -39,7 +41,7 @@
   xdg.userDirs = let
     home = "${config.home.homeDirectory}";
   in {
-    enable = true;
+    enable = osConfig.setup.isGraphical;
     createDirectories = true;
 
     documents = "${home}/Documents";
@@ -54,5 +56,5 @@
   };
 
   # Stuff tends to collect in my Downloads, so I'm intentionally not persisting it
-  setup.impermanence.keepDirs = ["Documents" "Music" "Pictures" "Videos"];
+  setup.impermanence.keepDirs = lib.mkIf osConfig.setup.isGraphical ["Documents" "Music" "Pictures" "Videos"];
 }
