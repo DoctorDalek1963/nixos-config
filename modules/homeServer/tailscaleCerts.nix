@@ -16,6 +16,8 @@
     text = ''
       set -euo pipefail
 
+      sleep 3 # Make sure tailscaled is running
+
       mkdir -p "${certDir}"
 
       tailscale cert \
@@ -59,19 +61,20 @@ in {
       services.tailscale-certificates = {
         serviceConfig = {
           Type = "oneshot";
-          Restart = "on-failure";
-          RestartSec = "3s";
           ExecStart = "${bash-script}/bin/tailscale-certificates";
           Group = "certs";
         };
-        after = ["network.target" "network-online.target"];
-        wants = ["network-online.target"];
+
+        after = ["network.target" "network-online.target" "tailscaled.service"];
+        wants = ["network-online.target" "tailscaled.service"];
       };
+
       timers.tailscale-certificates = {
         timerConfig = {
           OnCalendar = "daily";
           Unit = "tailscale-certificates.service";
         };
+
         wantedBy = ["timers.target"];
       };
     };
