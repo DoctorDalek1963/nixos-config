@@ -360,14 +360,14 @@ in {
             {
               Infrastructure = {
                 style = "row";
-                columns = 2;
+                columns = builtins.length (builtins.elemAt infraServices 0).Infrastructure;
                 icon = "mdi-server";
               };
             }
             {
               Storage = {
                 style = "row";
-                columns = builtins.length storageServices;
+                columns = builtins.length (builtins.elemAt storageServices 0).Storage;
                 icon = "mdi-harddisk";
               };
             }
