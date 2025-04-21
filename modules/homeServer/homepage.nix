@@ -94,19 +94,31 @@
     else [];
 
   storageServices = let
-    # Also Scrutiny and Unmanic
-    list = lib.optional cfg.nextcloud.enable {
-      "Nextcloud" = {
-        icon = "nextcloud-blue.svg";
-        href = "https://${cfg.domainName}/nextcloud";
-        description = "File storage";
-        widget = {
-          type = "nextcloud";
-          url = "https://${cfg.domainName}/nextcloud";
-          key = "{{HOMEPAGE_VAR_NEXTCLOUD_KEY}}";
+    # TODO: Also Unmanic
+    list =
+      (lib.optional cfg.nextcloud.enable {
+        "Nextcloud" = {
+          icon = "nextcloud-blue.svg";
+          href = "https://${cfg.domainName}/nextcloud";
+          description = "File storage";
+          widget = {
+            type = "nextcloud";
+            url = "https://${cfg.domainName}/nextcloud";
+            key = "{{HOMEPAGE_VAR_NEXTCLOUD_KEY}}";
+          };
         };
-      };
-    };
+      })
+      ++ (lib.optional cfg.scrutiny.enable {
+        "Scrutiny" = {
+          icon = "scrutiny.svg";
+          href = "https://${cfg.domainName}/scrutiny";
+          description = "Smartd hard drive monitoring";
+          widget = {
+            type = "scrutiny";
+            url = "https://${cfg.domainName}/scrutiny";
+          };
+        };
+      });
   in
     if builtins.length list > 0
     then [{Storage = list;}]
