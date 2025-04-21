@@ -62,13 +62,13 @@
   radarr = optSnippet cfgMs.movies ''
     add_root_folder(
         "${config.services.radarr.dataDir}/radarr.db",
-        "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/movies/')"
+        "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/jellyfin/movies/')"
     )
   '';
   sonarr = optSnippet cfgMs.telly ''
     add_root_folder(
         "${config.services.sonarr.dataDir}/sonarr.db",
-        "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/telly/')"
+        "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/jellyfin/telly/')"
     )
   '';
 in {
@@ -78,7 +78,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py" {flakeIgnore = ["W293" "E303"];}
+        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py" {flakeIgnore = ["W293" "E303" "E501"];}
           ''
             import json
             import os

@@ -9,7 +9,7 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.movies) {
     setup = {
       impermanence.keepDirs = [config.services.radarr.dataDir];
-      backup.exclude = ["${cfgMs.mediaRoot}/movies"];
+      backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/movies"];
     };
 
     services = {
@@ -43,7 +43,7 @@ in {
       };
 
       tmpfiles.rules = [
-        "d ${cfgMs.mediaRoot}/movies 0775 jellyfin media - -"
+        "d ${cfgMs.mediaRoot}/jellyfin/movies 0775 jellyfin media - -"
         "d ${cfgMs.mediaRoot}/torrents/downloads/movies 0775 transmission media - -"
       ];
     };

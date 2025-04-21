@@ -9,7 +9,7 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.telly) {
     setup = {
       impermanence.keepDirs = [config.services.sonarr.dataDir];
-      backup.exclude = ["${cfgMs.mediaRoot}/telly"];
+      backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/telly"];
     };
 
     services = {
@@ -43,7 +43,7 @@ in {
       };
 
       tmpfiles.rules = [
-        "d ${cfgMs.mediaRoot}/telly 0775 jellyfin media - -"
+        "d ${cfgMs.mediaRoot}/jellyfin/telly 0775 jellyfin media - -"
         "d ${cfgMs.mediaRoot}/torrents/downloads/telly 0775 transmission media - -"
       ];
     };

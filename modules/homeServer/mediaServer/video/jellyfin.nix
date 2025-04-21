@@ -23,5 +23,7 @@ in {
     };
 
     users.users.jellyfin.extraGroups = ["certs"];
+
+    systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot}/jellyfin 0775 jellyfin media - -"];
   };
 }
