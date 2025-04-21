@@ -6,6 +6,21 @@
   cfg = config.setup.homeServer;
 in {
   config = lib.mkIf cfg.scrutiny.enable {
+    setup.impermanence.keepDirs = [
+      {
+        directory = "/var/lib/private/scrutiny";
+        user = "scrutiny";
+        group = "scrutiny";
+        mode = "0750";
+      }
+      {
+        directory = "/var/lib/influxdb2";
+        user = "influxdb2";
+        group = "influxdb2";
+        mode = "0755";
+      }
+    ];
+
     services = {
       scrutiny = {
         enable = true;
