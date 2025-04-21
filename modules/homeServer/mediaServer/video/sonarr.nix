@@ -7,7 +7,10 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.telly) {
-    setup.impermanence.keepDirs = [config.services.sonarr.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.sonarr.dataDir];
+      backup.exclude = ["${cfgMs.mediaRoot}/telly"];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {

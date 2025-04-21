@@ -7,7 +7,10 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.movies) {
-    setup.impermanence.keepDirs = [config.services.radarr.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.radarr.dataDir];
+      backup.exclude = ["${cfgMs.mediaRoot}/movies"];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
