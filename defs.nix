@@ -295,6 +295,8 @@
 
             squid.enable = true;
 
+            scrutiny.enable = true;
+
             mediaServer = {
               enable = true;
               transmission.ovpnName = "ch_airvpn";

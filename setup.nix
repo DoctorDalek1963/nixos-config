@@ -175,6 +175,7 @@ in {
           https = port 4001;
         };
         squid = port 3128;
+        scrutiny = port 29517;
 
         mediaServer = {
           audiobookshelf = port 8000;
@@ -217,6 +218,8 @@ in {
       firefly-iii.enable = defaultFalse;
 
       squid.enable = defaultFalse;
+
+      scrutiny.enable = defaultFalse;
 
       homeAutomation = {};
 

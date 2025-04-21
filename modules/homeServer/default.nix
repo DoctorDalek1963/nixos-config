@@ -11,6 +11,7 @@
     ./nextcloud.nix
     ./nginx.nix
     ./ntfy.nix
+    ./scrutiny.nix
     ./squid.nix
     ./tailscaleCerts.nix
   ];
