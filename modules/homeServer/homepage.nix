@@ -360,14 +360,20 @@ in {
             {
               Infrastructure = {
                 style = "row";
-                columns = builtins.length (builtins.elemAt infraServices 0).Infrastructure;
+                columns =
+                  if infraServices == []
+                  then 1
+                  else builtins.length (builtins.elemAt infraServices 0).Infrastructure;
                 icon = "mdi-server";
               };
             }
             {
               Storage = {
                 style = "row";
-                columns = builtins.length (builtins.elemAt storageServices 0).Storage;
+                columns =
+                  if storageServices == []
+                  then 1
+                  else builtins.length (builtins.elemAt storageServices 0).Storage;
                 icon = "mdi-harddisk";
               };
             }
