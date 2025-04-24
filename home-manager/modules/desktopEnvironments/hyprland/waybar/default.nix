@@ -7,7 +7,8 @@
 }: let
   launch-btop = lib.mkIf config.setup.terminal.tools.btop.enable "${config.wayland.windowManager.hyprland.settings."$launchInTerminal"} ${config.programs.btop.package}/bin/btop";
 
-  hyprctl-exit = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch exit";
+  hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
+  hyprctl-exit = "${hyprctl} dispatch exit";
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
@@ -101,6 +102,8 @@ in {
             format = "{title}";
             max-length = 50;
             icon = true;
+            on-click = "${hyprctl} dispatch fullscreen 1";
+            on-click-right = "${hyprctl} dispatch killactive";
           };
 
           "custom/clock" = {
