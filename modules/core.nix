@@ -4,6 +4,7 @@
   config,
   inputs,
   system,
+  self,
   ...
 }: let
   cfg = config.setup;
@@ -135,4 +136,20 @@ in {
   systemd.services.NetworkManager-wait-online = {
     serviceConfig.ExecStart = ["" "${pkgs.networkmanager}/bin/nm-online -q"];
   };
+
+  system.nixos.label = let
+    cfg = config.system.nixos;
+
+    nixosVersion = builtins.concatStringsSep "." [
+      cfg.release
+      (builtins.substring 0 8 inputs.nixpkgs.sourceInfo.lastModifiedDate)
+      inputs.nixpkgs.sourceInfo.shortRev
+    ];
+
+    buildVersion = builtins.concatStringsSep "." [
+      (builtins.substring 0 8 self.sourceInfo.lastModifiedDate)
+      (self.sourceInfo.shortRev or self.sourceInfo.dirtyShortRev)
+    ];
+  in
+    builtins.concatStringsSep "-" (cfg.tags ++ [nixosVersion] ++ ["build" buildVersion]);
 }

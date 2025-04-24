@@ -33,7 +33,7 @@
 
   "Alex-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs system;};
+    specialArgs = {inherit self inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -110,7 +110,7 @@
   in
     nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit inputs system;};
+      specialArgs = {inherit self inputs system;};
       modules = [
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -161,7 +161,7 @@
 
   "Harold-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs system;};
+    specialArgs = {inherit self inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -221,7 +221,7 @@
 
   # "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
   #   system = "x86_64-linux";
-  #   specialArgs = {inherit inputs system;};
+  #   specialArgs = {inherit self inputs system;};
   #   modules = [
   #     inputs.lix-module.nixosModules.default
   #     ./setup.nix
@@ -260,7 +260,7 @@
 
   "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs system;};
+    specialArgs = {inherit self inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
@@ -335,7 +335,7 @@
 
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit inputs system;};
+    specialArgs = {inherit self inputs system;};
     modules = [
       inputs.lix-module.nixosModules.default
       ./setup.nix
