@@ -9,6 +9,8 @@
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   hyprctl-exit = "${hyprctl} dispatch exit";
+
+  zenity-confirm = actionName: command: ''if ${pkgs.zenity}/bin/zenity --question --title="${actionName}" --text="Are you sure you want to ${lib.toLower actionName}?" --default-cancel; then ${command}; fi'';
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
@@ -207,13 +209,13 @@ in {
           "custom/power" = {
             format = "";
             tooltip-format = "Shutdown";
-            on-click = "${hyprctl-exit}; /run/current-system/sw/bin/shutdown now";
+            on-click = zenity-confirm "Shutdown" "${hyprctl-exit}; /run/current-system/sw/bin/shutdown now";
           };
 
           "custom/logout" = {
             format = "󰍃";
             tooltip-format = "Logout";
-            on-click = hyprctl-exit;
+            on-click = zenity-confirm "Logout" hyprctl-exit;
           };
 
           "custom/lock" = {
@@ -225,7 +227,7 @@ in {
           "custom/reboot" = {
             format = "";
             tooltip-format = "Reboot";
-            on-click = "${hyprctl-exit}; /run/current-system/sw/bin/reboot";
+            on-click = zenity-confirm "Reboot" "${hyprctl-exit}; /run/current-system/sw/bin/reboot";
           };
         }
       ];
