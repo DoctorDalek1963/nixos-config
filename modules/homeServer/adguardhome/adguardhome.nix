@@ -4,6 +4,12 @@
   ...
 }: let
   cfg = config.setup.homeServer;
+
+  tailnetName = with builtins;
+    concatStringsSep "."
+    (filter isString
+      (tail
+        (split "\\." cfg.domainName)));
 in {
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
     setup.impermanence.keepDirs = ["/var/lib/private/AdGuardHome"];
@@ -31,7 +37,7 @@ in {
           upstream_dns =
             ["127.0.0.1:${toString cfg.ports.unbound}"]
             ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}"
-            ++ lib.optional config.setup.secrets.tailscale.enable "100.100.100.100";
+            ++ lib.optional config.setup.secrets.tailscale.enable "[/${tailnetName}/]100.100.100.100";
           bootstrap_dns = upstream_dns;
         };
 
