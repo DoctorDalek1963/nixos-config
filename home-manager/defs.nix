@@ -19,8 +19,8 @@
       enable = true;
       automounts = [
         {
-          remote = "OneDrive";
-          mountpoint = "/home/dyson/OneDrive";
+          remote = "Nextcloud-Sasha";
+          mountpoint = "/home/dyson/Nextcloud-Sasha";
         }
       ];
     };
@@ -86,8 +86,8 @@
   #       enable = true;
   #       automounts = [
   #         {
-  #           remote = "OneDrive";
-  #           mountpoint = "/home/dyson/OneDrive";
+  #           remote = "Nextcloud-Sasha";
+  #           mountpoint = "/home/dyson/Nextcloud-Sasha";
   #         }
   #       ];
   #     };
@@ -168,8 +168,8 @@
       enable = true;
       automounts = [
         {
-          remote = "OneDrive";
-          mountpoint = "/home/dyson/OneDrive";
+          remote = "Nextcloud-Sasha";
+          mountpoint = "/home/dyson/Nextcloud-Sasha";
         }
       ];
     };
@@ -214,8 +214,8 @@
     #   enable = true;
     #   automounts = [
     #     {
-    #       remote = "OneDrive";
-    #       mountpoint = "/home/dyson/OneDrive";
+    #       remote = "Nextcloud-Sasha";
+    #       mountpoint = "/home/dyson/Nextcloud-Sasha";
     #       readonly = true;
     #     }
     #   ];
