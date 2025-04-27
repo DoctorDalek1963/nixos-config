@@ -5,6 +5,10 @@
 }: let
   cfg = config.setup.homeServer;
 
+  unboundUpstreams =
+    ["127.0.0.1:${toString cfg.ports.unbound}"]
+    ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
+
   tailnetName = with builtins;
     concatStringsSep "."
     (filter isString
@@ -26,7 +30,7 @@ in {
       # it manually.
       mutableSettings = true;
       settings = {
-        dns = rec {
+        dns = {
           bind_hosts = ["0.0.0.0"];
 
           enable_dnssec = true;
@@ -35,10 +39,10 @@ in {
           ratelimit = 50;
 
           upstream_dns =
-            ["127.0.0.1:${toString cfg.ports.unbound}"]
-            ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}"
+            unboundUpstreams
             ++ lib.optional config.setup.secrets.tailscale.enable "[/${tailnetName}/]100.100.100.100";
-          bootstrap_dns = upstream_dns;
+
+          bootstrap_dns = unboundUpstreams;
         };
 
         filtering = {
