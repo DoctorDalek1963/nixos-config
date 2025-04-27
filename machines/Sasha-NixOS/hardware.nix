@@ -1,4 +1,5 @@
 {
+  pkgs,
   config,
   lib,
   modulesPath,
@@ -32,6 +33,16 @@
   swapDevices = [];
 
   nix.settings.max-jobs = 3;
+
+  # Enable Nvidia GPU (GTX 960) for hardware acceleration, for example with ffmpeg
+  hardware = {
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [nvidia-vaapi-driver];
+    };
+    nvidia.open = false;
+  };
+  services.xserver.videoDrivers = ["nvidia"];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

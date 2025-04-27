@@ -64,6 +64,10 @@ in {
           # Printing
           "cnijfilter" # Canon Pixma driver
 
+          # Proprietary Nvidia drivers
+          "nvidia-x11"
+          "nvidia-settings"
+
           # === home-manager
           "discord"
           "libsciter" # For RustDesk
