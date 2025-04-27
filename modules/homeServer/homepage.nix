@@ -142,7 +142,7 @@
                 enableNowPlaying = true;
                 enableUser = true;
                 showEpisodeNumber = true;
-                expandOneStreamToTwoRows = true;
+                expandOneStreamToTwoRows = false;
               };
             };
           }
