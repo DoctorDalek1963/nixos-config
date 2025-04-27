@@ -137,6 +137,7 @@
                 type = "jellyfin";
                 url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}";
                 key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+                fields = ["movies" "series" "episodes"];
                 enableBlocks = true;
                 enableNowPlaying = true;
                 enableUser = true;
