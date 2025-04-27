@@ -32,6 +32,8 @@
 
   swapDevices = [];
 
+  nix.settings.max-jobs = 3;
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [

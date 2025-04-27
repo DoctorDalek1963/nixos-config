@@ -27,11 +27,7 @@
     ];
   };
 
-  # Don't build anything locally, since the Pi 4 is so underpowered for
-  # compilation. Instead I build this system from a different machine and push
-  # the result to Cachix using `just cachix-push-raspi`, and then just download
-  # the new config
-  nix.settings.max-jobs = 0;
+  nix.settings.max-jobs = 2;
 
   # Don't build any docs locally
   documentation.enable = false;
