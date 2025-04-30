@@ -68,6 +68,15 @@ in {
           cfg.ports.mediaServer.jellyseerr
           ""
         }
+
+        ${
+          optProxy
+          cfgMs.enable
+          "fileflows"
+          cfg.ports.haproxy.mediaServer.fileflows
+          cfg.ports.mediaServer.fileflows
+          ""
+        }
       '';
     };
 
