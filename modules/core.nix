@@ -68,6 +68,8 @@ in {
           "nvidia-x11"
           "nvidia-settings"
 
+          "fileflows"
+
           # === home-manager
           "discord"
           "libsciter" # For RustDesk

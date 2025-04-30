@@ -80,7 +80,7 @@ in
     meta = {
       description = "FileFlows server and node with wrapper scripts";
       homepage = "https://fileflows.com/";
-      # license = lib.licenses.unfree;
+      license = lib.licenses.unfree;
       platforms = ["x86_64-linux"];
       maintainers = [];
     };
