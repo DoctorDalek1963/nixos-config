@@ -125,7 +125,7 @@
           description = "Automated transcoding";
           widget = {
             type = "fileflows";
-            url = "https://${cfg.domainName}:${toString cfg.ports.mediaServer.fileflows}";
+            url = "http://${cfg.domainName}:${toString cfg.ports.mediaServer.fileflows}";
           };
         };
       });
