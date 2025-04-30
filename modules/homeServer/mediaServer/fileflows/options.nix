@@ -8,13 +8,33 @@
 
   inherit (lib) mkOption types;
 
-  optPrintExtraPkgs =
-    lib.optional (builtins.length cfg.extraPkgs > 0) ''echo -e "Extra packages:\n${builtins.concatStringsSep "\\n" (map toString cfg.extraPkgs)}"'';
+  server-fhs = pkgs.buildFHSEnv {
+    name = "fileflows-server-fhs";
+    pname = "server"; # Script name
+    inherit (cfg.package) version;
+
+    targetPkgs = _pkgs: [cfg.package] ++ cfg.extraPkgs;
+    runScript = "server";
+  };
+
+  node-fhs = pkgs.buildFHSEnv {
+    name = "fileflows-node-fhs";
+    pname = "node"; # Script name
+    inherit (cfg.package) version;
+
+    targetPkgs = _pkgs: [cfg.package] ++ cfg.extraPkgs;
+    runScript = "node";
+  };
 in {
   options.services.fileflows = {
     package = mkOption {
       type = types.package;
       default = pkgs.callPackage ./package.nix {};
+      description = ''
+        The package to use for FileFlows.
+
+        Must provide /bin/server and /bin/node (if services are enabled). The services handle the FHS logic to provide extraPkgs, so that should not be done here.
+      '';
     };
 
     extraPkgs = mkOption {
@@ -22,9 +42,9 @@ in {
       default = [];
       example = lib.literalMD "with pkgs; [jellyfin-ffmpeg]";
       description = ''
-        Extra packages to install in the Nix store.
+        Extra packages to install for FileFlows.
 
-        These won't affect the server or node directly, but this option guarantees that these packages will be installed, and will print all their paths at the start of the systemd services.
+        These will be provided in an FHS environment in /usr/bin so that FileFlows can reference them easily and the links will continue to work even after updates.
       '';
     };
 
@@ -89,7 +109,7 @@ in {
 
         services.fileflows-server = {
           description = "FileFlows server with integrated node";
-          script = "${cfg.package}/bin/server --no-gui --systemd-service";
+          script = "${server-fhs}/bin/server --no-gui --systemd-service";
 
           startLimitIntervalSec = 200;
           startLimitBurst = 3;
@@ -102,8 +122,6 @@ in {
 
           serviceConfig = {
             Type = "simple";
-
-            ExecStartPre = optPrintExtraPkgs;
 
             Restart = "always";
             RestartSec = 10;
@@ -130,7 +148,7 @@ in {
 
         services.fileflows-node = {
           description = "FileFlows node";
-          script = "${cfg.package}/bin/node --no-gui --systemd-service";
+          script = "${node-fhs}/bin/node --no-gui --systemd-service";
 
           startLimitIntervalSec = 200;
           startLimitBurst = 3;
@@ -143,8 +161,6 @@ in {
 
           serviceConfig = {
             Type = "simple";
-
-            ExecStartPre = optPrintExtraPkgs;
 
             Restart = "always";
             RestartSec = 10;
