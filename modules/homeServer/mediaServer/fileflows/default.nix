@@ -18,12 +18,15 @@ in {
       };
     };
 
-    setup.impermanence.keepDirs = [
-      {
-        directory = config.services.fileflows.server.baseDir;
-        inherit (config.services.fileflows.server) user group;
-        mode = "750";
-      }
-    ];
+    setup = {
+      backup.paths = [config.services.fileflows.server.baseDir];
+      impermanence.keepDirs = [
+        {
+          directory = config.services.fileflows.server.baseDir;
+          inherit (config.services.fileflows.server) user group;
+          mode = "750";
+        }
+      ];
+    };
   };
 }
