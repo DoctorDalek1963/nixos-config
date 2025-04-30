@@ -34,7 +34,7 @@ in {
       user = mkOption {
         type = types.nonEmptyStr;
         default = "fileflows";
-        description = "User account under which the FileFlow server runs.";
+        description = "User account under which the FileFlows server runs.";
       };
 
       group = mkOption {
@@ -62,7 +62,7 @@ in {
       user = mkOption {
         type = types.nonEmptyStr;
         default = "fileflows";
-        description = "User account under which the FileFlow node runs.";
+        description = "User account under which the FileFlows node runs.";
       };
 
       group = mkOption {
@@ -79,23 +79,15 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    systemd = {
-      tmpfiles.settings.fileflowsDirs = {
-        "${cfg.server.baseDir}".d = {
+  config = lib.mkMerge [
+    (lib.mkIf cfg.server.enable {
+      systemd = {
+        tmpfiles.settings.fileflowsDirs."${cfg.server.baseDir}".d = {
           mode = "700";
           inherit (cfg.server) user group;
         };
 
-        "${cfg.node.baseDir}".d = {
-          mode = "700";
-          inherit (cfg) user group;
-          age = "24h";
-        };
-      };
-
-      services = {
-        fileflows-server = {
+        services.fileflows-server = {
           description = "FileFlows server with integrated node";
           script = "${cfg.package}/bin/server --no-gui --systemd-service";
 
@@ -117,8 +109,26 @@ in {
             RestartSec = 10;
           };
         };
+      };
 
-        fileflows-node = {
+      users.users.fileflows = lib.mkIf (cfg.server.user == "fileflows") {
+        isSystemUser = true;
+        inherit (cfg.server) group;
+      };
+
+      networking.firewall = lib.mkIf cfg.server.openFirewall {
+        allowedTCPPorts = [19200];
+      };
+    })
+
+    (lib.mkIf cfg.node.enable {
+      systemd = {
+        tmpfiles.settings.fileflowsDirs."${cfg.node.baseDir}".d = {
+          mode = "700";
+          inherit (cfg) user group;
+        };
+
+        services.fileflows-node = {
           description = "FileFlows node";
           script = "${cfg.package}/bin/node --no-gui --systemd-service";
 
@@ -141,15 +151,11 @@ in {
           };
         };
       };
-    };
 
-    users.users.fileflows = lib.mkIf (cfg.server.user == "fileflows" || cfg.node.user == "fileflows") {
-      isSystemUser = true;
-      inherit (cfg) group;
-    };
-
-    networking.firewall = lib.mkIf cfg.openFirewall {
-      allowedTCPPorts = [19200];
-    };
-  };
+      users.users.fileflows = lib.mkIf (cfg.node.user == "fileflows") {
+        isSystemUser = true;
+        inherit (cfg.node) group;
+      };
+    })
+  ];
 }
