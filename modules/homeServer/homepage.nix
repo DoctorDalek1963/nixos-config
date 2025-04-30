@@ -94,7 +94,6 @@
     else [];
 
   storageServices = let
-    # TODO: Also Unmanic
     list =
       (lib.optional cfg.nextcloud.enable {
         "Nextcloud" = {
@@ -116,6 +115,17 @@
           widget = {
             type = "scrutiny";
             url = "https://${cfg.domainName}/scrutiny";
+          };
+        };
+      })
+      ++ (lib.optional cfgMs.enable {
+        "FileFlows" = {
+          icon = "fileflows.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.fileflows}";
+          description = "Automated transcoding";
+          widget = {
+            type = "fileflows";
+            url = "http://${cfg.domainName}:${toString cfg.ports.mediaServer.fileflows}";
           };
         };
       });

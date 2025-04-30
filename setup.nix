@@ -157,6 +157,7 @@ in {
           mediaServer = {
             audiobookshelf = port 8001;
             jellyseerr = port 5056;
+            fileflows = port 19201;
           };
         };
 
@@ -199,6 +200,8 @@ in {
 
           prowlarr = port 9696;
           transmission = port 9091;
+
+          fileflows = port 19200;
         };
 
         nextcloud = port 38260;
