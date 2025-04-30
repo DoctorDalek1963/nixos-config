@@ -122,6 +122,8 @@ in {
 
           serviceConfig = {
             Type = "simple";
+            User = cfg.server.user;
+            Group = cfg.server.group;
 
             Restart = "always";
             RestartSec = 10;
@@ -143,7 +145,7 @@ in {
       systemd = {
         tmpfiles.settings.fileflowsDirs."${cfg.node.baseDir}".d = {
           mode = "700";
-          inherit (cfg) user group;
+          inherit (cfg.node) user group;
         };
 
         services.fileflows-node = {
@@ -161,6 +163,8 @@ in {
 
           serviceConfig = {
             Type = "simple";
+            User = cfg.node.user;
+            Group = cfg.node.group;
 
             Restart = "always";
             RestartSec = 10;
