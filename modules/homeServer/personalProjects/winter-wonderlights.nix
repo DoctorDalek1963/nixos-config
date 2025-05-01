@@ -44,7 +44,11 @@ in {
       "/winter-wonderlights/docs".return = "301 /winter-wonderlights/docs/ww_effects/index.html";
     };
 
-    systemd.tmpfiles.rules = ["d ${env.DATA_DIR} 0755 user group - -"];
+    systemd.tmpfiles.settings.winterWonderlights."${env.DATA_DIR}".d = {
+      user = "winter-wonderlights";
+      group = "winter-wonderlights";
+      mode = "755";
+    };
 
     # The tailscale-certificates.service can take a few seconds to get the
     # certificates initially, but the server requires them. The --require-tls
@@ -54,6 +58,9 @@ in {
     systemd.services.winter-wonderlights-server = {
       serviceConfig = {
         Type = "simple";
+
+        User = "winter-wonderlights";
+        Group = "winter-wonderlights";
 
         Restart = "on-failure";
         RestartSec = "10s";
@@ -68,6 +75,11 @@ in {
         ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
       wantedBy = ["network-online.target" "tailscale-certificates.service"];
+    };
+
+    users.users.winter-wonderlights = {
+      isSystemUser = true;
+      group = "winter-wonderlights";
     };
   };
 }
