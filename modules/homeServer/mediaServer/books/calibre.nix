@@ -8,6 +8,38 @@
   cfgMs = cfg.mediaServer;
 
   libraryPath = "${cfgMs.mediaRoot}/ebooks";
+
+  users-db-pkg = pkgs.stdenvNoCC.mkDerivation {
+    name = "calibre-server-users.db";
+
+    dontUnpack = true;
+    dontConfigure = true;
+
+    nativeBuildInputs = [pkgs.sqlite];
+
+    buildPhase = ''
+      sqlite3 users.db ".read ${pkgs.writeText "new-calibre-server-users.sql" ''
+        CREATE TABLE users (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            pw TEXT NOT NULL,
+            timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+            session_data TEXT NOT NULL DEFAULT "{}",
+            restriction TEXT NOT NULL DEFAULT "{}",
+            readonly TEXT NOT NULL DEFAULT "n",
+            misc_data TEXT NOT NULL DEFAULT "{}",
+            UNIQUE(name)
+        );
+
+        INSERT INTO users (name, pw, restriction) VALUES ('admin', 'admin', '{"library_restrictions": {}}');
+      ''}"
+    '';
+
+    installPhase = ''
+      mkdir $out
+      cp users.db $out/users.db
+    '';
+  };
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     setup = {
@@ -40,7 +72,7 @@ in {
         auth = {
           enable = true;
           mode = "basic";
-          userDb = ./calibre-server-users.db;
+          userDb = "${users-db-pkg}/users.db";
         };
       };
 
