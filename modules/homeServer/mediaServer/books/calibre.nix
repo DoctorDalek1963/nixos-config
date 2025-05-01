@@ -31,7 +31,7 @@
             UNIQUE(name)
         );
 
-        INSERT INTO users (name, pw, restriction) VALUES ('admin', 'admin', '{"library_restrictions": {}}');
+        INSERT INTO users (name, pw, timestamp, restriction) VALUES ('admin', 'admin', datetime(0, 'unixepoch'), '{"library_restrictions": {}}');
       ''}"
     '';
 
