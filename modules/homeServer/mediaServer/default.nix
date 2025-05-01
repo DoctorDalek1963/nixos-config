@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -22,15 +23,23 @@ in {
 
     users.groups.media = {};
 
-    systemd.tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}" = {
-      d = {
+    systemd = {
+      tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}".d = {
         user = "root";
         group = "media";
         mode = "775";
       };
 
-      # Set ACL to make new files group-readable by media by default
-      A.argument = "u::rw,g:media:rw,o::r";
+      services.chmod-media-root = {
+        description = "Chmod mediaRoot";
+        script = ''${pkgs.coreutils}/bin/chmod -R u=rwX,g=rwX,o=rX "${cfgMs.mediaRoot}"'';
+
+        after = ["systemd-tmpfiles-setup.service"];
+        requires = ["systemd-tmpfiles-setup.service"];
+        wantedBy = ["multi-user.target"];
+
+        serviceConfig.Type = "oneshot";
+      };
     };
 
     setup.backup.paths = [cfgMs.mediaRoot];
