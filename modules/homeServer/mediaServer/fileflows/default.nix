@@ -19,7 +19,11 @@ in {
     };
 
     setup = {
-      backup.paths = [config.services.fileflows.server.baseDir];
+      backup = {
+        paths = [config.services.fileflows.server.baseDir];
+        exclude = ["${config.services.fileflows.server.baseDir}/Temp"];
+      };
+
       impermanence.keepDirs = [
         {
           directory = config.services.fileflows.server.baseDir;
