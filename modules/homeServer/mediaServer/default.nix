@@ -22,10 +22,15 @@ in {
 
     users.groups.media = {};
 
-    systemd.tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}".d = {
-      user = "root";
-      group = "media";
-      mode = "775";
+    systemd.tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}" = {
+      d = {
+        user = "root";
+        group = "media";
+        mode = "775";
+      };
+
+      # Set ACL to make new files group-readable by media by default
+      A.argument = "u::rw,g:media:rw,o::r";
     };
 
     setup.backup.paths = [cfgMs.mediaRoot];
