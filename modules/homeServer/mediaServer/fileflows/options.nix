@@ -7,9 +7,6 @@
   cfg = config.services.fileflows;
 
   inherit (lib) mkOption types;
-
-  optPrintExtraPkgs =
-    lib.optional (builtins.length cfg.extraPkgs > 0) ''echo -e "Extra packages:\n${builtins.concatStringsSep "\\n" (map toString cfg.extraPkgs)}"'';
 in {
   options.services.fileflows = {
     package = mkOption {
@@ -21,11 +18,13 @@ in {
       type = types.listOf types.package;
       default = [];
       example = lib.literalMD "with pkgs; [jellyfin-ffmpeg]";
-      description = ''
-        Extra packages to install in the Nix store.
+      description = "Extra packages to install in `config.services.fileflows.binDir`.";
+    };
 
-        These won't affect the server or node directly, but this option guarantees that these packages will be installed, and will print all their paths at the start of the systemd services.
-      '';
+    binDir = mkOption {
+      type = types.nonEmptyStr;
+      default = "/var/lib/fileflows/bin";
+      description = "The directory where the extraPkgs will be symlinked.";
     };
 
     server = {
@@ -80,6 +79,13 @@ in {
   };
 
   config = lib.mkMerge [
+    (lib.mkIf (cfg.server.enable || cfg.node.enable) {
+      systemd.tmpfiles.settings.fileflowsDirs."${cfg.binDir}"."L+".argument = "${pkgs.symlinkJoin {
+        name = "fileflows-extra-pkgs";
+        paths = cfg.extraPkgs;
+      }}/bin";
+    })
+
     (lib.mkIf cfg.server.enable {
       systemd = {
         tmpfiles.settings.fileflowsDirs."${cfg.server.baseDir}".d = {
@@ -104,8 +110,6 @@ in {
             Type = "simple";
             User = cfg.server.user;
             Group = cfg.server.group;
-
-            ExecStartPre = optPrintExtraPkgs;
 
             Restart = "always";
             RestartSec = 10;
@@ -147,8 +151,6 @@ in {
             Type = "simple";
             User = cfg.node.user;
             Group = cfg.node.group;
-
-            ExecStartPre = optPrintExtraPkgs;
 
             Restart = "always";
             RestartSec = 10;
