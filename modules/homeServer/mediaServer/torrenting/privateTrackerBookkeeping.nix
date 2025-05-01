@@ -48,7 +48,11 @@
   };
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    systemd.tmpfiles.rules = ["d ${dir} 0755 root root - -"];
+    systemd.tmpfiles.settings.private-tracker-bookkeeping."${dir}".d = {
+      user = "root";
+      group = "root";
+      mode = "755";
+    };
 
     systemd = {
       services = mkService {

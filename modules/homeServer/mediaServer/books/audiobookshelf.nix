@@ -21,6 +21,10 @@ in {
       port = cfg.ports.mediaServer.audiobookshelf;
     };
 
-    systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot}/audiobookshelf 0775 audiobookshelf media - -"];
+    systemd.tmpfiles.settings.books."${cfgMs.mediaRoot}/audiobookshelf".d = {
+      user = "audiobookshelf";
+      group = "media";
+      mode = "775";
+    };
   };
 }

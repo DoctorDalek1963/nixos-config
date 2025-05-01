@@ -108,11 +108,17 @@ in {
       };
     };
 
-    systemd.tmpfiles.rules = [
-      "d ${cfgMs.mediaRoot}/torrents 0775 transmission media - -"
-      "d ${cfgMs.mediaRoot}/torrents/downloads 0775 transmission media - -"
-      "d ${cfgMs.mediaRoot}/torrents/incomplete 0775 transmission media - -"
-    ];
+    systemd.tmpfiles.settings.transmission = let
+      conf = {
+        user = "transmission";
+        group = "media";
+        mode = "775";
+      };
+    in {
+      "${cfgMs.mediaRoot}/torrents".d = conf;
+      "${cfgMs.mediaRoot}/torrents/downloads".d = conf;
+      "${cfgMs.mediaRoot}/torrents/incomplete".d = conf;
+    };
 
     # These service configs were mostly taken from
     # https://github.com/conallprendergast/openvpn-netns-systemd

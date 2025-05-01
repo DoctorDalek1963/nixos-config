@@ -42,10 +42,18 @@ in {
         requires = ["servarr-config.service"];
       };
 
-      tmpfiles.rules = [
-        "d ${cfgMs.mediaRoot}/jellyfin/telly 0775 jellyfin media - -"
-        "d ${cfgMs.mediaRoot}/torrents/downloads/telly 0775 transmission media - -"
-      ];
+      tmpfiles.settings.telly = {
+        "${cfgMs.mediaRoot}/jellyfin/telly".d = {
+          user = "jellyfin";
+          group = "media";
+          mode = "775";
+        };
+        "${cfgMs.mediaRoot}/torrents/downloads/telly".d = {
+          user = "transmission";
+          group = "media";
+          mode = "775";
+        };
+      };
     };
   };
 }

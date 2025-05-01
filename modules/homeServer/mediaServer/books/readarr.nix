@@ -39,7 +39,11 @@ in {
         requires = ["servarr-config.service"];
       };
 
-      tmpfiles.rules = ["d ${cfgMs.mediaRoot}/torrents/downloads/ebooks 0775 transmission media - -"];
+      tmpfiles.settings.books."${cfgMs.mediaRoot}/torrents/downloads/ebooks".d = {
+        user = "transmission";
+        group = "media";
+        mode = "775";
+      };
     };
   };
 }

@@ -39,10 +39,18 @@ in {
         requires = ["servarr-config.service"];
       };
 
-      tmpfiles.rules = [
-        "d ${cfgMs.mediaRoot}/music 0775 lidarr media - -"
-        "d ${cfgMs.mediaRoot}/torrents/downloads/music 0775 transmission media - -"
-      ];
+      tmpfiles.settings.music = {
+        "${cfgMs.mediaRoot}/music".d = {
+          user = "navidrome";
+          group = "media";
+          mode = "775";
+        };
+        "${cfgMs.mediaRoot}/torrents/downloads/music".d = {
+          user = "transmission";
+          group = "media";
+          mode = "775";
+        };
+      };
     };
   };
 }

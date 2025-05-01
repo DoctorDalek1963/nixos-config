@@ -22,7 +22,11 @@ in {
 
     users.groups.media = {};
 
-    systemd.tmpfiles.rules = ["d ${cfgMs.mediaRoot} 0775 root media - -"];
+    systemd.tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}".d = {
+      user = "root";
+      group = "media";
+      mode = "775";
+    };
 
     setup.backup.paths = [cfgMs.mediaRoot];
   };
