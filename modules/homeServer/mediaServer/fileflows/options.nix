@@ -75,6 +75,11 @@ in {
         default = "/var/lib/fileflows/node";
         description = "The directory where the FileFlows node stores its config.";
       };
+
+      serverUrl = mkOption {
+        type = types.nonEmptyStr;
+        description = "The URL of the FileFlows server to connect to.";
+      };
     };
   };
 
@@ -136,7 +141,7 @@ in {
 
         services.fileflows-node = {
           description = "FileFlows node";
-          script = "${cfg.package}/bin/node --no-gui --systemd-service";
+          script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.node.serverUrl}";
 
           startLimitIntervalSec = 200;
           startLimitBurst = 3;

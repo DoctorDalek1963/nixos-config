@@ -12,9 +12,16 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     services.fileflows = {
       extraPkgs = [pkgs.jellyfin-ffmpeg];
+
       server = {
         enable = true;
         group = "media";
+      };
+
+      node = {
+        enable = true;
+        group = "media";
+        serverUrl = "http://localhost:${toString cfg.ports.mediaServer.fileflows}";
       };
     };
 
@@ -28,6 +35,11 @@ in {
         {
           directory = config.services.fileflows.server.baseDir;
           inherit (config.services.fileflows.server) user group;
+          mode = "750";
+        }
+        {
+          directory = config.services.fileflows.node.baseDir;
+          inherit (config.services.fileflows.node) user group;
           mode = "750";
         }
       ];
