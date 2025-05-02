@@ -26,7 +26,7 @@ in {
     # provided and maintained
     virtualisation.oci-containers.containers.whisper-asr-webservice = {
       image = "onerahmet/openai-whisper-asr-webservice:v1.8.2-gpu";
-      pull = "never";
+      # pull = "never"; # TODO (25.05): Uncomment this
       imageFile = pkgs.dockerTools.pullImage {
         imageName = "onerahmet/openai-whisper-asr-webservice";
         finalImageTag = "v1.8.2-gpu";
