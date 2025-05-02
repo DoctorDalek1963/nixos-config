@@ -108,9 +108,6 @@ in {
           description = "FileFlows server with integrated node";
           script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.server.port}";
 
-          startLimitIntervalSec = 200;
-          startLimitBurst = 3;
-
           requires = ["network-online.target"];
           after = ["network-online.target"];
           wantedBy = ["multi-user.target"];
@@ -124,6 +121,8 @@ in {
 
             Restart = "always";
             RestartSec = 10;
+
+            TasksMax = 1000;
           };
         };
       };
