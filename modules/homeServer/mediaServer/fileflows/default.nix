@@ -16,6 +16,7 @@ in {
       server = {
         enable = true;
         group = "media";
+        port = cfg.ports.mediaServer.fileflows;
       };
 
       node = {

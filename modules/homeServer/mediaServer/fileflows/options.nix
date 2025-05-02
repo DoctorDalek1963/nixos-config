@@ -42,6 +42,12 @@ in {
         description = "Group under which the FileFlows server runs.";
       };
 
+      port = mkOption {
+        type = types.port;
+        default = 19200;
+        description = "The port to run the FileFlows server on.";
+      };
+
       baseDir = mkOption {
         type = types.nonEmptyStr;
         default = "/var/lib/fileflows/server";
@@ -100,7 +106,7 @@ in {
 
         services.fileflows-server = {
           description = "FileFlows server with integrated node";
-          script = "${cfg.package}/bin/server --no-gui --systemd-service";
+          script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.server.port}";
 
           startLimitIntervalSec = 200;
           startLimitBurst = 3;
@@ -128,7 +134,7 @@ in {
       };
 
       networking.firewall = lib.mkIf cfg.server.openFirewall {
-        allowedTCPPorts = [19200];
+        allowedTCPPorts = [cfg.server.port];
       };
     })
 
