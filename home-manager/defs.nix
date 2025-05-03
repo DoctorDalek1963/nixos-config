@@ -37,6 +37,7 @@
 
     misc = {
       programs = {
+        discord = true;
         feishin = true;
         hexchat = true;
         ms-teams = true;
