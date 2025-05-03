@@ -34,7 +34,9 @@ in {
         sha256 = "1l386gj5jls0hwfs40hpyhzd0hb3qv690sl08c9hbbv5l341mb6j";
       };
 
-      user = "bazarr:media";
+      # podman.user = "bazarr"; # TODO (25.05): Uncomment this
+
+      # We specify 127.0.0.1 here because otherwise, NixOS would open this port in the firewall
       ports = ["127.0.0.1:${toString cfg.ports.mediaServer.whisper-asr}:9000"];
       volumes = ["${cacheDir}:/root/.cache"];
 
