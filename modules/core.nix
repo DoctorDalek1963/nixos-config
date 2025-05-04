@@ -68,6 +68,10 @@ in {
           "nvidia-x11"
           "nvidia-settings"
 
+          # CUDA stuff
+          "cuda_cudart"
+
+          # Automated transcoding on home server
           "fileflows"
 
           # === home-manager

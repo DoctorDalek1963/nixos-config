@@ -47,6 +47,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Other home server stuff
+    whisper-asr-webservice-flake.url = "github:DoctorDalek1963/whisper-asr-webservice-flake";
+
     # home-manager stuff
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
