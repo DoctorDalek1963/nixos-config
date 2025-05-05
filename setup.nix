@@ -208,6 +208,7 @@ in {
           transmission = port 9091;
 
           fileflows = port 19200;
+          whisper-asr = port 9000;
         };
 
         nextcloud = port 38260;

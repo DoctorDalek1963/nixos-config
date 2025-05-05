@@ -6,6 +6,8 @@
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 in {
+  imports = [./whisper.nix];
+
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
     setup.impermanence.keepDirs = ["/var/lib/bazarr"];
 

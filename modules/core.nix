@@ -68,6 +68,7 @@ in {
           "nvidia-x11"
           "nvidia-settings"
 
+          # Automated transcoding on home server
           "fileflows"
 
           # === home-manager
