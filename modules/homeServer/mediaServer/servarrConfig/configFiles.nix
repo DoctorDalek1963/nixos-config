@@ -99,6 +99,10 @@
 
               ''.opensubtitlescom.username = "$OPENSUBTITLES_USERNAME"''
               ''.opensubtitlescom.password = "$OPENSUBTITLES_PASSWORD"''
+
+              ''.whisper.endpoint = "http://127.0.0.1:9000"''
+              ''.whisper.response = 60''
+              ''.whisper.timeout = 3600''
             ];
           in ''
             mkdir -p /var/lib/bazarr/config
