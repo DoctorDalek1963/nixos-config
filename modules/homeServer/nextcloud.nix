@@ -24,6 +24,10 @@ in {
       };
     };
 
+    users.groups.nextcloud = {
+      members = lib.optional (cfg.manager != null) cfg.manager;
+    };
+
     services = {
       nextcloud = {
         enable = true;

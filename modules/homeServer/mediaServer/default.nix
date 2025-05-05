@@ -21,7 +21,9 @@ in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     # TODO (25.05): Change all servarr stuff to use the new declarative config style
 
-    users.groups.media = {};
+    users.groups.media = {
+      members = lib.optional (cfg.manager != null) cfg.manager;
+    };
 
     systemd = {
       tmpfiles.settings.mediaRoot."${cfgMs.mediaRoot}".d = {

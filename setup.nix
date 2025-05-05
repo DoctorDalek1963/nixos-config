@@ -143,6 +143,12 @@ in {
         type = types.nonEmptyStr;
       };
 
+      manager = mkOption {
+        type = types.nullOr types.nonEmptyStr;
+        default = null;
+        description = "The primary user account on the server. This user will be added to groups like `media` and `nextcloud`.";
+      };
+
       # All the ports used by different services
       ports = let
         port = num:

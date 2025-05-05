@@ -125,6 +125,7 @@
               enable = true;
               domainName = "bert-nixos.triceratops-egret.ts.net";
               dataRoot = "/data";
+              manager = "pi";
 
               personalProjects = {
                 enable = true;
@@ -286,6 +287,7 @@
             enable = true;
             domainName = "sasha-nixos.triceratops-egret.ts.net";
             dataRoot = "/data";
+            manager = "dyson";
 
             adguardhome.enable = true;
             myspeed.enable = true;
