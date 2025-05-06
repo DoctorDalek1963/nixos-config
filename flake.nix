@@ -52,7 +52,7 @@
 
     # home-manager stuff
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/master"; # TODO (25.05): Go back to release-25.05 once it's available
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
