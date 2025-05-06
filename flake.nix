@@ -34,18 +34,9 @@
     };
 
     # Personal projects for home server
-    tic-tac-toe = {
-      url = "github:DoctorDalek1963/tic-tac-toe";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    winter-wonderlights = {
-      url = "github:DoctorDalek1963/winter-wonderlights";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    wordle = {
-      url = "github:DoctorDalek1963/wordle";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    tic-tac-toe.url = "github:DoctorDalek1963/tic-tac-toe";
+    winter-wonderlights.url = "github:DoctorDalek1963/winter-wonderlights";
+    wordle.url = "github:DoctorDalek1963/wordle";
 
     # Other home server stuff
     whisper-asr-webservice-flake.url = "github:DoctorDalek1963/whisper-asr-webservice-flake";
