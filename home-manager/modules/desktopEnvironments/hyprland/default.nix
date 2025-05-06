@@ -164,6 +164,8 @@ in {
           inherit (theme-colors) "col.active_border" "col.inactive_border";
         };
 
+        ecosystem.no_donation_nag = true;
+
         decoration = {
           rounding = 7;
 
