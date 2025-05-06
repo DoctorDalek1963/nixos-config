@@ -187,7 +187,9 @@ in {
           new_window_takes_over_fullscreen = 2;
 
           # Wait longer before saying "Application not responding"
-          anr_missed_pings = 5;
+          # anr_missed_pings = 5; # TODO (25.11): Uncomment
+          # For now, we'll just disable ANR completely
+          enable_anr_dialog = false;
         };
 
         animation =
