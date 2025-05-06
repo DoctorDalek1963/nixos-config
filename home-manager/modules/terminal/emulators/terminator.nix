@@ -151,7 +151,9 @@
         };
       };
     }
-    .${cfg.theme};
+    .${
+      cfg.theme
+    };
 
   default-and-dark = ''
     [[default]]

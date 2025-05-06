@@ -34,7 +34,9 @@
         };
       };
     }
-    .${config.setup.terminal.theme};
+    .${
+      config.setup.terminal.theme
+    };
 in {
   config = lib.mkIf cfg.enable {
     programs.btop = {

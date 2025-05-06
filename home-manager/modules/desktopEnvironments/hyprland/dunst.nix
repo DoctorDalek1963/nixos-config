@@ -21,7 +21,9 @@
         dark_text = "#24273a";
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 
   # Copied from home-manager modules/services/dunst.nix
   toDunstIni = lib.generators.toINI {

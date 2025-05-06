@@ -25,7 +25,9 @@
         };
       };
     }
-    .${config.setup.terminal.theme};
+    .${
+      config.setup.terminal.theme
+    };
 in {
   config = lib.mkIf config.setup.terminal.tools.bat {
     programs.bat = {

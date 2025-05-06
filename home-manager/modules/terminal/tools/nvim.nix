@@ -56,7 +56,9 @@ in {
       medium = inputs.nixvim-config.packages.${system}.nvim-medium;
       full = inputs.nixvim-config.packages.${system}.nvim-full;
     }
-    .${config.setup.terminal.tools.nvim};
+    .${
+      config.setup.terminal.tools.nvim
+    };
 
   setup.terminal.shellAliases = {
     v = config.consts.nvimPath;

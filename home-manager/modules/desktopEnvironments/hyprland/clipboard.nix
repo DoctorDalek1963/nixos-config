@@ -12,7 +12,9 @@
       wezterm = "$launchInTerminal --class clipse ${clipse}";
       terminator = abort "Terminator doesn't support setting a custom class, so cannot be used for clipse in the current setup";
     }
-    .${config.setup.terminal.emulator};
+    .${
+      config.setup.terminal.emulator
+    };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home.packages = [pkgs.wl-clipboard];

@@ -40,7 +40,9 @@
         };
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home.pointerCursor = {

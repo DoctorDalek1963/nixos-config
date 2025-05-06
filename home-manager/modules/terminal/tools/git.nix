@@ -51,7 +51,9 @@
               onedark = "OneHalfDark";
               catppuccin-macchiato = "catppuccin-macchiato";
             }
-            .${config.setup.terminal.theme};
+            .${
+              config.setup.terminal.theme
+            };
           line-numbers = true;
         };
       };

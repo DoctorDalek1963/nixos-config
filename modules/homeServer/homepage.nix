@@ -408,7 +408,9 @@ in {
                     "4" = 2;
                     "5" = 3;
                   }
-                  .${toString cols};
+                  .${
+                    toString cols
+                  };
                 icon = "si-jellyfin";
               };
             }
@@ -463,7 +465,9 @@ in {
                   tempmax = 85;
                 };
               }
-              .${config.setup.hostname};
+              .${
+                config.setup.hostname
+              };
           }
           {
             resources = {

@@ -51,7 +51,9 @@
         "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 in {
   imports = [
     ./waybar
@@ -125,14 +127,18 @@ in {
             wezterm = "${config.programs.wezterm.package}/bin/wezterm start --always-new-process";
             terminator = "${pkgs.terminator}/bin/terminator -x";
           }
-          .${config.setup.terminal.emulator};
+          .${
+            config.setup.terminal.emulator
+          };
 
         "$launchInTerminal" =
           {
             wezterm = ''${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation="NeverPrompt"' start --always-new-process'';
             terminator = "${pkgs.terminator}/bin/terminator -x";
           }
-          .${config.setup.terminal.emulator};
+          .${
+            config.setup.terminal.emulator
+          };
 
         "$fileManager" =
           if cfgTT.yazi

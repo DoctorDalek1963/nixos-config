@@ -21,11 +21,10 @@
     SCANNER_SERVER_URL = "wss://${cfg.domainName}:${SCANNER_PORT}";
   };
 
-  winter-wonderlights-web =
-    (inputs.winter-wonderlights.packages.${system}.client-web.override env)
+  winter-wonderlights-web = (inputs.winter-wonderlights.packages.${system}.client-web.override env)
     .overrideAttrs {
-      TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
-    };
+    TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
+  };
   winter-wonderlights-doc = inputs.winter-wonderlights.packages.${system}.doc;
 
   winter-wonderlights-server = inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override env;

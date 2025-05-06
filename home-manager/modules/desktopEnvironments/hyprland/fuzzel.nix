@@ -20,7 +20,9 @@
         border = "c7a0f6ff";
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
