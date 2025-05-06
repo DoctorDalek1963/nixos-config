@@ -185,6 +185,9 @@ in {
           # If one window is fullscreen and another window is opened,
           # then disable fullscreen
           new_window_takes_over_fullscreen = 2;
+
+          # Wait longer before saying "Application not responding"
+          anr_missed_pings = 5;
         };
 
         animation =
