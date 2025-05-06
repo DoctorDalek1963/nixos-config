@@ -3,7 +3,7 @@
 
   inputs = {
     # Core
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # TODO (25.05): Actually use nixos-25.05 when it's available
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur = {
       url = "github:nix-community/nur";
