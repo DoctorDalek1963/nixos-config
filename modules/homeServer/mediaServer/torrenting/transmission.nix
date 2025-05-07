@@ -82,6 +82,9 @@ in {
           lpd-enabled = true;
           pex-enabled = true;
 
+          speed-limit-up = 100; # kB/s
+          speed-limit-up-enabled = true;
+
           rpc-enabled = true;
           rpc-port = cfg.ports.mediaServer.transmission;
           rpc-url = "/transmission/";
