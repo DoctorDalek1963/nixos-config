@@ -56,11 +56,11 @@
   radarr = optSnippet cfgMs.movies ''
     set_naming_config(
         "${config.services.radarr.dataDir}/radarr.db",
-        "INSERT INTO NamingConfig (MultiEpisodeStyle, "
-        "ReplaceIllegalCharacters, StandardMovieFormat, MovieFolderFormat,"
-        "ColonReplacementFormat, RenameMovies) VALUES (0, 1, '{Movie Title} "
+        "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
+        "StandardMovieFormat, MovieFolderFormat,"
+        "ColonReplacementFormat, RenameMovies) VALUES (1, '{Movie Title} "
         "({Release Year}) - {Quality Full}', '{Movie Title} ({Release Year})'"
-        ", 2, 1);"
+        ", 4, 1);"
     )
   '';
   sonarr = optSnippet cfgMs.telly ''
@@ -70,11 +70,11 @@
         "StandardEpisodeFormat, DailyEpisodeFormat, SeasonFolderFormat, "
         "SeriesFolderFormat, AnimeEpisodeFormat, ReplaceIllegalCharacters, "
         "SpecialsFolderFormat, ColonReplacementFormat) VALUES"
-        "(5, 1, '{Series Title} S{season:00}E{episode:00} - {Episode Title} "
+        "(4, 1, '{Series Title} S{season:00}E{episode:00} - {Episode Title} "
         "- {Quality Full}', '{Series Title} - {Air-Date} - {Episode Title} "
-        "- {Quality Full}', 'Season {season:00}', '{Series Title}', "
+        "- {Quality Full}', 'Season {season}', '{Series Title}', "
         "'{Series Title} - S{season:00}E{episode:00} - {Episode Title} "
-        "- {Quality Full}', 1, 'Season 00', 4)"
+        "- {Quality Full}', 1, 'Specials', 4)"
     )
   '';
 in {
