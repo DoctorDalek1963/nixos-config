@@ -157,8 +157,8 @@ in {
 
       transmission = {
         bindsTo = [openvpn-ns-service];
-        after = [openvpn-ns-service "create-transmission-veth.service"];
-        requires = [openvpn-ns-service "create-transmission-veth.service"];
+        after = [openvpn-ns-service "create-transmission-veth.service" "resolvconf.service"];
+        requires = [openvpn-ns-service "create-transmission-veth.service" "resolvconf.service"];
 
         serviceConfig = {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];
