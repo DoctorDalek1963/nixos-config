@@ -359,6 +359,7 @@ in {
 
         environmentFile = config.sops.secrets."home-server/homepage.env".path;
         listenPort = cfg.ports.homepage;
+        allowedHosts = cfg.domainName;
 
         bookmarks = miscBookmarks ++ personalProjectsBookmarks;
         services = infraServices ++ storageServices ++ mediaServices ++ mediaDownloadServices;
