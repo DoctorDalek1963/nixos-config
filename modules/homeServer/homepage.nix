@@ -10,8 +10,6 @@
   # Information about how the icons work can be found at
   # https://gethomepage.dev/latest/configs/services/#icons
 
-  # TODO (25.05): Redo all config for v0.9 -> v1 update
-
   miscBookmarks = let
     list = lib.optional cfg.firefly-iii.enable {
       "Firefly III" = [
@@ -64,7 +62,7 @@
     then [{"Personal projects" = list;}]
     else [];
 
-  infraServices = let
+  networkingServices = let
     list =
       (lib.optional cfg.adguardhome.enable {
         "AdGuard Home" = {
@@ -90,7 +88,7 @@
       });
   in
     if builtins.length list > 0
-    then [{Infrastructure = list;}]
+    then [{Networking = list;}]
     else [];
 
   storageServices = let
@@ -362,7 +360,7 @@ in {
         allowedHosts = cfg.domainName;
 
         bookmarks = miscBookmarks ++ personalProjectsBookmarks;
-        services = infraServices ++ storageServices ++ mediaServices ++ mediaDownloadServices;
+        services = networkingServices ++ storageServices ++ mediaServices ++ mediaDownloadServices;
 
         settings = {
           headerStyle = "boxed";
@@ -370,13 +368,13 @@ in {
 
           layout = [
             {
-              Infrastructure = {
+              Networking = {
                 style = "row";
                 columns =
-                  if infraServices == []
+                  if networkingServices == []
                   then 1
-                  else builtins.length (builtins.elemAt infraServices 0).Infrastructure;
-                icon = "mdi-server";
+                  else builtins.length (builtins.elemAt networkingServices 0).Networking;
+                icon = "mdi-server-network";
               };
             }
             {
