@@ -170,6 +170,8 @@ in {
           inherit (theme-colors) "col.active_border" "col.inactive_border";
         };
 
+        dwindle.smart_split = true;
+
         ecosystem.no_donation_nag = true;
 
         decoration = {
