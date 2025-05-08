@@ -33,6 +33,18 @@ in {
       radarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Radarr";
+          server = {
+            port = cfg.ports.mediaServer.radarr;
+            urlbase = "radarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 

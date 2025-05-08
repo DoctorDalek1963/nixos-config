@@ -30,6 +30,18 @@ in {
       prowlarr = {
         enable = true;
         # dataDir = "/var/lib/prowlarr";
+
+        settings = {
+          app.instancename = "Prowlarr";
+          server = {
+            port = cfg.ports.mediaServer.prowlarr;
+            urlbase = "prowlarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 

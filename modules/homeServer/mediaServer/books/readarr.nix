@@ -30,6 +30,18 @@ in {
       readarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Readarr";
+          server = {
+            port = cfg.ports.mediaServer.readarr;
+            urlbase = "readarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 

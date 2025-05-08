@@ -19,8 +19,6 @@ in {
   ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    # TODO (25.05): Change all servarr stuff to use the new declarative config style
-
     users.groups.media = {
       members = lib.optional (cfg.manager != null) cfg.manager;
     };

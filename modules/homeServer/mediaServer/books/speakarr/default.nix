@@ -32,6 +32,18 @@ in {
       speakarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Speakarr";
+          server = {
+            port = cfg.ports.mediaServer.speakarr;
+            urlbase = "speakarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 

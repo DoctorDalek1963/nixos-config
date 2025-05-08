@@ -33,6 +33,18 @@ in {
       sonarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Sonarr";
+          server = {
+            port = cfg.ports.mediaServer.sonarr;
+            urlbase = "sonarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 

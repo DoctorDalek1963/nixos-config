@@ -30,6 +30,18 @@ in {
       lidarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Lidarr";
+          server = {
+            port = cfg.ports.mediaServer.lidarr;
+            urlbase = "lidarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 
