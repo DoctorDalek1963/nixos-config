@@ -70,7 +70,7 @@
         "StandardEpisodeFormat, DailyEpisodeFormat, SeasonFolderFormat, "
         "SeriesFolderFormat, AnimeEpisodeFormat, ReplaceIllegalCharacters, "
         "SpecialsFolderFormat, ColonReplacementFormat) VALUES"
-        "(4, 1, '{Series Title} S{season:00}E{episode:00} - {Episode Title} "
+        "(4, 1, '{Series Title} - S{season:00}E{episode:00} - {Episode Title} "
         "- {Quality Full}', '{Series Title} - {Air-Date} - {Episode Title} "
         "- {Quality Full}', 'Season {season}', '{Series Title}', "
         "'{Series Title} - S{season:00}E{episode:00} - {Episode Title} "
