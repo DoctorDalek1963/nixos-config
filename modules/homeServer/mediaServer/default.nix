@@ -13,6 +13,7 @@ in {
     ./music
     ./video
     ./fileflows
+    ./porn
 
     ./directoryMap.nix
     ./prowlarr.nix
