@@ -53,16 +53,42 @@ in {
         }
         // directoryMapTmpfiles;
 
-      # TODO: Also set ownership and run periodically (but don't rerun tmpfiles-setup every time)
       services.set-permissions-for-media-server-directory-map = {
         description = "Set ownership and permissions for the mediaServer directoryMap";
-        script = ''${pkgs.coreutils}/bin/chmod -R u=rwX,g=rwX,o=rX "${cfgMs.mediaRoot}"'';
+        script = let
+          commands = lib.flatten (lib.mapAttrsToList (user: paths:
+            map (path: ''
+              chown -R ${user}:media "${path}"
+              chmod -R u=rwX,g=rwX,o=rX "${path}"
+            '')
+            paths)
+          cfgMs.directoryMap);
+
+          shellApp = pkgs.writeShellApplication {
+            name = "set-permissions-for-media-server-directory-map";
+            runtimeInputs = [pkgs.coreutils];
+            text = ''
+              chmod -R u=rwX,g=rwX,o=rX "${cfgMs.mediaRoot}"
+
+              ${lib.concatStringsSep "\n" commands}
+            '';
+          };
+        in "${shellApp}/bin/set-permissions-for-media-server-directory-map";
 
         after = ["systemd-tmpfiles-setup.service"];
-        requires = ["systemd-tmpfiles-setup.service"];
+        wants = ["systemd-tmpfiles-setup.service"];
         wantedBy = ["multi-user.target"];
 
         serviceConfig.Type = "simple";
+      };
+
+      timers.set-permissions-for-media-server-directory-map = {
+        timerConfig = {
+          OnCalendar = "*:00"; # Every hour
+          Unit = "set-permissions-for-media-server-directory-map.service";
+        };
+
+        wantedBy = ["timers.target"];
       };
     };
 
