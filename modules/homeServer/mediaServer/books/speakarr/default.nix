@@ -9,7 +9,12 @@ in {
   imports = [./options.nix];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
-    setup.impermanence.keepDirs = [config.services.speakarr.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.speakarr.dataDir];
+      homeServer.mediaServer.directoryMap.transmission = [
+        "${cfgMs.mediaRoot}/torrents/downloads/audiobooks"
+      ];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -47,17 +52,9 @@ in {
       };
     };
 
-    systemd = {
-      services.speakarr = {
-        after = ["servarr-config.service"];
-        requires = ["servarr-config.service"];
-      };
-
-      tmpfiles.settings.books."${cfgMs.mediaRoot}/torrents/downloads/audiobooks".d = {
-        user = "transmission";
-        group = "media";
-        mode = "775";
-      };
+    systemd.services.speakarr = {
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
   };
 }

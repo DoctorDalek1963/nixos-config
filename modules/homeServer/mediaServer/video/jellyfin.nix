@@ -17,6 +17,10 @@ in {
         paths = [config.services.jellyfin.dataDir];
         exclude = ["${config.services.jellyfin.dataDir}/log"];
       };
+
+      homeServer.mediaServer.directoryMap.jellyfin = [
+        "${cfgMs.mediaRoot}/jellyfin"
+      ];
     };
 
     # NOTE: On a fresh install, you first need to connect to
@@ -29,11 +33,5 @@ in {
     };
 
     users.users.jellyfin.extraGroups = ["certs"];
-
-    systemd.tmpfiles.settings.jellyfin."${cfgMs.mediaRoot}/jellyfin".d = {
-      user = "jellyfin";
-      group = "media";
-      mode = "775";
-    };
   };
 }

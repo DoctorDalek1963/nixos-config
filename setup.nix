@@ -236,6 +236,15 @@ in {
       mediaServer = {
         enable = defaultFalse;
 
+        directoryMap = mkOption {
+          type = types.attrsOf (types.listOf types.nonEmptyStr);
+          default = {};
+          example = lib.literalExample {
+            radarr = "/data/media/movies";
+            sonarr = "/data/media/tv";
+          };
+        };
+
         # See dataRoot for note about persisting on impermanent setups
         mediaRoot = mkOption {
           type = types.nonEmptyStr;

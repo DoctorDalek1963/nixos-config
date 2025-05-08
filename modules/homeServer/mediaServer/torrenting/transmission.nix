@@ -11,6 +11,12 @@ in {
     setup = {
       impermanence.keepDirs = [config.services.transmission.home];
       backup.exclude = ["${cfgMs.mediaRoot}/torrents"];
+
+      homeServer.mediaServer.directoryMap.transmission = [
+        "${cfgMs.mediaRoot}/torrents"
+        "${cfgMs.mediaRoot}/torrents/downloads"
+        "${cfgMs.mediaRoot}/torrents/incomplete"
+      ];
     };
 
     services = {
@@ -109,18 +115,6 @@ in {
           ];
         };
       };
-    };
-
-    systemd.tmpfiles.settings.transmission = let
-      conf = {
-        user = "transmission";
-        group = "media";
-        mode = "775";
-      };
-    in {
-      "${cfgMs.mediaRoot}/torrents".d = conf;
-      "${cfgMs.mediaRoot}/torrents/downloads".d = conf;
-      "${cfgMs.mediaRoot}/torrents/incomplete".d = conf;
     };
 
     # These service configs were mostly taken from

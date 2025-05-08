@@ -10,6 +10,11 @@ in {
     setup = {
       impermanence.keepDirs = [config.services.radarr.dataDir];
       backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/movies"];
+
+      homeServer.mediaServer.directoryMap = {
+        jellyfin = ["${cfgMs.mediaRoot}/jellyfin/movies"];
+        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/movies"];
+      };
     };
 
     services = {
@@ -48,24 +53,9 @@ in {
       };
     };
 
-    systemd = {
-      services.radarr = {
-        after = ["servarr-config.service"];
-        requires = ["servarr-config.service"];
-      };
-
-      tmpfiles.settings.movies = {
-        "${cfgMs.mediaRoot}/jellyfin/movies".d = {
-          user = "jellyfin";
-          group = "media";
-          mode = "775";
-        };
-        "${cfgMs.mediaRoot}/torrents/downloads/movies".d = {
-          user = "transmission";
-          group = "media";
-          mode = "775";
-        };
-      };
+    systemd.services.radarr = {
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
   };
 }
