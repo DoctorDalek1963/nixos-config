@@ -12,10 +12,9 @@ in {
     setup = {
       impermanence.keepDirs = [config.services.whisparr.dataDir];
 
-      homeServer.mediaServer.directoryMap = {
-        stash = ["${cfgMs.mediaRoot}/porn"];
-        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/porn"];
-      };
+      homeServer.mediaServer.directoryMap.transmission = [
+        "${cfgMs.mediaRoot}/torrents/downloads/porn"
+      ];
     };
 
     services = {

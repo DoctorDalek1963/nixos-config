@@ -1,3 +1,3 @@
 {
-  imports = [./whisparr.nix];
+  imports = [./stash.nix ./whisparr.nix];
 }

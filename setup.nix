@@ -196,6 +196,7 @@ in {
           };
           jellyseerr = port 5055;
           navidrome = port 4533;
+          stash = port 9999;
 
           bazarr = port 6767;
           lidarr = port 8686;
