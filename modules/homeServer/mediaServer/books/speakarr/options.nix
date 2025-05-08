@@ -3,10 +3,13 @@
   pkgs,
   lib,
   config,
+  modulesPath,
   ...
 }: let
   inherit (lib) mkOption mkEnableOption mkIf types;
   cfg = config.services.speakarr;
+
+  servarr = import (modulesPath + "/services/misc/servarr/settings-options.nix") {inherit lib pkgs;};
 in {
   options = {
     services.speakarr = {
@@ -31,6 +34,10 @@ in {
           Open ports in the firewall for Speakarr
         '';
       };
+
+      settings = servarr.mkServarrSettingsOptions "speakarr" 8282;
+
+      environmentFiles = servarr.mkServarrEnvironmentFiles "speakarr";
 
       user = mkOption {
         type = types.str;
@@ -60,6 +67,7 @@ in {
       description = "Speakarr";
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
+      environment = servarr.mkServarrSettingsEnvVars "SPEAKARR" cfg.settings;
 
       serviceConfig = {
         Type = "simple";
@@ -71,7 +79,7 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [8282];
+      allowedTCPPorts = [cfg.settings.server.port];
     };
 
     users.users = mkIf (cfg.user == "speakarr") {
