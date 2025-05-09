@@ -43,6 +43,9 @@ in {
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection $http_connection;
+            proxy_set_header X-Forwarded-Prefix /stash;
+
+            rewrite ^/stash/(.*)$ /$1 break;
           '';
         };
       };
@@ -73,8 +76,6 @@ in {
           ];
 
           port = cfg.ports.mediaServer.stash;
-
-          host = "0.0.0.0";
 
           # This *should* be the default, but it seems like it won't build
           # using the default settings because they use some fancy `apply`
