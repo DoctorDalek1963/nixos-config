@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -11,7 +12,7 @@ in {
       impermanence.keepDirs = [config.services.stash.dataDir];
 
       backup = {
-        paths = []; # TODO: Which paths need backing up?
+        paths = [config.services.stash.dataDir];
         exclude = [config.services.stash.settings.cache];
       };
 
@@ -59,6 +60,7 @@ in {
         jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
         sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
 
+        mutableSettings = false;
         # TODO: Remove these and declare plugins and scrapers once I've decided what I want
         mutablePlugins = true;
         mutableScrapers = true;
@@ -76,6 +78,13 @@ in {
           ];
 
           port = cfg.ports.mediaServer.stash;
+
+          language = "en-GB";
+
+          ffmpeg.hardware_acceleration = true;
+          ffmpeg_path = "${pkgs.jellyfin-ffmpeg}/bin/ffmpeg";
+          ffprobe_path = "${pkgs.jellyfin-ffmpeg}/bin/ffprobe";
+          python_path = "${pkgs.python3}/bin/python3";
 
           # This *should* be the default, but it seems like it won't build
           # using the default settings because they use some fancy `apply`
