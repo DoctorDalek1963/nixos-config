@@ -6,6 +6,23 @@
 }: let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
+
+  stashapp-tools = pkgs.python3.pkgs.buildPythonPackage rec {
+    pname = "stashapp-tools";
+    version = "0.2.58";
+    pyproject = true;
+
+    src = pkgs.fetchPypi {
+      inherit pname version;
+      hash = "sha256-krruLbBI4FMruoXPiJEde9403hY7se6aeDsO+AqA8jo=";
+    };
+
+    build-system = [pkgs.python3.pkgs.setuptools];
+
+    dependencies = [pkgs.python3.pkgs.requests];
+  };
+
+  python = pkgs.python3.withPackages (p: [stashapp-tools p.pyyaml]);
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
@@ -61,9 +78,8 @@ in {
         sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
 
         mutableSettings = false;
-        # TODO: Remove these and declare plugins and scrapers once I've decided what I want
-        mutablePlugins = true;
-        mutableScrapers = true;
+        mutablePlugins = true; # TODO: Remove this an declare plugins properly
+        mutableScrapers = true; # I can't be bothered to declare all of these
 
         settings = {
           stash = [
@@ -84,53 +100,72 @@ in {
           ffmpeg.hardware_acceleration = true;
           ffmpeg_path = "${pkgs.jellyfin-ffmpeg}/bin/ffmpeg";
           ffprobe_path = "${pkgs.jellyfin-ffmpeg}/bin/ffprobe";
-          python_path = "${pkgs.python3}/bin/python3";
+          python_path = "${python}/bin/python3";
+          scraper_cdp_path = "${pkgs.ungoogled-chromium}/bin/chromium";
 
-          # This *should* be the default, but it seems like it won't build
-          # using the default settings because they use some fancy `apply`
-          # option to work with a function, but that causes the generation of
-          # config.yml to fail, which causes the whole system build to fail.
-          # Looks like https://github.com/NixOS/nixpkgs/pull/402574 should fix
-          # this and issue with empty plugin/scraper lists
-          ui.frontPageContent = let
-            recentlyReleased = mode: {
-              __typename = "CustomFilter";
-              message = {
-                id = "recently_released_objects";
-                values.objects = mode;
+          # Don't detect mp4s before FileFlows has converted them
+          video_extensions = ["mkv"];
+
+          ui = {
+            advancedMode = true;
+
+            taskDefaults.scan = {
+              rescan = true;
+              scanGenerateClipPreviews = false;
+              scanGenerateCovers = true;
+              scanGenerateImagePreviews = false;
+              scanGeneratePhashes = false;
+              scanGeneratePreviews = true;
+              scanGenerateSprites = true;
+              scanGenerateThumbnails = false;
+            };
+
+            # This *should* be the default, but it seems like it won't build
+            # using the default settings because they use some fancy `apply`
+            # option to work with a function, but that causes the generation of
+            # config.yml to fail, which causes the whole system build to fail.
+            # Looks like https://github.com/NixOS/nixpkgs/pull/402574 should fix
+            # this and issue with empty plugin/scraper lists
+            frontPageContent = let
+              recentlyReleased = mode: {
+                __typename = "CustomFilter";
+                message = {
+                  id = "recently_released_objects";
+                  values.objects = mode;
+                };
+                mode = lib.toUpper mode;
+                sortBy = "date";
+                direction = "DESC";
               };
-              mode = lib.toUpper mode;
-              sortBy = "date";
-              direction = "DESC";
-            };
-            recentlyAdded = mode: {
-              __typename = "CustomFilter";
-              message = {
-                id = "recently_added_objects";
-                values.objects = mode;
+              recentlyAdded = mode: {
+                __typename = "CustomFilter";
+                message = {
+                  id = "recently_added_objects";
+                  values.objects = mode;
+                };
+                mode = lib.toUpper mode;
+                sortBy = "created_at";
+                direction = "DESC";
               };
-              mode = lib.toUpper mode;
-              sortBy = "created_at";
-              direction = "DESC";
-            };
-            presets = {
-              recentlyReleasedScenes = recentlyReleased "Scenes";
-              recentlyAddedScenes = recentlyAdded "Scenes";
-              recentlyReleasedGalleries = recentlyReleased "Galleries";
-              recentlyAddedGalleries = recentlyAdded "Galleries";
-              recentlyAddedImages = recentlyAdded "Images";
-              recentlyReleasedMovies = recentlyReleased "Movies";
-              recentlyAddedMovies = recentlyAdded "Movies";
-              recentlyAddedStudios = recentlyAdded "Studios";
-              recentlyAddedPerformers = recentlyAdded "Performers";
-            };
-          in [
-            presets.recentlyReleasedScenes
-            presets.recentlyAddedStudios
-            presets.recentlyReleasedMovies
-            presets.recentlyAddedPerformers
-            presets.recentlyReleasedGalleries
-          ];
+              presets = {
+                recentlyReleasedScenes = recentlyReleased "Scenes";
+                recentlyAddedScenes = recentlyAdded "Scenes";
+                recentlyReleasedGalleries = recentlyReleased "Galleries";
+                recentlyAddedGalleries = recentlyAdded "Galleries";
+                recentlyAddedImages = recentlyAdded "Images";
+                recentlyReleasedMovies = recentlyReleased "Movies";
+                recentlyAddedMovies = recentlyAdded "Movies";
+                recentlyAddedStudios = recentlyAdded "Studios";
+                recentlyAddedPerformers = recentlyAdded "Performers";
+              };
+            in [
+              presets.recentlyReleasedScenes
+              presets.recentlyAddedStudios
+              presets.recentlyReleasedMovies
+              presets.recentlyAddedPerformers
+              presets.recentlyReleasedGalleries
+            ];
+          };
         };
       };
     };
