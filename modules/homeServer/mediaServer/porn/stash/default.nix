@@ -78,7 +78,7 @@ in {
         sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
 
         mutableSettings = false;
-        mutablePlugins = true; # TODO: Remove this an declare plugins properly
+        mutablePlugins = false;
         mutableScrapers = true; # I can't be bothered to declare all of these
 
         settings = {
@@ -94,6 +94,8 @@ in {
           ];
 
           port = cfg.ports.mediaServer.stash;
+
+          plugins_path = lib.mkForce (import ./plugins {inherit pkgs;}).outPath;
 
           language = "en-GB";
 
