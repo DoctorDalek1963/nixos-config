@@ -15,14 +15,17 @@
     name = "stash-plugin-renamer";
     dontBuild = true;
 
-    patches = [./renamer-api-key.patch];
+    patches = [
+      ./renamer/api-key.patch
+      ./renamer/separator.patch
+    ];
     src = commonSrcs.serechops-stash;
 
     installPhase = ''
       mkdir $out
       cd plugins/Renamer
       cp renamer.py renamer.yml $out/
-      cp ${./renamer_settings.py} $out/renamer_settings.py
+      cp ${./renamer/settings.py} $out/renamer_settings.py
     '';
   };
 in

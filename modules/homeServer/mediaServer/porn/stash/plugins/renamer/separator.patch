@@ -1,18 +1,5 @@
 --- a/plugins/Renamer/renamer.py
 +++ b/plugins/Renamer/renamer.py
-@@ -37,7 +37,11 @@ def graphql_request(query, variables=None):
-     data = {'query': query}
-     if variables:
-         data['variables'] = variables
--    response = requests.post(endpoint, json=data)
-+
-+    with open('/run/secrets/home-server/stash/api-key', 'r') as f:
-+        api_key = f.read()
-+
-+    response = requests.post(endpoint, json=data, headers={'ApiKey': api_key})
-     return response.json()
- 
- # Function to replace illegal characters in filenames
 @@ -94,7 +98,7 @@ def form_filename(scene_details, wrapper_styles, separator, key_order, exclude_k
                      else:
                          filename_parts.append(title)
