@@ -22,6 +22,18 @@ in {
       ];
     };
 
+    sops.secrets = let
+      perms = {
+        owner = "stash";
+        group = "media";
+        mode = "0400";
+      };
+    in {
+      "home-server/stash/password" = perms;
+      "home-server/stash/jwt-secret" = perms;
+      "home-server/stash/session-store-secret" = perms;
+    };
+
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
         "/stash" = {
@@ -39,6 +51,15 @@ in {
         enable = true;
         group = "media";
 
+        username = "dyson";
+        passwordFile = config.sops.secrets."home-server/stash/password".path;
+        jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
+        sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
+
+        # TODO: Remove these and declare plugins and scrapers once I've decided what I want
+        mutablePlugins = true;
+        mutableScrapers = true;
+
         settings = {
           stash = [
             {
@@ -52,6 +73,54 @@ in {
           ];
 
           port = cfg.ports.mediaServer.stash;
+
+          host = "0.0.0.0";
+
+          # This *should* be the default, but it seems like it won't build
+          # using the default settings because they use some fancy `apply`
+          # option to work with a function, but that causes the generation of
+          # config.yml to fail, which causes the whole system build to fail.
+          # Looks like https://github.com/NixOS/nixpkgs/pull/402574 should fix
+          # this and issue with empty plugin/scraper lists
+          ui.frontPageContent = let
+            recentlyReleased = mode: {
+              __typename = "CustomFilter";
+              message = {
+                id = "recently_released_objects";
+                values.objects = mode;
+              };
+              mode = lib.toUpper mode;
+              sortBy = "date";
+              direction = "DESC";
+            };
+            recentlyAdded = mode: {
+              __typename = "CustomFilter";
+              message = {
+                id = "recently_added_objects";
+                values.objects = mode;
+              };
+              mode = lib.toUpper mode;
+              sortBy = "created_at";
+              direction = "DESC";
+            };
+            presets = {
+              recentlyReleasedScenes = recentlyReleased "Scenes";
+              recentlyAddedScenes = recentlyAdded "Scenes";
+              recentlyReleasedGalleries = recentlyReleased "Galleries";
+              recentlyAddedGalleries = recentlyAdded "Galleries";
+              recentlyAddedImages = recentlyAdded "Images";
+              recentlyReleasedMovies = recentlyReleased "Movies";
+              recentlyAddedMovies = recentlyAdded "Movies";
+              recentlyAddedStudios = recentlyAdded "Studios";
+              recentlyAddedPerformers = recentlyAdded "Performers";
+            };
+          in [
+            presets.recentlyReleasedScenes
+            presets.recentlyAddedStudios
+            presets.recentlyReleasedMovies
+            presets.recentlyAddedPerformers
+            presets.recentlyReleasedGalleries
+          ];
         };
       };
     };
