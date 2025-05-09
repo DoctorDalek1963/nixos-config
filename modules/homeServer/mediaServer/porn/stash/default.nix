@@ -50,6 +50,7 @@ in {
       "home-server/stash/password" = perms;
       "home-server/stash/jwt-secret" = perms;
       "home-server/stash/session-store-secret" = perms;
+      "home-server/stash/api-key" = perms;
     };
 
     systemd.services.stash.serviceConfig.ExecStartPre = [

@@ -13,8 +13,10 @@
 
   renamer = mkDerivation {
     name = "stash-plugin-renamer";
-    src = commonSrcs.serechops-stash;
     dontBuild = true;
+
+    patches = [./renamer-api-key.patch];
+    src = commonSrcs.serechops-stash;
 
     installPhase = ''
       mkdir $out
