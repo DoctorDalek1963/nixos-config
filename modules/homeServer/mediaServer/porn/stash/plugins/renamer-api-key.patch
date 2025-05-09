@@ -13,3 +13,12 @@
      return response.json()
  
  # Function to replace illegal characters in filenames
+@@ -94,7 +98,7 @@ def form_filename(scene_details, wrapper_styles, separator, key_order, exclude_k
+                     else:
+                         filename_parts.append(title)
+             elif key == 'performers':
+-                performers = '-'.join([performer.get('name', '') for performer in scene_details.get('performers', [])])
++                performers = ', '.join([performer.get('name', '') for performer in scene_details.get('performers', [])])
+                 if performers:
+                     if wrapper_styles.get('performers'):
+                         filename_parts.append(f"{wrapper_styles['performers'][0]}{performers}{wrapper_styles['performers'][1]}")

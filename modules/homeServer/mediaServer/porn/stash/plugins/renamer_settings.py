@@ -14,7 +14,7 @@ config = {
 
     # Define the separator to use between different parts of the filename.
     # Use '-' for hyphen, '_' for underscore, or ' ' for space.
-    "separator": '-',
+    "separator": ' - ',
 
     # Define the order of keys in the filename.
     # Use a list to specify the order of keys.
