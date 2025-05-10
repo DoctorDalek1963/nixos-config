@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   osConfig,
@@ -28,7 +27,6 @@ in {
   config = lib.mkIf (cfg.emulator == "wezterm") {
     programs.wezterm = {
       enable = true;
-      package = pkgs.unstable.wezterm;
       enableBashIntegration = cfg.shells.bash;
 
       extraConfig =
