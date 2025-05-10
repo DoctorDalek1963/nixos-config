@@ -2,10 +2,10 @@ config = {
     # Define wrapper styles for different parts of the filename.
     # Use '[]' for square brackets, '{}' for curly brackets, '()' for parentheses, or an empty string for None.
     "wrapper_styles": {
-        "studio": '[]',
-        "title": '[]',
-        "performers": '[]',
-        "date": '[]',
+        "studio": '',
+        "title": '',
+        "performers": '',
+        "date": '',
         "height": '[]',
         "video_codec": '[]',
         "frame_rate": '[]',
