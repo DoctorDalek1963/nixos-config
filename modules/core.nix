@@ -30,22 +30,22 @@ in {
     };
 
     # Use unstable packages on the command line with `nix shell unstable#pkgName`
-    registry.unstable = {
-      from = {
-        type = "indirect";
-        id = "unstable";
-      };
-      flake = inputs.nixpkgs-unstable;
-      exact = true;
-    };
+    # registry.unstable = {
+    #   from = {
+    #     type = "indirect";
+    #     id = "unstable";
+    #   };
+    #   flake = inputs.nixpkgs-unstable;
+    #   exact = true;
+    # };
   };
 
   nixpkgs = {
     overlays = [
       # Access unstable packages through pkgs.unstable
-      (_final: _prev: {
-        unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      })
+      # (_final: _prev: {
+      #   unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
+      # })
       inputs.nur.overlays.default
     ];
 
@@ -88,7 +88,9 @@ in {
       permittedInsecurePackages = [
         # HTTP proxy used on home server. It's okay because it's only
         # accessible to devices on my tailnet and not the public internet
-        "squid-6.10"
+        "squid-7.0.1"
+
+        "electron-33.4.11" # TODO (25.05): Remove this once Feishin 1.12.4 is in nixpkgs
       ];
     };
   };

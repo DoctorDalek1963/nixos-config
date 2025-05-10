@@ -21,7 +21,9 @@
         dark_text = "#24273a";
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 
   # Copied from home-manager modules/services/dunst.nix
   toDunstIni = lib.generators.toINI {
@@ -46,9 +48,9 @@ in {
           enable_posix_regex = true;
 
           width = "(100, 300)";
-          height = "(100, 10000)";
+          height = "(0, 10000)";
           origin = "top-right";
-          offset = "25x25"; # TODO (25.05): Update from XxY to (X, Y) syntax with v1.12
+          offset = "(25, 25)";
 
           sort = "update";
 

@@ -9,16 +9,6 @@
 
   yq = "${pkgs.yq-go}/bin/yq";
 
-  toTitleCase = string: let
-    chars = lib.strings.stringToCharacters string;
-    newChars = lib.lists.imap0 (idx: char:
-      if idx == 0
-      then lib.strings.toUpper char
-      else char)
-    chars;
-  in
-    lib.strings.concatStrings newChars;
-
   # Transform a Nix attribute set into a yq expression to set .Config.<name>
   # for every <name> in the set. This function returns a non-escaped string. It
   # will contain double quotes, so should be properly escaped and wrapped in
@@ -35,13 +25,10 @@
 
   # Use the name of a servarr app to populate a template of common options. The
   # resulting set should then be passed to shConfExpr.
+  # I used to use this for much more before we had services.*arr.settings, but
+  # we still need to get the API key from homepage.env, so we keep this.
   servarrTemplate = name: {
-    Port = cfg.ports.mediaServer."${name}";
     ApiKey = "$HOMEPAGE_VAR_${lib.strings.toUpper name}_KEY";
-    AuthenticationMethod = "Basic";
-    AuthenticationRequired = "Enabled";
-    UrlBase = "${name}";
-    InstanceName = "${toTitleCase name}";
   };
 
   mkCommand = yqExpr: dataDir: ''

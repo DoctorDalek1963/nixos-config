@@ -22,7 +22,9 @@
         desktop = "terminator.desktop";
       };
     }
-    .${config.setup.terminal.emulator};
+    .${
+      config.setup.terminal.emulator
+    };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     assertions = [

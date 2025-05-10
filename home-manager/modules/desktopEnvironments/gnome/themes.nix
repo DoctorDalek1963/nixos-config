@@ -105,7 +105,9 @@
         };
       };
     }
-    .${cfg.theme};
+    .${
+      cfg.theme
+    };
 
   # Create the gsettings command to switch to the theme of the specified mode
   gsettingsSetCommand = mode:

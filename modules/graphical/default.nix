@@ -23,8 +23,7 @@
       };
     };
 
-    # Enable sound
-    hardware.pulseaudio.enable = false;
+    # RealtimeKit needed by pipewire
     security.rtkit.enable = true;
   };
 }

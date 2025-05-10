@@ -7,7 +7,12 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
-    setup.impermanence.keepDirs = [config.services.readarr.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.readarr.dataDir];
+      homeServer.mediaServer.directoryMap.transmission = [
+        "${cfgMs.mediaRoot}/torrents/downloads/ebooks"
+      ];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -30,20 +35,24 @@ in {
       readarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Readarr";
+          server = {
+            port = cfg.ports.mediaServer.readarr;
+            urlbase = "readarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 
-    systemd = {
-      services.readarr = {
-        after = ["servarr-config.service"];
-        requires = ["servarr-config.service"];
-      };
-
-      tmpfiles.settings.books."${cfgMs.mediaRoot}/torrents/downloads/ebooks".d = {
-        user = "transmission";
-        group = "media";
-        mode = "775";
-      };
+    systemd.services.readarr = {
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
   };
 }

@@ -7,11 +7,21 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
-    # TODO: Next time I enable this, add setup.backup.paths for databases etc.
-    setup.impermanence.keepDirs = [
-      config.services.jellyfin.dataDir
-      config.services.jellyfin.cacheDir
-    ];
+    setup = {
+      impermanence.keepDirs = [
+        config.services.jellyfin.dataDir
+        config.services.jellyfin.cacheDir
+      ];
+
+      backup = {
+        paths = [config.services.jellyfin.dataDir];
+        exclude = ["${config.services.jellyfin.dataDir}/log"];
+      };
+
+      homeServer.mediaServer.directoryMap.jellyfin = [
+        "${cfgMs.mediaRoot}/jellyfin"
+      ];
+    };
 
     # NOTE: On a fresh install, you first need to connect to
     # http://{ip_address}:8096 and add libraries, then enable HTTPS and set the
@@ -23,11 +33,5 @@ in {
     };
 
     users.users.jellyfin.extraGroups = ["certs"];
-
-    systemd.tmpfiles.settings.jellyfin."${cfgMs.mediaRoot}/jellyfin".d = {
-      user = "jellyfin";
-      group = "media";
-      mode = "775";
-    };
   };
 }

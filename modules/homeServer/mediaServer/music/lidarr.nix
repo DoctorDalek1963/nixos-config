@@ -7,7 +7,14 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
-    setup.impermanence.keepDirs = [config.services.lidarr.dataDir];
+    setup = {
+      impermanence.keepDirs = [config.services.lidarr.dataDir];
+
+      homeServer.mediaServer.directoryMap = {
+        lidarr = ["${cfgMs.mediaRoot}/music"];
+        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/music"];
+      };
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -30,27 +37,24 @@ in {
       lidarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Lidarr";
+          server = {
+            port = cfg.ports.mediaServer.lidarr;
+            urlbase = "lidarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 
-    systemd = {
-      services.lidarr = {
-        after = ["servarr-config.service"];
-        requires = ["servarr-config.service"];
-      };
-
-      tmpfiles.settings.music = {
-        "${cfgMs.mediaRoot}/music".d = {
-          user = "navidrome";
-          group = "media";
-          mode = "775";
-        };
-        "${cfgMs.mediaRoot}/torrents/downloads/music".d = {
-          user = "transmission";
-          group = "media";
-          mode = "775";
-        };
-      };
+    systemd.services.lidarr = {
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
   };
 }

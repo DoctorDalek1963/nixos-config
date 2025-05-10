@@ -3,8 +3,8 @@
 
   inputs = {
     # Core
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # Useful when the system uses a stable branch
     nur = {
       url = "github:nix-community/nur";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,25 +34,16 @@
     };
 
     # Personal projects for home server
-    tic-tac-toe = {
-      url = "github:DoctorDalek1963/tic-tac-toe";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    winter-wonderlights = {
-      url = "github:DoctorDalek1963/winter-wonderlights";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    wordle = {
-      url = "github:DoctorDalek1963/wordle";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    tic-tac-toe.url = "github:DoctorDalek1963/tic-tac-toe";
+    winter-wonderlights.url = "github:DoctorDalek1963/winter-wonderlights";
+    wordle.url = "github:DoctorDalek1963/wordle";
 
     # Other home server stuff
     whisper-asr-webservice-flake.url = "github:DoctorDalek1963/whisper-asr-webservice-flake";
 
     # home-manager stuff
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

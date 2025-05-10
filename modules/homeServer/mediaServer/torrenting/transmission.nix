@@ -11,6 +11,12 @@ in {
     setup = {
       impermanence.keepDirs = [config.services.transmission.home];
       backup.exclude = ["${cfgMs.mediaRoot}/torrents"];
+
+      homeServer.mediaServer.directoryMap.transmission = [
+        "${cfgMs.mediaRoot}/torrents"
+        "${cfgMs.mediaRoot}/torrents/downloads"
+        "${cfgMs.mediaRoot}/torrents/incomplete"
+      ];
     };
 
     services = {
@@ -82,6 +88,9 @@ in {
           lpd-enabled = true;
           pex-enabled = true;
 
+          speed-limit-up = 100; # kB/s
+          speed-limit-up-enabled = true;
+
           rpc-enabled = true;
           rpc-port = cfg.ports.mediaServer.transmission;
           rpc-url = "/transmission/";
@@ -106,18 +115,6 @@ in {
           ];
         };
       };
-    };
-
-    systemd.tmpfiles.settings.transmission = let
-      conf = {
-        user = "transmission";
-        group = "media";
-        mode = "775";
-      };
-    in {
-      "${cfgMs.mediaRoot}/torrents".d = conf;
-      "${cfgMs.mediaRoot}/torrents/downloads".d = conf;
-      "${cfgMs.mediaRoot}/torrents/incomplete".d = conf;
     };
 
     # These service configs were mostly taken from
@@ -157,8 +154,8 @@ in {
 
       transmission = {
         bindsTo = [openvpn-ns-service];
-        after = [openvpn-ns-service "create-transmission-veth.service"];
-        requires = [openvpn-ns-service "create-transmission-veth.service"];
+        after = [openvpn-ns-service "create-transmission-veth.service" "resolvconf.service"];
+        requires = [openvpn-ns-service "create-transmission-veth.service" "resolvconf.service"];
 
         serviceConfig = {
           ExecStartPre = ["${pkgs.curl}/bin/curl icanhazip.com"];

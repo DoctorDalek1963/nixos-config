@@ -13,6 +13,7 @@ in {
       settings = {
         theme = "catppuccin-macchiato";
         default_mode = "locked";
+        show_startup_tips = false;
 
         layout_dir = "${config.xdg.configHome}/zellij/layouts";
         default_layout = "custom_default";

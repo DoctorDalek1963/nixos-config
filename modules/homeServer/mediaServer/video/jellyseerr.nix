@@ -7,8 +7,13 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
-    # TODO: Next time I enable this, add setup.backup.paths for databases etc.
-    setup.impermanence.keepDirs = ["/var/lib/private/jellyseerr"];
+    setup = {
+      impermanence.keepDirs = ["/var/lib/private/jellyseerr"];
+      backup = {
+        paths = ["/var/lib/private/jellyseerr"];
+        exclude = ["/var/lib/private/jellyseerr/logs"];
+      };
+    };
 
     services.jellyseerr = {
       enable = true;

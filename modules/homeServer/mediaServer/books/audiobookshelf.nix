@@ -13,18 +13,16 @@ in {
         "/var/lib/audiobookshelf/config/absdatabase.sqlite"
         "/var/lib/audiobookshelf/metadata"
       ];
+
+      homeServer.mediaServer.directoryMap.audiobookshelf = [
+        "${cfgMs.mediaRoot}/audiobookshelf"
+      ];
     };
 
     services.audiobookshelf = {
       enable = true;
       group = "media";
       port = cfg.ports.mediaServer.audiobookshelf;
-    };
-
-    systemd.tmpfiles.settings.books."${cfgMs.mediaRoot}/audiobookshelf".d = {
-      user = "audiobookshelf";
-      group = "media";
-      mode = "775";
     };
   };
 }

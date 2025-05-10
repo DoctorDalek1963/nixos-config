@@ -10,6 +10,11 @@ in {
     setup = {
       impermanence.keepDirs = [config.services.sonarr.dataDir];
       backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/telly"];
+
+      homeServer.mediaServer.directoryMap = {
+        jellyfin = ["${cfgMs.mediaRoot}/jellyfin/telly"];
+        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/telly"];
+      };
     };
 
     services = {
@@ -33,27 +38,24 @@ in {
       sonarr = {
         enable = true;
         group = "media";
+
+        settings = {
+          app.instancename = "Sonarr";
+          server = {
+            port = cfg.ports.mediaServer.sonarr;
+            urlbase = "sonarr";
+          };
+          auth = {
+            required = "Enabled";
+            method = "Basic";
+          };
+        };
       };
     };
 
-    systemd = {
-      services.sonarr = {
-        after = ["servarr-config.service"];
-        requires = ["servarr-config.service"];
-      };
-
-      tmpfiles.settings.telly = {
-        "${cfgMs.mediaRoot}/jellyfin/telly".d = {
-          user = "jellyfin";
-          group = "media";
-          mode = "775";
-        };
-        "${cfgMs.mediaRoot}/torrents/downloads/telly".d = {
-          user = "transmission";
-          group = "media";
-          mode = "775";
-        };
-      };
+    systemd.services.sonarr = {
+      after = ["servarr-config.service"];
+      requires = ["servarr-config.service"];
     };
   };
 }

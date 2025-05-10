@@ -7,12 +7,12 @@
   cfg = config.setup.fonts;
 
   nerdfontFonts =
-    ["Arimo"]
-    ++ lib.optional cfg.hackNerdFont "Hack";
+    [pkgs.nerd-fonts.arimo]
+    ++ lib.optional cfg.hackNerdFont pkgs.nerd-fonts.hack;
 in {
   fonts.fontconfig.enable = true;
 
   home.packages =
-    lib.optional ((builtins.length nerdfontFonts) > 0) (pkgs.nerdfonts.override {fonts = nerdfontFonts;})
+    nerdfontFonts
     ++ lib.optionals cfg.microsoftFonts [pkgs.corefonts pkgs.vistafonts];
 }

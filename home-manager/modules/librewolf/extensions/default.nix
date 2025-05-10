@@ -6,7 +6,7 @@
   cfg = config.setup.librewolf;
   addons = pkgs.nur.repos.rycee.firefox-addons;
 
-  extensions =
+  packages =
     (with addons; [
       # Privacy
       canvasblocker
@@ -35,5 +35,5 @@
     ]));
 in
   if cfg.enableExtensions
-  then extensions
+  then {inherit packages;}
   else []

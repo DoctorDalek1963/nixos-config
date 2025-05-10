@@ -51,7 +51,9 @@
         "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
       };
     }
-    .${config.setup.desktopEnvironments.hyprland.theme};
+    .${
+      config.setup.desktopEnvironments.hyprland.theme
+    };
 in {
   imports = [
     ./waybar
@@ -125,14 +127,18 @@ in {
             wezterm = "${config.programs.wezterm.package}/bin/wezterm start --always-new-process";
             terminator = "${pkgs.terminator}/bin/terminator -x";
           }
-          .${config.setup.terminal.emulator};
+          .${
+            config.setup.terminal.emulator
+          };
 
         "$launchInTerminal" =
           {
             wezterm = ''${config.programs.wezterm.package}/bin/wezterm --config 'window_close_confirmation="NeverPrompt"' start --always-new-process'';
             terminator = "${pkgs.terminator}/bin/terminator -x";
           }
-          .${config.setup.terminal.emulator};
+          .${
+            config.setup.terminal.emulator
+          };
 
         "$fileManager" =
           if cfgTT.yazi
@@ -164,6 +170,10 @@ in {
           inherit (theme-colors) "col.active_border" "col.inactive_border";
         };
 
+        dwindle.smart_split = true;
+
+        ecosystem.no_donation_nag = true;
+
         decoration = {
           rounding = 7;
 
@@ -183,6 +193,11 @@ in {
           # If one window is fullscreen and another window is opened,
           # then disable fullscreen
           new_window_takes_over_fullscreen = 2;
+
+          # Wait longer before saying "Application not responding"
+          # anr_missed_pings = 5; # TODO (25.11): Uncomment
+          # For now, we'll just disable ANR completely
+          enable_anr_dialog = false;
         };
 
         animation =

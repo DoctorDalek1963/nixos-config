@@ -17,7 +17,9 @@
         fail_color = "rgb(237, 135, 150)";
       };
     }
-    .${cfg.hyprland.theme};
+    .${
+      cfg.hyprland.theme
+    };
 
   pauseCommand = "${pkgs.playerctl}/bin/playerctl pause";
   lockCommand = "${config.programs.hyprlock.package}/bin/hyprlock";
