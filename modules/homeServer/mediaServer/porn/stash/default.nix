@@ -53,19 +53,24 @@ in {
       "home-server/stash/api-key" = perms;
     };
 
-    systemd.services.stash.serviceConfig.ExecStartPre = [
-      (
-        let
-          inherit (config.services.stash.settings) plugins_path;
-        in
-          pkgs.writeShellScript "copy-stash-plugins.sh" ''
-            mkdir ${plugins_path}
-            cp -r ${(import ./plugins {inherit pkgs;}).outPath}/* ${plugins_path}/
-            chown -R ${config.services.stash.user}:media ${plugins_path}
-            chmod -R u+rw,g+rw ${plugins_path}
-          ''
-      )
-    ];
+    systemd.services.stash.serviceConfig = {
+      # We want plugins to be able to change files, like renaming them
+      BindReadOnlyPaths = lib.mkForce [];
+
+      ExecStartPre = [
+        (
+          let
+            inherit (config.services.stash.settings) plugins_path;
+          in
+            pkgs.writeShellScript "copy-stash-plugins.sh" ''
+              mkdir ${plugins_path}
+              cp -r ${(import ./plugins {inherit pkgs;}).outPath}/* ${plugins_path}/
+              chown -R ${config.services.stash.user}:media ${plugins_path}
+              chmod -R u+rw,g+rw ${plugins_path}
+            ''
+        )
+      ];
+    };
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
