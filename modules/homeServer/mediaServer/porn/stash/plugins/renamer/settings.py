@@ -34,7 +34,7 @@ config = {
     # Specify keys to exclude from the filename formation process. (ie. "exclude_keys": ["studio", "date"],)
     "exclude_keys": [],
 
-    # Define whether files should be moved when renaming
+    # Define whether files should be moved into a subdir named after the studio when renaming
     "move_files": False,
 
     # Define whether files should be renamed when moved

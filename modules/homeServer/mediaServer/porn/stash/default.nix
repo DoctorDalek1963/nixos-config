@@ -142,6 +142,9 @@ in {
               scanGenerateThumbnails = false;
             };
 
+            showChildStudioContent = true;
+            ratingSystemOptions.type = "decimal";
+
             # This *should* be the default, but it seems like it won't build
             # using the default settings because they use some fancy `apply`
             # option to work with a function, but that causes the generation of
