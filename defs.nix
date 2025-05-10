@@ -279,7 +279,7 @@
           backup = {
             enable = true;
             users = ["dyson"];
-            startAt = "02:00";
+            startAt = "03:00";
             ntfy.url = "http://localhost:4000";
           };
 
