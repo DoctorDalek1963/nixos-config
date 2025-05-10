@@ -90,7 +90,7 @@ in {
         # accessible to devices on my tailnet and not the public internet
         "squid-7.0.1"
 
-        "electron-33.4.11" # TODO (25.05): Remove this once Feishin 1.12.4 is in nixpkgs
+        "electron-33.4.11" # TODO (feishin 1.12.6): Remove this once https://github.com/NixOS/nixpkgs/pull/405530 is merged
       ];
     };
   };
