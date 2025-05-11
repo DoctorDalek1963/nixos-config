@@ -131,15 +131,23 @@ in {
           ui = {
             advancedMode = true;
 
-            taskDefaults.scan = {
-              rescan = true;
-              scanGenerateClipPreviews = false;
-              scanGenerateCovers = true;
-              scanGenerateImagePreviews = false;
-              scanGeneratePhashes = false;
-              scanGeneratePreviews = true;
-              scanGenerateSprites = true;
-              scanGenerateThumbnails = false;
+            taskDefaults = {
+              autoTag = {
+                performers = [];
+                studios = [];
+                tags = [];
+              };
+
+              scan = {
+                rescan = true;
+                scanGenerateClipPreviews = false;
+                scanGenerateCovers = true;
+                scanGenerateImagePreviews = false;
+                scanGeneratePhashes = false;
+                scanGeneratePreviews = true;
+                scanGenerateSprites = true;
+                scanGenerateThumbnails = false;
+              };
             };
 
             showChildStudioContent = true;
