@@ -27,7 +27,7 @@ in {
                 topics: list[str],
                 tags: list[str],
                 *,
-                priority: int = 3,
+                priority: int = 2,
                 click_url: str | None = None,
             ) -> dict[str, typing.Any]:
                 settings = {
@@ -47,7 +47,7 @@ in {
                 topic: str,
                 tag: str,
                 *,
-                priority: int = 3,
+                priority: int = 2,
                 click_url: str | None = None,
             ) -> dict[str, typing.Any]:
                 return make_settings(
@@ -67,6 +67,7 @@ in {
                 settings = make_prowlarr_settings(
                     "health",
                     "ambulance",
+                    priority=3,
                     click_url="https://${cfg.domainName}/prowlarr"
                 )
                 cur.execute(
