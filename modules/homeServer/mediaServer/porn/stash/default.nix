@@ -125,9 +125,6 @@ in {
           python_path = "${python}/bin/python3";
           scraper_cdp_path = "${pkgs.ungoogled-chromium}/bin/chromium";
 
-          # Don't detect mp4s before FileFlows has converted them
-          video_extensions = ["mkv"];
-
           ui = {
             advancedMode = true;
 
