@@ -20,7 +20,7 @@ config = {
     # Use a list to specify the order of keys.
     # Valid keys are 'studio', 'title', 'performers', 'date', 'height', 'video_codec', 'frame_rate', and 'tags'.
     "key_order": [
-        "studio",
+        # "studio",
         "title",
         "performers",
         # "date",
@@ -35,7 +35,7 @@ config = {
     "exclude_keys": [],
 
     # Define whether files should be moved into a subdir named after the studio when renaming
-    "move_files": False,
+    "move_files": True,
 
     # Define whether files should be renamed when moved
     "rename_files": True,
