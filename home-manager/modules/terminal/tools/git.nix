@@ -6,8 +6,10 @@
   config = lib.mkIf config.setup.terminal.tools.git {
     programs.git = {
       enable = true;
+
       userName = "DoctorDalek1963";
       userEmail = "dyson.dyson@icloud.com";
+
       aliases = {
         a = "add";
         aa = "add -A";
@@ -37,10 +39,12 @@
         unstage = "restore --staged";
         uncommit = "reset --soft HEAD~1";
       };
+
       signing = {
         key = "${config.home.homeDirectory}/.ssh/git_main_signing";
         signByDefault = true;
       };
+
       delta = {
         enable = config.setup.terminal.tools.delta;
         options = {
@@ -57,6 +61,7 @@
           line-numbers = true;
         };
       };
+
       extraConfig = {
         core.editor = config.consts.nvimPath;
         diff.colorMoved = "default";
@@ -64,14 +69,21 @@
         gpg.format = "ssh";
         init.defaultBranch = "main";
         merge.ff = false;
+
         pull = {
           rebase = false;
           ff = "only";
         };
+
         push = {
           followTags = true;
           autoSetupRemote = true;
           default = "current";
+        };
+
+        url = {
+          "git@github.com:DoctorDalek1963/".insteadOf = "dd:";
+          "git@github.com:".insteadOf = "gh:";
         };
       };
     };

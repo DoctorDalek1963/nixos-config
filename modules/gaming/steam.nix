@@ -17,11 +17,7 @@ in {
         enable = true;
 
         gamescopeSession.enable = true;
-
-        protontricks = {
-          enable = true;
-          # package = pkgs.unstable.protontricks;
-        };
+        protontricks.enable = true;
 
         extraCompatPackages =
           if cfg.steam.enableProtonGE
