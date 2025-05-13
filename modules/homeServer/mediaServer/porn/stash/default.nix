@@ -101,6 +101,9 @@ in {
         mutablePlugins = false;
         mutableScrapers = true; # I can't be bothered to declare all of these
 
+        # TODO: What's the best way to set the API key without hard coding it?
+        # Is hard coding even that bad? Why are the settings not overwritten
+        # everytime; what does `mutableSettings = false` actually do?
         settings = {
           stash = [
             {
@@ -114,9 +117,7 @@ in {
           ];
 
           port = cfg.ports.mediaServer.stash;
-
           plugins_path = lib.mkForce "${config.services.stash.dataDir}/plugins";
-
           language = "en-GB";
 
           ffmpeg.hardware_acceleration = true;
@@ -124,6 +125,14 @@ in {
           ffprobe_path = "${pkgs.jellyfin-ffmpeg}/bin/ffprobe";
           python_path = "${python}/bin/python3";
           scraper_cdp_path = "${pkgs.ungoogled-chromium}/bin/chromium";
+
+          menu_items = [
+            "scenes"
+            "groups"
+            "performers"
+            "studios"
+            "tags"
+          ];
 
           ui = {
             advancedMode = true;
