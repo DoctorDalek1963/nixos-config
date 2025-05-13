@@ -196,6 +196,7 @@ in {
           };
           jellyseerr = port 5055;
           navidrome = port 4533;
+          stash = port 9999;
 
           bazarr = port 6767;
           lidarr = port 8686;
@@ -203,6 +204,7 @@ in {
           readarr = port 8787;
           speakarr = port 8282;
           sonarr = port 8989;
+          whisparr = port 6969;
 
           prowlarr = port 9696;
           transmission = port 9091;
@@ -255,6 +257,7 @@ in {
         music = defaultTrue;
         movies = defaultTrue;
         telly = defaultTrue;
+        porn = defaultFalse;
 
         transmission = {
           ovpnName = mkOption {

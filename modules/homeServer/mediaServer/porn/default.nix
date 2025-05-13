@@ -1,0 +1,3 @@
+{
+  imports = [./stash ./whisparr.nix];
+}

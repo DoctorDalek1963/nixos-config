@@ -55,6 +55,7 @@ in {
           ${optChown cfgMs.movies "radarr" "${config.services.radarr.dataDir}/config.xml"}
           ${optChown cfgMs.telly "sonarr" "${config.services.sonarr.dataDir}/config.xml"}
           ${optChown (cfgMs.movies || cfgMs.telly) "bazarr" "/var/lib/bazarr/config/config.yaml"}
+          ${optChown cfgMs.porn "whisparr" "${config.services.whisparr.dataDir}/config.xml"}
         ''}";
       };
     };

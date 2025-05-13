@@ -301,6 +301,7 @@
 
             mediaServer = {
               enable = true;
+              porn = true;
               transmission.ovpnName = "ch_airvpn";
             };
 

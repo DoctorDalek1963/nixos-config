@@ -77,6 +77,16 @@
         "- {Quality Full}', 1, 'Specials', 4)"
     )
   '';
+  whisparr = optSnippet cfgMs.porn ''
+    set_naming_config(
+        "${config.services.whisparr.dataDir}/whisparr2.db",
+        "INSERT INTO NamingConfig (MultiEpisodeStyle, RenameEpisodes, "
+        "SeriesFolderFormat, StandardEpisodeFormat, ReplaceIllegalCharacters, "
+        "ColonReplacementFormat) VALUES (4, 1, '{Site Title}', "
+        "'{Site Title} - {Episode Title} - {Episode Performers} - "
+        "{Release-Date}', 1, 4)"
+    )
+  '';
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.set-servarr-rename-rules = {
@@ -108,6 +118,7 @@ in {
             ${lidarr}
             ${radarr}
             ${sonarr}
+            ${whisparr}
 
 
             if __name__ == '__main__':
