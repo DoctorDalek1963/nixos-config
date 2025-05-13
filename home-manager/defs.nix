@@ -18,9 +18,18 @@
     rclone = {
       enable = true;
       automounts = [
+        # WebDAV
         {
           remote = "Nextcloud-Sasha";
           mountpoint = "/home/dyson/Nextcloud-Sasha";
+        }
+
+        # STFP, don't set pub_key_file, just set key_file and key_file_pass and
+        # it will find the public key automatically
+        {
+          remote = "sasha-ssh";
+          remotePath = "/";
+          mountpoint = "/home/dyson/sasha";
         }
       ];
     };
@@ -168,9 +177,18 @@
     rclone = {
       enable = true;
       automounts = [
+        # WebDAV
         {
           remote = "Nextcloud-Sasha";
           mountpoint = "/home/dyson/Nextcloud-Sasha";
+        }
+
+        # STFP, don't set pub_key_file, just set key_file and key_file_pass and
+        # it will find the public key automatically
+        {
+          remote = "sasha-ssh";
+          remotePath = "/";
+          mountpoint = "/home/dyson/sasha";
         }
       ];
     };

@@ -265,6 +265,11 @@ in {
               type = types.nonEmptyStr;
               description = "The name of the remote server to mount.";
             };
+            remotePath = mkOption {
+              type = types.str;
+              default = "";
+              description = "The path on the remote to mount, if any.";
+            };
             mountpoint = mkOption {
               type = types.nonEmptyStr;
               description = "The full path of the folder to mount the remote into.";

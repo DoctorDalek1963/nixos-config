@@ -10,7 +10,7 @@
 in {
   config = lib.mkIf cfg.enable {
     home.packages = [pkgs.rclone];
-    systemd.user.services = builtins.listToAttrs (builtins.map (opts: {
+    systemd.user.services = builtins.listToAttrs (lib.imap0 (idx: opts: {
         name = "rclone-mount-${lib.strings.toLower opts.remote}";
         value = {
           Unit = {
@@ -35,12 +35,12 @@ in {
               "--log-file \"${log-dir}/${opts.remote}.log\""
               "--log-level INFO"
               "--rc"
-              "--rc-addr=localhost:5572"
+              "--rc-addr=localhost:${toString (5572 + idx)}"
               "--rc-web-gui"
               "--rc-web-gui-no-open-browser"
               "${readonly}"
               "${opts.extraArgs}"
-              "${opts.remote}: ${opts.mountpoint}"
+              "${opts.remote}:${opts.remotePath} ${opts.mountpoint}"
             ];
             ExecStop = "${pkgs.writeShellScript "stop-rclone-mount-${lib.strings.toLower opts.remote}"
               ''
