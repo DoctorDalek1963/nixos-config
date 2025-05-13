@@ -96,10 +96,7 @@
           };
 
           desktopEnvironments.hyprland.enable = true;
-          displayManagers.sddm = {
-            enable = true;
-            theme = "catppuccin-macchiato";
-          };
+          displayManagers.tuigreet.enable = true;
         };
       }
     ];
@@ -211,10 +208,7 @@
           };
 
           desktopEnvironments.hyprland.enable = true;
-          displayManagers.sddm = {
-            enable = true;
-            theme = "catppuccin-macchiato";
-          };
+          displayManagers.tuigreet.enable = true;
         };
       }
     ];

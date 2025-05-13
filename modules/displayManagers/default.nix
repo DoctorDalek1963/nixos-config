@@ -1,3 +1,3 @@
 {
-  imports = [./gdm ./sddm];
+  imports = [./gdm ./sddm ./tuigreet];
 }
