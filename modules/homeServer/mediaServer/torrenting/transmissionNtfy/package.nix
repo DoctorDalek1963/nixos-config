@@ -8,8 +8,7 @@ rustPlatform.buildRustPackage {
 
   cargoPatches = [
     ./Cargo.lock.patch
-    ./ntfy-tags.patch
-    ./priority.patch
+    ./ntfy-tags-priority.patch
   ];
 
   src = fetchFromGitHub {
