@@ -71,6 +71,12 @@
         "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/jellyfin/telly/')"
     )
   '';
+  whisparr = optSnippet cfgMs.porn ''
+    add_root_folder(
+        "${config.services.whisparr.dataDir}/whisparr2.db",
+        "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/porn/staging/')"
+    )
+  '';
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.add-servarr-root-folders = {
@@ -109,6 +115,7 @@ in {
             ${lidarr}
             ${radarr}
             ${sonarr}
+            ${whisparr}
 
 
             if __name__ == '__main__':

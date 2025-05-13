@@ -65,6 +65,10 @@
           (mkCommand (shConfExpr (servarrTemplate "sonarr")) config.services.sonarr.dataDir)
         )
         ++ (
+          lib.optional cfgMs.porn
+          (mkCommand (shConfExpr (servarrTemplate "whisparr")) config.services.whisparr.dataDir)
+        )
+        ++ (
           lib.optional (cfgMs.movies || cfgMs.telly)
           (let
             yqExpr = builtins.concatStringsSep " | " [

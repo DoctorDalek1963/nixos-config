@@ -62,6 +62,7 @@ in {
                 ${optSet cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
                 ${optSet cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
                 ${optSet cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}
+                ${optSet cfgMs.porn "${config.services.whisparr.dataDir}/whisparr2.db"}
 
 
             if __name__ == '__main__':

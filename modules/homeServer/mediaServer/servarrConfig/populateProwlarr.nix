@@ -32,6 +32,7 @@ in {
                 ${optStr cfgMs.music ''("Lidarr", "music", False),''}
                 ${optStr cfgMs.movies ''("Radarr", "movies", True),''}
                 ${optStr cfgMs.telly ''("Sonarr", "telly", True),''}
+                ${optStr cfgMs.porn ''("Whisparr", "porn", True),''}
             ]
 
             TAGS = {
@@ -40,6 +41,7 @@ in {
                 "telly": 3,
                 "music": 4,
                 "books": 5,
+                "porn": 6,
             }
 
 
