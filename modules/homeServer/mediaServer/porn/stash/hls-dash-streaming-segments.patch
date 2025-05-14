@@ -1,0 +1,22 @@
+diff --git a/pkg/ffmpeg/stream_segmented.go b/pkg/ffmpeg/stream_segmented.go
+index 7d529b82..680ffffe 100644
+--- a/pkg/ffmpeg/stream_segmented.go
++++ b/pkg/ffmpeg/stream_segmented.go
+@@ -428,7 +428,7 @@ func serveHLSManifest(sm *StreamManager, w http.ResponseWriter, r *http.Request,
+ 
+ 	baseUrl := *r.URL
+ 	baseUrl.RawQuery = ""
+-	baseURL := baseUrl.String()
++	baseURL := "/stash/" + baseUrl.String()
+ 
+ 	urlQuery := url.Values{}
+ 	apikey := r.URL.Query().Get(apiKeyParamKey)
+@@ -561,7 +561,7 @@ func serveDASHManifest(sm *StreamManager, w http.ResponseWriter, r *http.Request
+ 
+ 	baseUrl := r.URL.JoinPath("/")
+ 	baseUrl.RawQuery = ""
+-	m.BaseURL = baseUrl.String()
++	m.BaseURL = "/stash/" + baseUrl.String()
+ 
+ 	video, _ := m.AddNewAdaptationSetVideo(MimeWebmVideo, "progressive", true, 1)
+ 

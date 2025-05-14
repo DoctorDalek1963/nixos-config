@@ -92,6 +92,10 @@ in {
         enable = true;
         group = "media";
 
+        package = pkgs.stash.overrideAttrs (oldAttrs: {
+          patches = (oldAttrs.patches or []) ++ [./hls-dash-streaming-segments.patch];
+        });
+
         username = "dyson";
         passwordFile = config.sops.secrets."home-server/stash/password".path;
         jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
