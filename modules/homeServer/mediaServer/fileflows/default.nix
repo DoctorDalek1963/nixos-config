@@ -34,6 +34,7 @@ in {
           "${config.services.fileflows.server.baseDir}/Server"
           "${config.services.fileflows.server.baseDir}/Node"
           "${config.services.fileflows.server.baseDir}/FlowRunner"
+          "${config.services.fileflows.server.baseDir}/Logs"
         ];
       };
 
