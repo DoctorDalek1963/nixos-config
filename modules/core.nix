@@ -89,8 +89,6 @@ in {
         # HTTP proxy used on home server. It's okay because it's only
         # accessible to devices on my tailnet and not the public internet
         "squid-7.0.1"
-
-        "electron-33.4.11" # TODO (feishin 1.12.6): Remove this once https://github.com/NixOS/nixpkgs/pull/405530 is merged
       ];
     };
   };
