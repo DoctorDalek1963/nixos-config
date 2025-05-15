@@ -29,7 +29,7 @@ in {
         mode = "0440";
       };
 
-      services.borgbackup.jobs.automatic-rsync-net = lib.mkIf cfg.enable {
+      services.borgbackup.jobs.automatic-rsync-net = {
         group = "backup";
 
         inherit (cfg) paths;
@@ -42,22 +42,7 @@ in {
         archiveBaseName = "${config.setup.hostname}-auto";
 
         extraArgs = ["--remote-path=borg14"];
-        extraCreateArgs =
-          [
-            "--stats"
-            "--checkpoint-interval=600"
-          ]
-          ++ (
-            # In a media server setup, we have
-            # set-permissions-for-media-server-directory-map.service, which
-            # does chown and chmod every hour, but these modify ctime on btrfs.
-            # So on a media server, Borg will think any files in the directory
-            # map have changed every hour even if they haven't, so we tell Borg
-            # to use mtime instead.
-            lib.optional
-            (config.setup.homeServer.enable && config.setup.homeServer.mediaServer.enable)
-            "--files-cache=mtime,size,inode"
-          );
+        extraCreateArgs = ["--stats" "--checkpoint-interval=600"];
 
         # An empty list here makes the service not start automatically, but
         # only be triggered manually. When we have no paths, we obviously don't
@@ -117,6 +102,19 @@ in {
           onFailure = ["borgbackup-job-automatic-rsync-net-ntfy-failed.service"];
           onSuccess = ["borgbackup-job-automatic-rsync-net-ntfy-succeeded.service"];
         };
+      };
+    })
+    (lib.mkIf (cfg.enable
+      && config.setup.homeServer.enable
+      && config.setup.homeServer.mediaServer.enable) {
+      # Turn off the mediaServer directoryMap while doing backups because it
+      # messes with the ctimes and borg doesn't like that
+      # TODO (borg 2): When borg 2 is stable (and we probably need it to be
+      # available on the remote too), we should be able to retry problematic
+      # files and that _might_ be a better solution
+      systemd.services.borgbackup-job-automatic-rsync-net.serviceConfig = {
+        ExecStartPre = ["systemctl stop set-permissions-for-media-server-directory-map.timer"];
+        ExecStopPost = ["systemctl start set-permissions-for-media-server-directory-map.timer"];
       };
     })
   ];
