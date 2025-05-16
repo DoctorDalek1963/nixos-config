@@ -125,8 +125,15 @@ in {
     };
   };
 
-  # Use British keyboard in TTYs
-  console.keyMap = "uk";
+  console = {
+    # Use British keyboard in TTYs
+    keyMap = "uk";
+
+    # Use nicer font for 1080p monitors
+    earlySetup = true;
+    packages = [pkgs.terminus_font];
+    font = "ter-v18b.psf.gz";
+  };
 
   environment.systemPackages =
     (with pkgs; [
