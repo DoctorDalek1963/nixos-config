@@ -67,6 +67,14 @@ in {
 
         environment.BORG_RSH = "ssh -i ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path}";
       };
+
+      systemd.services.borgbackup-job-automatic-rsync-net = {
+        serviceConfig.Restart = "on-failure";
+        unitConfig = {
+          StartLimitIntervalSec = "1d";
+          StartLimitBurst = 3;
+        };
+      };
     })
     (lib.mkIf (cfg.enable && cfg.ntfy.url != null) {
       systemd.services = {
