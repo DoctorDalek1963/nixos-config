@@ -12,9 +12,9 @@ jobs:
         with:
           tool-cache: true
 
-      - uses: nixbuild/nix-quick-install-action@v27
+      - uses: nixbuild/nix-quick-install-action@v30
 
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/cachix-action@v16
         with:
           name: doctordalek1963
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -34,11 +34,11 @@ jobs:
 
       - uses: docker/setup-qemu-action@v3
 
-      - uses: nixbuild/nix-quick-install-action@v27
+      - uses: nixbuild/nix-quick-install-action@v30
         with:
           nix_conf: "extra-platforms = aarch64-linux"
 
-      - uses: cachix/cachix-action@v14
+      - uses: cachix/cachix-action@v16
         with:
           name: doctordalek1963
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
