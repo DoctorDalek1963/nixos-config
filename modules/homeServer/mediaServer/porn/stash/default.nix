@@ -103,7 +103,7 @@ in {
         jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
         sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
 
-        mutableSettings = false;
+        mutableSettings = true; # TODO (nixos module): Logic is nixpkgs is backwards until https://github.com/NixOS/nixpkgs/pull/408198 is merged
         mutablePlugins = false;
         mutableScrapers = true; # I can't be bothered to declare all of these
 
