@@ -195,9 +195,7 @@ in {
           new_window_takes_over_fullscreen = 2;
 
           # Wait longer before saying "Application not responding"
-          # anr_missed_pings = 5; # TODO (hyprland 0.49): Uncomment this and remove line below
-          # For now, we'll just disable ANR completely
-          enable_anr_dialog = false;
+          anr_missed_pings = 5;
         };
 
         animation =
