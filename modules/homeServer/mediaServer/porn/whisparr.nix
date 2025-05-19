@@ -7,8 +7,6 @@
   cfgMs = cfg.mediaServer;
 in {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
-    # TODO: Add Whisparr database setup stuff to servarr-config.service
-
     setup = {
       impermanence.keepDirs = [config.services.whisparr.dataDir];
 
