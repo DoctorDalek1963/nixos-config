@@ -43,6 +43,7 @@ in {
 
         extraArgs = ["--remote-path=borg14"];
         extraCreateArgs = ["--stats" "--checkpoint-interval=600"];
+        extraPruneArgs = ["--stats" "--save-space"];
 
         # An empty list here makes the service not start automatically, but
         # only be triggered manually. When we have no paths, we obviously don't
