@@ -63,12 +63,19 @@ in {
             inherit (config.services.stash.settings) plugins_path;
           in
             pkgs.writeShellScript "copy-stash-plugins.sh" ''
-              mkdir ${plugins_path}
+              mkdir -p ${plugins_path}
               cp -r ${(import ./plugins {inherit pkgs;}).outPath}/* ${plugins_path}/
               chown -R ${config.services.stash.user}:media ${plugins_path}
               chmod -R u+rw,g+rw ${plugins_path}
             ''
         )
+        (let
+          script = pkgs.writeShellScript "set-stash-api-key.sh" ''
+            env apiKey="$(< ${config.sops.secrets."home-server/stash/api-key".path})" \
+              ${lib.getExe pkgs.yq-go} -i '.api_key = strenv(apiKey)' ${config.services.stash.dataDir}/config.yml
+          '';
+          # Why the plus? So that this script is run as root and we can actually read the secret API key
+        in "+${script}")
       ];
     };
 
@@ -107,9 +114,6 @@ in {
         mutablePlugins = false;
         mutableScrapers = true; # I can't be bothered to declare all of these
 
-        # TODO: What's the best way to set the API key without hard coding it?
-        # Is hard coding even that bad? Why are the settings not overwritten
-        # everytime; what does `mutableSettings = false` actually do?
         settings = {
           stash = [
             {
