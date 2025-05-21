@@ -172,7 +172,10 @@ in {
 
         dwindle.smart_split = true;
 
-        ecosystem.no_donation_nag = true;
+        ecosystem = {
+          no_donation_nag = true;
+          no_update_news = true;
+        };
 
         decoration = {
           rounding = 7;
