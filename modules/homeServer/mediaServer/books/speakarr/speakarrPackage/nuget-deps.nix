@@ -6,6 +6,12 @@
     sha256 = "03kgk728v7vjn8npv45wnc4jvqbhdd3pm1aklf0c7narlzfagkch";
   })
   (fetchNuGet {
+    pname = "BouncyCastle.Cryptography";
+    version = "2.4.0";
+    url = "https://api.nuget.org/v3-flatcontainer/bouncycastle.cryptography/2.4.0/bouncycastle.cryptography.2.4.0.nupkg";
+    sha256 = "1400lbwk16ddpvfpp5c655ghcdxngr33h9c75h7fscsqdcsxk00f";
+  })
+  (fetchNuGet {
     pname = "Castle.Core";
     version = "4.4.1";
     url = "https://api.nuget.org/v3-flatcontainer/castle.core/4.4.1/castle.core.4.4.1.nupkg";
@@ -79,15 +85,21 @@
   })
   (fetchNuGet {
     pname = "Ical.Net";
-    version = "4.2.0";
-    url = "https://api.nuget.org/v3-flatcontainer/ical.net/4.2.0/ical.net.4.2.0.nupkg";
-    sha256 = "19qcbsfmpzm4iclga4zd8qzb37gggq9vs665viyjc8x77nm2zi9r";
+    version = "4.3.1";
+    url = "https://api.nuget.org/v3-flatcontainer/ical.net/4.3.1/ical.net.4.3.1.nupkg";
+    sha256 = "0hy33kynz69ag058gdylg3xxdhxa0af09gkk0fsyw1cl52y236lf";
   })
   (fetchNuGet {
     pname = "ImpromptuInterface";
     version = "7.0.1";
     url = "https://api.nuget.org/v3-flatcontainer/impromptuinterface/7.0.1/impromptuinterface.7.0.1.nupkg";
     sha256 = "1kyjp5skhsajvmabz438abcvddaz1w8s3d3csybw3znngpj9hlpb";
+  })
+  (fetchNuGet {
+    pname = "IPAddressRange";
+    version = "6.1.0";
+    url = "https://api.nuget.org/v3-flatcontainer/ipaddressrange/6.1.0/ipaddressrange.6.1.0.nupkg";
+    sha256 = "03h1wa7v0wr95jimlhp0qlqm3l7jywpw5asfp58ppzgsln3ixy0n";
   })
   (fetchNuGet {
     pname = "LazyCache";
@@ -97,129 +109,117 @@
   })
   (fetchNuGet {
     pname = "MailKit";
-    version = "3.6.0";
-    url = "https://api.nuget.org/v3-flatcontainer/mailkit/3.6.0/mailkit.3.6.0.nupkg";
-    sha256 = "1i7fjvi5pp1bi9h4dp82dn7kfp7y6rwc4lwyp1zphyvv3gc54ahh";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.AspNetCore.App.Ref";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg";
-    sha256 = "0rc5z2a52rc0ic63bz09ikmapshal0v5awx7r9y7gzphp1cy8c7n";
+    version = "4.8.0";
+    url = "https://api.nuget.org/v3-flatcontainer/mailkit/4.8.0/mailkit.4.8.0.nupkg";
+    sha256 = "0ww9801plcq97clcyabs9saz6qp6sg618g0345mj7ir3xiafpnrq";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-arm/6.0.36/microsoft.aspnetcore.app.runtime.linux-arm.6.0.36.nupkg";
-    sha256 = "129qnwyv8rrc292k0794380csxgv2kz9x1mxz28d1pvz9cskpamq";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-arm/8.0.15/microsoft.aspnetcore.app.runtime.linux-arm.8.0.15.nupkg";
+    sha256 = "0nzjpfw2h1hizg26jq798jmdi9xkfa632k5qd99w3s567vlldrvy";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-arm64/6.0.36/microsoft.aspnetcore.app.runtime.linux-arm64.6.0.36.nupkg";
-    sha256 = "03lmjv7hjxhlv7axx95kzbxy0wgwr9bnhjada7lg52kl44khn195";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-arm64/8.0.15/microsoft.aspnetcore.app.runtime.linux-arm64.8.0.15.nupkg";
+    sha256 = "0gaihg660xhgxfzcz45cg9k6mcngmg9i9ipx083s06hcy48sfkpl";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-musl-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-arm/6.0.36/microsoft.aspnetcore.app.runtime.linux-musl-arm.6.0.36.nupkg";
-    sha256 = "1g0sgq05xzad5rafi65dfxp8kcly772ffxqakq83h1v3al89hvr3";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-arm/8.0.15/microsoft.aspnetcore.app.runtime.linux-musl-arm.8.0.15.nupkg";
+    sha256 = "0x2l15m8k35fxdw8y1qrl9a05329c6439rba036iac5w11qh19p9";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-musl-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-arm64/6.0.36/microsoft.aspnetcore.app.runtime.linux-musl-arm64.6.0.36.nupkg";
-    sha256 = "06lq2gbb01s3k9wzl2cicczxbb92cf2pkp2sq5866qyg74mprim3";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-arm64/8.0.15/microsoft.aspnetcore.app.runtime.linux-musl-arm64.8.0.15.nupkg";
+    sha256 = "0443xz1qj54v6nhmbsarn8vs0lf4rxkh1bnn0zfxfb664y7wzq2h";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-musl-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-x64/6.0.36/microsoft.aspnetcore.app.runtime.linux-musl-x64.6.0.36.nupkg";
-    sha256 = "110lavxb9q8b2lr9mj4qzac90g1wxwd6kx9hi6x41jzxlx68ym7w";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-musl-x64/8.0.15/microsoft.aspnetcore.app.runtime.linux-musl-x64.8.0.15.nupkg";
+    sha256 = "1sf2y28q063bkl95k4nkmncdlran5lj4wd2825iw0glb0fv0ywn4";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/6.0.36/microsoft.aspnetcore.app.runtime.linux-x64.6.0.36.nupkg";
-    sha256 = "09lpfdknj9x4pnkn677myzvh0hx42i0jrnh55k65pwvqjli1ajyd";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.linux-x64/8.0.15/microsoft.aspnetcore.app.runtime.linux-x64.8.0.15.nupkg";
+    sha256 = "12gj528id53b18lmdqm12l1b2f4dwvfckj4gbr3rb8zi62r0c1bc";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.osx-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-arm64/6.0.36/microsoft.aspnetcore.app.runtime.osx-arm64.6.0.36.nupkg";
-    sha256 = "0gg92dpkcghr9mir2zhsnph0jdzmkb0l2xrqjciya9glrijsmiys";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-arm64/8.0.15/microsoft.aspnetcore.app.runtime.osx-arm64.8.0.15.nupkg";
+    sha256 = "0qv4pjw2yyd7wpfmr7qnyjl139f16xljs6x44r9lv28m8kcyfbvx";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.osx-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/6.0.36/microsoft.aspnetcore.app.runtime.osx-x64.6.0.36.nupkg";
-    sha256 = "1r8yhkcmgzzf9h2yn90334f4i1pm1x6kw81qj3glnal131zxl4nb";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.osx-x64/8.0.15/microsoft.aspnetcore.app.runtime.osx-x64.8.0.15.nupkg";
+    sha256 = "13g5kfhmim9qbhjzmjw3qjn63hvfww2injpqinpgnm4li46nm411";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.win-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/6.0.36/microsoft.aspnetcore.app.runtime.win-x64.6.0.36.nupkg";
-    sha256 = "11lzz2jla3w6blj4s4r6iwvnlgkhp6v19siwd5k3b65ppkfjpyg0";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x64/8.0.15/microsoft.aspnetcore.app.runtime.win-x64.8.0.15.nupkg";
+    sha256 = "018jkp25llgyghcab9dm33pbi20wr2w8hjkm68sjh3yhdmsbq9qc";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.win-x86";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x86/6.0.36/microsoft.aspnetcore.app.runtime.win-x86.6.0.36.nupkg";
-    sha256 = "19h2wzn4m9n00p9ry5irfgmv4dbv2rsapva5wbw0m320xbpq2k6r";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.app.runtime.win-x86/8.0.15/microsoft.aspnetcore.app.runtime.win-x86.8.0.15.nupkg";
+    sha256 = "0j1142zmk8n1aqgk99gkp1dq1a11i58vfm6z5hv6qsn626iplz81";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.Connections.Abstractions";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.connections.abstractions/6.0.32/microsoft.aspnetcore.connections.abstractions.6.0.32.nupkg";
-    sha256 = "1mb5qzbfrrrm9wazg918n4n6apdvg2m2i51zink9lck6cfp2j4qj";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.connections.abstractions/6.0.35/microsoft.aspnetcore.connections.abstractions.6.0.35.nupkg";
+    sha256 = "1lpakbv4xh9wcswvibfjs7xncfp2nfgjr37zyqkf52lzd1c338x6";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.Http.Connections.Client";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.http.connections.client/6.0.32/microsoft.aspnetcore.http.connections.client.6.0.32.nupkg";
-    sha256 = "0rmvdjyw0sq9iggzflgfxb4zvq3640sm2zn4nkns804ik4wad713";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.http.connections.client/6.0.35/microsoft.aspnetcore.http.connections.client.6.0.35.nupkg";
+    sha256 = "1m84cab42ks89gh80iw7p3g8cza5lwm7dakdihjkk7mhsxz24icb";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.Http.Connections.Common";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.http.connections.common/6.0.32/microsoft.aspnetcore.http.connections.common.6.0.32.nupkg";
-    sha256 = "1jgla6sjfc5q3lvpkdz1n8imnvq2wcr3hqjrlsq9bc5gn5rcl3z1";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.http.connections.common/6.0.35/microsoft.aspnetcore.http.connections.common.6.0.35.nupkg";
+    sha256 = "052aqqpkr69xipbqjf823dri1jjzwb0mb7585s7a99n1wixx7b6n";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.SignalR.Client";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.client/6.0.32/microsoft.aspnetcore.signalr.client.6.0.32.nupkg";
-    sha256 = "0rb2yh8dcpa0df94a34f49jmpv9ixzlk8kxwnnjkbfhn8fwm2pvs";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.client/6.0.35/microsoft.aspnetcore.signalr.client.6.0.35.nupkg";
+    sha256 = "1sl5x5d0dkr78hmyz3fk1bfx894s26p68vss3cy6mki52sv4yrzz";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.SignalR.Client.Core";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.client.core/6.0.32/microsoft.aspnetcore.signalr.client.core.6.0.32.nupkg";
-    sha256 = "0zxqn5768iiwj8slsq2q8vnf4li59yzsqk51f0lkqff5sfxrhx12";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.client.core/6.0.35/microsoft.aspnetcore.signalr.client.core.6.0.35.nupkg";
+    sha256 = "0xfrlmcl5z4088nj03sv0r9fags0y53z2vwnagqf8fcgvgpwhxp0";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.SignalR.Common";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.common/6.0.32/microsoft.aspnetcore.signalr.common.6.0.32.nupkg";
-    sha256 = "0m66mqcny8c7x0w8ifxzyv5z0yfm3gb5smsm2pnrcpr0r8f4k6mz";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.common/6.0.35/microsoft.aspnetcore.signalr.common.6.0.35.nupkg";
+    sha256 = "15nkkqn0n57mar0jx0nq3xql64gq7gd25czjkx1v5j11jrgg4h4j";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.SignalR.Protocols.Json";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.protocols.json/6.0.32/microsoft.aspnetcore.signalr.protocols.json.6.0.32.nupkg";
-    sha256 = "15nap3nn9css053as798vy9grwqbxcg8dyk8da5sk094h8sh9vz3";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.aspnetcore.signalr.protocols.json/6.0.35/microsoft.aspnetcore.signalr.protocols.json.6.0.35.nupkg";
+    sha256 = "159s0zpj5yq5kpdpmhnfrjqxw9342zkxidfgg30nwdwfw930hnyr";
   })
   (fetchNuGet {
-    pname = "Microsoft.Bcl.AsyncInterfaces";
-    version = "6.0.0";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg";
-    sha256 = "15gqy2m14fdlvy1g59207h5kisznm355kbw010gy19vh47z8gpz3";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.Bcl.TimeProvider";
-    version = "8.0.0";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.bcl.timeprovider/8.0.0/microsoft.bcl.timeprovider.8.0.0.nupkg";
-    sha256 = "11bzf84kg54g5vq5w4zshdfl9a1agkph6gmg9lrq68fjf14w66vw";
+    pname = "Microsoft.Build.Tasks.Git";
+    version = "1.1.1";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.build.tasks.git/1.1.1/microsoft.build.tasks.git.1.1.1.nupkg";
+    sha256 = "1bb5p4zlnfn88skkvymxfsn0jybqncl4356hwnic9jxdq2d4fz1w";
   })
   (fetchNuGet {
     pname = "Microsoft.CodeCoverage";
@@ -235,12 +235,6 @@
   })
   (fetchNuGet {
     pname = "Microsoft.CSharp";
-    version = "4.3.0";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.csharp/4.3.0/microsoft.csharp.4.3.0.nupkg";
-    sha256 = "0gw297dgkh0al1zxvgvncqs0j15lsna9l1wpqas4rflmys440xvb";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.CSharp";
     version = "4.4.1";
     url = "https://api.nuget.org/v3-flatcontainer/microsoft.csharp/4.4.1/microsoft.csharp.4.4.1.nupkg";
     sha256 = "0z6d1i6xcf0c00z6rs75rgw4ncs9q2m8amasf6mmbf40fm02ry7g";
@@ -253,9 +247,9 @@
   })
   (fetchNuGet {
     pname = "Microsoft.Data.SqlClient";
-    version = "2.1.2";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.data.sqlclient/2.1.2/microsoft.data.sqlclient.2.1.2.nupkg";
-    sha256 = "1l9qvvqdg1jmqg525k0cgfw08j9jyvb9ibh3x1wl1zidkwg1xgbz";
+    version = "2.1.7";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.data.sqlclient/2.1.7/microsoft.data.sqlclient.2.1.7.nupkg";
+    sha256 = "10zlzi5lb045fpgnl0sq3v4wrbjc7wwkhvdrhvs79ydiajcwb6l0";
   })
   (fetchNuGet {
     pname = "Microsoft.Data.SqlClient.SNI.runtime";
@@ -283,9 +277,9 @@
   })
   (fetchNuGet {
     pname = "Microsoft.Extensions.Caching.Memory";
-    version = "6.0.1";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.extensions.caching.memory/6.0.1/microsoft.extensions.caching.memory.6.0.1.nupkg";
-    sha256 = "0ra0ldbg09r40jzvfqhpb3h42h80nafvka9hg51dja32k3mxn5gk";
+    version = "6.0.2";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.extensions.caching.memory/6.0.2/microsoft.extensions.caching.memory.6.0.2.nupkg";
+    sha256 = "1h63r79a56yxjxbsrvxaz06m3vzbp26svhlbz7ly99rf2912x10n";
   })
   (fetchNuGet {
     pname = "Microsoft.Extensions.Configuration";
@@ -397,9 +391,9 @@
   })
   (fetchNuGet {
     pname = "Microsoft.Extensions.Features";
-    version = "6.0.32";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.extensions.features/6.0.32/microsoft.extensions.features.6.0.32.nupkg";
-    sha256 = "1rfh2whgmy25ij3m8klss9ykbrqwism3iry29ykpcrbybcvzahhz";
+    version = "6.0.35";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.extensions.features/6.0.35/microsoft.extensions.features.6.0.35.nupkg";
+    sha256 = "0ish6d5q30wqnjcpjnx051b66v60hrakrvkz0bhdwbjhyfb5k18z";
   })
   (fetchNuGet {
     pname = "Microsoft.Extensions.FileProviders.Abstractions";
@@ -577,129 +571,117 @@
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.linux-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-arm/6.0.36/microsoft.netcore.app.host.linux-arm.6.0.36.nupkg";
-    sha256 = "1rxhncf64wppiazd5krc05vm452vpbn8a075hagfjl56567bkhrh";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-arm/8.0.15/microsoft.netcore.app.host.linux-arm.8.0.15.nupkg";
+    sha256 = "0iyqi8y0avwd1z0xhb5y4f60rc5rpjrsgrsp4kv9617pkqm5q0qd";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.linux-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-arm64/6.0.36/microsoft.netcore.app.host.linux-arm64.6.0.36.nupkg";
-    sha256 = "0bbpx4wlhzfyfrimvgsfnbj41y8a0m4xmcv5j5iqi1gdi4nvyl7n";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-arm64/8.0.15/microsoft.netcore.app.host.linux-arm64.8.0.15.nupkg";
+    sha256 = "08l8sixdy10czl9d7zc1vnzh0x9qsrbljb693ckyz95x562yr8q0";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.linux-musl-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-arm/6.0.36/microsoft.netcore.app.host.linux-musl-arm.6.0.36.nupkg";
-    sha256 = "158jf903hzzcakcq03zidsx884vj8dl1l1dfj3j1xy0nkpjzdn0q";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-arm/8.0.15/microsoft.netcore.app.host.linux-musl-arm.8.0.15.nupkg";
+    sha256 = "1pvsqr8c8mbxpbsmrydkmypwkyifnnya7sz63x8m9ndmzpk58xv4";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.linux-musl-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-arm64/6.0.36/microsoft.netcore.app.host.linux-musl-arm64.6.0.36.nupkg";
-    sha256 = "1dhba1sqp3m50ailm6ccvydmywg82b9fzirsfjlmabab3ac32yg7";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-arm64/8.0.15/microsoft.netcore.app.host.linux-musl-arm64.8.0.15.nupkg";
+    sha256 = "0325vv0c5wghpgznsi2ylcxgp0m4hsv5lb8sknrld6rm0bm9gbz4";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.linux-musl-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-x64/6.0.36/microsoft.netcore.app.host.linux-musl-x64.6.0.36.nupkg";
-    sha256 = "14h6ys0ax4nz6m80r0lwsdsrzlz22mwa2lfldc592nn71v2ngvzz";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.NETCore.App.Host.linux-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-x64/6.0.36/microsoft.netcore.app.host.linux-x64.6.0.36.nupkg";
-    sha256 = "0pbkf7g457pv8b5667gharhlszgzn1lp9jicwz4fn9nb3v7l6m2l";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.linux-musl-x64/8.0.15/microsoft.netcore.app.host.linux-musl-x64.8.0.15.nupkg";
+    sha256 = "1hfnvrl8cl86jpb8zba7nd1z078svqk6823vaagvh3kb1h72fpl6";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.osx-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-arm64/6.0.36/microsoft.netcore.app.host.osx-arm64.6.0.36.nupkg";
-    sha256 = "1slyj06glqi5qjslxds36x0yngqaslq8g30v20jnl902h30rd90d";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-arm64/8.0.15/microsoft.netcore.app.host.osx-arm64.8.0.15.nupkg";
+    sha256 = "0qg5qmzn13lfqid6mbbf68mk23jc9ga57m5karq7gyyamy8rq6vw";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.osx-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/6.0.36/microsoft.netcore.app.host.osx-x64.6.0.36.nupkg";
-    sha256 = "1piilz0n9xjqw71y1b4ihji3i74g1dkymvh656175s08s75ngd0n";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.osx-x64/8.0.15/microsoft.netcore.app.host.osx-x64.8.0.15.nupkg";
+    sha256 = "185hfssyc6mcpf89ag39sbnpxy9kp49hbab88l6x7xgc91bv175r";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.win-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/6.0.36/microsoft.netcore.app.host.win-x64.6.0.36.nupkg";
-    sha256 = "0x0vd8v0bagw2ynvhhjgvv33mj2kndfc5c7gj8j71bnkyvdcy99w";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x64/8.0.15/microsoft.netcore.app.host.win-x64.8.0.15.nupkg";
+    sha256 = "1hn2gcgv7gk02f46mhbxzv9a12qh6yp08dc7kdckc6vi3npq8iza";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Host.win-x86";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x86/6.0.36/microsoft.netcore.app.host.win-x86.6.0.36.nupkg";
-    sha256 = "09pvz3m98b4njs3l3y5a2d6apggw3qgckvh9k0k3w7kbs9mkrzgv";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.NETCore.App.Ref";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg";
-    sha256 = "07wp60ndpkb1yf5bsw3zq6sfwqk0dg993g2br66wl5q5h9b61dpl";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.host.win-x86/8.0.15/microsoft.netcore.app.host.win-x86.8.0.15.nupkg";
+    sha256 = "0bvbj1s7x33cfq5wiwy2fndgvryp81cvdgmapmkxc4whgbpjw30h";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-arm/6.0.36/microsoft.netcore.app.runtime.linux-arm.6.0.36.nupkg";
-    sha256 = "0yjlihi4qlv4pd0b2cz1q38nh0k0py2j0l9apnwkgyda42whplxg";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-arm/8.0.15/microsoft.netcore.app.runtime.linux-arm.8.0.15.nupkg";
+    sha256 = "0nkh7hvdhg3205c40vzh589ni9m56q5r2g28b0v7mn8qp48gy1gb";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-arm64/6.0.36/microsoft.netcore.app.runtime.linux-arm64.6.0.36.nupkg";
-    sha256 = "1pr13w9dplsczdhp1yp74qx95y4h5m1q02kzahlls4a292yz2ylk";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-arm64/8.0.15/microsoft.netcore.app.runtime.linux-arm64.8.0.15.nupkg";
+    sha256 = "1zaw83w13i701zxq89r2k9kgv8jg3552nz6xw54yzdq6g2310js6";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-musl-arm";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-arm/6.0.36/microsoft.netcore.app.runtime.linux-musl-arm.6.0.36.nupkg";
-    sha256 = "18yf7qf3xyappxp4inxrcrbvmk0v6fjifwcvv0lijx6igdrcrwpp";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-arm/8.0.15/microsoft.netcore.app.runtime.linux-musl-arm.8.0.15.nupkg";
+    sha256 = "091d3pw7nibfag2prq8b6qnpl06pzvh2r67mrlprlfh9pzyvkqyj";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-musl-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-arm64/6.0.36/microsoft.netcore.app.runtime.linux-musl-arm64.6.0.36.nupkg";
-    sha256 = "0c0bdz2ir6y4whqszlga17mlyq47a0smy89c4bw6rjxbsalm6c77";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-arm64/8.0.15/microsoft.netcore.app.runtime.linux-musl-arm64.8.0.15.nupkg";
+    sha256 = "1l6jb4azavllh0p31pyvlmfgyjljjzkpx4b3h29b8pbhn74k62rm";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-musl-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-x64/6.0.36/microsoft.netcore.app.runtime.linux-musl-x64.6.0.36.nupkg";
-    sha256 = "0gs8jrp4bd3kp5aifvbyl8lsh8vl9zmncqpksl9c2fcm88db7i47";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-musl-x64/8.0.15/microsoft.netcore.app.runtime.linux-musl-x64.8.0.15.nupkg";
+    sha256 = "0xfc4prr10pv32adffcfgv4v61vqa85daiy873zsps4fm3qbm12l";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/6.0.36/microsoft.netcore.app.runtime.linux-x64.6.0.36.nupkg";
-    sha256 = "0ixvf8lk3h8zzrss5rdbn05rsa4ywxw2vm800ag5l36jr7d0kk2k";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.linux-x64/8.0.15/microsoft.netcore.app.runtime.linux-x64.8.0.15.nupkg";
+    sha256 = "1bgmj4vgpk79dimrrsmji7319jdms9w7jhjan69qnlmqg68skvl8";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.osx-arm64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-arm64/6.0.36/microsoft.netcore.app.runtime.osx-arm64.6.0.36.nupkg";
-    sha256 = "15hgzk8394mq7h5w80a5jq75w8iq7vmdhgabry5z73w6pnndrwji";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-arm64/8.0.15/microsoft.netcore.app.runtime.osx-arm64.8.0.15.nupkg";
+    sha256 = "1k520b593wy70w60lsw93f1vkjs76jwbqwixaykjyr7kp783njm9";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.osx-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/6.0.36/microsoft.netcore.app.runtime.osx-x64.6.0.36.nupkg";
-    sha256 = "16x06zh21lg3rp6g3k67qd0sg521a50wxw1x18kwfx7ibih0j4nk";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.osx-x64/8.0.15/microsoft.netcore.app.runtime.osx-x64.8.0.15.nupkg";
+    sha256 = "1m8kcs0wk6nx43gcnsm2ir4vprnnwbqxhckh54azh6sj1dnrbdma";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.win-x64";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/6.0.36/microsoft.netcore.app.runtime.win-x64.6.0.36.nupkg";
-    sha256 = "15xfkh6kvwsdlj7h0n3qbby7zigrj1h659rjkd394aq2yksc0s1f";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x64/8.0.15/microsoft.netcore.app.runtime.win-x64.8.0.15.nupkg";
+    sha256 = "0ifm49nrk0nbqb3a6lxdnj8zvnzlxyc9gbclb1cfw8i3rj623ghi";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.win-x86";
-    version = "6.0.36";
-    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x86/6.0.36/microsoft.netcore.app.runtime.win-x86.6.0.36.nupkg";
-    sha256 = "0rrvj2y1far9ic0ajikrfg54d01gry94c0afiv03hqwch7vk665k";
+    version = "8.0.15";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.netcore.app.runtime.win-x86/8.0.15/microsoft.netcore.app.runtime.win-x86.8.0.15.nupkg";
+    sha256 = "185fgl3nwf437j9c5viasb8v6c431wr4yjzyv6117xwv600g6yhp";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.Platforms";
@@ -742,6 +724,18 @@
     version = "1.6.14";
     url = "https://api.nuget.org/v3-flatcontainer/microsoft.openapi/1.6.14/microsoft.openapi.1.6.14.nupkg";
     sha256 = "1wr8crmjg4gznm3jqgz9s9p285vrwb8a6baqc6gz3b58rn4m88km";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.SourceLink.Common";
+    version = "1.1.1";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.sourcelink.common/1.1.1/microsoft.sourcelink.common.1.1.1.nupkg";
+    sha256 = "0xkdqs7az2cprar7jzjlgjpd64l6f8ixcmwmpkdm03fyb4s5m0bg";
+  })
+  (fetchNuGet {
+    pname = "Microsoft.SourceLink.GitHub";
+    version = "1.1.1";
+    url = "https://api.nuget.org/v3-flatcontainer/microsoft.sourcelink.github/1.1.1/microsoft.sourcelink.github.1.1.1.nupkg";
+    sha256 = "099y35f2npvva3jk1zp8hn0vb9pwm2l0ivjasdly6y2idv53s5yy";
   })
   (fetchNuGet {
     pname = "Microsoft.TestPlatform.ObjectModel";
@@ -793,9 +787,9 @@
   })
   (fetchNuGet {
     pname = "MimeKit";
-    version = "3.6.0";
-    url = "https://api.nuget.org/v3-flatcontainer/mimekit/3.6.0/mimekit.3.6.0.nupkg";
-    sha256 = "0l54df3s0qnj0b06a4z5mldlx4nnfvw8sbfl57ddalz505q3mayg";
+    version = "4.8.0";
+    url = "https://api.nuget.org/v3-flatcontainer/mimekit/4.8.0/mimekit.4.8.0.nupkg";
+    sha256 = "1x4bmywazcpd3wq8q4skhvnx8p7c0hpzc0qj86wylpj19gi7jh70";
   })
   (fetchNuGet {
     pname = "Mono.Cecil";
@@ -847,12 +841,6 @@
   })
   (fetchNuGet {
     pname = "Newtonsoft.Json";
-    version = "10.0.3";
-    url = "https://api.nuget.org/v3-flatcontainer/newtonsoft.json/10.0.3/newtonsoft.json.10.0.3.nupkg";
-    sha256 = "06vy67bkshclpz69kps4vgzc9h2cgg41c8vlqmdbwclfky7c4haq";
-  })
-  (fetchNuGet {
-    pname = "Newtonsoft.Json";
     version = "13.0.1";
     url = "https://api.nuget.org/v3-flatcontainer/newtonsoft.json/13.0.1/newtonsoft.json.13.0.1.nupkg";
     sha256 = "0fijg0w6iwap8gvzyjnndds0q4b8anwxxvik7y8vgq97dram4srb";
@@ -889,15 +877,15 @@
   })
   (fetchNuGet {
     pname = "NodaTime";
-    version = "3.0.0";
-    url = "https://api.nuget.org/v3-flatcontainer/nodatime/3.0.0/nodatime.3.0.0.nupkg";
-    sha256 = "1rk6jxpy7rngznmci02hi346wr7ibr262m8jn0bf5rdk6y8qds4h";
+    version = "3.2.0";
+    url = "https://api.nuget.org/v3-flatcontainer/nodatime/3.2.0/nodatime.3.2.0.nupkg";
+    sha256 = "0hxmnysaq84q6wyl0npqxqlik33iwpiv8fcwh90w361kc4qpvplj";
   })
   (fetchNuGet {
     pname = "Npgsql";
-    version = "7.0.7";
-    url = "https://api.nuget.org/v3-flatcontainer/npgsql/7.0.7/npgsql.7.0.7.nupkg";
-    sha256 = "1rsss91i3q0irafps64bqdhg741cayw4i1r3j3sblgwhxl8czw82";
+    version = "7.0.10";
+    url = "https://api.nuget.org/v3-flatcontainer/npgsql/7.0.10/npgsql.7.0.10.nupkg";
+    sha256 = "1vc9c1qh925vhq254szdp17g4lb9arh4zm7p7rnrlcxc0snz6dg6";
   })
   (fetchNuGet {
     pname = "NuGet.Frameworks";
@@ -925,15 +913,15 @@
   })
   (fetchNuGet {
     pname = "PdfSharpCore";
-    version = "1.3.32";
-    url = "https://api.nuget.org/v3-flatcontainer/pdfsharpcore/1.3.32/pdfsharpcore.1.3.32.nupkg";
-    sha256 = "1faz9afk4a0hgxgs109zfkfh1yx6n6vn03n33z1dsn6pnqhkd3x6";
+    version = "1.3.65";
+    url = "https://api.nuget.org/v3-flatcontainer/pdfsharpcore/1.3.65/pdfsharpcore.1.3.65.nupkg";
+    sha256 = "1bx2r54jm4jyf6j83nh6n5cmymzvhbnkwxpl78dsyn2n6hclxsjf";
   })
   (fetchNuGet {
     pname = "Polly";
-    version = "8.4.1";
-    url = "https://api.nuget.org/v3-flatcontainer/polly/8.4.1/polly.8.4.1.nupkg";
-    sha256 = "05k2wy0c3rrihdy7lplj3q5yf4256mx001fagm5zxn4z7v971w88";
+    version = "8.5.2";
+    url = "https://api.nuget.org/v3-flatcontainer/polly/8.5.2/polly.8.5.2.nupkg";
+    sha256 = "044rd0hg8q20j18380dlgn8v9xdxrgnpspp5c8ars82fszlp9cr2";
   })
   (fetchNuGet {
     pname = "Polly.Contrib.WaitAndRetry";
@@ -943,15 +931,9 @@
   })
   (fetchNuGet {
     pname = "Polly.Core";
-    version = "8.4.1";
-    url = "https://api.nuget.org/v3-flatcontainer/polly.core/8.4.1/polly.core.8.4.1.nupkg";
-    sha256 = "1412h0sf1irry39qbi0mqm80xp3d5lizj31svbicm6jw9vfh0jqj";
-  })
-  (fetchNuGet {
-    pname = "Portable.BouncyCastle";
-    version = "1.9.0";
-    url = "https://api.nuget.org/v3-flatcontainer/portable.bouncycastle/1.9.0/portable.bouncycastle.1.9.0.nupkg";
-    sha256 = "0kphjwz4hk2nki3b4f9z096xzd520nrpvi3cjib8fkjk6zhwrr8q";
+    version = "8.5.2";
+    url = "https://api.nuget.org/v3-flatcontainer/polly.core/8.5.2/polly.core.8.5.2.nupkg";
+    sha256 = "1yc9ihna7f4gnh6j8v4simlsihjwggsysg5nzygy12f2m9d2q31w";
   })
   (fetchNuGet {
     pname = "RestSharp";
@@ -1266,28 +1248,10 @@
     sha256 = "1700famsxndccfbcdz9q14qb20p49lax67mqwpgy4gx3vja1yczr";
   })
   (fetchNuGet {
-    pname = "Selenium.Support";
-    version = "3.141.0";
-    url = "https://api.nuget.org/v3-flatcontainer/selenium.support/3.141.0/selenium.support.3.141.0.nupkg";
-    sha256 = "1gqwzbfq7i9jz830b0jibsis0qfxs8sl10n1nja02c6s637cwzib";
-  })
-  (fetchNuGet {
-    pname = "Selenium.WebDriver";
-    version = "3.141.0";
-    url = "https://api.nuget.org/v3-flatcontainer/selenium.webdriver/3.141.0/selenium.webdriver.3.141.0.nupkg";
-    sha256 = "09g0zhz6n7yhxmxlrpzjdykfavr3m4z1gb4cmq304dw0gr8s89mq";
-  })
-  (fetchNuGet {
-    pname = "Selenium.WebDriver.ChromeDriver";
-    version = "91.0.4472.10100";
-    url = "https://api.nuget.org/v3-flatcontainer/selenium.webdriver.chromedriver/91.0.4472.10100/selenium.webdriver.chromedriver.91.0.4472.10100.nupkg";
-    sha256 = "1ps7f66s86qpgcyhk69v13mxfi24yd2rwpmaycza72y5rrdzl7b1";
-  })
-  (fetchNuGet {
     pname = "Sentry";
-    version = "3.31.0";
-    url = "https://api.nuget.org/v3-flatcontainer/sentry/3.31.0/sentry.3.31.0.nupkg";
-    sha256 = "10r99k9lplgdpbzs9c2xj2vn0q6f7m93sfi8fzs6815a19bhp2ks";
+    version = "4.0.2";
+    url = "https://api.nuget.org/v3-flatcontainer/sentry/4.0.2/sentry.4.0.2.nupkg";
+    sha256 = "118k34q5zrzz2k150nq10mp6iplxpvfsyzi9f6fn81ra0v200fsg";
   })
   (fetchNuGet {
     pname = "Servarr.FluentMigrator";
@@ -1405,12 +1369,6 @@
   })
   (fetchNuGet {
     pname = "SharpZipLib";
-    version = "1.3.3";
-    url = "https://api.nuget.org/v3-flatcontainer/sharpziplib/1.3.3/sharpziplib.1.3.3.nupkg";
-    sha256 = "1gij11wfj1mqm10631cjpnhzw882bnzx699jzwhdqakxm1610q8x";
-  })
-  (fetchNuGet {
-    pname = "SharpZipLib";
     version = "1.4.2";
     url = "https://api.nuget.org/v3-flatcontainer/sharpziplib/1.4.2/sharpziplib.1.4.2.nupkg";
     sha256 = "0ijrzz2szxjmv2cipk7rpmg14dfaigdkg7xabjvb38ih56m9a27y";
@@ -1423,9 +1381,9 @@
   })
   (fetchNuGet {
     pname = "SixLabors.ImageSharp";
-    version = "3.1.5";
-    url = "https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp/3.1.5/sixlabors.imagesharp.3.1.5.nupkg";
-    sha256 = "1z05h81rb9jrmw3vk4y56miy10x6wlqpbxhbgrkws8zysigs2iyx";
+    version = "3.1.7";
+    url = "https://api.nuget.org/v3-flatcontainer/sixlabors.imagesharp/3.1.7/sixlabors.imagesharp.3.1.7.nupkg";
+    sha256 = "0zh4183li73d1gzhakfyxlw0bx7kl2l88fijhl6mjnrh48bgzh4c";
   })
   (fetchNuGet {
     pname = "StyleCop.Analyzers";
@@ -1471,9 +1429,9 @@
   })
   (fetchNuGet {
     pname = "System.Buffers";
-    version = "4.5.1";
-    url = "https://api.nuget.org/v3-flatcontainer/system.buffers/4.5.1/system.buffers.4.5.1.nupkg";
-    sha256 = "04kb1mdrlcixj9zh1xdi5as0k0qi8byr5mi3p3jcxx72qz93s2y3";
+    version = "4.6.0";
+    url = "https://api.nuget.org/v3-flatcontainer/system.buffers/4.6.0/system.buffers.4.6.0.nupkg";
+    sha256 = "15zw58cparmgsmhsljx8w90kym082fxn0fbb0rgqks3ma202ar3k";
   })
   (fetchNuGet {
     pname = "System.Collections";
@@ -1651,9 +1609,9 @@
   })
   (fetchNuGet {
     pname = "System.Formats.Asn1";
-    version = "6.0.0";
-    url = "https://api.nuget.org/v3-flatcontainer/system.formats.asn1/6.0.0/system.formats.asn1.6.0.0.nupkg";
-    sha256 = "1vvr7hs4qzjqb37r0w1mxq7xql2b17la63jwvmgv65s1hj00g8r9";
+    version = "8.0.1";
+    url = "https://api.nuget.org/v3-flatcontainer/system.formats.asn1/8.0.1/system.formats.asn1.8.0.1.nupkg";
+    sha256 = "0wrr7bxa7hdscrsgla4hw65h28qip0ql292y6ysnkcly1xdbzb4r";
   })
   (fetchNuGet {
     pname = "System.Globalization";
@@ -1783,9 +1741,9 @@
   })
   (fetchNuGet {
     pname = "System.Memory";
-    version = "4.5.5";
-    url = "https://api.nuget.org/v3-flatcontainer/system.memory/4.5.5/system.memory.4.5.5.nupkg";
-    sha256 = "08jsfwimcarfzrhlyvjjid61j02irx6xsklf32rv57x2aaikvx0h";
+    version = "4.6.2";
+    url = "https://api.nuget.org/v3-flatcontainer/system.memory/4.6.2/system.memory.4.6.2.nupkg";
+    sha256 = "1pixsrjgkfax4j259prdlik9c6b3b1yx5b6rhab4dhh06fhx1via";
   })
   (fetchNuGet {
     pname = "System.Net.Http";
@@ -1975,12 +1933,6 @@
   })
   (fetchNuGet {
     pname = "System.Runtime.CompilerServices.Unsafe";
-    version = "4.7.1";
-    url = "https://api.nuget.org/v3-flatcontainer/system.runtime.compilerservices.unsafe/4.7.1/system.runtime.compilerservices.unsafe.4.7.1.nupkg";
-    sha256 = "119br3pd85lq8zcgh4f60jzmv1g976q1kdgi3hvqdlhfbw6siz2j";
-  })
-  (fetchNuGet {
-    pname = "System.Runtime.CompilerServices.Unsafe";
     version = "6.0.0";
     url = "https://api.nuget.org/v3-flatcontainer/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg";
     sha256 = "0qm741kh4rh57wky16sq4m0v05fxmkjjr87krycf5vp9f0zbahbc";
@@ -2046,22 +1998,10 @@
     sha256 = "19rav39sr5dky7afygh309qamqqmi9kcwvz3i0c5700v0c5cg61z";
   })
   (fetchNuGet {
-    pname = "System.Runtime.Serialization.Formatters";
-    version = "4.3.0";
-    url = "https://api.nuget.org/v3-flatcontainer/system.runtime.serialization.formatters/4.3.0/system.runtime.serialization.formatters.4.3.0.nupkg";
-    sha256 = "114j35n8gcvn3sqv9ar36r1jjq0y1yws9r0yk8i6wm4aq7n9rs0m";
-  })
-  (fetchNuGet {
     pname = "System.Runtime.Serialization.Primitives";
     version = "4.1.1";
     url = "https://api.nuget.org/v3-flatcontainer/system.runtime.serialization.primitives/4.1.1/system.runtime.serialization.primitives.4.1.1.nupkg";
     sha256 = "042rfjixknlr6r10vx2pgf56yming8lkjikamg3g4v29ikk78h7k";
-  })
-  (fetchNuGet {
-    pname = "System.Runtime.Serialization.Primitives";
-    version = "4.3.0";
-    url = "https://api.nuget.org/v3-flatcontainer/system.runtime.serialization.primitives/4.3.0/system.runtime.serialization.primitives.4.3.0.nupkg";
-    sha256 = "01vv2p8h4hsz217xxs0rixvb7f2xzbh6wv1gzbfykcbfrza6dvnf";
   })
   (fetchNuGet {
     pname = "System.Security.AccessControl";
@@ -2125,9 +2065,9 @@
   })
   (fetchNuGet {
     pname = "System.Security.Cryptography.Pkcs";
-    version = "6.0.0";
-    url = "https://api.nuget.org/v3-flatcontainer/system.security.cryptography.pkcs/6.0.0/system.security.cryptography.pkcs.6.0.0.nupkg";
-    sha256 = "1q80znpwkv5wrzgx0qnzxqaa5k1s72fnk3g1yng62l7y14d8ki64";
+    version = "8.0.0";
+    url = "https://api.nuget.org/v3-flatcontainer/system.security.cryptography.pkcs/8.0.0/system.security.cryptography.pkcs.8.0.0.nupkg";
+    sha256 = "04kqf1lhsq3fngiljanmrz2774x5h2fc8p57v04c51jwwqhwi9ya";
   })
   (fetchNuGet {
     pname = "System.Security.Cryptography.Primitives";
@@ -2251,9 +2191,9 @@
   })
   (fetchNuGet {
     pname = "System.Text.Json";
-    version = "6.0.9";
-    url = "https://api.nuget.org/v3-flatcontainer/system.text.json/6.0.9/system.text.json.6.0.9.nupkg";
-    sha256 = "1fvqlicbn774da3b1zyfbnd7lw350sxq8hr7jcincv1fbz2yyf76";
+    version = "6.0.10";
+    url = "https://api.nuget.org/v3-flatcontainer/system.text.json/6.0.10/system.text.json.6.0.10.nupkg";
+    sha256 = "1iwyj6lq6pxizcd6pyb68d31mapp3fd4rln3kii325ki8y3xha2j";
   })
   (fetchNuGet {
     pname = "System.Text.RegularExpressions";
@@ -2341,9 +2281,9 @@
   })
   (fetchNuGet {
     pname = "System.ValueTuple";
-    version = "4.5.0";
-    url = "https://api.nuget.org/v3-flatcontainer/system.valuetuple/4.5.0/system.valuetuple.4.5.0.nupkg";
-    sha256 = "00k8ja51d0f9wrq4vv5z2jhq8hy31kac2rg0rv06prylcybzl8cy";
+    version = "4.6.1";
+    url = "https://api.nuget.org/v3-flatcontainer/system.valuetuple/4.6.1/system.valuetuple.4.6.1.nupkg";
+    sha256 = "0qidp9ljd9i80brbisbnlfs6mijk198wq0qijl8p8x0dywq3pgqx";
   })
   (fetchNuGet {
     pname = "System.Windows.Extensions";

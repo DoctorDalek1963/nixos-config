@@ -25,7 +25,7 @@
       owner = "Readarr";
       repo = "Readarr";
       rev = "v${version}";
-      hash = "sha256-EZy0YeHCtsI18WJhTNUisBsbtIR+eJqI9jNCziQZAh8=";
+      hash = "sha256-RkZ845uOYTnKDQzdoxivGrbGkW4J0ayQf7sbZgcBXVQ=";
     };
 
     nativeBuildInputs = [
@@ -65,9 +65,9 @@
       fd -t f readarr -X rename 's/Readarr/Speakarr/g'
 
       cp ${./logo.svg} frontend/src/Content/Images/logo.svg
-      convert -geometry 16x16 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-16x16.png
-      convert -geometry 32x32 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-32x32.png
-      convert -geometry 48x48 ${./logo.svg} frontend/src/Content/Images/Icons/favicon.ico
+      magick convert -geometry 16x16 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-16x16.png
+      magick convert -geometry 32x32 ${./logo.svg} frontend/src/Content/Images/Icons/favicon-32x32.png
+      magick convert -geometry 48x48 ${./logo.svg} frontend/src/Content/Images/Icons/favicon.ico
     '';
 
     installPhase = ''

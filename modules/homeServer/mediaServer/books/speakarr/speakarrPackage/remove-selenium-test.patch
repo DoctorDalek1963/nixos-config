@@ -1,26 +1,14 @@
-diff --git a/src/Directory.Packages.props b/src/Directory.Packages.props
-index 9f3f84be5..d2ebf26ef 100644
 --- a/src/Directory.Packages.props
 +++ b/src/Directory.Packages.props
 @@ -41,8 +41,6 @@
-     <PackageVersion Include="PdfSharpCore" Version="1.3.32" />
+     <PackageVersion Include="PdfSharpCore" Version="1.3.65" />
      <PackageVersion Include="RestSharp.Serializers.SystemTextJson" Version="106.15.0" />
      <PackageVersion Include="RestSharp" Version="106.15.0" />
 -    <PackageVersion Include="Selenium.Support" Version="3.141.0" />
--    <PackageVersion Include="Selenium.WebDriver.ChromeDriver" Version="91.0.4472.10100" />
-     <PackageVersion Include="Sentry" Version="3.31.0" />
+-    <PackageVersion Include="Selenium.WebDriver.ChromeDriver" Version="134.0.6998.16500" />
+     <PackageVersion Include="Sentry" Version="4.0.2" />
      <PackageVersion Include="SharpZipLib" Version="1.4.2" />
-     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.5" />
-@@ -66,4 +64,4 @@
-     <PackageVersion Include="System.ValueTuple" Version="4.5.0" />
-     <PackageVersion Include="TagLibSharp-Lidarr" Version="2.2.0.19" />
-   </ItemGroup>
--</Project>
-\ No newline at end of file
-+</Project>
-diff --git a/src/NzbDrone.Automation.Test/AutomationTest.cs b/src/NzbDrone.Automation.Test/AutomationTest.cs
-deleted file mode 100644
-index b23ec4443..000000000
+     <PackageVersion Include="SixLabors.ImageSharp" Version="3.1.7" />
 --- a/src/NzbDrone.Automation.Test/AutomationTest.cs
 +++ /dev/null
 @@ -1,93 +0,0 @@
@@ -117,9 +105,6 @@ index b23ec4443..000000000
 -        }
 -    }
 -}
-diff --git a/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs b/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs
-deleted file mode 100644
-index 2ed2fac7e..000000000
 --- a/src/NzbDrone.Automation.Test/AutomationTestAttribute.cs
 +++ /dev/null
 @@ -1,12 +0,0 @@
@@ -135,9 +120,6 @@ index 2ed2fac7e..000000000
 -        }
 -    }
 -}
-diff --git a/src/NzbDrone.Automation.Test/MainPagesTest.cs b/src/NzbDrone.Automation.Test/MainPagesTest.cs
-deleted file mode 100644
-index d21a898cf..000000000
 --- a/src/NzbDrone.Automation.Test/MainPagesTest.cs
 +++ /dev/null
 @@ -1,94 +0,0 @@
@@ -235,9 +217,6 @@ index d21a898cf..000000000
 -        }
 -    }
 -}
-diff --git a/src/NzbDrone.Automation.Test/PageModel/PageBase.cs b/src/NzbDrone.Automation.Test/PageModel/PageBase.cs
-deleted file mode 100644
-index 575aba7d0..000000000
 --- a/src/NzbDrone.Automation.Test/PageModel/PageBase.cs
 +++ /dev/null
 @@ -1,66 +0,0 @@
@@ -307,9 +286,6 @@ index 575aba7d0..000000000
 -        public IWebElement SystemNavIcon => Find(By.PartialLinkText("System"));
 -    }
 -}
-diff --git a/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj b/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj
-deleted file mode 100644
-index 2a5833eeb..000000000
 --- a/src/NzbDrone.Automation.Test/Readarr.Automation.Test.csproj
 +++ /dev/null
 @@ -1,12 +0,0 @@
@@ -325,8 +301,6 @@ index 2a5833eeb..000000000
 -    <ProjectReference Include="..\NzbDrone.Test.Common\Readarr.Test.Common.csproj" />
 -  </ItemGroup>
 -</Project>
-diff --git a/src/Readarr.sln b/src/Readarr.sln
-index 8dd62e63f..89072b86f 100644
 --- a/src/Readarr.sln
 +++ b/src/Readarr.sln
 @@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Readarr.Http", "Readarr.Htt
@@ -361,8 +335,6 @@ index 8dd62e63f..89072b86f 100644
  		{A628FEA4-75CC-4039-8823-27258C55D2BF} = {57A04B72-8088-4F75-A582-1158CF8291F7}
  		{AEA9EE9A-19BF-45CB-93D9-52CA443FD313} = {486ADF86-DD89-4E19-B805-9D94F19800D9}
  		{04ECC74F-C340-4987-863E-757FB62D27C9} = {57A04B72-8088-4F75-A582-1158CF8291F7}
-diff --git a/test.sh b/test.sh
-index e38f76817..341345707 100755
 --- a/test.sh
 +++ b/test.sh
 @@ -4,7 +4,7 @@ TYPE=$2

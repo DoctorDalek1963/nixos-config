@@ -1,3 +1,25 @@
+--- a/frontend/src/Author/Index/Posters/AuthorIndexPoster.css
++++ b/frontend/src/Author/Index/Posters/AuthorIndexPoster.css
+@@ -90,7 +90,7 @@ $hoverScale: 1.05;
+   left: 10px;
+   z-index: 3;
+   border-radius: 4px;
+-  background-color: var(--readarrRed);
++  background-color: var(--speakarrRed);
+   color: var(--white);
+   font-size: $smallFontSize;
+   opacity: 0;
+--- a/frontend/src/Book/Index/Posters/BookIndexPoster.css
++++ b/frontend/src/Book/Index/Posters/BookIndexPoster.css
+@@ -91,7 +91,7 @@ $hoverScale: 1.05;
+   left: 10px;
+   z-index: 3;
+   border-radius: 4px;
+-  background-color: var(--readarrRed);
++  background-color: var(--speakarrRed);
+   color: var(--white);
+   font-size: $smallFontSize;
+   opacity: 0;
 --- a/frontend/src/Styles/Themes/dark.js
 +++ b/frontend/src/Styles/Themes/dark.js
 @@ -1,4 +1,4 @@
