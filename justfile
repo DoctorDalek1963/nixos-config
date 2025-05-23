@@ -44,12 +44,17 @@ build-raspi-sd:
 	sudo umount {{justfile_directory()}}/pi-mnt
 	rmdir {{justfile_directory()}}/pi-mnt
 
-# push all store paths for the give system to Cachix
-cachix-push-system name:
-	cachix watch-exec doctordalek1963 nom -- build {{justfile_directory()}}#nixosConfigurations."{{name}}".config.system.build.toplevel --keep-going --json | jq -r '.[].drvPath' | cachix push doctordalek1963
+# push store paths for the given system to Cachix
+cachix-push-systems +names:
+	for name in {{names}}; do nix build {{justfile_directory()}}#nixosConfigurations."$name".config.system.build.toplevel --keep-going --print-build-logs; done
+	RUST_LOG=debug {{justfile_directory()}}/cachix_push_missing_paths.rs "{{justfile_directory()}}" {{names}}
+	# Don't forget to add substituters to CI to avoid duplicate work in future
 
-# push all store paths for Bert-NixOS to Cachix
-cachix-push-raspi: (cachix-push-system "Bert-NixOS")
+# push store paths for Bert-NixOS to Cachix
+cachix-push-raspi: (cachix-push-systems "Bert-NixOS")
+
+# push store paths for all my systems
+cachix-push-all: (cachix-push-systems "Alex-NixOS" "Bert-NixOS" "Harold-NixOS" "Sasha-NixOS")
 
 # set the git remote to use my SSH key
 set-git-remote:
