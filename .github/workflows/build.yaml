@@ -7,10 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
+      - uses: wimpysworld/nothing-but-nix@main
 
       - uses: nixbuild/nix-quick-install-action@v30
 
@@ -26,11 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - uses: jlumbroso/free-disk-space@main
-        with:
-          tool-cache: true
-
+      - uses: wimpysworld/nothing-but-nix@main
       - uses: docker/setup-qemu-action@v3
 
       - uses: nixbuild/nix-quick-install-action@v30
