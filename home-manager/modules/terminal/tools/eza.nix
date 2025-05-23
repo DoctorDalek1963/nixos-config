@@ -10,7 +10,7 @@
 
       setup.terminal.shellAliases = {
         ls = "${pkgs.eza}/bin/eza";
-        ll = "${pkgs.eza}/bin/eza --long --all --mounts --icons=auto --group --header --git";
+        ll = "${pkgs.eza}/bin/eza --long --all --mounts --icons=auto --group --header --git --group-directories-first";
       };
     })
     (lib.mkIf (!config.setup.terminal.tools.eza) {
