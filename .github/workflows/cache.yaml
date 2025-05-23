@@ -10,7 +10,7 @@ jobs:
 
       - uses: wimpysworld/nothing-but-nix@main
         with:
-          hatchet-protocol: 'carve'
+          hatchet-protocol: 'carve' # Keep docker for qemu
 
       - uses: DeterminateSystems/nix-installer-action@v17
         with:

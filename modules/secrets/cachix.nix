@@ -20,7 +20,7 @@ in {
     #   compressionLevel = 5;
     # };
 
-    # Don't forget to update these in iso/default.nix and .github/workflows/cache.yaml as well!
+    # Don't forget to update these in iso/default.nix and .github/workflows/ as well!
     nix.settings = {
       substituters = [
         "https://nix-community.cachix.org"

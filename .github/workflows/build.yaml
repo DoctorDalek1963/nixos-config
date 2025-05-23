@@ -20,7 +20,7 @@ jobs:
 
       - uses: wimpysworld/nothing-but-nix@main
         with:
-          hatchet-protocol: 'carve'
+          hatchet-protocol: 'carve' # Keep docker for qemu
 
       - uses: docker/setup-qemu-action@v3
 
