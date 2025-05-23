@@ -8,7 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: wimpysworld/nothing-but-nix@main
-
       - uses: DeterminateSystems/nix-installer-action@v17
 
       - uses: cachix/cachix-action@v16
@@ -23,7 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: wimpysworld/nothing-but-nix@main
+        with:
+          hatchet-protocol: 'carve'
+
       - uses: docker/setup-qemu-action@v3
 
       - uses: DeterminateSystems/nix-installer-action@v17
