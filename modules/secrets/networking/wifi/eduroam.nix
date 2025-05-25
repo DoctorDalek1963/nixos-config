@@ -41,7 +41,8 @@ in {
         RestartSec = "3s";
         ExecStart = "${bash-script}/bin/add-wifi-network-eduroam";
       };
-      wantedBy = ["network-online.target"];
+      wants = ["network-online.target"];
+      wantedBy = ["multi-user.target"];
     };
   };
 }
