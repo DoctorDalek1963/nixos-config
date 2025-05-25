@@ -172,6 +172,11 @@ in {
 
           bluetooth = lib.mkIf osConfig.setup.hasBluetooth {
             format = "󰂯 {status}";
+            format-disabled = "󰂯 Disabled";
+            format-on = "󰂯 On";
+            format-off = "󰂯 Off";
+            format-connected = "󰂯 {device_alias}";
+            format-connected-battery = "󰂯 {device_alias} {device_battery_percentage}%";
 
             on-click = "${pkgs.blueberry}/bin/blueberry";
           };
