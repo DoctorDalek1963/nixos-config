@@ -24,6 +24,7 @@ in {
     ./lazygit.nix
     ./nvim.nix
     ./ripgrep.nix
+    ./starship.nix
     ./tldr.nix
     ./yazi.nix
     ./zoxide.nix
