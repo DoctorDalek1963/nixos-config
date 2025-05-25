@@ -74,8 +74,17 @@
       # Enable Firefox Sync
       "identity.fxaccounts.enabled" = true;
 
-      # Auto-play DRM-controlled HTML5 content
+      # Allow DRM-controlled content
       "media.eme.enabled" = true;
+      "media.gmp-provider.enabled" = true;
+      "media.gmp-manager.updateEnabled" = true;
+      "media.gmp.trial-create.enabled" = true;
+      "media.gmp-widevinecdm.enabled" = true;
+      "media.gmp-widevinecdm.autoupdate" = true;
+      "media.gmp-gmpopenh264.enabled" = true;
+      "media.gmp-gmpopenh264.autoupdate" = true;
+      "media.peerconnection.video.enabled" = true;
+      "media.gmp-eme-adobe.enabled" = true;
 
       # WebGL is a strong fingerprinting vector and LibreWolf disables it
       # by default, but I like to have it
