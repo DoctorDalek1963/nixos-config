@@ -202,6 +202,7 @@ in {
     maths = {
       enable = defaultFalse;
 
+      anki = defaultTrue;
       lintrans = defaultTrue;
       octave = defaultTrue;
       sage = defaultTrue;
