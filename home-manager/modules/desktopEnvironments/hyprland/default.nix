@@ -243,9 +243,9 @@ in {
             "$mod SHIFT, T, exec, [float; size 50% 50%] $launchPrefix $terminal"
             "$mod, E, exec, [float; size 50% 50%] $launchPrefix $fileManager"
           ]
-          ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${config.programs.librewolf.package}/bin/librewolf"
-          ++ lib.optional cfg.misc.programs.obsidian "$mod, O, exec, $launchPrefix ${pkgs.obsidian}/bin/obsidian"
-          ++ lib.optional cfg.terminal.tools.btop.enable ''$mod, B, exec, $launchPrefix $launchInTerminal ${config.programs.btop.package}/bin/btop''
+          ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${lib.getExe config.programs.librewolf.package}"
+          ++ lib.optional cfg.misc.programs.obsidian "$mod, O, exec, $launchPrefix ${lib.getExe pkgs.obsidian}"
+          ++ lib.optional cfg.terminal.tools.btop.enable "$mod, B, exec, $launchPrefix $launchInTerminal ${lib.getExe config.programs.btop.package}"
           # Move focus
           ++ [
             "$mod, H, movefocus, l"
