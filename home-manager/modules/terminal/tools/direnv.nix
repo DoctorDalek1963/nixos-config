@@ -26,7 +26,12 @@ in {
         # Copied mostly from the output of "direnv hook bash" but adapted to use
         # blesh. This fixes a bug with Starship where the Starship prompt would
         # run in blesh's PRECMD before _direnv_hook would run in PROMPT_COMMAND
+
         # TODO (direnv): Keep up to date. This version copied from 2.36.0
+
+        # Once https://github.com/direnv/direnv/pull/1439 is merged and
+        # included in a release, we can go back to home-managers's Bash
+        # integration option
         bash.initExtra =
           # bash
           ''
