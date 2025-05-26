@@ -7,6 +7,7 @@
   mp = config.setup.misc.programs;
 in {
   imports = [
+    ./anki.nix
     ./discord.nix
     ./evince.nix
     ./feishin.nix

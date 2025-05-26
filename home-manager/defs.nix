@@ -46,6 +46,7 @@
 
     misc = {
       programs = {
+        anki = true;
         discord = true;
         feishin = true;
         hexchat = true;
@@ -203,6 +204,7 @@
 
     misc = {
       programs = {
+        anki = true;
         feishin = true;
         hexchat = true;
         ms-teams = true;

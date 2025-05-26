@@ -202,7 +202,6 @@ in {
     maths = {
       enable = defaultFalse;
 
-      anki = defaultTrue;
       lintrans = defaultTrue;
       octave = defaultTrue;
       sage = defaultTrue;
@@ -214,6 +213,7 @@ in {
     # === Misc stuff
     misc = {
       programs = {
+        anki = defaultFalse;
         discord = defaultFalse;
         evince = mkOption {
           default = osConfig.setup.isGraphical;

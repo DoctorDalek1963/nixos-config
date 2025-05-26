@@ -12,8 +12,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages =
-      lib.optional cfg.anki pkgs.anki
-      ++ lib.optional cfg.lintrans inputs.lintrans.packages."${system}".default
+      lib.optional cfg.lintrans inputs.lintrans.packages."${system}".default
       ++ lib.optional cfg.tikzit pkgs.tikzit
       ++ lib.optional cfg.weylus pkgs.weylus
       ++ lib.optional cfg.zotero pkgs.zotero;
@@ -21,7 +20,6 @@ in {
     setup.impermanence = {
       keepDirs =
         [".cache/mathlib"] # Mathlib for Lean 4, which I only use in devShells
-        ++ lib.optional cfg.anki ".local/share/Anki2"
         ++ lib.optional cfg.lintrans ".lintrans"
         ++ lib.optionals cfg.zotero [".zotero/zotero" "Zotero"];
     };
