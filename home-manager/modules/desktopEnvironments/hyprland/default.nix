@@ -244,6 +244,7 @@ in {
             "$mod, E, exec, [float; size 50% 50%] $launchPrefix $fileManager"
           ]
           ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${lib.getExe config.programs.librewolf.package}"
+          ++ lib.optional cfg.misc.programs.anki "$mod, A, exec, $launchPrefix ${lib.getExe pkgs.anki}"
           ++ lib.optional cfg.misc.programs.obsidian "$mod, O, exec, $launchPrefix ${lib.getExe pkgs.obsidian}"
           ++ lib.optional cfg.terminal.tools.btop.enable "$mod, B, exec, $launchPrefix $launchInTerminal ${lib.getExe config.programs.btop.package}"
           # Move focus
