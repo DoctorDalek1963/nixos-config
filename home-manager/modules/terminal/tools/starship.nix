@@ -96,7 +96,7 @@ in {
         style = "bold red";
 
         conflicted = "!";
-        stashed = "$";
+        stashed = "\\$";
         modified = "*";
         deleted = "-";
         staged = "+";
