@@ -49,7 +49,6 @@
         anki = true;
         discord = true;
         feishin = true;
-        hexchat = true;
         ms-teams = true;
         obsidian = true;
         rustdesk = true;
@@ -206,7 +205,6 @@
       programs = {
         anki = true;
         feishin = true;
-        hexchat = true;
         ms-teams = true;
         obsidian = true;
         rustdesk = true;
