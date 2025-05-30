@@ -29,7 +29,6 @@ in {
 
       prowlarr = {
         enable = true;
-        group = "media";
 
         settings = {
           app.instancename = "Prowlarr";
