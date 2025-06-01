@@ -17,6 +17,22 @@ in {
       "${config.programs.waybar.package}/bin/waybar"
     ];
 
+    systemd.user.services.playerctld = {
+      Unit = {
+        Description = "playerctl daemon";
+        After = ["graphical-session.target"];
+      };
+      Install.WantedBy = ["default.target"];
+
+      Service = {
+        Type = "simple";
+        ExecStart = "${pkgs.playerctl}/bin/playerctld";
+
+        Restart = "on-failure";
+        RestartSec = "5s";
+      };
+    };
+
     programs.waybar = {
       enable = true;
 
@@ -40,7 +56,7 @@ in {
             ]
             ++ lib.optional config.services.hypridle.enable "idle_inhibitor"
             ++ [
-              "pulseaudio"
+              "group/audio"
               "network"
             ]
             ++ lib.optional osConfig.setup.hasBluetooth "bluetooth"
@@ -143,6 +159,29 @@ in {
             };
             tooltip-format-activated = "Inhibiting idle";
             tooltip-format-deactivated = "Not inhibiting idle";
+          };
+
+          "group/audio" = {
+            orientation = "inherit";
+            drawer = {
+              transition-duration = 250;
+              children-class = "group-audio-child";
+              transition-left-to-right = false;
+            };
+            modules = [
+              "pulseaudio"
+              "mpris"
+            ];
+          };
+
+          mpris = {
+            format-playing = "󰝚 {title} - {artist} - {album}";
+            format-paused = " {title} - {artist} - {album}";
+            format-stopped = "";
+            tooltip-format = "";
+
+            player = "playerctld";
+            ignored-players = ["firefox"];
           };
 
           pulseaudio = {
@@ -343,6 +382,14 @@ in {
 
           #idle_inhibitor {
               color: @mauve;
+          }
+
+          #mpris {
+              color: @green;
+          }
+
+          #mpris.paused {
+              color: @teal;
           }
 
           #pulseaudio {
