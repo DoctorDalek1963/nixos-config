@@ -2,6 +2,7 @@ _default:
     @just --list
 
 # build the ISO image for a bootable USB, without secrets
+[group("build")]
 build-iso:
     nom build {{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage
 
@@ -9,6 +10,7 @@ build-iso:
 # directory, including all git artifacts and any other unstaged and uncommitted files
 
 # build the ISO image for a bootable USB, and include the necessary sops secrets
+[group("build")]
 build-iso-with-secrets:
     nom build path:{{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage
 
@@ -20,6 +22,7 @@ build-iso-with-secrets:
 # the start, and then the root partition afterwards.
 
 # build the image for the SD card for Bert-NixOS, my Raspberry Pi 4, and copy the secret key to the correct place
+[group("build")]
 build-raspi-sd:
     nom build {{ justfile_directory() }}#nixosConfigurations.Bert-NixOS.config.system.build.sdImage
     cp {{ justfile_directory() }}/result/sd-image/pi.img pi.img
@@ -44,23 +47,28 @@ build-raspi-sd:
     rmdir {{ justfile_directory() }}/pi-mnt
 
 # push store paths for the given system to Cachix
+[group("cache")]
 cachix-push-systems +names:
     for name in {{ names }}; do nix build {{ justfile_directory() }}#nixosConfigurations."$name".config.system.build.toplevel --keep-going --print-build-logs; done
     RUST_LOG=debug {{ justfile_directory() }}/cachix_push_missing_paths.rs "{{ justfile_directory() }}" {{ names }}
     # Don't forget to add substituters to CI to avoid duplicate work in future
 
 # push store paths for Bert-NixOS to Cachix
+[group("cache")]
 cachix-push-raspi: (cachix-push-systems "Bert-NixOS")
 
 # push store paths for all my systems
+[group("cache")]
 cachix-push-all: (cachix-push-systems "Alex-NixOS" "Bert-NixOS" "Harold-NixOS" "Sasha-NixOS")
 
 # set the git remote to use my SSH key
+[group("setup")]
 set-git-remote:
     git remote rm origin
     git remote add origin github-dd:DoctorDalek1963/nixos-config.git
 
 # make sure everything is set up properly after a fresh install
+[group("setup")]
 post-install user='dyson':
     sudo chown -R {{ user }}:users /etc/nixos
     chmod -R u+w /etc/nixos
@@ -68,11 +76,13 @@ post-install user='dyson':
     @just set-git-remote
 
 # copy sops keys to ~/.config/sops/age/keys.txt (WILL OVERWRITE)
+[group("setup")]
 copy-sops-keys:
     mkdir -p {{ env("HOME") }}/.config/sops/age
     cat {{ justfile_directory() }}/sops-secrets/key.txt > {{ env("HOME") }}/.config/sops/age/keys.txt
     cat {{ justfile_directory() }}/home-manager/sops-secrets/keys/{{ env("USER") }}.txt >> {{ env("HOME") }}/.config/sops/age/keys.txt
 
 # set authentication token for Cachix
+[group("setup")]
 cachix-authtoken:
     cachix authtoken "$(sudo cat /run/secrets/cachix/tokens/doctordalek1963)"
