@@ -201,6 +201,8 @@ in {
           anr_missed_pings = 5;
         };
 
+        binds.movefocus_cycles_fullscreen = true;
+
         animation =
           [
             "windows, 1, 2.5, overshot"
