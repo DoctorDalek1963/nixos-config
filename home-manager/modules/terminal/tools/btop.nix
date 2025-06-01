@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  osConfig,
   ...
 }: let
   cfg = config.setup.terminal.tools.btop;
@@ -47,6 +48,14 @@ in {
         theme_background = false;
         update_ms = 500;
         proc_tree = true;
+
+        disks_filter = lib.mkIf osConfig.setup.impermanence.enable (let
+          paths = lib.flatten (lib.mapAttrsToList (
+              _: persistConf:
+                map (d: d.dirPath) persistConf.directories
+            )
+            osConfig.environment.persistence);
+        in "exclude=${lib.concatStringsSep " " paths}");
       };
     };
 
