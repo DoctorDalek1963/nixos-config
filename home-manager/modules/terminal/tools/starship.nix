@@ -68,7 +68,7 @@ in {
 
       git_commit = {
         format = " " + ''[\($hash(:$tag)\)]($style)'';
-        style = "bold green";
+        style = "green";
         only_detached = true;
         tag_disabled = false;
         tag_symbol = "";
@@ -76,7 +76,7 @@ in {
 
       git_state = {
         format = " " + ''[$state( $progress_current/$progress_total)]($style)'';
-        style = "bold yellow";
+        style = "yellow";
       };
 
       git_status = {
