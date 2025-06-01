@@ -7,9 +7,11 @@
   feishin-config-json = (pkgs.formats.json {}).generate "feishin-config.json" {
     disable_auto_updates = true;
     mpv_path = "${pkgs.mpv}/bin/mpv";
+    password_store = "gnome_libsecret";
     theme = "system";
     window_minimize_to_tray = true;
     window_exit_to_tray = true;
+    window_window_bar_style = "linux";
   };
 
   path = "${config.xdg.configHome}/feishin/config.json";
