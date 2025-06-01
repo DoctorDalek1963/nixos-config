@@ -55,7 +55,7 @@ in {
         style = "bold blue";
         read_only = "[RO]";
         read_only_style = "blue";
-        truncation_length = 4;
+        truncation_length = 3;
         fish_style_pwd_dir_length = 1;
       };
 
