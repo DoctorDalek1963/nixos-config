@@ -13,6 +13,7 @@ in {
       format = concatVars [
         "status"
         "nix_shell"
+        "direnv"
         "username"
         "hostname"
         "directory"
@@ -35,6 +36,17 @@ in {
         format = ''[\[nix-shell\]]($style) '';
         style = "bold purple";
         heuristic = false;
+      };
+
+      # Only show message when denied or not allowed
+      direnv = {
+        disabled = false;
+        format = "[$allowed]($style)";
+        style = "bold yellow";
+
+        allowed_msg = "";
+        not_allowed_msg = "[direnv not allowed] ";
+        denied_msg = "[direnv denied] ";
       };
 
       username = {
