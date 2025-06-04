@@ -12,6 +12,8 @@ jobs:
         with:
           hatchet-protocol: 'carve' # Keep docker for qemu
 
+      - uses: docker/setup-qemu-action@v3
+
       - uses: DeterminateSystems/nix-installer-action@v17
         with:
           extra-conf: |
