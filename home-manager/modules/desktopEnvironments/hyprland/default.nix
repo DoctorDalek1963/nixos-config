@@ -88,6 +88,8 @@ in {
         wpctl = "${pkgs.wireplumber}/bin/wpctl";
         playerctl = "${pkgs.playerctl}/bin/playerctl";
         hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
+        hyprshot = "${pkgs.hyprshot}/bin/hyprshot";
+        downloads = config.xdg.userDirs.download;
 
         volume-adjust-pkg = pkgs.writeShellApplication {
           name = "volume-adjust";
@@ -301,6 +303,12 @@ in {
             ", Xf86AudioPlay, exec, ${playerctl} play-pause"
             ", Xf86AudioPrev, exec, ${playerctl} previous"
             ", Xf86AudioNext, exec, ${playerctl} next"
+          ]
+          # Screenshots
+          ++ [
+            ", print, exec, ${hyprshot} -o ${downloads} -m region"
+            "SHIFT, print, exec, ${hyprshot} -o ${downloads} -m window"
+            "CTRL, print, exec, ${hyprshot} -o ${downloads} -m output -m active"
           ]
           # This is absolutely bizarre and I don't understand it, but certain
           # programs like Dyson Sphere Program don't recognise middle click,
