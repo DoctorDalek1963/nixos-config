@@ -6,6 +6,8 @@
 }: {
   config = lib.mkIf config.setup.misc.programs.discord {
     home.packages = [pkgs.discord];
+    setup.impermanence.keepDirs = [".config/discord"];
+
     xdg.configFile."discord/settings.json".text =
       # json
       ''
