@@ -175,13 +175,29 @@ in {
           };
 
           mpris = {
-            format-playing = "󰝚 {title} - {artist} - {album}";
-            format-paused = " {title} - {artist} - {album}";
+            format = "{player_icon} {status_icon} {dynamic}";
             format-stopped = "";
+
             tooltip-format = "";
 
+            player-icons = {
+              default = "󰝚";
+              firefox = "";
+            };
+            status-icons = {
+              playing = "";
+              paused = "";
+            };
+
+            dynamic-order = [
+              "title"
+              "artist"
+              "album"
+            ];
+            dynamic-separator = " - ";
+            dynamic-len = -1;
+
             player = "playerctld";
-            ignored-players = ["firefox"];
           };
 
           pulseaudio = {
