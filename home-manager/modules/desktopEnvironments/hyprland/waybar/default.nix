@@ -194,7 +194,7 @@ in {
               "artist"
               "album"
             ];
-            dynamic-separator = " - ";
+            dynamic-separator = " – "; # En dash
             dynamic-len = -1;
 
             player = "playerctld";
