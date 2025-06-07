@@ -44,6 +44,11 @@ in {
       };
     };
 
+    users.users.prowlarr = {
+      isSystemUser = true;
+      group = "media";
+    };
+
     systemd.services.prowlarr = {
       after = ["servarr-config.service"];
       requires = ["servarr-config.service"];
