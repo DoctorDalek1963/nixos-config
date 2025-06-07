@@ -24,6 +24,8 @@
 
   python = pkgs.python3.withPackages (p: [stashapp-tools p.pyyaml]);
 in {
+  imports = [./customJs.nix];
+
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
       impermanence.keepDirs = [config.services.stash.dataDir];
@@ -129,6 +131,7 @@ in {
           port = cfg.ports.mediaServer.stash;
           plugins_path = lib.mkForce "${config.services.stash.dataDir}/plugins";
           language = "en-GB";
+          javascriptenabled = true;
 
           ffmpeg.hardware_acceleration = true;
           ffmpeg_path = "${pkgs.jellyfin-ffmpeg}/bin/ffmpeg";
