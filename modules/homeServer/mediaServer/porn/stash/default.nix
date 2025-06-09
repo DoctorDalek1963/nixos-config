@@ -141,6 +141,7 @@ in {
 
           menu_items = [
             "scenes"
+            "images"
             "groups"
             "performers"
             "studios"
