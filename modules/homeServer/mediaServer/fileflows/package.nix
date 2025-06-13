@@ -7,7 +7,7 @@
   libz,
   writeShellScript,
 }: let
-  version = "25.4.9.5355";
+  version = "25.5.9.5493";
 
   dotnet = dotnetCorePackages.aspnetcore_8_0;
   buildInputs = [sqlite libz];
@@ -56,7 +56,7 @@ in
     src = fetchzip {
       url = "https://fileflows.com/downloads/Zip/${version}";
       extension = "zip";
-      hash = "sha256-ySpDNC3uWykJ38kjmMRO3yXSenk/KePxbxusRlU/YmE=";
+      hash = "sha256-Y/bNiMSC9HNmYAplknnI+57TxR5LOsxXX3AQN55T1Rs=";
       stripRoot = false;
     };
 
