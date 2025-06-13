@@ -215,9 +215,7 @@ in {
       programs = {
         anki = defaultFalse;
         discord = defaultFalse;
-        evince = mkOption {
-          default = osConfig.setup.isGraphical;
-        };
+        evince = defaultFalse;
         feishin = defaultFalse; # Subsonic music player
         handbrake = defaultFalse; # DVD ripper
         hexchat = defaultFalse;
