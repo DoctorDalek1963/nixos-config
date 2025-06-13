@@ -229,6 +229,9 @@ in {
         rustdesk = defaultFalse;
         vlc = defaultFalse;
         xremap = defaultFalse;
+        zathura = mkOption {
+          default = osConfig.setup.isGraphical;
+        };
         zoom = defaultFalse;
       };
 
