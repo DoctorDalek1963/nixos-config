@@ -27,7 +27,7 @@
   ];
 in {
   config = lib.mkIf cfg.enable {
-    services.xserver.desktopManager.gnome.enable = cfg.enable;
+    services.desktopManager.gnome.enable = cfg.enable;
 
     programs.dconf.enable = cfg.enable;
 
