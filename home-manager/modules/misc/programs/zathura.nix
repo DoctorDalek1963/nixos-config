@@ -33,6 +33,7 @@
         recolor = false;
         recolor-lightcolor = "rgba(36, 39, 58, 1)";
         recolor-darkcolor = "rgba(202, 211, 245, 1)";
+        recolor-keephue = true;
 
         index-fg = "rgba(202, 211, 245, 1)";
         index-bg = "rgba(36, 39, 58, 1)";
