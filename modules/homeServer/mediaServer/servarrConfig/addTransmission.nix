@@ -79,12 +79,12 @@ in {
 
             def main() -> None:
                 add_transmission("/var/lib/prowlarr/prowlarr.db")
-                ${optAdd cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optAdd cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
-                ${optAdd cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
-                ${optAdd cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
-                ${optAdd cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}
-                ${optAdd cfgMs.porn "${config.services.whisparr.dataDir}/whisparr2.db"}
+                ${optAdd config.services.readarr.enable "${config.services.readarr.dataDir}/readarr.db"}
+                ${optAdd config.services.speakarr.enable "${config.services.speakarr.dataDir}/speakarr.db"}
+                ${optAdd config.services.lidarr.enable "${config.services.lidarr.dataDir}/lidarr.db"}
+                ${optAdd config.services.radarr.enable "${config.services.radarr.dataDir}/radarr.db"}
+                ${optAdd config.services.sonarr.enable "${config.services.sonarr.dataDir}/sonarr.db"}
+                ${optAdd config.services.whisparr.enable "${config.services.whisparr.dataDir}/whisparr2.db"}
 
 
             if __name__ == '__main__':

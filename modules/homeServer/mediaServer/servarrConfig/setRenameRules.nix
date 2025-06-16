@@ -23,7 +23,7 @@
     then indent4 code
     else "";
 
-  readarr = optSnippet cfgMs.books ''
+  readarr = optSnippet config.services.readarr.enable ''
     set_naming_config(
         "${config.services.readarr.dataDir}/readarr.db",
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
@@ -32,7 +32,7 @@
         "'{Book Title}{ (Part PartNumber)}', 4)"
     )
   '';
-  speakarr = optSnippet cfgMs.books ''
+  speakarr = optSnippet config.services.speakarr.enable ''
     set_naming_config(
         "${config.services.speakarr.dataDir}/speakarr.db",
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
@@ -41,7 +41,7 @@
         "'{Book Title}/{Part PartNumber}', 4)"
     )
   '';
-  lidarr = optSnippet cfgMs.music ''
+  lidarr = optSnippet config.services.lidarr.enable ''
     set_naming_config(
         "${config.services.lidarr.dataDir}/lidarr.db",
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
@@ -53,7 +53,7 @@
         "- {track:00} - {Track Title}', 4)"
     )
   '';
-  radarr = optSnippet cfgMs.movies ''
+  radarr = optSnippet config.services.radarr.enable ''
     set_naming_config(
         "${config.services.radarr.dataDir}/radarr.db",
         "INSERT INTO NamingConfig (ReplaceIllegalCharacters, "
@@ -63,7 +63,7 @@
         ", 4, 1);"
     )
   '';
-  sonarr = optSnippet cfgMs.telly ''
+  sonarr = optSnippet config.services.sonarr.enable ''
     set_naming_config(
         "${config.services.sonarr.dataDir}/sonarr.db",
         "INSERT INTO NamingConfig (MultiEpisodeStyle, RenameEpisodes, "
@@ -77,7 +77,7 @@
         "- {Quality Full}', 1, 'Specials', 4)"
     )
   '';
-  whisparr = optSnippet cfgMs.porn ''
+  whisparr = optSnippet config.services.whisparr.enable ''
     set_naming_config(
         "${config.services.whisparr.dataDir}/whisparr2.db",
         "INSERT INTO NamingConfig (MultiEpisodeStyle, RenameEpisodes, "

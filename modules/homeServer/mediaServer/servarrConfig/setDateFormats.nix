@@ -57,12 +57,12 @@ in {
 
             def main() -> None:
                 set_date_formats("/var/lib/prowlarr/prowlarr.db")
-                ${optSet cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optSet cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
-                ${optSet cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
-                ${optSet cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
-                ${optSet cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}
-                ${optSet cfgMs.porn "${config.services.whisparr.dataDir}/whisparr2.db"}
+                ${optSet config.services.readarr.enable "${config.services.readarr.dataDir}/readarr.db"}
+                ${optSet config.services.speakarr.enable "${config.services.speakarr.dataDir}/speakarr.db"}
+                ${optSet config.services.lidarr.enable "${config.services.lidarr.dataDir}/lidarr.db"}
+                ${optSet config.services.radarr.enable "${config.services.radarr.dataDir}/radarr.db"}
+                ${optSet config.services.sonarr.enable "${config.services.sonarr.dataDir}/sonarr.db"}
+                ${optSet config.services.whisparr.enable "${config.services.whisparr.dataDir}/whisparr2.db"}
 
 
             if __name__ == '__main__':

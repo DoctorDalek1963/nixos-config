@@ -66,12 +66,12 @@ in {
 
             def main() -> None:
                 write_user_to_database("/var/lib/prowlarr/prowlarr.db")
-                ${optWrite cfgMs.books "${config.services.readarr.dataDir}/readarr.db"}
-                ${optWrite cfgMs.books "${config.services.speakarr.dataDir}/speakarr.db"}
-                ${optWrite cfgMs.music "${config.services.lidarr.dataDir}/lidarr.db"}
-                ${optWrite cfgMs.movies "${config.services.radarr.dataDir}/radarr.db"}
-                ${optWrite cfgMs.telly "${config.services.sonarr.dataDir}/sonarr.db"}
-                ${optWrite cfgMs.porn "${config.services.whisparr.dataDir}/whisparr2.db"}
+                ${optWrite config.services.readarr.enable "${config.services.readarr.dataDir}/readarr.db"}
+                ${optWrite config.services.speakarr.enable "${config.services.speakarr.dataDir}/speakarr.db"}
+                ${optWrite config.services.lidarr.enable "${config.services.lidarr.dataDir}/lidarr.db"}
+                ${optWrite config.services.radarr.enable "${config.services.radarr.dataDir}/radarr.db"}
+                ${optWrite config.services.sonarr.enable "${config.services.sonarr.dataDir}/sonarr.db"}
+                ${optWrite config.services.whisparr.enable "${config.services.whisparr.dataDir}/whisparr2.db"}
 
 
             if __name__ == '__main__':

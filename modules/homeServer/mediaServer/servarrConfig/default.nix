@@ -49,13 +49,13 @@ in {
             else "";
         in "${pkgs.writeShellScript "finish-servarr-configs" ''
           ${mkChown "prowlarr" "/var/lib/prowlarr/config.xml"}
-          ${optChown cfgMs.books "readarr" "${config.services.readarr.dataDir}/config.xml"}
-          ${optChown cfgMs.books "speakarr" "${config.services.speakarr.dataDir}/config.xml"}
-          ${optChown cfgMs.music "lidarr" "${config.services.lidarr.dataDir}/config.xml"}
-          ${optChown cfgMs.movies "radarr" "${config.services.radarr.dataDir}/config.xml"}
-          ${optChown cfgMs.telly "sonarr" "${config.services.sonarr.dataDir}/config.xml"}
-          ${optChown (cfgMs.movies || cfgMs.telly) "bazarr" "/var/lib/bazarr/config/config.yaml"}
-          ${optChown cfgMs.porn "whisparr" "${config.services.whisparr.dataDir}/config.xml"}
+          ${optChown config.services.readarr.enable "readarr" "${config.services.readarr.dataDir}/config.xml"}
+          ${optChown config.services.speakarr.enable "speakarr" "${config.services.speakarr.dataDir}/config.xml"}
+          ${optChown config.services.lidarr.enable "lidarr" "${config.services.lidarr.dataDir}/config.xml"}
+          ${optChown config.services.radarr.enable "radarr" "${config.services.radarr.dataDir}/config.xml"}
+          ${optChown config.services.sonarr.enable "sonarr" "${config.services.sonarr.dataDir}/config.xml"}
+          ${optChown config.services.bazarr.enable "bazarr" "/var/lib/bazarr/config/config.yaml"}
+          ${optChown config.services.whisparr.enable "whisparr" "${config.services.whisparr.dataDir}/config.xml"}
         ''}";
       };
     };

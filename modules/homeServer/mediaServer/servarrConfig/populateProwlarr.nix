@@ -27,12 +27,12 @@ in {
             HOMEPAGE_ENV = "${config.sops.secrets."home-server/homepage.env".path}"
 
             APPS = [
-                ${optStr cfgMs.books ''("Readarr", "books", False),''}
-                ${optStr cfgMs.books ''("Speakarr", "books", False),''}
-                ${optStr cfgMs.music ''("Lidarr", "music", False),''}
-                ${optStr cfgMs.movies ''("Radarr", "movies", True),''}
-                ${optStr cfgMs.telly ''("Sonarr", "telly", True),''}
-                ${optStr cfgMs.porn ''("Whisparr", "porn", True),''}
+                ${optStr config.services.readarr.enable ''("Readarr", "books", False),''}
+                ${optStr config.services.speakarr.enable ''("Speakarr", "books", False),''}
+                ${optStr config.services.lidarr.enable ''("Lidarr", "music", False),''}
+                ${optStr config.services.radarr.enable ''("Radarr", "movies", True),''}
+                ${optStr config.services.sonarr.enable ''("Sonarr", "telly", True),''}
+                ${optStr config.services.whisparr.enable ''("Whisparr", "porn", True),''}
             ]
 
             TAGS = {

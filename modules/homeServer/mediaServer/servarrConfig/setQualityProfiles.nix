@@ -23,7 +23,7 @@
     then indent4 code
     else "";
 
-  readarr = optSnippet cfgMs.books ''
+  readarr = optSnippet config.services.readarr.enable ''
     ITEMS = [
         {"quality": 0, "items": [], "allowed": False},
         {"quality": 1, "items": [], "allowed": True},
@@ -43,7 +43,7 @@
         f"VALUES (1, 'eBook', 2, '{json.dumps(ITEMS)}', 0, '[]', 0, 0)",
     )
   '';
-  speakarr = optSnippet cfgMs.books ''
+  speakarr = optSnippet config.services.speakarr.enable ''
     ITEMS = [
         {"quality": 0, "items": [], "allowed": False},
         {"quality": 1, "items": [], "allowed": False},
@@ -64,7 +64,7 @@
     )
   '';
 
-  lidarr = optSnippet cfgMs.music ''
+  lidarr = optSnippet config.services.lidarr.enable ''
     LOSSLESS_ITEMS = [
         {
             "id": 1005,

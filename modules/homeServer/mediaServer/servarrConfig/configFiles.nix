@@ -45,31 +45,31 @@
       (
         [(mkCommand (shConfExpr (servarrTemplate "prowlarr")) "/var/lib/prowlarr")]
         ++ (
-          lib.optional cfgMs.music
+          lib.optional config.services.lidarr.enable
           (mkCommand (shConfExpr (servarrTemplate "lidarr")) config.services.lidarr.dataDir)
         )
         ++ (
-          lib.optional cfgMs.books
+          lib.optional config.services.readarr.enable
           (mkCommand (shConfExpr (servarrTemplate "readarr")) config.services.readarr.dataDir)
         )
         ++ (
-          lib.optional cfgMs.books
+          lib.optional config.services.speakarr.enable
           (mkCommand (shConfExpr (servarrTemplate "speakarr")) config.services.speakarr.dataDir)
         )
         ++ (
-          lib.optional cfgMs.movies
+          lib.optional config.services.radarr.enable
           (mkCommand (shConfExpr (servarrTemplate "radarr")) config.services.radarr.dataDir)
         )
         ++ (
-          lib.optional cfgMs.telly
+          lib.optional config.services.sonarr.enable
           (mkCommand (shConfExpr (servarrTemplate "sonarr")) config.services.sonarr.dataDir)
         )
         ++ (
-          lib.optional cfgMs.porn
+          lib.optional config.services.whisparr.enable
           (mkCommand (shConfExpr (servarrTemplate "whisparr")) config.services.whisparr.dataDir)
         )
         ++ (
-          lib.optional (cfgMs.movies || cfgMs.telly)
+          lib.optional config.services.bazarr.enable
           (let
             yqExpr = builtins.concatStringsSep " | " [
               ''.auth.apikey = "$HOMEPAGE_VAR_BAZARR_KEY"''

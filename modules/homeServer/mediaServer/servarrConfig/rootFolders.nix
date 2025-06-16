@@ -23,7 +23,7 @@
     then indent4 code
     else "";
 
-  readarr = optSnippet cfgMs.books ''
+  readarr = optSnippet config.services.readarr.enable ''
     calibre_settings = {
         "host": "localhost",
         "port": ${toString cfg.ports.mediaServer.calibre.server},
@@ -43,7 +43,7 @@
         f"'Calibre', 1, 1, '[]', 1, '{json.dumps(calibre_settings)}')"
     )
   '';
-  speakarr = optSnippet cfgMs.books ''
+  speakarr = optSnippet config.services.speakarr.enable ''
     add_root_folder(
         "${config.services.speakarr.dataDir}/speakarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
@@ -51,7 +51,7 @@
         "('${cfgMs.mediaRoot}/audiobooks/', 'Audiobookshelf', 1, 2, '[]', 0)"
     )
   '';
-  lidarr = optSnippet cfgMs.music ''
+  lidarr = optSnippet config.services.lidarr.enable ''
     add_root_folder(
         "${config.services.lidarr.dataDir}/lidarr.db",
         "INSERT INTO RootFolders (Path, Name, DefaultMetadataProfileId, "
@@ -59,19 +59,19 @@
         "('${cfgMs.mediaRoot}/music/', 'Root', 1, 4, '[]')"
     )
   '';
-  radarr = optSnippet cfgMs.movies ''
+  radarr = optSnippet config.services.radarr.enable ''
     add_root_folder(
         "${config.services.radarr.dataDir}/radarr.db",
         "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/jellyfin/movies/')"
     )
   '';
-  sonarr = optSnippet cfgMs.telly ''
+  sonarr = optSnippet config.services.sonarr.enable ''
     add_root_folder(
         "${config.services.sonarr.dataDir}/sonarr.db",
         "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/jellyfin/telly/')"
     )
   '';
-  whisparr = optSnippet cfgMs.porn ''
+  whisparr = optSnippet config.services.whisparr.enable ''
     add_root_folder(
         "${config.services.whisparr.dataDir}/whisparr2.db",
         "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/porn/staging/')"
