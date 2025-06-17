@@ -71,5 +71,8 @@ in {
     nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
   };
 
-  home.packages = [nvim-extend];
+  home = {
+    packages = [nvim-extend];
+    sessionVariables.MANPAGER = "${config.consts.nvimPath} +Man!";
+  };
 }
