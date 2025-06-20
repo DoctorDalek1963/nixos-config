@@ -27,6 +27,7 @@
               keyword general:gaps_in 0;\
               keyword general:gaps_out 0;\
               keyword general:border_size 1;\
+              keyword general:col.active_border ${theme-colors.gamemode-active-border};\
               keyword decoration:rounding 0;\
               keyword decoration:dim_inactive 0;\
               keyword general:allow_tearing 1"
@@ -49,6 +50,7 @@
           (builtins.map (colour: "rgba(${colour}ff)") active_colours)
         } 45deg";
         "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
+        gamemode-active-border = "rgba(5b6078ff)"; # Surface 2
       };
     }
     .${
