@@ -6,7 +6,7 @@
   gobject-introspection,
   gtk3,
   libayatana-appindicator,
-  python3,
+  python312,
   wrapGAppsHook3,
 }:
 stdenv.mkDerivation {
@@ -25,7 +25,9 @@ stdenv.mkDerivation {
   ];
 
   buildInputs = [
-    (python3.withPackages (p:
+    # TODO (plyer build failure): We can go back to python3 when
+    # https://github.com/NixOS/nixpkgs/issues/418869 is fixed
+    (python312.withPackages (p:
       with p; [
         pystray
         pillow
