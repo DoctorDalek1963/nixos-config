@@ -19,4 +19,4 @@ jobs:
           extra-conf: "extra-platforms = aarch64-linux"
 
       - name: Check the NixOS flake
-        run: nix flake check . --print-build-logs --keep-going
+        run: nix flake check . --print-build-logs --keep-going --show-trace
