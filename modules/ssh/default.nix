@@ -7,6 +7,8 @@
   cfg = config.setup.ssh;
 in {
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = [pkgs.sshfs];
+
     programs.mosh.enable = cfg.mosh;
 
     services.openssh = {

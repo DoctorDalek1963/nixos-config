@@ -128,15 +128,13 @@ in {
   # Use British keyboard in TTYs
   console.keyMap = "uk";
 
-  environment.systemPackages =
-    (with pkgs; [
-      coreutils
-      file
-      git
-      vim
-      wget
-    ])
-    ++ lib.optional cfg.ssh.enable pkgs.sshfs;
+  environment.systemPackages = with pkgs; [
+    coreutils
+    file
+    git
+    vim
+    wget
+  ];
 
   # This is a very weird quirk that really should be fixed upstream but I don't
   # understand the root cause. See https://github.com/NixOS/nixpkgs/issues/296953
