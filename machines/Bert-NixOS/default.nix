@@ -91,9 +91,13 @@
     usbutils
   ];
 
+  image = {
+    baseName = "pi";
+    fileName = "pi.img";
+  };
+
   sdImage = {
     compressImage = false;
-    imageName = "pi.img";
 
     extraFirmwareConfig = {
       # Give up VRAM for more Free System Memory
