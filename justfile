@@ -46,6 +46,11 @@ build-raspi-sd:
     sudo umount {{ justfile_directory() }}/pi-mnt
     rmdir {{ justfile_directory() }}/pi-mnt
 
+# build the SD card image for Bert-NixOS and copy it to the given device
+[group("build")]
+copy-raspi-sd device: build-raspi-sd
+    sudo dd if=/etc/nixos/pi.img of={{ device }} status=progress conv=fsync
+
 # push store paths for the given system to Cachix
 [group("cache")]
 cachix-push-systems +names:
