@@ -1,9 +1,14 @@
 {
   lib,
   config,
+  osConfig,
   ...
 }: let
   concatVars = vars: lib.concatMapStringsSep "" (x: "\$${x}") vars;
+
+  # Bert-NixOS doesn't seem to set SSH_CLIENT or SSH_CONNECTION, so username
+  # and hostname have to be on all the time on Bert
+  isBert = osConfig.setup.hostname == "Bert-NixOS";
 in {
   programs.starship = {
     enable = true;
@@ -53,12 +58,13 @@ in {
         style_user = "bold green";
         style_root = "bold red";
         format = "[$user]($style)[@](bold)";
+        show_always = isBert;
       };
 
       hostname = {
         format = "[$hostname$ssh_symbol]($style):";
         style = "bold green";
-        ssh_only = true;
+        ssh_only = !isBert;
         ssh_symbol = "";
       };
 
