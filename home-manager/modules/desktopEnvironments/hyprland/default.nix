@@ -13,6 +13,7 @@
     name = "hypr-gamemode.sh";
 
     runtimeInputs = [
+      pkgs.dunst
       pkgs.gawk
       config.wayland.windowManager.hyprland.package
     ];
@@ -31,8 +32,10 @@
               keyword decoration:rounding 0;\
               keyword decoration:dim_inactive 0;\
               keyword general:allow_tearing 1"
+          dunstctl set-paused true
       else
           hyprctl reload
+          dunstctl set-paused false
       fi
     '';
   };
