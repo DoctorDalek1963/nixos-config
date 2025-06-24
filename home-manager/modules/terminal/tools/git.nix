@@ -84,6 +84,7 @@
         url = {
           "git@github.com:DoctorDalek1963/".insteadOf = "dd:";
           "git@github.com:".insteadOf = "gh:";
+          "https://gitlab.com/".insteadOf = "gl:";
         };
       };
     };
