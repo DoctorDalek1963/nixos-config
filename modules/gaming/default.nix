@@ -7,7 +7,7 @@
   imports = [./emulators.nix ./lutris.nix ./minecraft.nix ./steam.nix];
 
   config = lib.mkIf config.setup.gaming.enable {
-    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+    boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_xanmod_stable;
 
     hardware.xone.enable = true;
     programs.gamemode.enable = true;
