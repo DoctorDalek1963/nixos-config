@@ -15,6 +15,7 @@
     runtimeInputs = [
       pkgs.dunst
       pkgs.gawk
+      pkgs.procps
       config.wayland.windowManager.hyprland.package
     ];
 
@@ -33,9 +34,11 @@
               keyword decoration:dim_inactive 0;\
               keyword general:allow_tearing 1"
           dunstctl set-paused true
+          pkill -USR1 waybar
       else
           hyprctl reload
           dunstctl set-paused false
+          pkill -USR1 waybar
       fi
     '';
   };
