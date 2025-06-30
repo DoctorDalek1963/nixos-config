@@ -43,7 +43,13 @@ in {
           position = "top";
           reload_style_on_change = true;
 
-          modules-left = ["hyprland/workspaces" "group/stats" "hyprland/window"];
+          modules-left = [
+            "hyprland/workspaces"
+            # "group/stats"
+            "cpu"
+            "memory"
+            "hyprland/window"
+          ];
           modules-center = [
             # The builtin clock module doesn't support stripping leading zeroes
             # for some bizarre reason
@@ -67,19 +73,19 @@ in {
 
           "hyprland/workspaces" = {};
 
-          "group/stats" = {
-            orientation = "inherit";
-            drawer = {
-              transition-duration = 250;
-              children-class = "group-stats-child";
-              transition-left-to-right = true;
-            };
-            modules = [
-              "cpu"
-              "temperature"
-              "memory"
-            ];
-          };
+          # "group/stats" = {
+          #   orientation = "inherit";
+          #   drawer = {
+          #     transition-duration = 250;
+          #     children-class = "group-stats-child";
+          #     transition-left-to-right = true;
+          #   };
+          #   modules = [
+          #     "cpu"
+          #     "temperature"
+          #     "memory"
+          #   ];
+          # };
 
           cpu = {
             format = " {usage}%";
@@ -88,26 +94,26 @@ in {
             on-click = launch-btop;
           };
 
-          temperature = let
-            # Use `sensors` and the below bash command to find the right
-            # temperature sensor that agrees with btop
-            # for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
-            hwmon-path-map = {
-              "Alex-NixOS" = "/sys/class/hwmon/hwmon1/temp1_input";
-              "Harold-NixOS" = "/sys/class/hwmon/hwmon4/temp1_input";
-            };
-          in {
-            hwmon-path =
-              lib.mkIf
-              (hwmon-path-map ? "${osConfig.setup.hostname}")
-              hwmon-path-map."${osConfig.setup.hostname}";
-
-            format = " {temperatureC}°C";
-            tooltip = false;
-            interval = 5;
-
-            on-click = launch-btop;
-          };
+          # temperature = let
+          #   # Use `sensors` and the below bash command to find the right
+          #   # temperature sensor that agrees with btop
+          #   # for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+          #   hwmon-path-map = {
+          #     "Alex-NixOS" = "/sys/class/hwmon/hwmon1/temp1_input";
+          #     "Harold-NixOS" = "/sys/class/hwmon/hwmon4/temp1_input";
+          #   };
+          # in {
+          #   hwmon-path =
+          #     lib.mkIf
+          #     (hwmon-path-map ? "${osConfig.setup.hostname}")
+          #     hwmon-path-map."${osConfig.setup.hostname}";
+          #
+          #   format = " {temperatureC}°C";
+          #   tooltip = false;
+          #   interval = 5;
+          #
+          #   on-click = launch-btop;
+          # };
 
           memory = {
             format = "  {percentage}%";
