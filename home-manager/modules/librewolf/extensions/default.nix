@@ -24,6 +24,7 @@
       leechblock-ng
       return-youtube-dislikes
       sponsorblock
+      youtube-recommended-videos # Old name for Unhook, also unfree
 
       # Misc
       darkreader
