@@ -24,7 +24,7 @@
 
   python = pkgs.python3.withPackages (p: [stashapp-tools p.pyyaml]);
 in {
-  imports = [./customJs.nix];
+  imports = [./customJs];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
