@@ -9,8 +9,6 @@
 }: let
   cfg = config.setup;
 in {
-  system.stateVersion = "23.11";
-
   nix = {
     settings = {
       # Keep the nix store optimised
@@ -143,7 +141,7 @@ in {
     serviceConfig.ExecStart = ["" "${pkgs.networkmanager}/bin/nm-online -q"];
   };
 
-  system.nixos.label = let
+  system = let
     cfg = config.system.nixos;
 
     nixosVersion = builtins.concatStringsSep "." [
@@ -152,10 +150,17 @@ in {
       inputs.nixpkgs.sourceInfo.shortRev
     ];
 
+    configurationRevision = self.sourceInfo.shortRev or self.sourceInfo.dirtyShortRev;
+
     buildVersion = builtins.concatStringsSep "." [
       (builtins.substring 0 8 self.sourceInfo.lastModifiedDate)
-      (self.sourceInfo.shortRev or self.sourceInfo.dirtyShortRev)
+      configurationRevision
     ];
-  in
-    builtins.concatStringsSep "-" (cfg.tags ++ [nixosVersion] ++ ["build" buildVersion]);
+  in {
+    inherit configurationRevision;
+
+    stateVersion = "23.11";
+
+    nixos.label = builtins.concatStringsSep "-" (cfg.tags ++ [nixosVersion] ++ ["build" buildVersion]);
+  };
 }
