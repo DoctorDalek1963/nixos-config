@@ -143,6 +143,7 @@ in {
             "scenes"
             "images"
             "groups"
+            "galleries"
             "performers"
             "studios"
             "tags"
