@@ -257,7 +257,7 @@
     system = "x86_64-linux";
     specialArgs = {inherit self inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
+      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Sasha-NixOS
       {
