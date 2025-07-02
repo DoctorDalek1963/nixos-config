@@ -9,10 +9,6 @@
       url = "github:nix-community/nur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.1.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Repo management
     flake-parts.url = "github:hercules-ci/flake-parts";

@@ -35,7 +35,6 @@
     system = "x86_64-linux";
     specialArgs = {inherit self inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Alex-NixOS
       {
@@ -161,7 +160,6 @@
     system = "x86_64-linux";
     specialArgs = {inherit self inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Harold-NixOS
       {
@@ -218,7 +216,6 @@
   #   system = "x86_64-linux";
   #   specialArgs = {inherit self inputs system;};
   #   modules = [
-  #     inputs.lix-module.nixosModules.default
   #     ./setup.nix
   #     # ./machines/Olivia-NixOS # TODO: When I get the actual laptop, implement the machine
   #     {
@@ -257,7 +254,6 @@
     system = "x86_64-linux";
     specialArgs = {inherit self inputs system;};
     modules = [
-      # inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/Sasha-NixOS
       {
@@ -334,7 +330,6 @@
     system = "x86_64-linux";
     specialArgs = {inherit self inputs system;};
     modules = [
-      inputs.lix-module.nixosModules.default
       ./setup.nix
       ./machines/VirtualBox-NixOS
       {
