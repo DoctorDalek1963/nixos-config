@@ -254,6 +254,8 @@ in {
 
       nix = defaultTrue;
       jetbrains = defaultFalse;
+
+      misc = defaultFalse;
     };
 
     # === Rclone
