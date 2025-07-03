@@ -19,7 +19,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pkgs.callPackage ./myspeedPackage.nix {};
+        default = pkgs.callPackage ./package.nix {};
         description = "The myspeed package to use.";
       };
 
