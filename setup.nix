@@ -28,6 +28,7 @@ in {
     ./modules/displayManagers
     ./modules/development
     ./modules/gaming
+    ./modules/gpu
     ./modules/openRGB
     ./modules/impermanence
     ./modules/homeServer

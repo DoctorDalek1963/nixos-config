@@ -259,6 +259,7 @@ in {
           ++ lib.optional cfg.misc.programs.anki "$mod, A, exec, $launchPrefix ${lib.getExe pkgs.anki}"
           ++ lib.optional cfg.misc.programs.obsidian "$mod, O, exec, $launchPrefix ${lib.getExe pkgs.obsidian}"
           ++ lib.optional cfg.terminal.tools.btop.enable "$mod, B, exec, $launchPrefix $launchInTerminal ${lib.getExe config.programs.btop.package}"
+          ++ lib.optional osConfig.hardware.graphics.enable "$mod, G, exec, $launchPrefix ${lib.getExe pkgs.amdgpu_top} --gui"
           # Move focus
           ++ [
             "$mod, H, movefocus, l"
