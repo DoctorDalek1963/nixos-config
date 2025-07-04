@@ -12,6 +12,8 @@
       lact
     ];
 
+    # To configure overclocking with LACT on a remote machine like a headless
+    # server, refer to https://github.com/ilya-zlobintsev/LACT#remote-management
     systemd = {
       packages = [pkgs.lact];
       services.lactd.wantedBy = ["multi-user.target"];
