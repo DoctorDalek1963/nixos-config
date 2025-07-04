@@ -21,6 +21,7 @@ in {
 
     services.whisper-asr = {
       enable = true;
+      autoStart = false;
       group = "media";
     };
 
