@@ -20,7 +20,7 @@
     ];
 
     text = ''
-      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk 'NR==1 {print $2}')
+      HYPRGAMEMODE=$(hyprctl getoption animations:enabled | awk '$1=="int:" {print $2}')
       if [ "$HYPRGAMEMODE" = 1 ] ; then
           hyprctl --batch "\
               keyword animations:enabled 0;\
