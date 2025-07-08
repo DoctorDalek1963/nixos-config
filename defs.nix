@@ -289,6 +289,8 @@
 
             scrutiny.enable = true;
 
+            foldingAtHome.enable = true;
+
             mediaServer = {
               enable = true;
               porn = true;

@@ -237,6 +237,8 @@ in {
 
       scrutiny.enable = defaultFalse;
 
+      foldingAtHome.enable = defaultFalse;
+
       homeAutomation = {};
 
       mediaServer = {
