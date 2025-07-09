@@ -10,11 +10,10 @@ in {
 
     services.foldingathome = {
       enable = true;
-      daemonNiceLevel = 19; # Lowest process priority
+      daemonNiceLevel = 5;
       extraArgs = [
         "--config=${config.sops.secrets."home-server/foldingAtHome/config.xml".path}"
         "--machine-name=${config.setup.hostname}"
-        "--cpus=1"
       ];
     };
   };
