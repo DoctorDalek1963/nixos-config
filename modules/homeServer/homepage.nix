@@ -11,16 +11,27 @@
   # https://gethomepage.dev/configs/services/#icons
 
   miscBookmarks = let
-    list = lib.optional cfg.firefly-iii.enable {
-      "Firefly III" = [
-        {
-          abbr = "FIII";
-          icon = "firefly.png";
-          href = "https://${cfg.domainName}/firefly-iii/home";
-          description = "";
-        }
-      ];
-    };
+    list =
+      lib.optional cfg.firefly-iii.enable {
+        "Firefly III" = [
+          {
+            abbr = "FIII";
+            icon = "firefly.png";
+            href = "https://${cfg.domainName}/firefly-iii/home";
+            description = "";
+          }
+        ];
+      }
+      ++ lib.optional cfg.foldingAtHome.enable {
+        "Folding@home" = [
+          {
+            abbr = "F@H";
+            icon = "foldingathome.png";
+            href = "https://app.foldingathome.org";
+            description = "";
+          }
+        ];
+      };
   in
     if builtins.length list > 0
     then [{Misc = list;}]
