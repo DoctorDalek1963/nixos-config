@@ -8,7 +8,7 @@
   cfgPp = cfg.personalProjects;
 
   # Information about how the icons work can be found at
-  # https://gethomepage.dev/latest/configs/services/#icons
+  # https://gethomepage.dev/configs/services/#icons
 
   miscBookmarks = let
     list = lib.optional cfg.firefly-iii.enable {
