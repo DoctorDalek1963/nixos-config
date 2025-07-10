@@ -52,7 +52,7 @@
     nixvim-config = {
       url = "github:DoctorDalek1963/nixvim-config";
       inputs = {
-        # nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses stable nixpkgs
+        nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses the same nixpkgs branch
         flake-parts.follows = "flake-parts";
       };
     };
