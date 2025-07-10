@@ -33,9 +33,13 @@
 
   nix.settings.max-jobs = 12;
 
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+
+    amdgpu.opencl.enable = true;
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
