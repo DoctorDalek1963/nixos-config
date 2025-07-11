@@ -19,6 +19,7 @@ in {
       n = "nix";
       nhos = "NH_FLAKE=/etc/nixos ${custom-nh}/bin/nh os";
       nhcl = "${custom-nh}/bin/nh clean all --keep 3 --nogcroots";
+      nrpl = "nix repl --file '<nixpkgs>'";
     };
   };
 }
