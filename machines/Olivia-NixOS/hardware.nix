@@ -24,8 +24,8 @@
         device = "nodev";
         efiSupport = true;
         timeoutStyle = "hidden";
+        efiInstallAsRemovable = true;
       };
-      efi.canTouchEfiVariables = true;
       timeout = 2;
     };
   };
