@@ -218,6 +218,10 @@ in {
         };
 
         nextcloud = port 38260;
+        seafile = {
+          fileserver = port 45620;
+          seahub = port 45621;
+        };
 
         personalProjects = {
           winter-wonderlights = {
@@ -291,6 +295,16 @@ in {
         cloudRoot = mkOption {
           type = types.nonEmptyStr;
           default = "${config.setup.homeServer.dataRoot}/nextcloud";
+        };
+      };
+
+      seafile = {
+        enable = defaultFalse;
+
+        # See dataRoot for note about persisting on impermanent setups
+        cloudRoot = mkOption {
+          type = types.nonEmptyStr;
+          default = "${config.setup.homeServer.dataRoot}/seafile";
         };
       };
 
