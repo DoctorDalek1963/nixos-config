@@ -130,10 +130,7 @@
         vlc = true;
       };
 
-      office = {
-        libreoffice = true;
-        onlyoffice = true;
-      };
+      office.onlyoffice = true;
     };
   };
 
