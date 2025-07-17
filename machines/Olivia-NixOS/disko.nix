@@ -48,6 +48,10 @@
                   mountOptions = mount-options "2";
                   mountpoint = "/home";
                 };
+                "/home/.snapshots" = {
+                  mountOptions = mount-options "5";
+                  mountpoint = "/home/.snapshots";
+                };
               };
             };
           };

@@ -4,7 +4,7 @@
     snapshotInterval = "0/1:00:00";
 
     configs.home = {
-      SUBVOLUME = "/persist/home";
+      SUBVOLUME = "/home";
       FSTYPE = "btrfs";
       ALLOW_USERS = ["dyson"];
       TIMELINE_CREATE = true;
