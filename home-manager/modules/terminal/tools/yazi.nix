@@ -11,7 +11,7 @@ in {
       enable = true;
       enableBashIntegration = cfg.shells.bash;
 
-      keymap.manager.prepend_keymap = [
+      keymap.mgr.prepend_keymap = [
         {
           on = ["g" "r"];
           run = "cd ~/repos";
@@ -26,7 +26,7 @@ in {
 
       settings = lib.mkMerge [
         (lib.mkIf true {
-          manager.show_hidden = true;
+          mgr.show_hidden = true;
         })
         (lib.mkIf config.setup.misc.programs.vlc {
           open.prepend_rules = [
