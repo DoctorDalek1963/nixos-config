@@ -4,7 +4,7 @@
   config,
   ...
 }: {
-  config = lib.mkIf config.hardware.graphics.enable {
+  config = lib.mkIf config.setup.hasDedicatedGpu {
     hardware.amdgpu.overdrive.enable = true;
 
     environment.systemPackages = with pkgs; [

@@ -223,6 +223,8 @@
           hostname = "Olivia-NixOS";
           isLaptop = true;
 
+          hasDedicatedGpu = false;
+
           users.rebecca = true;
 
           printing = {

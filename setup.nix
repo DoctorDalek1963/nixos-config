@@ -52,6 +52,10 @@ in {
       type = types.bool;
       default = config.setup.isLaptop;
     };
+    hasDedicatedGpu = mkOption {
+      type = types.bool;
+      default = config.hardware.graphics.enable;
+    };
 
     # === Basic system config
     ssh = {
