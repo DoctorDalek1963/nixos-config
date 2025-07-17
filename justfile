@@ -70,7 +70,7 @@ cachix-push-all: (cachix-push-systems "Alex-NixOS" "Bert-NixOS" "Harold-NixOS" "
 [group("setup")]
 set-git-remote:
     git remote rm origin
-    git remote add origin github-dd:DoctorDalek1963/nixos-config.git
+    git remote add origin git@github.com:DoctorDalek1963/nixos-config.git
     git fetch
     git branch --set-upstream-to=origin/main main
 
