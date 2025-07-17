@@ -16,7 +16,8 @@
 
     # Search long-form history
     setup.terminal.shellAliases = {
-      rghist = "cat ${config.home.homeDirectory} | ${config.programs.ripgrep.package}/bin/rg --";
+      # TODO: Make history file shell-agnostic
+      rghist = "cat ${config.home.homeDirectory}/.bash_history | ${config.programs.ripgrep.package}/bin/rg --";
     };
   };
 }
