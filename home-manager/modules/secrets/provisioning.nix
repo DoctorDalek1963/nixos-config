@@ -10,12 +10,21 @@
 
   inherit (osConfig.users.users.${config.home.username}) uid;
 
-  secretsIf = condition: secrets:
-    if condition
-    then secrets
-    else {};
+  isDyson = config.home.username == "dyson";
 
-  git-ssh-secrets = secretsIf cfg.terminal.tools.git {
+  ssh-key-secrets = lib.optionalAttrs isDyson {
+    "ssh/id_ed25519/passphrase" = {};
+    "ssh/id_ed25519/keys/id_ed25519" = {
+      path = "${homedir}/.ssh/id_ed25519";
+      mode = "0600";
+    };
+    "ssh/id_ed25519/keys/id_ed25519.pub" = {
+      path = "${homedir}/.ssh/id_ed25519.pub";
+      mode = "0644";
+    };
+  };
+
+  git-ssh-secrets = lib.optionalAttrs (isDyson && cfg.terminal.tools.git) {
     "ssh/github_main/passphrase" = {};
     "ssh/github_main/keys/github_main" = {
       path = "${homedir}/.ssh/github_main";
@@ -37,7 +46,7 @@
     };
   };
 
-  irc-secrets = secretsIf cfg.misc.programs.hexchat {
+  irc-secrets = lib.optionalAttrs (isDyson && cfg.misc.programs.hexchat) {
     "irc/libera/password" = {mode = "0400";};
     "irc/oftc/password" = {mode = "0400";};
   };
@@ -77,17 +86,8 @@ in {
             path = "${homedir}/.ssh/config";
             mode = "0644";
           };
-
-          "ssh/id_ed25519/passphrase" = {};
-          "ssh/id_ed25519/keys/id_ed25519" = {
-            path = "${homedir}/.ssh/id_ed25519";
-            mode = "0600";
-          };
-          "ssh/id_ed25519/keys/id_ed25519.pub" = {
-            path = "${homedir}/.ssh/id_ed25519.pub";
-            mode = "0644";
-          };
         }
+        // ssh-key-secrets
         // git-ssh-secrets
         // irc-secrets;
     };

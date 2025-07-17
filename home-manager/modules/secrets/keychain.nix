@@ -7,7 +7,7 @@
   cfg = config.setup.secrets;
   keychain-enabled = cfg.enable && cfg.enableKeychain;
 
-  ssh-keys = [
+  ssh-keys = lib.optionals (config.home.username == "dyson") [
     "github_main"
     "git_main_signing"
     "id_ed25519"
