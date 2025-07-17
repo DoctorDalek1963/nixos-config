@@ -118,7 +118,12 @@
         };
       };
 
-      terminal.tools.nvim = "small";
+      terminal.tools = {
+        nvim = "small";
+        # Nemo is much better for her and Yazi has a .desktop file so it gets
+        # all up in yo face
+        yazi = false;
+      };
 
       librewolf = {
         enable = true;
@@ -126,8 +131,10 @@
       };
 
       misc.programs = {
+        evince = true;
         rustdesk = true;
         vlc = true;
+        zathura = false;
       };
 
       office.onlyoffice = true;
