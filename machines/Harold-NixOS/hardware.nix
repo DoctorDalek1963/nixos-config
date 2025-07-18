@@ -40,7 +40,7 @@
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
       intel-vaapi-driver # LIBVA_DRIVER_NAME=i965 (older but apparently works better with Firefox & Chromium)
       libvdpau-va-gl
-      intel-media-sdk # Quick Sync Video
+      # intel-media-sdk # Quick Sync Video (insecure)
     ];
   };
 
