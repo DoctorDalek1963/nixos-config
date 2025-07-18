@@ -36,7 +36,7 @@
     ./modules/secrets
   ];
   other-modules = [
-    inputs.nix-index-database.hmModules.nix-index
+    inputs.nix-index-database.homeModules.nix-index
     inputs.sops-nix.homeManagerModules.sops
     inputs.xremap.homeManagerModules.default
   ];
