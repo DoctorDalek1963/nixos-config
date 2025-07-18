@@ -18,6 +18,7 @@ in {
           name = "stash-custom.js";
           text = ''
             ${readFile ./transgenderSymbols.js}
+            ${readFile ./hlsDefault.js}
           '';
         });
       };
