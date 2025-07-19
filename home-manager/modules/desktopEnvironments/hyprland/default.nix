@@ -93,7 +93,6 @@ in {
       };
 
       settings = let
-        wpctl = "${pkgs.wireplumber}/bin/wpctl";
         playerctl = "${pkgs.playerctl}/bin/playerctl";
         hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
         hyprshot = "${pkgs.hyprshot}/bin/hyprshot";
@@ -105,7 +104,11 @@ in {
           runtimeInputs = with pkgs; [wireplumber coreutils bc dunst];
 
           text = ''
-            wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$1"
+            if [ "$1" = "mute" ]; then
+              wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+            else
+              wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$1"
+            fi
 
             muted=""
             if [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | tail -1)" = "[MUTED]" ]; then
@@ -313,7 +316,7 @@ in {
           ]
           # Mute button
           ++ [
-            ", Xf86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            ", Xf86AudioMute, exec, ${volume-adjust} mute"
             ", Xf86AudioPlay, exec, ${playerctl} play-pause"
             ", Xf86AudioPrev, exec, ${playerctl} previous"
             ", Xf86AudioNext, exec, ${playerctl} next"
