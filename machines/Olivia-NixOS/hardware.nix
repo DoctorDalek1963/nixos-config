@@ -9,6 +9,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
+  powerManagement.enable = false;
+
   boot = {
     initrd = {
       availableKernelModules = ["xhci_pci" "ehci_pci" "ahci" "usb_storage" "sd_mod" "rtsx_pci_sdmmc"];
