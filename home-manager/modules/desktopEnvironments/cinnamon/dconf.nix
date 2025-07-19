@@ -26,6 +26,11 @@
         slideshow-enabled = false;
       };
     };
+
+  disable-screensaver-lock = lib.optionalAttrs (config.home.username == "rebecca") {
+    "org/cinnamon/desktop/screensaver".lock-enabled = false;
+    "org/cinnamon/settings-daemon/plugins/power".lock-on-suspend = false;
+  };
 in {
   config = lib.mkIf osConfig.setup.desktopEnvironments.cinnamon.enable {
     assertions = [
@@ -42,7 +47,8 @@ in {
           # Maximize window when dragging to top instead of tiling to top half
           "org/cinnamon/muffin".tile-maximize = true;
         }
-        // background-settings;
+        // background-settings
+        // disable-screensaver-lock;
     };
   };
 }
