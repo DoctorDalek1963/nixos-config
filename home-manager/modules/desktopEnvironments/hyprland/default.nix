@@ -107,13 +107,18 @@ in {
           text = ''
             wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$1"
 
-            volume_float="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | tail -1)"
+            muted=""
+            if [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | tail -1)" = "[MUTED]" ]; then
+              muted=" [MUTED]"
+            fi
+
+            volume_float="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | head -2 | tail -1)"
             volume="$(bc <<< "($volume_float * 100) / 1")"
 
             progress_hint_float="$(bc -l <<< "($volume / 150) * 100")"
             progress_hint="$(bc <<< "$progress_hint_float / 1")"
 
-            dunstify "Volume" "$volume / 150" --urgency=low --hints=int:value:"$progress_hint" --hints=string:x-dunst-stack-tag:volume-adjust
+            dunstify "Volume$muted" "$volume / 150" --urgency=low --hints=int:value:"$progress_hint" --hints=string:x-dunst-stack-tag:volume-adjust
           '';
         };
 
