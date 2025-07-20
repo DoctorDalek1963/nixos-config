@@ -39,6 +39,9 @@ in {
         ".cache/rpcs3"
       ];
     })
+    (mkIf osSetup.isGraphical {
+      setup.impermanence.keepDirs = [".local/state/wireplumber"];
+    })
     (mkIf osSetup.openRGB.enable {
       setup.impermanence.keepDirs = [".config/OpenRGB"];
     })
