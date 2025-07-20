@@ -29,6 +29,7 @@
 
   disable-screensaver-lock = lib.optionalAttrs (config.home.username == "rebecca") {
     "org/cinnamon/desktop/screensaver".lock-enabled = false;
+    "org/cinnamon/desktop/session".idle-delay = lib.hm.gvariant.mkUint32 0;
     "org/cinnamon/settings-daemon/plugins/power".lock-on-suspend = false;
   };
 in {
