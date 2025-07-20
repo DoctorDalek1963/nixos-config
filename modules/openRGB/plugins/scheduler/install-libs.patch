@@ -1,0 +1,13 @@
+diff --git a/OpenRGBSchedulerPlugin.pro b/OpenRGBSchedulerPlugin.pro
+index fba0079..95a23c6 100644
+--- a/OpenRGBSchedulerPlugin.pro
++++ b/OpenRGBSchedulerPlugin.pro
+@@ -139,6 +139,8 @@ win32:DEFINES +=                                                        \
+ # Linux-specific Configuration                                          #
+ #-----------------------------------------------------------------------#
+ unix:!macx {
++    target.path=$$PREFIX/lib/
++    INSTALLS += target
+ }
+ 
+ #-----------------------------------------------------------------------#
