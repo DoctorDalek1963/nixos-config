@@ -131,6 +131,7 @@ in {
     openRGB = {
       enable = defaultFalse;
       usePlugins = defaultTrue;
+      simpleDaytimeRainbow = defaultFalse;
     };
 
     # === Home server

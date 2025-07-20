@@ -85,7 +85,10 @@
             users = ["dyson"];
           };
 
-          openRGB.enable = true;
+          openRGB = {
+            enable = true;
+            simpleDaytimeRainbow = true;
+          };
 
           gaming.enable = true;
 

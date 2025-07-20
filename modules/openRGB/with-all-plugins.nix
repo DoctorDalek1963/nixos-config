@@ -4,5 +4,5 @@ in
   pkgs.openrgb.withPlugins [
     pkgs.openrgb-plugin-effects
     pkgs.openrgb-plugin-hardwaresync
-    plugin-scheduler
+    plugin-scheduler # TODO: Is this broken or am I stupid?
   ]
