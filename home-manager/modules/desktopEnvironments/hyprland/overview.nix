@@ -1,10 +1,11 @@
 {
   pkgs,
   lib,
-  osConfig,
+  # osConfig,
   ...
 }: {
-  config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
+  config = lib.mkIf false {
+    # osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland = {
       plugins = [pkgs.hyprlandPlugins.hyprspace];
 
