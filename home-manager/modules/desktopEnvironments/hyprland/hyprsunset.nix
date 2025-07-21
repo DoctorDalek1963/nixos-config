@@ -1,37 +1,32 @@
 {
   pkgs,
   lib,
-  osConfig,
+  # osConfig,
   ...
 }: {
-  config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    systemd.user = {
-      services = {
-        hyprsunset = {
-          Unit = {
-            ConditionEnvironment = "WAYLAND_DISPLAY";
-            Description = "Start hyprsunset";
-          };
+  config = lib.mkIf false {
+    # osConfig.setup.desktopEnvironments.hyprland.enable {
+    wayland.windowManager.hyprland.settings.exec-once = [(lib.getExe pkgs.hyprsunset)];
 
-          Service.ExecStart = "${pkgs.hyprsunset}/bin/hyprsunset --temperature 5500";
-        };
+    xdg.configFile."hypr/hyprsunset.config".text =
+      # hyprlang
+      ''
+        profile {
+            time = 7:00
+            identity = true
+        }
 
-        hyprsunset-stop = {
-          Unit.Description = "Stop hyprsunset";
-          Service.ExecStart = "/run/current-system/sw/bin/systemctl stop --user hyprsunset.service";
-        };
-      };
+        profile {
+            time = 19:00
+            temperature = 5500
+            gamma = 0.8
+        }
 
-      timers = {
-        hyprsunset = {
-          Install.WantedBy = ["timers.target"];
-          Timer.OnCalendar = ["19:00"];
-        };
-        hyprsunset-stop = {
-          Install.WantedBy = ["timers.target"];
-          Timer.OnCalendar = ["7:00"];
-        };
-      };
-    };
+        profile {
+            time = 22:00
+            temperature = 5000
+            gamma = 0.7
+        }
+      '';
   };
 }
