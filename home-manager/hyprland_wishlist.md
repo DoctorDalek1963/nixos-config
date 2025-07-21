@@ -1,7 +1,0 @@
-- hyprsunset
-- day/night theme switcher
-- hyprpanel or custom AGS top bar?
-- screenshot tool (hyprshot?)
-- what the hell is happening with Obsidian and authentication?
-- notification daemon
-- check if qt5-wayland and qt6-wayland are actually installed
