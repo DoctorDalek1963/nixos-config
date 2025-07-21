@@ -302,8 +302,6 @@
               transmission.ovpnName = "ch_airvpn";
             };
 
-            nextcloud.enable = true;
-
             personalProjects = {
               enable = true;
               # This only works on a Raspberry Pi
