@@ -73,6 +73,7 @@ in {
           "discord"
           "libsciter" # For RustDesk
           "obsidian"
+          "zoom"
 
           # Firefox extensions
           "dashlane"

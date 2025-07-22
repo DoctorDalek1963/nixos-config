@@ -48,6 +48,7 @@
         obsidian = true;
         rustdesk = true;
         vlc = true;
+        zoom = true;
       };
       services.easyeffects = true;
     };
