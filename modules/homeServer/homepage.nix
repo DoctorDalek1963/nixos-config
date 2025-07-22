@@ -104,7 +104,7 @@
 
   storageServices = let
     list =
-      (lib.optional cfg.nextcloud.enable {
+      (lib.optional cfg.cloud.nextcloud.enable {
         "Nextcloud" = {
           icon = "nextcloud-blue.svg";
           href = "https://${cfg.domainName}/nextcloud";

@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./adguardhome
+    ./cloud
     ./mediaServer
     ./myspeed
     ./personalProjects
@@ -13,7 +14,6 @@
     ./homepage.nix
     ./firefly-iii.nix
     ./foldingAtHome.nix
-    ./nextcloud.nix
     ./nginx.nix
     ./ntfy.nix
     ./scrutiny.nix

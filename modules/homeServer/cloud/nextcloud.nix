@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.setup.homeServer;
-  cfgNc = config.setup.homeServer.nextcloud;
+  cfgNc = config.setup.homeServer.cloud.nextcloud;
 in {
   config = lib.mkIf (cfg.enable && cfgNc.enable) {
     setup = {

@@ -153,8 +153,7 @@ in {
       };
 
       manager = mkOption {
-        type = types.nullOr types.nonEmptyStr;
-        default = null;
+        type = types.nonEmptyStr;
         description = "The primary user account on the server. This user will be added to groups like `media` and `nextcloud`.";
       };
 
@@ -289,13 +288,25 @@ in {
         };
       };
 
-      nextcloud = {
-        enable = defaultFalse;
+      cloud = {
+        basic = {
+          enable = defaultFalse;
 
-        # See dataRoot for note about persisting on impermanent setups
-        cloudRoot = mkOption {
-          type = types.nonEmptyStr;
-          default = "${config.setup.homeServer.dataRoot}/nextcloud";
+          # See dataRoot for note about persisting on impermanent setups
+          cloudRoot = mkOption {
+            type = types.nonEmptyStr;
+            default = "${config.setup.homeServer.dataRoot}/cloud";
+          };
+        };
+
+        nextcloud = {
+          enable = defaultFalse;
+
+          # See dataRoot for note about persisting on impermanent setups
+          cloudRoot = mkOption {
+            type = types.nonEmptyStr;
+            default = "${config.setup.homeServer.dataRoot}/nextcloud";
+          };
         };
       };
 

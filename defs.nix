@@ -302,6 +302,8 @@
               transmission.ovpnName = "ch_airvpn";
             };
 
+            cloud.basic.enable = true;
+
             personalProjects = {
               enable = true;
               # This only works on a Raspberry Pi
