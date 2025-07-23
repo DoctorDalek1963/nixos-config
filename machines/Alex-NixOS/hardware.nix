@@ -1,6 +1,7 @@
 {
-  config,
+  pkgs,
   lib,
+  config,
   modulesPath,
   ...
 }: {
@@ -41,6 +42,12 @@
 
     amdgpu.opencl.enable = true;
   };
+
+  systemd.tmpfiles.rules = ["L+ /opt/rocm/hip - - - - ${pkgs.rocmPackages.clr}"];
+
+  # Taken from https://blog.wjt.je/running-foldingathome-on-nixos-with-opencl-support-for-amd-gpu
+  # to support Folding@home
+  environment.variables.OCL_ICD_VENDORS = "${pkgs.rocmPackages.clr.icd}/etc/OpenCL/vendors/";
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
