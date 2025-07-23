@@ -12,7 +12,7 @@
 
   miscBookmarks = let
     list =
-      lib.optional cfg.firefly-iii.enable {
+      lib.optional config.services.firefly-iii.enable {
         "Firefly III" = [
           {
             abbr = "FIII";
@@ -22,7 +22,7 @@
           }
         ];
       }
-      ++ lib.optional cfg.foldingAtHome.enable {
+      ++ lib.optional config.services.foldingathome.enable {
         "Folding@home" = [
           {
             abbr = "F@H";
@@ -75,7 +75,7 @@
 
   networkingServices = let
     list =
-      (lib.optional cfg.adguardhome.enable {
+      lib.optional config.services.adguardhome.enable {
         "AdGuard Home" = {
           icon = "adguard-home.svg";
           href = "https://${cfg.domainName}:${toString cfg.ports.adguardhome.https}/";
@@ -85,8 +85,8 @@
             url = "https://localhost:${toString cfg.ports.adguardhome.https}";
           };
         };
-      })
-      ++ (lib.optional cfg.myspeed.enable {
+      }
+      ++ lib.optional config.services.myspeed.enable {
         "MySpeed" = {
           icon = "mdi-speedometer";
           href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.myspeed}/";
@@ -96,7 +96,7 @@
             url = "http://localhost:${toString cfg.ports.myspeed}";
           };
         };
-      });
+      };
   in
     if builtins.length list > 0
     then [{Networking = list;}]
@@ -104,7 +104,7 @@
 
   storageServices = let
     list =
-      (lib.optional cfg.cloud.nextcloud.enable {
+      lib.optional config.services.nextcloud.enable {
         "Nextcloud" = {
           icon = "nextcloud-blue.svg";
           href = "https://${cfg.domainName}/nextcloud";
@@ -115,8 +115,8 @@
             key = "{{HOMEPAGE_VAR_NEXTCLOUD_KEY}}";
           };
         };
-      })
-      ++ (lib.optional cfg.scrutiny.enable {
+      }
+      ++ lib.optional config.services.scrutiny.enable {
         "Scrutiny" = {
           icon = "scrutiny.svg";
           href = "https://${cfg.domainName}/scrutiny";
@@ -126,8 +126,8 @@
             url = "https://${cfg.domainName}/scrutiny";
           };
         };
-      })
-      ++ (lib.optional cfgMs.enable {
+      }
+      ++ lib.optional config.services.fileflows.server.enable {
         "FileFlows" = {
           icon = "fileflows.svg";
           href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.fileflows}";
@@ -137,7 +137,7 @@
             url = "http://${cfg.domainName}:${toString cfg.ports.mediaServer.fileflows}";
           };
         };
-      });
+      };
   in
     if builtins.length list > 0
     then [{Storage = list;}]
@@ -145,84 +145,75 @@
 
   mediaServices = let
     list = lib.optionals cfgMs.enable (
-      (
-        lib.optionals (cfgMs.movies || cfgMs.telly) [
-          {
-            "Jellyfin" = {
-              icon = "jellyfin.svg";
-              href = "https://${cfg.domainName}:${toString cfg.ports.mediaServer.jellyfin.https}";
-              description = "Movie and TV streaming";
-              widget = {
-                type = "jellyfin";
-                url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}";
-                key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
-                fields = ["movies" "series" "episodes"];
-                enableBlocks = true;
-                enableNowPlaying = true;
-                enableUser = true;
-                showEpisodeNumber = true;
-                expandOneStreamToTwoRows = false;
-              };
-            };
-          }
-          {
-            "Jellyseerr" = {
-              icon = "jellyseerr.svg";
-              href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.jellyseerr}";
-              description = "Request movies and TV shows";
-              widget = {
-                type = "jellyseerr";
-                url = "http://localhost:${toString cfg.ports.mediaServer.jellyseerr}";
-                key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
-              };
-            };
-          }
-        ]
-      )
-      ++ (
-        lib.optional cfgMs.music
-        {
-          "Navidrome" = {
-            icon = "navidrome.svg";
-            href = "https://${cfg.domainName}/navidrome";
-            description = "Music streaming";
-            widget = {
-              type = "navidrome";
-              url = "http://localhost:${toString cfg.ports.mediaServer.navidrome}/navidrome";
-              user = "admin";
-              token = "4d1618495ed3495dcb95d7d8511e7717";
-              salt = "gt8ou69prf";
-            };
+      lib.optional config.services.jellyfin.enable {
+        "Jellyfin" = {
+          icon = "jellyfin.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.mediaServer.jellyfin.https}";
+          description = "Movie and TV streaming";
+          widget = {
+            type = "jellyfin";
+            url = "http://localhost:${toString cfg.ports.mediaServer.jellyfin.http}";
+            key = "{{HOMEPAGE_VAR_JELLYFIN_KEY}}";
+            fields = ["movies" "series" "episodes"];
+            enableBlocks = true;
+            enableNowPlaying = true;
+            enableUser = true;
+            showEpisodeNumber = true;
+            expandOneStreamToTwoRows = false;
           };
-        }
-      )
-      ++ (lib.optionals cfgMs.books [
-        {
-          "Calibre" = {
-            icon = "calibre.svg";
-            href = "https://${cfg.domainName}/calibre";
-            description = "Digital library";
-            widget = {
-              type = "calibreweb";
-              url = "http://localhost:${toString cfg.ports.mediaServer.calibre.web}";
-              username = "admin";
-              password = "admin123";
-            };
+        };
+      }
+      ++ lib.optional config.services.jellyseerr.enable {
+        "Jellyseerr" = {
+          icon = "jellyseerr.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.jellyseerr}";
+          description = "Request movies and TV shows";
+          widget = {
+            type = "jellyseerr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.jellyseerr}";
+            key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
           };
-        }
-        {
-          "Audiobookshelf" = {
-            icon = "audiobookshelf.svg";
-            href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.audiobookshelf}";
-            description = "Digital audiobook library";
-            widget = {
-              type = "audiobookshelf";
-              url = "http://localhost:${toString cfg.ports.mediaServer.audiobookshelf}";
-              key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.navidrome.enable {
+        "Navidrome" = {
+          icon = "navidrome.svg";
+          href = "https://${cfg.domainName}/navidrome";
+          description = "Music streaming";
+          widget = {
+            type = "navidrome";
+            url = "http://localhost:${toString cfg.ports.mediaServer.navidrome}/navidrome";
+            user = "admin";
+            token = "4d1618495ed3495dcb95d7d8511e7717";
+            salt = "gt8ou69prf";
           };
-        }
-      ])
+        };
+      }
+      ++ lib.optional config.services.calibre-web.enable {
+        "Calibre" = {
+          icon = "calibre.svg";
+          href = "https://${cfg.domainName}/calibre";
+          description = "Digital library";
+          widget = {
+            type = "calibreweb";
+            url = "http://localhost:${toString cfg.ports.mediaServer.calibre.web}";
+            username = "admin";
+            password = "admin123";
+          };
+        };
+      }
+      ++ lib.optional config.services.audiobookshelf.enable {
+        "Audiobookshelf" = {
+          icon = "audiobookshelf.svg";
+          href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.audiobookshelf}";
+          description = "Digital audiobook library";
+          widget = {
+            type = "audiobookshelf";
+            url = "http://localhost:${toString cfg.ports.mediaServer.audiobookshelf}";
+            key = "{{HOMEPAGE_VAR_AUDIOBOOKSHELF_KEY}}";
+          };
+        };
+      }
     );
   in
     if builtins.length list > 0
@@ -231,122 +222,104 @@
 
   mediaDownloadServices = let
     list = lib.optionals cfgMs.enable (
-      [
-        {
-          "Transmission" = {
-            icon = "transmission.svg";
-            href = "https://${cfg.domainName}/transmission";
-            description = "BitTorrent client";
-            widget = {
-              type = "transmission";
-              url = "http://192.168.${toString cfgMs.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
-              username = config.services.transmission.settings.rpc-username;
-              password = config.services.transmission.settings.rpc-password;
-              rpc-url = "/transmission/";
-            };
+      lib.optional config.services.transmission.enable {
+        "Transmission" = {
+          icon = "transmission.svg";
+          href = "https://${cfg.domainName}/transmission";
+          description = "BitTorrent client";
+          widget = {
+            type = "transmission";
+            url = "http://192.168.${toString cfgMs.transmission.thirdOctet}.2:${toString cfg.ports.mediaServer.transmission}";
+            username = config.services.transmission.settings.rpc-username;
+            password = config.services.transmission.settings.rpc-password;
+            rpc-url = "/transmission/";
           };
-        }
-        {
-          "Prowlarr" = {
-            icon = "prowlarr.svg";
-            href = "https://${cfg.domainName}/prowlarr";
-            description = "Torrent & Usenet indexer manager";
-            widget = {
-              type = "prowlarr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.prowlarr}/prowlarr";
-              key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.prowlarr.enable {
+        "Prowlarr" = {
+          icon = "prowlarr.svg";
+          href = "https://${cfg.domainName}/prowlarr";
+          description = "Torrent & Usenet indexer manager";
+          widget = {
+            type = "prowlarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.prowlarr}/prowlarr";
+            key = "{{HOMEPAGE_VAR_PROWLARR_KEY}}";
           };
-        }
-      ]
-      ++ (
-        lib.optional cfgMs.movies
-        {
-          "Radarr" = {
-            icon = "radarr.svg";
-            href = "https://${cfg.domainName}/radarr";
-            description = "Movie manager";
-            widget = {
-              type = "radarr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.radarr}/radarr";
-              key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.sonarr.enable {
+        "Radarr" = {
+          icon = "radarr.svg";
+          href = "https://${cfg.domainName}/radarr";
+          description = "Movie manager";
+          widget = {
+            type = "radarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.radarr}/radarr";
+            key = "{{HOMEPAGE_VAR_RADARR_KEY}}";
           };
-        }
-      )
-      ++ (
-        lib.optional cfgMs.telly
-        {
-          "Sonarr" = {
-            icon = "sonarr.svg";
-            href = "https://${cfg.domainName}/sonarr";
-            description = "TV manager";
-            widget = {
-              type = "sonarr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.sonarr}/sonarr";
-              key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.sonarr.enable {
+        "Sonarr" = {
+          icon = "sonarr.svg";
+          href = "https://${cfg.domainName}/sonarr";
+          description = "TV manager";
+          widget = {
+            type = "sonarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.sonarr}/sonarr";
+            key = "{{HOMEPAGE_VAR_SONARR_KEY}}";
           };
-        }
-      )
-      ++ (
-        lib.optional (cfgMs.movies || cfgMs.telly)
-        {
-          "Bazarr" = {
-            icon = "bazarr.svg";
-            href = "https://${cfg.domainName}/bazarr";
-            description = "Subtitle manager";
-            widget = {
-              type = "bazarr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.bazarr}/bazarr";
-              key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.bazarr.enable {
+        "Bazarr" = {
+          icon = "bazarr.svg";
+          href = "https://${cfg.domainName}/bazarr";
+          description = "Subtitle manager";
+          widget = {
+            type = "bazarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.bazarr}/bazarr";
+            key = "{{HOMEPAGE_VAR_BAZARR_KEY}}";
           };
-        }
-      )
-      ++ (
-        lib.optional cfgMs.music
-        {
-          "Lidarr" = {
-            icon = "lidarr.svg";
-            href = "https://${cfg.domainName}/lidarr";
-            description = "Music manager";
-            widget = {
-              type = "lidarr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.lidarr}/lidarr";
-              key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
-            };
+        };
+      }
+      ++ lib.optional config.services.lidarr.enable {
+        "Lidarr" = {
+          icon = "lidarr.svg";
+          href = "https://${cfg.domainName}/lidarr";
+          description = "Music manager";
+          widget = {
+            type = "lidarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.lidarr}/lidarr";
+            key = "{{HOMEPAGE_VAR_LIDARR_KEY}}";
           };
-        }
-      )
-      ++ (
-        lib.optionals cfgMs.books [
-          {
-            "Readarr" = {
-              icon = "readarr.svg";
-              href = "https://${cfg.domainName}/readarr";
-              description = "E-book manager";
-              widget = {
-                type = "readarr";
-                url = "http://localhost:${toString cfg.ports.mediaServer.readarr}/readarr";
-                key = "{{HOMEPAGE_VAR_READARR_KEY}}";
-              };
-            };
-          }
-          {
-            "Speakarr" = {
-              icon = "mdi-cast-audio-variant";
-              href = "https://${cfg.domainName}/speakarr";
-              description = "Audiobook manager";
-              widget = {
-                type = "readarr";
-                url = "http://localhost:${toString cfg.ports.mediaServer.speakarr}/speakarr";
-                key = "{{HOMEPAGE_VAR_SPEAKARR_KEY}}";
-              };
-            };
-          }
-        ]
-      )
+        };
+      }
+      ++ lib.optional config.services.readarr.enable {
+        "Readarr" = {
+          icon = "readarr.svg";
+          href = "https://${cfg.domainName}/readarr";
+          description = "E-book manager";
+          widget = {
+            type = "readarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.readarr}/readarr";
+            key = "{{HOMEPAGE_VAR_READARR_KEY}}";
+          };
+        };
+      }
+      ++ lib.optional config.services.speakarr.enable {
+        "Speakarr" = {
+          icon = "mdi-cast-audio-variant";
+          href = "https://${cfg.domainName}/speakarr";
+          description = "Audiobook manager";
+          widget = {
+            type = "readarr";
+            url = "http://localhost:${toString cfg.ports.mediaServer.speakarr}/speakarr";
+            key = "{{HOMEPAGE_VAR_SPEAKARR_KEY}}";
+          };
+        };
+      }
     );
   in
     if builtins.length list > 0
@@ -400,14 +373,10 @@ in {
             }
             {
               Media = let
-                optNum = cond: num:
-                  if cond
-                  then num
-                  else 0;
                 cols =
-                  (optNum (cfgMs.movies || cfgMs.telly) 2)
-                  + (optNum cfgMs.music 1)
-                  + (optNum cfgMs.books 2);
+                  if mediaServices == []
+                  then 1
+                  else builtins.length (builtins.elemAt mediaServices 0).Media;
               in {
                 style = "row";
                 columns =
