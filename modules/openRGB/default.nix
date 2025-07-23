@@ -22,32 +22,26 @@ in {
     setup.impermanence.keepDirs = ["/var/lib/OpenRGB"];
 
     systemd = lib.mkIf cfg.simpleDaytimeRainbow {
-      services = {
-        openrgb-start-rainbow.serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${lib.getExe package} --mode rainbow";
-        };
+      services.openrgb-daytime-rainbow.serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.writeShellScript "set-openrgb-daytime-rainbow" ''
+          current=$(date +'%s')
+          start=$(date -d '7:30' +'%s')
+          end=$(date -d '22:30' +'%s')
 
-        openrgb-lights-off.serviceConfig = {
-          Type = "oneshot";
-          ExecStart = "${lib.getExe package} --mode off";
-        };
+          if [ $current -ge $start -a $current -lt $end ]; then
+            ${lib.getExe package} --mode rainbow
+          else
+            ${lib.getExe package} --mode off
+          fi
+        ''}";
       };
 
-      timers = {
-        openrgb-start-rainbow = {
-          wantedBy = ["timers.target"];
-          timerConfig = {
-            OnCalendar = "07:30";
-            Unit = "openrgb-start-rainbow.service";
-          };
-        };
-        openrgb-lights-off = {
-          wantedBy = ["timers.target"];
-          timerConfig = {
-            OnCalendar = "22:30";
-            Unit = "openrgb-lights-off.service";
-          };
+      timers.openrgb-daytime-rainbow = {
+        wantedBy = ["timers.target"];
+        timerConfig = {
+          OnCalendar = "07,22:30";
+          Unit = "openrgb-daytime-rainbow.service";
         };
       };
     };
