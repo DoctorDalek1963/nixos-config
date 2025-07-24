@@ -64,6 +64,8 @@
 
           # podman.enable = true;
 
+          misc.services.foldingAtHome.enable = true;
+
           printing = {
             enable = true;
             users = ["dyson"];
