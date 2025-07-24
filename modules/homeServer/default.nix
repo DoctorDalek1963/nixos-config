@@ -13,7 +13,6 @@
     ./haproxy.nix
     ./homepage.nix
     ./firefly-iii.nix
-    ./foldingAtHome.nix
     ./nginx.nix
     ./ntfy.nix
     ./scrutiny.nix

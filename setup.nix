@@ -32,6 +32,7 @@ in {
     ./modules/openRGB
     ./modules/impermanence
     ./modules/homeServer
+    ./modules/misc
     ./modules/pam
     ./modules/printing
     ./modules/secrets
@@ -241,8 +242,6 @@ in {
 
       scrutiny.enable = defaultFalse;
 
-      foldingAtHome.enable = defaultFalse;
-
       homeAutomation = {};
 
       mediaServer = {
@@ -316,6 +315,13 @@ in {
         tictactoe = defaultTrue;
         winter-wonderlights = defaultTrue;
         wordle = defaultTrue;
+      };
+    };
+
+    # === Misc
+    misc = {
+      services = {
+        foldingAtHome.enable = defaultFalse;
       };
     };
 

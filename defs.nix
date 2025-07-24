@@ -278,6 +278,8 @@
             ntfy.url = "http://localhost:4000";
           };
 
+          misc.services.foldingAtHome.enable = true;
+
           homeServer = {
             enable = true;
             domainName = "sasha-nixos.triceratops-egret.ts.net";
@@ -293,8 +295,6 @@
             squid.enable = true;
 
             scrutiny.enable = true;
-
-            foldingAtHome.enable = true;
 
             mediaServer = {
               enable = true;
