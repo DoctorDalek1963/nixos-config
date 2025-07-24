@@ -19,8 +19,6 @@ in {
     };
 
     home = {
-      sessionVariables.EXTENDED_PS1 = 1;
-
       file.".blerc".text =
         # bash
         ''
