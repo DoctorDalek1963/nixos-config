@@ -64,6 +64,7 @@
     };
 in {
   imports = [
+    ./sunsetr
     ./waybar
 
     ./clipboard.nix
@@ -73,7 +74,6 @@ in {
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
-    ./hyprsunset.nix
     ./overview.nix
   ];
 
