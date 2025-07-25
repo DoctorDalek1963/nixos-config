@@ -24,9 +24,13 @@ in {
     systemd = lib.mkIf cfg.simpleDaytimeRainbow {
       services.openrgb-daytime-rainbow = {
         wantedBy = ["multi-user.target"];
+        after = ["openrgb.service"];
+
         serviceConfig = {
           Type = "oneshot";
           ExecStart = "${pkgs.writeShellScript "set-openrgb-daytime-rainbow" ''
+            sleep 15
+
             current=$(date +'%s')
             start=$(date -d '7:30' +'%s')
             end=$(date -d '22:30' +'%s')
