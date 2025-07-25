@@ -4,10 +4,11 @@
   ...
 }: let
   cfg = config.setup.misc.services.foldingAtHome;
-  directory = "/var/lib/foldingathome";
 in {
   config = lib.mkIf cfg.enable {
     sops.secrets."foldingAtHome/config.xml".mode = "0444";
+
+    setup.impermanence.keepDirs = ["/var/lib/foldingathome"];
 
     services.foldingathome = {
       enable = true;
@@ -18,38 +19,35 @@ in {
       ];
     };
 
-    # The default config uses a dynamic user but that doesn't work for me and I
-    # have no idea why, so I just override the systemd service with a static user
-
     # FIXME: Currently this runs the service as root, which is obviously very
     # bad because Folding@home downloads and runs untrusted binary blobs, so
-    # this is momumentally insecure, but at least it works
+    # this is very insecure, but at least it works.
 
-    # users = {
-    #   users.foldingathome = {
-    #     isSystemUser = true;
-    #     group = "foldingathome";
-    #   };
-    #   groups.foldingathome = {};
-    # };
+    # Personally I trust the binaries because Folding@home is a long-running
+    # project being run and managed by trusted scientists and programmers, and
+    # large parts of the project are open source. Still, running everything as
+    # root is rather sub-optimal.
 
-    # setup.impermanence.keepDirs = [
-    #   {
-    #     inherit directory;
-    #     user = "foldingathome";
-    #     group = "foldingathome";
-    #     mode = "u=rwx,g=rx,o=rx";
-    #   }
-    # ];
+    # The default config uses a dynamic user but for me, every time fah-client
+    # tries to start a subprocess, it fails immediately. Specifically, execve
+    # returns -1 (EACCES), which I don't know how to solve.
+
+    # If I create a custom static system user and run the systemd service as
+    # that user, bwrap complains that it can't set up the uid map. I think
+    # that's because `setfsuid(0)` fails as an unprivileged user, but it works
+    # when I run fah-client myself so I'm not sure.
+
+    # I could instead override the version of buildFHSEnv that pkgs.fahclient
+    # uses to add my own arguments to bwrap and run the systemd service as
+    # root, but all the children still get run as root, so I'm not sure what's
+    # going on there either.
 
     systemd = {
       services.foldingathome. serviceConfig = {
         DynamicUser = lib.mkForce false;
-        # User = lib.mkForce "foldingathome";
-        # Group = lib.mkForce "foldingathome";
 
         StateDirectory = "foldingathome";
-        WorkingDirectory = lib.mkForce directory;
+        WorkingDirectory = lib.mkForce "/var/lib/foldingathome";
       };
     };
   };
