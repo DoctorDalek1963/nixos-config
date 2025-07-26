@@ -3,22 +3,28 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  optWrite = cond: path:
-    if cond
-    then "write_user_to_database(\"${path}\")"
-    else "";
-in {
+  optWrite = cond: path: if cond then "write_user_to_database(\"${path}\")" else "";
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.add-user-to-servarr-apps = {
       description = "Add the user 'dyson' to all the servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py" {flakeIgnore = ["W293" "E303" "E501"];}
+        ExecStart = "${pkgs.writers.writePython3 "add_user_to_servarr_apps.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "E303"
+              "E501"
+            ];
+          }
           ''
             import os
             import sqlite3
@@ -76,7 +82,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

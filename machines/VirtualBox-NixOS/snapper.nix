@@ -6,7 +6,7 @@
     configs.home = {
       SUBVOLUME = "/persist/home";
       FSTYPE = "btrfs";
-      ALLOW_USERS = ["dyson"];
+      ALLOW_USERS = [ "dyson" ];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
       TIMELINE_LIMIT_HOURLY = 0;

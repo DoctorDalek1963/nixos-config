@@ -3,17 +3,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.backup;
-in {
+in
+{
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
       # Provide borgbackup for users in the backup group
-      home-manager.users = builtins.listToAttrs (map (name: {
+      home-manager.users = builtins.listToAttrs (
+        map (name: {
           inherit name;
-          value = {home.packages = [config.services.borgbackup.package];};
-        })
-        cfg.users);
+          value = {
+            home.packages = [ config.services.borgbackup.package ];
+          };
+        }) cfg.users
+      );
 
       setup.impermanence.keepDirs = [
         "/root/.config/borg"
@@ -33,7 +38,7 @@ in {
         group = "backup";
 
         inherit (cfg) paths;
-        exclude = ["/nix"] ++ cfg.exclude;
+        exclude = [ "/nix" ] ++ cfg.exclude;
 
         doInit = false;
 
@@ -41,18 +46,21 @@ in {
         inhibitsSleep = true;
         archiveBaseName = "${config.setup.hostname}-auto";
 
-        extraArgs = ["--remote-path=borg14"];
-        extraCreateArgs = ["--stats" "--checkpoint-interval=600"];
-        extraPruneArgs = ["--stats" "--save-space"];
+        extraArgs = [ "--remote-path=borg14" ];
+        extraCreateArgs = [
+          "--stats"
+          "--checkpoint-interval=600"
+        ];
+        extraPruneArgs = [
+          "--stats"
+          "--save-space"
+        ];
 
         # An empty list here makes the service not start automatically, but
         # only be triggered manually. When we have no paths, we obviously don't
         # want to do the backup, but we still want to have the script that
         # wraps borg with these credentials in environment variables.
-        startAt =
-          if builtins.length cfg.paths == 0
-          then []
-          else cfg.startAt;
+        startAt = if builtins.length cfg.paths == 0 then [ ] else cfg.startAt;
 
         compression = "auto,lzma";
         prune.keep = {
@@ -63,7 +71,9 @@ in {
         repo = "zh5288@zh5288.rsync.net:nixos-backups";
         encryption = {
           mode = "repokey";
-          passCommand = "cat ${config.sops.secrets."borgbackup/repos/rsync.net/nixos-backups/passphrase".path}";
+          passCommand = "cat ${
+            config.sops.secrets."borgbackup/repos/rsync.net/nixos-backups/passphrase".path
+          }";
         };
 
         environment.BORG_RSH = "ssh -i ${config.sops.secrets."ssh/rsync.net/keys/rsync_net".path}";
@@ -81,7 +91,7 @@ in {
       systemd.services = {
         borgbackup-job-automatic-rsync-net-ntfy-failed = {
           description = "Use ntfy to send a notification that borgbackup-job-automatic-rsync-net failed";
-          path = [pkgs.ntfy-sh];
+          path = [ pkgs.ntfy-sh ];
 
           script = builtins.concatStringsSep " " [
             "ntfy send"
@@ -95,7 +105,7 @@ in {
 
         borgbackup-job-automatic-rsync-net-ntfy-succeeded = {
           description = "Use ntfy to send a notification that borgbackup-job-automatic-rsync-net succeeded";
-          path = [pkgs.ntfy-sh];
+          path = [ pkgs.ntfy-sh ];
 
           script = builtins.concatStringsSep " " [
             "ntfy send"
@@ -108,23 +118,24 @@ in {
         };
 
         borgbackup-job-automatic-rsync-net = {
-          onFailure = ["borgbackup-job-automatic-rsync-net-ntfy-failed.service"];
-          onSuccess = ["borgbackup-job-automatic-rsync-net-ntfy-succeeded.service"];
+          onFailure = [ "borgbackup-job-automatic-rsync-net-ntfy-failed.service" ];
+          onSuccess = [ "borgbackup-job-automatic-rsync-net-ntfy-succeeded.service" ];
         };
       };
     })
-    (lib.mkIf (cfg.enable
-      && config.setup.homeServer.enable
-      && config.setup.homeServer.mediaServer.enable) {
-      # Turn off the mediaServer directoryMap while doing backups because it
-      # messes with the ctimes and borg doesn't like that
-      # TODO (borg 2): When borg 2 is stable (and we probably need it to be
-      # available on the remote too), we should be able to retry problematic
-      # files and that _might_ be a better solution
-      systemd.services.borgbackup-job-automatic-rsync-net.serviceConfig = {
-        ExecStartPre = ["systemctl stop set-permissions-for-media-server-directory-map.timer"];
-        ExecStopPost = ["systemctl start set-permissions-for-media-server-directory-map.timer"];
-      };
-    })
+    (lib.mkIf
+      (cfg.enable && config.setup.homeServer.enable && config.setup.homeServer.mediaServer.enable)
+      {
+        # Turn off the mediaServer directoryMap while doing backups because it
+        # messes with the ctimes and borg doesn't like that
+        # TODO (borg 2): When borg 2 is stable (and we probably need it to be
+        # available on the remote too), we should be able to retry problematic
+        # files and that _might_ be a better solution
+        systemd.services.borgbackup-job-automatic-rsync-net.serviceConfig = {
+          ExecStartPre = [ "systemctl stop set-permissions-for-media-server-directory-map.timer" ];
+          ExecStopPost = [ "systemctl start set-permissions-for-media-server-directory-map.timer" ];
+        };
+      }
+    )
   ];
 }

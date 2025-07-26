@@ -17,7 +17,7 @@ pkgs.stdenv.mkDerivation {
     hash = "sha256-um87ibE8RR+kMjAT6CNlSec12ObMMhQqMiRqUDgJ0JM=";
   };
 
-  nativeBuildInputs = [pkgs.buildPackages.glib];
+  nativeBuildInputs = [ pkgs.buildPackages.glib ];
 
   buildPhase = ''
     runHook preBuild

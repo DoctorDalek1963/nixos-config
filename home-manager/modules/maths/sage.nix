@@ -3,12 +3,14 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.maths;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.sage) {
     home = {
-      packages = [pkgs.sageWithDoc];
+      packages = [ pkgs.sageWithDoc ];
       file.".sage/init.sage".text =
         # python
         ''
@@ -36,6 +38,6 @@ in {
         '';
     };
 
-    setup.impermanence.keepFiles = [".sage/ipython-5.0.0/profile_default/history.sqlite"];
+    setup.impermanence.keepFiles = [ ".sage/ipython-5.0.0/profile_default/history.sqlite" ];
   };
 }

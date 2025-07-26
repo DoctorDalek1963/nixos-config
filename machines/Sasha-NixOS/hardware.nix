@@ -4,19 +4,25 @@
   lib,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot = {
     initrd = {
-      availableKernelModules = ["xhci_pci" "usbhid" "ums_realtek" "sr_mod"];
-      kernelModules = [];
+      availableKernelModules = [
+        "xhci_pci"
+        "usbhid"
+        "ums_realtek"
+        "sr_mod"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = ["kvm-intel"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
 
     loader = {
       grub = {
@@ -30,7 +36,7 @@
     };
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   nix.settings.max-jobs = 3;
 
@@ -38,11 +44,11 @@
   hardware = {
     graphics = {
       enable = true;
-      extraPackages = with pkgs; [nvidia-vaapi-driver];
+      extraPackages = with pkgs; [ nvidia-vaapi-driver ];
     };
     nvidia.open = false;
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

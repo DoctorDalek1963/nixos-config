@@ -3,25 +3,20 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  indent4 = code:
-    builtins.concatStringsSep "\n"
-    (
-      builtins.map (line: "    ${line}")
-      (
-        builtins.filter
-        (x: builtins.isString x && x != "")
-        (lib.strings.split "\n" code)
+  indent4 =
+    code:
+    builtins.concatStringsSep "\n" (
+      builtins.map (line: "    ${line}") (
+        builtins.filter (x: builtins.isString x && x != "") (lib.strings.split "\n" code)
       )
     );
 
-  optSnippet = cond: code:
-    if cond
-    then indent4 code
-    else "";
+  optSnippet = cond: code: if cond then indent4 code else "";
 
   readarr = optSnippet config.services.readarr.enable ''
     ITEMS = [
@@ -171,14 +166,16 @@
         f"(4, 'Prefer Good Lossy', 1004, '{json.dumps(PREFER_GOOD_LOSSY_ITEMS)}', 1, '[]', 0, 0)",
     )
   '';
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.set-servarr-quality-profiles = {
       description = "Set the quality profiles for servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "set_servarr_quality_profiles.py" {flakeIgnore = ["E501"];}
+        ExecStart = "${pkgs.writers.writePython3 "set_servarr_quality_profiles.py"
+          { flakeIgnore = [ "E501" ]; }
           ''
             import json
             import os
@@ -205,7 +202,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

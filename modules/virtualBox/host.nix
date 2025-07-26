@@ -3,10 +3,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkMerge;
   cfg = config.setup.virtualBox.host;
-in {
+in
+{
   config = mkIf cfg.enable (mkMerge [
     (mkIf cfg.asSpecialisation {
       specialisation.virtualbox.configuration = {

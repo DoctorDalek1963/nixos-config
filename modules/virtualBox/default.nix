@@ -1,3 +1,6 @@
 {
-  imports = [./guest.nix ./host.nix];
+  imports = [
+    ./guest.nix
+    ./host.nix
+  ];
 }

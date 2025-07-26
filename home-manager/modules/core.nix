@@ -3,7 +3,8 @@
   config,
   osConfig,
   ...
-}: {
+}:
+{
   home = {
     inherit (config.setup) username;
     homeDirectory = "/home/${config.setup.username}";
@@ -32,23 +33,30 @@
 
   targets.genericLinux.enable = false;
 
-  xdg.userDirs = let
-    home = "${config.home.homeDirectory}";
-  in {
-    enable = osConfig.setup.isGraphical;
-    createDirectories = true;
+  xdg.userDirs =
+    let
+      home = "${config.home.homeDirectory}";
+    in
+    {
+      enable = osConfig.setup.isGraphical;
+      createDirectories = true;
 
-    documents = "${home}/Documents";
-    download = "${home}/Downloads";
-    music = "${home}/Music";
-    pictures = "${home}/Pictures";
-    videos = "${home}/Videos";
+      documents = "${home}/Documents";
+      download = "${home}/Downloads";
+      music = "${home}/Music";
+      pictures = "${home}/Pictures";
+      videos = "${home}/Videos";
 
-    desktop = null;
-    publicShare = null;
-    templates = null;
-  };
+      desktop = null;
+      publicShare = null;
+      templates = null;
+    };
 
   # Stuff tends to collect in my Downloads, so I'm intentionally not persisting it
-  setup.impermanence.keepDirs = lib.mkIf osConfig.setup.isGraphical ["Documents" "Music" "Pictures" "Videos"];
+  setup.impermanence.keepDirs = lib.mkIf osConfig.setup.isGraphical [
+    "Documents"
+    "Music"
+    "Pictures"
+    "Videos"
+  ];
 }

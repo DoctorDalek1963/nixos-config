@@ -4,9 +4,15 @@
   osConfig,
   inputs,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
-  inherit (config.consts) valid-gnome-themes valid-hyprland-themes valid-terminal-themes valid-shells;
+  inherit (config.consts)
+    valid-gnome-themes
+    valid-hyprland-themes
+    valid-terminal-themes
+    valid-shells
+    ;
 
   defaultTrue = mkOption {
     default = true;
@@ -40,7 +46,8 @@
     inputs.sops-nix.homeManagerModules.sops
     inputs.xremap.homeManagerModules.default
   ];
-in {
+in
+{
   imports = file-modules ++ other-modules;
 
   options.setup = {
@@ -59,18 +66,24 @@ in {
         type = types.enum valid-shells;
       };
       shellAliases = mkOption {
-        default = {};
+        default = { };
         type = types.attrsOf types.nonEmptyStr;
       };
 
       emulator = mkOption {
         default = "wezterm";
-        type = types.enum ["terminator" "wezterm"];
+        type = types.enum [
+          "terminator"
+          "wezterm"
+        ];
       };
 
       multiplexer = mkOption {
         default = "zellij";
-        type = types.enum ["none" "zellij"];
+        type = types.enum [
+          "none"
+          "zellij"
+        ];
       };
 
       theme = mkOption {
@@ -95,7 +108,13 @@ in {
         git-all = defaultTrue;
         gh = defaultTrue;
         nvim = mkOption {
-          type = types.enum ["stock" "tiny" "small" "medium" "full"];
+          type = types.enum [
+            "stock"
+            "tiny"
+            "small"
+            "medium"
+            "full"
+          ];
           default = "medium";
         };
         lazygit = defaultTrue;
@@ -119,12 +138,16 @@ in {
     desktopEnvironments = {
       # Either one path, a light/dark pair of paths, or a slideshow path
       background = mkOption {
-        type = types.nullOr (types.either types.path (types.submodule {
-          options = {
-            light = mkOption {type = types.path;};
-            dark = mkOption {type = types.path;};
-          };
-        }));
+        type = types.nullOr (
+          types.either types.path (
+            types.submodule {
+              options = {
+                light = mkOption { type = types.path; };
+                dark = mkOption { type = types.path; };
+              };
+            }
+          )
+        );
         default = null;
       };
       background-slideshow-path = mkOption {
@@ -161,9 +184,7 @@ in {
           animateGradientAngle = {
             enable = mkOption {
               type = types.bool;
-              default =
-                config.setup.desktopEnvironments.hyprland.borderStyle.rainbow
-                && !osConfig.setup.isLaptop;
+              default = config.setup.desktopEnvironments.hyprland.borderStyle.rainbow && !osConfig.setup.isLaptop;
             };
             speedSecs = mkOption {
               type = types.int;
@@ -188,15 +209,17 @@ in {
     };
 
     # === Impermanence
-    impermanence = let
-      keepList = mkOption {
-        type = types.listOf (types.either types.nonEmptyStr types.attrs);
-        default = [];
+    impermanence =
+      let
+        keepList = mkOption {
+          type = types.listOf (types.either types.nonEmptyStr types.attrs);
+          default = [ ];
+        };
+      in
+      {
+        keepDirs = keepList;
+        keepFiles = keepList;
       };
-    in {
-      keepDirs = keepList;
-      keepFiles = keepList;
-    };
 
     # === Maths
     maths = {
@@ -262,34 +285,36 @@ in {
     rclone = {
       enable = defaultFalse;
       automounts = mkOption {
-        default = [];
-        type = types.listOf (types.submodule {
-          options = {
-            remote = mkOption {
-              type = types.nonEmptyStr;
-              description = "The name of the remote server to mount.";
+        default = [ ];
+        type = types.listOf (
+          types.submodule {
+            options = {
+              remote = mkOption {
+                type = types.nonEmptyStr;
+                description = "The name of the remote server to mount.";
+              };
+              remotePath = mkOption {
+                type = types.str;
+                default = "";
+                description = "The path on the remote to mount, if any.";
+              };
+              mountpoint = mkOption {
+                type = types.nonEmptyStr;
+                description = "The full path of the folder to mount the remote into.";
+              };
+              readonly = mkOption {
+                type = types.bool;
+                default = false;
+                description = "Should this mount be readonly?";
+              };
+              extraArgs = mkOption {
+                type = types.str;
+                default = "";
+                description = "Any extra args to pass to the `rclone mount` command.";
+              };
             };
-            remotePath = mkOption {
-              type = types.str;
-              default = "";
-              description = "The path on the remote to mount, if any.";
-            };
-            mountpoint = mkOption {
-              type = types.nonEmptyStr;
-              description = "The full path of the folder to mount the remote into.";
-            };
-            readonly = mkOption {
-              type = types.bool;
-              default = false;
-              description = "Should this mount be readonly?";
-            };
-            extraArgs = mkOption {
-              type = types.str;
-              default = "";
-              description = "Any extra args to pass to the `rclone mount` command.";
-            };
-          };
-        });
+          }
+        );
       };
     };
 

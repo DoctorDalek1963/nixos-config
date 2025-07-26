@@ -1,3 +1,7 @@
 {
-  imports = [./dconf.nix ./menuIcon.nix ./themes.nix];
+  imports = [
+    ./dconf.nix
+    ./menuIcon.nix
+    ./themes.nix
+  ];
 }

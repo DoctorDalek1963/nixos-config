@@ -3,10 +3,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   tt = config.setup.terminal.tools;
   inherit (config.consts) nvimPkg nvimPath;
-in {
+in
+{
   imports = [
     ./aria2.nix
     ./bat.nix
@@ -31,13 +33,14 @@ in {
   ];
 
   home = {
-    packages =
-      [nvimPkg]
-      ++ lib.optional tt.fastfetch pkgs.fastfetch
-      ++ lib.optional tt.hyperfine pkgs.hyperfine
-      ++ lib.optional tt.sad pkgs.sad
-      ++ lib.optional tt.sd pkgs.sd
-      ++ lib.optional tt.yt-dlp pkgs.yt-dlp;
+    packages = [
+      nvimPkg
+    ]
+    ++ lib.optional tt.fastfetch pkgs.fastfetch
+    ++ lib.optional tt.hyperfine pkgs.hyperfine
+    ++ lib.optional tt.sad pkgs.sad
+    ++ lib.optional tt.sd pkgs.sd
+    ++ lib.optional tt.yt-dlp pkgs.yt-dlp;
 
     sessionVariables.EDITOR = nvimPath;
   };

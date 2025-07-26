@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.uinput;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     hardware.uinput.enable = true;
 

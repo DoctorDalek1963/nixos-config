@@ -4,7 +4,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   theme-config =
     {
       "catppuccin-macchiato-mauve" = {
@@ -16,18 +17,16 @@
         gtk = {
           theme = {
             package = pkgs.catppuccin-gtk.override {
-              accents = ["mauve"];
-              size =
-                if osConfig.setup.isLaptop
-                then "compact"
-                else "standard";
-              tweaks = ["rimless"];
+              accents = [ "mauve" ];
+              size = if osConfig.setup.isLaptop then "compact" else "standard";
+              tweaks = [ "rimless" ];
               variant = "macchiato"; # Dark mode
             };
             name =
-              if osConfig.setup.isLaptop
-              then "catppuccin-macchiato-mauve-compact+rimless"
-              else "catppuccin-macchiato-mauve-standard+rimless";
+              if osConfig.setup.isLaptop then
+                "catppuccin-macchiato-mauve-compact+rimless"
+              else
+                "catppuccin-macchiato-mauve-standard+rimless";
           };
 
           iconTheme = {
@@ -40,10 +39,9 @@
         };
       };
     }
-    .${
-      config.setup.desktopEnvironments.hyprland.theme
-    };
-in {
+    .${config.setup.desktopEnvironments.hyprland.theme};
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home.pointerCursor = {
       gtk.enable = true;

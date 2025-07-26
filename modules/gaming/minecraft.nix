@@ -3,10 +3,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.gaming;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.minecraft) {
-    environment.systemPackages = [pkgs.prismlauncher];
+    environment.systemPackages = [ pkgs.prismlauncher ];
   };
 }

@@ -3,10 +3,11 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkMerge [
     (lib.mkIf config.setup.terminal.tools.eza {
-      home.packages = [pkgs.eza];
+      home.packages = [ pkgs.eza ];
 
       setup.terminal.shellAliases = {
         ls = "${pkgs.eza}/bin/eza";

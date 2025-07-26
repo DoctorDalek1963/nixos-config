@@ -2,11 +2,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
-    setup.impermanence.keepDirs = [config.services.unbound.stateDir];
+    setup.impermanence.keepDirs = [ config.services.unbound.stateDir ];
 
     services.unbound = {
       enable = true;
@@ -16,7 +18,10 @@ in {
         remote-control = {
           control-enable = true;
 
-          control-interface = ["127.0.0.1" "::1"];
+          control-interface = [
+            "127.0.0.1"
+            "::1"
+          ];
           control-use-cert = false;
         };
 

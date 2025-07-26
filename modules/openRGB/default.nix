@@ -3,28 +3,27 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.openRGB;
 
-  with-all-plugins = import ./with-all-plugins.nix {inherit pkgs;};
+  with-all-plugins = import ./with-all-plugins.nix { inherit pkgs; };
 
-  package =
-    if cfg.usePlugins
-    then with-all-plugins
-    else pkgs.openrgb;
-in {
+  package = if cfg.usePlugins then with-all-plugins else pkgs.openrgb;
+in
+{
   config = lib.mkIf cfg.enable {
     services.hardware.openrgb = {
       enable = true;
       inherit package;
     };
 
-    setup.impermanence.keepDirs = ["/var/lib/OpenRGB"];
+    setup.impermanence.keepDirs = [ "/var/lib/OpenRGB" ];
 
     systemd = lib.mkIf cfg.simpleDaytimeRainbow {
       services.openrgb-daytime-rainbow = {
-        wantedBy = ["multi-user.target"];
-        after = ["openrgb.service"];
+        wantedBy = [ "multi-user.target" ];
+        after = [ "openrgb.service" ];
 
         serviceConfig = {
           Type = "oneshot";
@@ -45,7 +44,7 @@ in {
       };
 
       timers.openrgb-daytime-rainbow = {
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
         timerConfig = {
           OnCalendar = "07,22:30";
           Unit = "openrgb-daytime-rainbow.service";

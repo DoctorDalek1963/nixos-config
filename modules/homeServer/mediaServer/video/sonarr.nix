@@ -2,18 +2,20 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.telly) {
     setup = {
-      impermanence.keepDirs = [config.services.sonarr.dataDir];
-      backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/telly"];
+      impermanence.keepDirs = [ config.services.sonarr.dataDir ];
+      backup.exclude = [ "${cfgMs.mediaRoot}/jellyfin/telly" ];
 
       homeServer.mediaServer.directoryMap = {
-        jellyfin = ["${cfgMs.mediaRoot}/jellyfin/telly"];
-        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/telly"];
+        jellyfin = [ "${cfgMs.mediaRoot}/jellyfin/telly" ];
+        transmission = [ "${cfgMs.mediaRoot}/torrents/downloads/telly" ];
       };
     };
 
@@ -54,8 +56,8 @@ in {
     };
 
     systemd.services.sonarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.programming.jetbrains {
     # Note that we don't actually install any JetBrains IDEs here. Nor do we
     # install Android Studio in ./android.nix. This is because the IDEs are

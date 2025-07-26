@@ -2,10 +2,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   imports = [
     ./torrenting
     ./servarrConfig
@@ -24,6 +26,6 @@ in {
       members = lib.optional (cfg.manager != null) cfg.manager;
     };
 
-    setup.backup.paths = [cfgMs.mediaRoot];
+    setup.backup.paths = [ cfgMs.mediaRoot ];
   };
 }

@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.isGraphical {
     services = {
       # Audio with pipewire

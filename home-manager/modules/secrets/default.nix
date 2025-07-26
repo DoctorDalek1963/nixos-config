@@ -1,3 +1,6 @@
 {
-  imports = [./provisioning.nix ./keychain.nix];
+  imports = [
+    ./provisioning.nix
+    ./keychain.nix
+  ];
 }

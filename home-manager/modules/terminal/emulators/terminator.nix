@@ -3,17 +3,21 @@
   lib,
   config,
   ...
-}: let
-  indent = num: text: let
-    padding = lib.strings.concatStrings (lib.lists.replicate num " ");
-    lines = lib.strings.splitString "\n" text;
-    indented-lines = map (line: padding + line) lines;
-  in
+}:
+let
+  indent =
+    num: text:
+    let
+      padding = lib.strings.concatStrings (lib.lists.replicate num " ");
+      lines = lib.strings.splitString "\n" text;
+      indented-lines = map (line: padding + line) lines;
+    in
     lib.strings.concatStringsSep "\n" indented-lines;
 
   cfg = config.setup.terminal;
 
-  common = fontSize:
+  common =
+    fontSize:
     indent 2 ''
       audible_bell = True
       font = Hack Nerd Font Mono ${toString fontSize}
@@ -23,30 +27,32 @@
       bold_is_bright = False
     '';
 
-  toTerminatorConfig = {
-    cursor_color,
-    background_color,
-    foreground_color,
-    dark_grey,
-    grey,
-    light_grey,
-    very_light_grey,
-    dark_red,
-    light_red,
-    dark_green,
-    light_green,
-    dark_yellow,
-    light_yellow,
-    dark_blue,
-    light_blue,
-    dark_magenta,
-    light_magenta,
-    dark_teal,
-    light_teal,
-  }: let
-    palette1 = "${dark_grey}:${dark_red}:${dark_green}:${dark_yellow}:${dark_blue}:${dark_magenta}:${dark_teal}:${light_grey}";
-    palette2 = "${grey}:${light_red}:${light_green}:${light_yellow}:${light_blue}:${light_magenta}:${light_teal}:${very_light_grey}";
-  in
+  toTerminatorConfig =
+    {
+      cursor_color,
+      background_color,
+      foreground_color,
+      dark_grey,
+      grey,
+      light_grey,
+      very_light_grey,
+      dark_red,
+      light_red,
+      dark_green,
+      light_green,
+      dark_yellow,
+      light_yellow,
+      dark_blue,
+      light_blue,
+      dark_magenta,
+      light_magenta,
+      dark_teal,
+      light_teal,
+    }:
+    let
+      palette1 = "${dark_grey}:${dark_red}:${dark_green}:${dark_yellow}:${dark_blue}:${dark_magenta}:${dark_teal}:${light_grey}";
+      palette2 = "${grey}:${light_red}:${light_green}:${light_yellow}:${light_blue}:${light_magenta}:${light_teal}:${very_light_grey}";
+    in
     indent 2 ''
       cursor_color = "${cursor_color}"
       background_color = "${background_color}"
@@ -151,9 +157,7 @@
         };
       };
     }
-    .${
-      cfg.theme
-    };
+    .${cfg.theme};
 
   default-and-dark = ''
     [[default]]
@@ -183,10 +187,18 @@
       show_titlebar = False
   '';
 
-  profiles = lib.strings.concatStringsSep "\n" (lib.lists.flatten [default-and-dark transparent light white]);
-in {
+  profiles = lib.strings.concatStringsSep "\n" (
+    lib.lists.flatten [
+      default-and-dark
+      transparent
+      light
+      white
+    ]
+  );
+in
+{
   config = lib.mkIf (cfg.emulator == "terminator") {
-    home.packages = [pkgs.terminator];
+    home.packages = [ pkgs.terminator ];
 
     xdg.configFile."terminator/config".text = ''
       [global_config]

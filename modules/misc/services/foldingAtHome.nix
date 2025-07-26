@@ -2,13 +2,15 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.misc.services.foldingAtHome;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     sops.secrets."foldingAtHome/config.xml".mode = "0444";
 
-    setup.impermanence.keepDirs = ["/var/lib/foldingathome"];
+    setup.impermanence.keepDirs = [ "/var/lib/foldingathome" ];
 
     services.foldingathome = {
       enable = true;
@@ -43,7 +45,7 @@ in {
     # going on there either.
 
     systemd = {
-      services.foldingathome. serviceConfig = {
+      services.foldingathome.serviceConfig = {
         DynamicUser = lib.mkForce false;
 
         StateDirectory = "foldingathome";

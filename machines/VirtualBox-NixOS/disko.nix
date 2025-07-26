@@ -33,32 +33,41 @@
 
                 content = {
                   type = "btrfs";
-                  extraArgs = ["-f" "--label" "nixos"];
+                  extraArgs = [
+                    "-f"
+                    "--label"
+                    "nixos"
+                  ];
 
-                  subvolumes = let
-                    mount-options = compression-level: ["compress=zstd:${compression-level}" "noatime"];
-                  in {
-                    "/rootfs" = {
-                      mountOptions = mount-options "2";
-                      mountpoint = "/";
+                  subvolumes =
+                    let
+                      mount-options = compression-level: [
+                        "compress=zstd:${compression-level}"
+                        "noatime"
+                      ];
+                    in
+                    {
+                      "/rootfs" = {
+                        mountOptions = mount-options "2";
+                        mountpoint = "/";
+                      };
+                      "/nix" = {
+                        mountOptions = mount-options "2";
+                        mountpoint = "/nix";
+                      };
+                      "/persist" = {
+                        mountOptions = mount-options "2";
+                        mountpoint = "/persist";
+                      };
+                      "/persist/home" = {
+                        mountOptions = mount-options "2";
+                        mountpoint = "/persist/home";
+                      };
+                      "/persist/home/.snapshots" = {
+                        mountOptions = mount-options "5";
+                        mountpoint = "/persist/home/.snapshots";
+                      };
                     };
-                    "/nix" = {
-                      mountOptions = mount-options "2";
-                      mountpoint = "/nix";
-                    };
-                    "/persist" = {
-                      mountOptions = mount-options "2";
-                      mountpoint = "/persist";
-                    };
-                    "/persist/home" = {
-                      mountOptions = mount-options "2";
-                      mountpoint = "/persist/home";
-                    };
-                    "/persist/home/.snapshots" = {
-                      mountOptions = mount-options "5";
-                      mountpoint = "/persist/home/.snapshots";
-                    };
-                  };
                 };
               };
             };

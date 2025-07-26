@@ -3,13 +3,15 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   concatVars = vars: lib.concatMapStringsSep "" (x: "\$${x}") vars;
 
   # Bert-NixOS doesn't seem to set SSH_CLIENT or SSH_CONNECTION, so username
   # and hostname have to be on all the time on Bert
   isBert = osConfig.setup.hostname == "Bert-NixOS";
-in {
+in
+{
   programs.starship = {
     enable = true;
     enableBashIntegration = config.setup.terminal.shells.bash;
@@ -98,19 +100,21 @@ in {
       };
 
       git_status = {
-        format = let
-          status = concatVars [
-            "conflicted"
-            "stashed"
-            "modified"
-            "deleted"
-            "staged"
-            "renamed"
-            "typechanged"
-            "untracked"
-            "ahead_behind"
-          ];
-        in ''( [${status}]($style))[\]](bold red)'';
+        format =
+          let
+            status = concatVars [
+              "conflicted"
+              "stashed"
+              "modified"
+              "deleted"
+              "staged"
+              "renamed"
+              "typechanged"
+              "untracked"
+              "ahead_behind"
+            ];
+          in
+          ''( [${status}]($style))[\]](bold red)'';
         style = "bold red";
 
         conflicted = "!";

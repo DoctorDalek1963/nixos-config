@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
@@ -19,75 +20,60 @@
         ${extraBackendOpts}
   '';
 
-  optProxy = cond: service: haproxyPort: servicePort: extraBackendOpts:
-    if cond
-    then mkProxy service haproxyPort servicePort extraBackendOpts
-    else "";
-in {
-  config = lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfgMs.books || cfgMs.movies || cfgMs.telly)) {
-    services.haproxy = {
-      enable = true;
-      group = "certs";
+  optProxy =
+    cond: service: haproxyPort: servicePort: extraBackendOpts:
+    if cond then mkProxy service haproxyPort servicePort extraBackendOpts else "";
+in
+{
+  config =
+    lib.mkIf (cfg.enable && (cfg.myspeed.enable || cfgMs.books || cfgMs.movies || cfgMs.telly))
+      {
+        services.haproxy = {
+          enable = true;
+          group = "certs";
 
-      config = ''
-        global
-            log stdout format raw local0 info
+          config = ''
+            global
+                log stdout format raw local0 info
 
-        defaults
-            mode http
-            timeout client 10s
-            timeout connect 5s
-            timeout server 10s
-            timeout http-request 10s
-            timeout tunnel 1h
-            log global
+            defaults
+                mode http
+                timeout client 10s
+                timeout connect 5s
+                timeout server 10s
+                timeout http-request 10s
+                timeout tunnel 1h
+                log global
 
-        ${
-          optProxy
-          cfg.myspeed.enable
-          "myspeed"
-          cfg.ports.haproxy.myspeed
-          cfg.ports.myspeed
-          ""
-        }
+            ${optProxy cfg.myspeed.enable "myspeed" cfg.ports.haproxy.myspeed cfg.ports.myspeed ""}
 
-        ${
-          optProxy
-          cfgMs.books
-          "audiobookshelf"
-          cfg.ports.haproxy.mediaServer.audiobookshelf
-          cfg.ports.mediaServer.audiobookshelf
-          "option http-server-close" # No Keep-Alive, hopefully makes websockets better
-        }
+            ${optProxy cfgMs.books "audiobookshelf" cfg.ports.haproxy.mediaServer.audiobookshelf
+              cfg.ports.mediaServer.audiobookshelf
+              "option http-server-close" # No Keep-Alive, hopefully makes websockets better
+            }
 
-        ${
-          optProxy
-          (cfgMs.movies || cfgMs.telly)
-          "jellyseerr"
-          cfg.ports.haproxy.mediaServer.jellyseerr
-          cfg.ports.mediaServer.jellyseerr
-          ""
-        }
+            ${optProxy (
+              cfgMs.movies || cfgMs.telly
+            ) "jellyseerr" cfg.ports.haproxy.mediaServer.jellyseerr cfg.ports.mediaServer.jellyseerr ""}
 
-        ${
-          optProxy
-          cfgMs.enable
-          "fileflows"
-          cfg.ports.haproxy.mediaServer.fileflows
-          cfg.ports.mediaServer.fileflows
-          ""
-        }
-      '';
-    };
+            ${optProxy cfgMs.enable "fileflows" cfg.ports.haproxy.mediaServer.fileflows
+              cfg.ports.mediaServer.fileflows
+              ""
+            }
+          '';
+        };
 
-    systemd.services.haproxy = {
-      after = ["network.target" "tailscale-certificates.service"];
-      requires = ["tailscale-certificates.service"];
+        systemd.services.haproxy = {
+          after = [
+            "network.target"
+            "tailscale-certificates.service"
+          ];
+          requires = [ "tailscale-certificates.service" ];
 
-      serviceConfig = {
-        Restart = "always";
-        RestartSec = 5;
+          serviceConfig = {
+            Restart = "always";
+            RestartSec = 5;
+          };
+        };
       };
-    };
-  };
 }

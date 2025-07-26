@@ -27,27 +27,33 @@
             size = "100%";
             content = {
               type = "btrfs";
-              extraArgs = ["-f" "--label" "NixOS"];
+              extraArgs = [
+                "-f"
+                "--label"
+                "NixOS"
+              ];
 
-              subvolumes = let
-                mount-options = compression-level: [
-                  "compress=zstd:${compression-level}"
-                  "noatime"
-                ];
-              in {
-                "/rootfs" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/";
+              subvolumes =
+                let
+                  mount-options = compression-level: [
+                    "compress=zstd:${compression-level}"
+                    "noatime"
+                  ];
+                in
+                {
+                  "/rootfs" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/nix";
+                  };
+                  "/persist" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/persist";
+                  };
                 };
-                "/nix" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/nix";
-                };
-                "/persist" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/persist";
-                };
-              };
             };
           };
         };

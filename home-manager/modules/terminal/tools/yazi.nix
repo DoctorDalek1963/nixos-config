@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.terminal;
-in {
+in
+{
   config = lib.mkIf cfg.tools.yazi {
     programs.yazi = {
       enable = true;
@@ -13,12 +15,18 @@ in {
 
       keymap.mgr.prepend_keymap = [
         {
-          on = ["g" "r"];
+          on = [
+            "g"
+            "r"
+          ];
           run = "cd ~/repos";
           desc = "Go to the repos directory";
         }
         {
-          on = ["g" "n"];
+          on = [
+            "g"
+            "n"
+          ];
           run = "cd /etc/nixos";
           desc = "Go to the NixOS directory";
         }
@@ -32,7 +40,10 @@ in {
           open.prepend_rules = [
             {
               mime = "video/*";
-              use = ["play" "reveal"];
+              use = [
+                "play"
+                "reveal"
+              ];
             }
           ];
 

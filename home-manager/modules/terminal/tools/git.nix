@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.terminal.tools.git {
     programs.git = {
       enable = true;
@@ -55,9 +56,7 @@
               onedark = "OneHalfDark";
               catppuccin-macchiato = "catppuccin-macchiato";
             }
-            .${
-              config.setup.terminal.theme
-            };
+            .${config.setup.terminal.theme};
           line-numbers = true;
         };
       };

@@ -3,7 +3,8 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.setup.impermanence;
 
   wipeScript =
@@ -46,7 +47,8 @@
       btrfs subvolume create /mnt/rootfs
       umount /mnt
     '';
-in {
+in
+{
   imports = [
     inputs.impermanence.nixosModules.impermanence
     ./users.nix
@@ -59,14 +61,13 @@ in {
       enable = true;
       hideMounts = true;
 
-      directories =
-        [
-          "/etc/nixos"
-          "/var/log"
-          "/var/lib/nixos"
-          "/var/lib/systemd/coredump"
-        ]
-        ++ cfg.keepDirs;
+      directories = [
+        "/etc/nixos"
+        "/var/log"
+        "/var/lib/nixos"
+        "/var/lib/systemd/coredump"
+      ]
+      ++ cfg.keepDirs;
 
       # {
       #   directory = "/var/lib/colord";
@@ -75,7 +76,7 @@ in {
       #   mode = "u=rwx,g=rx,o=";
       # }
 
-      files = ["/etc/machine-id"] ++ cfg.keepFiles;
+      files = [ "/etc/machine-id" ] ++ cfg.keepFiles;
     };
 
     # "We trust you have received the usual lecture..."
@@ -88,17 +89,15 @@ in {
 
     boot = lib.mkMerge [
       {
-        postBootCommands = let
-          commands =
-            builtins.attrValues
-            (builtins.mapAttrs (
-                name: conf: ''
-                  mkdir -p /persist${conf.home.homeDirectory}
-                  chown ${name}:users /persist${conf.home.homeDirectory}
-                ''
-              )
-              config.home-manager.users);
-        in
+        postBootCommands =
+          let
+            commands = builtins.attrValues (
+              builtins.mapAttrs (name: conf: ''
+                mkdir -p /persist${conf.home.homeDirectory}
+                chown ${name}:users /persist${conf.home.homeDirectory}
+              '') config.home-manager.users
+            );
+          in
           lib.strings.concatStringsSep "\n" commands;
       }
       (lib.mkIf cfg.isEncrypted {
@@ -114,11 +113,11 @@ in {
           services.wipe-btrfs-rootfs = {
             description = "Wipe BTRFS rootfs subvolume";
 
-            wantedBy = ["initrd.target"];
+            wantedBy = [ "initrd.target" ];
 
             # We want to do this after we've setup LUKS, but before the system mounts /
-            after = ["systemd-cryptsetup@cryptroot.service"];
-            before = ["sysroot.mount"];
+            after = [ "systemd-cryptsetup@cryptroot.service" ];
+            before = [ "sysroot.mount" ];
 
             unitConfig.DefaultDependencies = "no";
             serviceConfig.Type = "oneshot";

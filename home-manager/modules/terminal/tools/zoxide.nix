@@ -2,17 +2,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.terminal;
-in {
+in
+{
   config = lib.mkIf cfg.tools.zoxide {
     programs.zoxide = {
       enable = true;
-      options = ["--cmd" "cd"];
+      options = [
+        "--cmd"
+        "cd"
+      ];
 
       enableBashIntegration = cfg.shells.bash;
     };
 
-    setup.impermanence.keepDirs = [".local/share/zoxide"];
+    setup.impermanence.keepDirs = [ ".local/share/zoxide" ];
   };
 }

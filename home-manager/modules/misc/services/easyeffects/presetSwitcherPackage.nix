@@ -27,14 +27,15 @@ stdenv.mkDerivation {
   buildInputs = [
     # TODO (plyer build failure): We can go back to python3 when
     # https://github.com/NixOS/nixpkgs/issues/418869 is fixed
-    (python312.withPackages (p:
-      with p; [
+    (python312.withPackages (
+      p: with p; [
         pystray
         pillow
         cairosvg
         plyer
         dbus-python
-      ]))
+      ]
+    ))
     gtk3
     libayatana-appindicator
     easyeffects

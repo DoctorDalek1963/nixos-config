@@ -3,7 +3,8 @@
   lib,
   osConfig,
   ...
-}: let
+}:
+let
   sunsetr = pkgs.rustPlatform.buildRustPackage (finalAttrs: {
     pname = "sunsetr";
     version = "0.6.0";
@@ -26,12 +27,13 @@
       description = "Automatic blue light filter for Hyprland, Niri, and everything Wayland";
       homepage = "https://github.com/psi4j/sunsetr";
       license = lib.licenses.mit;
-      maintainers = [];
+      maintainers = [ ];
     };
   });
-in {
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    wayland.windowManager.hyprland.settings.exec-once = [(lib.getExe sunsetr)];
+    wayland.windowManager.hyprland.settings.exec-once = [ (lib.getExe sunsetr) ];
 
     xdg.configFile."sunsetr/sunsetr.toml".source =
       (pkgs.writers.writeTOML "sunsetr.toml" {

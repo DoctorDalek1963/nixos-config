@@ -1,4 +1,5 @@
-{pkgs}: let
+{ pkgs }:
+let
   inherit (pkgs.stdenvNoCC) mkDerivation;
   inherit (pkgs) fetchFromGitHub;
 
@@ -29,16 +30,16 @@
     '';
   };
 in
-  mkDerivation {
-    name = "stash-plugins";
+mkDerivation {
+  name = "stash-plugins";
 
-    dontUnpack = true;
-    dontConfigure = true;
-    dontBuild = true;
+  dontUnpack = true;
+  dontConfigure = true;
+  dontBuild = true;
 
-    installPhase = ''
-      mkdir $out
+  installPhase = ''
+    mkdir $out
 
-      cp -r ${renamer} $out/renamer
-    '';
-  }
+    cp -r ${renamer} $out/renamer
+  '';
+}

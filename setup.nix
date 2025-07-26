@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
 
   defaultTrue = mkOption {
@@ -13,7 +14,8 @@
     default = false;
     type = types.bool;
   };
-in {
+in
+{
   imports = [
     ./modules/core.nix
     ./modules/home-manager.nix
@@ -70,7 +72,7 @@ in {
       droidcam = defaultTrue;
       users = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
       };
     };
 
@@ -79,7 +81,7 @@ in {
       type = types.submodule {
         freeformType = types.attrsOf types.path;
       };
-      default = {};
+      default = { };
     };
 
     desktopEnvironments = {
@@ -101,7 +103,10 @@ in {
       sddm = {
         enable = defaultFalse;
         theme = mkOption {
-          type = types.enum ["catppuccin-macchiato" "sugar-light-nixos-simple-blue"];
+          type = types.enum [
+            "catppuccin-macchiato"
+            "sugar-light-nixos-simple-blue"
+          ];
         };
       };
 
@@ -159,78 +164,81 @@ in {
       };
 
       # All the ports used by different services
-      ports = let
-        port = num:
-          mkOption {
-            type = types.port;
-            default = num;
+      ports =
+        let
+          port =
+            num:
+            mkOption {
+              type = types.port;
+              default = num;
+            };
+        in
+        {
+          haproxy = {
+            myspeed = port 5217;
+
+            mediaServer = {
+              audiobookshelf = port 8001;
+              jellyseerr = port 5056;
+              fileflows = port 19201;
+            };
           };
-      in {
-        haproxy = {
-          myspeed = port 5217;
+
+          homepage = port 42731;
+
+          adguardhome = {
+            http = port 3000;
+            https = port 3001;
+            dnsOverTls = port 853; # TCP
+            dnsOverQuic = port 853; # UDP
+          };
+          unbound = port 5335;
+          myspeed = port 5216;
+          ntfy = {
+            http = port 4000;
+            https = port 4001;
+          };
+          squid = port 3128;
+          scrutiny = port 29517;
 
           mediaServer = {
-            audiobookshelf = port 8001;
-            jellyseerr = port 5056;
-            fileflows = port 19201;
+            audiobookshelf = port 8000;
+            calibre = {
+              server = port 8082;
+              web = port 8083;
+            };
+            jellyfin = {
+              http = port 8096;
+              https = port 8920;
+            };
+            jellyseerr = port 5055;
+            navidrome = port 4533;
+            stash = port 9999;
+
+            bazarr = port 6767;
+            lidarr = port 8686;
+            radarr = port 7878;
+            readarr = port 8787;
+            speakarr = port 8282;
+            sonarr = port 8989;
+            whisparr = port 6969;
+
+            prowlarr = port 9696;
+            transmission = port 9091;
+
+            fileflows = port 19200;
+            whisper-asr = port 9000;
+          };
+
+          nextcloud = port 38260;
+
+          personalProjects = {
+            winter-wonderlights = {
+              normal = port 23120;
+              scanner = port 23121;
+            };
           };
         };
-
-        homepage = port 42731;
-
-        adguardhome = {
-          http = port 3000;
-          https = port 3001;
-          dnsOverTls = port 853; # TCP
-          dnsOverQuic = port 853; # UDP
-        };
-        unbound = port 5335;
-        myspeed = port 5216;
-        ntfy = {
-          http = port 4000;
-          https = port 4001;
-        };
-        squid = port 3128;
-        scrutiny = port 29517;
-
-        mediaServer = {
-          audiobookshelf = port 8000;
-          calibre = {
-            server = port 8082;
-            web = port 8083;
-          };
-          jellyfin = {
-            http = port 8096;
-            https = port 8920;
-          };
-          jellyseerr = port 5055;
-          navidrome = port 4533;
-          stash = port 9999;
-
-          bazarr = port 6767;
-          lidarr = port 8686;
-          radarr = port 7878;
-          readarr = port 8787;
-          speakarr = port 8282;
-          sonarr = port 8989;
-          whisparr = port 6969;
-
-          prowlarr = port 9696;
-          transmission = port 9091;
-
-          fileflows = port 19200;
-          whisper-asr = port 9000;
-        };
-
-        nextcloud = port 38260;
-
-        personalProjects = {
-          winter-wonderlights = {
-            normal = port 23120;
-            scanner = port 23121;
-          };
-        };
-      };
 
       adguardhome.enable = defaultFalse;
       myspeed.enable = defaultFalse;
@@ -242,14 +250,14 @@ in {
 
       scrutiny.enable = defaultFalse;
 
-      homeAutomation = {};
+      homeAutomation = { };
 
       mediaServer = {
         enable = defaultFalse;
 
         directoryMap = mkOption {
           type = types.attrsOf (types.listOf types.nonEmptyStr);
-          default = {};
+          default = { };
           example = lib.literalExample {
             radarr = "/data/media/movies";
             sonarr = "/data/media/tv";
@@ -331,19 +339,19 @@ in {
 
       users = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
         description = "The users who are allowed to access the backup server directly.";
       };
 
       paths = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
         description = "The paths that will be included in the backup.";
       };
 
       exclude = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
         description = "Paths to exclude from the backup.";
       };
 
@@ -367,27 +375,29 @@ in {
     };
 
     # === Impermanence
-    impermanence = let
-      keepList = mkOption {
-        type = types.listOf (types.either types.nonEmptyStr types.attrs);
-        default = [];
-      };
-    in {
-      enable = defaultFalse;
-      debug = defaultFalse;
+    impermanence =
+      let
+        keepList = mkOption {
+          type = types.listOf (types.either types.nonEmptyStr types.attrs);
+          default = [ ];
+        };
+      in
+      {
+        enable = defaultFalse;
+        debug = defaultFalse;
 
-      isEncrypted = mkOption {
-        type = types.bool;
-        default = config.setup.impermanence.mainDriveDevice == "/dev/mapper/cryptroot";
-      };
+        isEncrypted = mkOption {
+          type = types.bool;
+          default = config.setup.impermanence.mainDriveDevice == "/dev/mapper/cryptroot";
+        };
 
-      mainDriveDevice = mkOption {
-        type = types.nonEmptyStr;
-      };
+        mainDriveDevice = mkOption {
+          type = types.nonEmptyStr;
+        };
 
-      keepDirs = keepList;
-      keepFiles = keepList;
-    };
+        keepDirs = keepList;
+        keepFiles = keepList;
+      };
 
     # === Passwords
     pamShortenFailDelay = {
@@ -406,7 +416,7 @@ in {
 
       users = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
       };
 
       specificPrinters = {
@@ -432,7 +442,7 @@ in {
         enable = defaultFalse;
         simpleWifiNetworkNames = mkOption {
           type = types.listOf types.nonEmptyStr;
-          default = ["HOME"];
+          default = [ "HOME" ];
           description = ''The names of the simple WiFi networks to use. Each name here should have entries of the form "<name>_SSID" and "<name>_PSK" in the secret networking.env file.'';
         };
         complex = {
@@ -442,28 +452,30 @@ in {
       vpn = {
         enable = defaultFalse;
         vpns = mkOption {
-          type = types.listOf (types.submodule {
-            options = {
-              vpnName = mkOption {
-                type = types.nonEmptyStr;
+          type = types.listOf (
+            types.submodule {
+              options = {
+                vpnName = mkOption {
+                  type = types.nonEmptyStr;
+                };
+                users = mkOption {
+                  type = types.listOf types.nonEmptyStr;
+                };
               };
-              users = mkOption {
-                type = types.listOf types.nonEmptyStr;
-              };
-            };
-          });
+            }
+          );
           default = [
             {
               vpnName = "ch_airvpn";
-              users = ["dyson"];
+              users = [ "dyson" ];
             }
             {
               vpnName = "gb_airvpn";
-              users = ["dyson"];
+              users = [ "dyson" ];
             }
             {
               vpnName = "us_airvpn";
-              users = ["dyson"];
+              users = [ "dyson" ];
             }
           ];
         };
@@ -478,7 +490,7 @@ in {
       enable = defaultFalse;
       users = mkOption {
         type = types.listOf types.nonEmptyStr;
-        default = [];
+        default = [ ];
       };
     };
 
@@ -496,7 +508,7 @@ in {
         enable = defaultFalse;
         users = mkOption {
           type = types.listOf types.nonEmptyStr;
-          default = [];
+          default = [ ];
         };
         asSpecialisation = defaultFalse;
       };

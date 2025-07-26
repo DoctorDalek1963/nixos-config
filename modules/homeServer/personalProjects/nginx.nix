@@ -4,7 +4,8 @@
   inputs,
   system,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgPp = cfg.personalProjects;
 
@@ -18,11 +19,9 @@
   };
   wordle-doc = inputs.wordle.packages.${system}.doc;
 
-  optSet = condition: set:
-    if condition
-    then set
-    else {};
-in {
+  optSet = condition: set: if condition then set else { };
+in
+{
   config = lib.mkIf (cfg.enable && cfgPp.enable) {
     services.nginx.virtualHosts."${cfg.domainName}" = {
       locations =

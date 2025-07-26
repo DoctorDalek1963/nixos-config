@@ -13,7 +13,8 @@
   sd,
   sqlite,
   mkYarnPackage,
-}: let
+}:
+let
   inherit (readarr) version;
 
   dotnet-runtime = dotnetCorePackages.aspnetcore_8_0;
@@ -99,51 +100,51 @@
     doDist = false;
   };
 in
-  buildDotnetModule {
-    pname = "speakarr";
-    inherit version;
+buildDotnetModule {
+  pname = "speakarr";
+  inherit version;
 
-    src = prePatchedSource;
+  src = prePatchedSource;
 
-    projectFile = "src/Speakarr.sln";
-    # installPath = "$out/share/speakarr-$version";
-    executables = ["Speakarr"];
-    nugetDeps = ./nuget-deps.nix;
+  projectFile = "src/Speakarr.sln";
+  # installPath = "$out/share/speakarr-$version";
+  executables = [ "Speakarr" ];
+  nugetDeps = ./nuget-deps.nix;
 
-    dotnetBuildFlags = ["-p:Deterministic=false"];
-    dotnetInstallFlags = ["--framework=net8.0"];
+  dotnetBuildFlags = [ "-p:Deterministic=false" ];
+  dotnetInstallFlags = [ "--framework=net8.0" ];
 
-    inherit dotnet-runtime;
+  inherit dotnet-runtime;
 
-    runtimeDeps = [sqlite];
+  runtimeDeps = [ sqlite ];
 
-    # buildDotnetModule generates its own NuGet.config, so we need to remove
-    # this one to avoid conflicts
-    preConfigure = ''
-      rm src/NuGet.config
-    '';
+  # buildDotnetModule generates its own NuGet.config, so we need to remove
+  # this one to avoid conflicts
+  preConfigure = ''
+    rm src/NuGet.config
+  '';
 
-    postInstall = ''
-      cp -rv ${frontend}/share/UI $out/lib/speakarr/
-    '';
+  postInstall = ''
+    cp -rv ${frontend}/share/UI $out/lib/speakarr/
+  '';
 
-    passthru = {
-      # Fetch the dependencies to generate nuget-deps.nix like so, in the prePatchedSource:
-      # nix-shell -p 'with dotnetCorePackages; combinePackages [aspnetcore_8_0 sdk_8_0]'
-      # dotnet clean src/Speakarr.sln -c Release
-      # dotnet restore src/Speakarr.sln -p:Configuration=Release -p:Platform=Posix -t:PublishAllRids --packages nuget-pkgs
-      # nix run github:winterqt/nuget2nix -- --directory nuget-pkgs/ --nuget-config src/NuGet.config > nuget-deps.nix
+  passthru = {
+    # Fetch the dependencies to generate nuget-deps.nix like so, in the prePatchedSource:
+    # nix-shell -p 'with dotnetCorePackages; combinePackages [aspnetcore_8_0 sdk_8_0]'
+    # dotnet clean src/Speakarr.sln -c Release
+    # dotnet restore src/Speakarr.sln -p:Configuration=Release -p:Platform=Posix -t:PublishAllRids --packages nuget-pkgs
+    # nix run github:winterqt/nuget2nix -- --directory nuget-pkgs/ --nuget-config src/NuGet.config > nuget-deps.nix
 
-      # updateScript = ./update.sh;
-      tests.smoke-test = nixosTests.readarr;
-    };
+    # updateScript = ./update.sh;
+    tests.smoke-test = nixosTests.readarr;
+  };
 
-    meta = {
-      description = "A Usenet/BitTorrent audiobook downloader";
-      homepage = "https://readarr.com";
-      license = lib.licenses.gpl3;
-      maintainers = [lib.maintainers.jocelynthode];
-      mainProgram = "Speakarr";
-      inherit (dotnet-runtime.meta) platforms;
-    };
-  }
+  meta = {
+    description = "A Usenet/BitTorrent audiobook downloader";
+    homepage = "https://readarr.com";
+    license = lib.licenses.gpl3;
+    maintainers = [ lib.maintainers.jocelynthode ];
+    mainProgram = "Speakarr";
+    inherit (dotnet-runtime.meta) platforms;
+  };
+}

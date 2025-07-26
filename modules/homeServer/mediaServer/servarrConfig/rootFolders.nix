@@ -3,25 +3,20 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  indent4 = code:
-    builtins.concatStringsSep "\n"
-    (
-      builtins.map (line: "    ${line}")
-      (
-        builtins.filter
-        (x: builtins.isString x && x != "")
-        (lib.strings.split "\n" code)
+  indent4 =
+    code:
+    builtins.concatStringsSep "\n" (
+      builtins.map (line: "    ${line}") (
+        builtins.filter (x: builtins.isString x && x != "") (lib.strings.split "\n" code)
       )
     );
 
-  optSnippet = cond: code:
-    if cond
-    then indent4 code
-    else "";
+  optSnippet = cond: code: if cond then indent4 code else "";
 
   readarr = optSnippet config.services.readarr.enable ''
     calibre_settings = {
@@ -77,14 +72,22 @@
         "INSERT INTO RootFolders (Path) VALUES ('${cfgMs.mediaRoot}/porn/staging/')"
     )
   '';
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.add-servarr-root-folders = {
       description = "Add root folders to all the servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py" {flakeIgnore = ["W293" "E303" "E501"];}
+        ExecStart = "${pkgs.writers.writePython3 "add_servarr_root_folders.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "E303"
+              "E501"
+            ];
+          }
           ''
             import json
             import os
@@ -120,7 +123,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

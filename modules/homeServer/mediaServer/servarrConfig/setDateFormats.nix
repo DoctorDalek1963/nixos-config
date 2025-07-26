@@ -3,22 +3,27 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  optSet = cond: path:
-    if cond
-    then "set_date_formats(\"${path}\")"
-    else "";
-in {
+  optSet = cond: path: if cond then "set_date_formats(\"${path}\")" else "";
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.set-servarr-date-formats = {
       description = "Set the time and date formats for servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "set_servarr_date_formats.py" {flakeIgnore = ["W293" "E303"];}
+        ExecStart = "${pkgs.writers.writePython3 "set_servarr_date_formats.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "E303"
+            ];
+          }
           ''
             import os
             import sqlite3
@@ -67,7 +72,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

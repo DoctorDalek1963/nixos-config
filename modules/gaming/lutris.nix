@@ -3,19 +3,21 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.gaming;
 
   lutris = pkgs.lutris.override {
-    extraPkgs = p:
-      with p; [
+    extraPkgs =
+      p: with p; [
         winetricks
       ];
 
-    extraLibraries = _p: [];
+    extraLibraries = _p: [ ];
   };
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.lutris) {
-    environment.systemPackages = [lutris];
+    environment.systemPackages = [ lutris ];
   };
 }

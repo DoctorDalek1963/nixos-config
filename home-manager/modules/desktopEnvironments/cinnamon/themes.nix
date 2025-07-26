@@ -3,12 +3,14 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.setup.desktopEnvironments.cinnamon;
 
   cursor-theme = cfg.theme.cursor;
   gtk-theme = cfg.theme.gtk;
-in {
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.cinnamon.enable {
     dconf.settings = {
       "org/cinnamon/desktop/interface" = {
@@ -26,10 +28,7 @@ in {
       };
 
       "org/x/apps/portal" = {
-        color-scheme =
-          if lib.hasInfix "dark" gtk-theme
-          then "prefer-dark"
-          else "prefer-light";
+        color-scheme = if lib.hasInfix "dark" gtk-theme then "prefer-dark" else "prefer-light";
       };
     };
   };

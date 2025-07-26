@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   probcalc = pkgs.python3.pkgs.buildPythonPackage rec {
     pname = "probcalc";
     version = "0.5.0";
@@ -14,33 +15,34 @@
     };
 
     pyproject = true;
-    build-system = [pkgs.python3.pkgs.setuptools];
+    build-system = [ pkgs.python3.pkgs.setuptools ];
   };
 
-  python =
-    pkgs.python3.withPackages
-    (ps:
-      (with ps; [
-        ipython
-        jedi
-        jupyter
+  python = pkgs.python3.withPackages (
+    ps:
+    (with ps; [
+      ipython
+      jedi
+      jupyter
 
-        bitstring
-        matplotlib
-        networkx
-        numpy
-        pandas
-        scikit-learn
-        scipy
-        sympy
-      ])
-      ++ [probcalc]);
+      bitstring
+      matplotlib
+      networkx
+      numpy
+      pandas
+      scikit-learn
+      scipy
+      sympy
+    ])
+    ++ [ probcalc ]
+  );
 
   python-bin = "${python}/bin/python";
-in {
+in
+{
   config = lib.mkIf config.setup.programming.python {
     home = {
-      packages = [python];
+      packages = [ python ];
       file = {
         ".ipython/profile_default/ipython_config.py".text =
           # python

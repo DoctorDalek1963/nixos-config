@@ -3,10 +3,17 @@
   lib,
   config,
   ...
-}: let
-  inherit (lib) mkOption mkEnableOption mkIf types;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkEnableOption
+    mkIf
+    types
+    ;
   cfg = config.services.myspeed;
-in {
+in
+{
   options = {
     services.myspeed = {
       enable = mkEnableOption "MySpeed, an analysis tool for internet speed tests.";
@@ -19,7 +26,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pkgs.callPackage ./package.nix {};
+        default = pkgs.callPackage ./package.nix { };
         description = "The myspeed package to use.";
       };
 
@@ -57,8 +64,8 @@ in {
 
     systemd.services.myspeed = {
       description = "MySpeed";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
 
       environment.NODE_ENV = "production";
 
@@ -87,7 +94,7 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [8282];
+      allowedTCPPorts = [ 8282 ];
     };
 
     users.users = mkIf (cfg.user == "myspeed") {
@@ -100,7 +107,7 @@ in {
     };
 
     users.groups = mkIf (cfg.group == "myspeed") {
-      myspeed = {};
+      myspeed = { };
     };
   };
 }

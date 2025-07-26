@@ -3,18 +3,23 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (config.consts) nvimPath;
-in {
+in
+{
   config = lib.mkIf config.setup.terminal.shells.bash {
     setup.impermanence = {
-      keepFiles = [".bash_history"];
+      keepFiles = [ ".bash_history" ];
       keepDirs = [
-        ".cache/blesh/${let
-          list = lib.strings.split "\\." pkgs.blesh.version;
-          major = builtins.elemAt list 0;
-          minor = builtins.elemAt list 2;
-        in "${major}.${minor}"}"
+        ".cache/blesh/${
+          let
+            list = lib.strings.split "\\." pkgs.blesh.version;
+            major = builtins.elemAt list 0;
+            minor = builtins.elemAt list 2;
+          in
+          "${major}.${minor}"
+        }"
       ];
     };
 
@@ -129,17 +134,13 @@ in {
         bind -s 'set completion-ignore-case on'
 
         source "${pkgs.complete-alias}/bin/complete_alias"
-        ${
-          lib.strings.concatStringsSep "\n" (
-            builtins.map (alias: "complete -F _complete_alias ${alias}") (
-              builtins.attrNames (
-                lib.filterAttrs
-                (_name: value: !(lib.strings.hasInfix "|" value))
-                config.setup.terminal.shellAliases
-              )
+        ${lib.strings.concatStringsSep "\n" (
+          builtins.map (alias: "complete -F _complete_alias ${alias}") (
+            builtins.attrNames (
+              lib.filterAttrs (_name: value: !(lib.strings.hasInfix "|" value)) config.setup.terminal.shellAliases
             )
           )
-        }
+        )}
 
         # Automatically attach to a running Zellij session, but only when
         # connecting over SSH

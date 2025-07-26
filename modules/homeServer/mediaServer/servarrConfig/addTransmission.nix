@@ -3,22 +3,28 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  optAdd = cond: path:
-    if cond
-    then "add_transmission(\"${path}\")"
-    else "";
-in {
+  optAdd = cond: path: if cond then "add_transmission(\"${path}\")" else "";
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.add-transmission-to-servarr-apps = {
       description = "Add the Transmission torrent client to all the servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "add_transmission_to_servarr_apps.py" {flakeIgnore = ["W293" "W503" "E303"];}
+        ExecStart = "${pkgs.writers.writePython3 "add_transmission_to_servarr_apps.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "W503"
+              "E303"
+            ];
+          }
           ''
             import json
             import os
@@ -89,7 +95,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

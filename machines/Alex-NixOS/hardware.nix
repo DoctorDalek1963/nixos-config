@@ -4,19 +4,27 @@
   config,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   boot = {
     initrd = {
-      availableKernelModules = ["nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod"];
-      kernelModules = [];
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = ["kvm-amd"];
-    extraModulePackages = [];
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
 
     loader = {
       grub = {
@@ -30,7 +38,7 @@
     };
   };
 
-  swapDevices = [];
+  swapDevices = [ ];
 
   nix.settings.max-jobs = 12;
 
@@ -43,7 +51,7 @@
     amdgpu.opencl.enable = true;
   };
 
-  systemd.tmpfiles.rules = ["L+ /opt/rocm/hip - - - - ${pkgs.rocmPackages.clr}"];
+  systemd.tmpfiles.rules = [ "L+ /opt/rocm/hip - - - - ${pkgs.rocmPackages.clr}" ];
 
   # Taken from https://blog.wjt.je/running-foldingathome-on-nixos-with-opencl-support-for-amd-gpu
   # to support Folding@home

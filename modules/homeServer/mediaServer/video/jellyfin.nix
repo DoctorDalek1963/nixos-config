@@ -2,10 +2,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
     setup = {
       impermanence.keepDirs = [
@@ -14,8 +16,8 @@ in {
       ];
 
       backup = {
-        paths = [config.services.jellyfin.dataDir];
-        exclude = ["${config.services.jellyfin.dataDir}/log"];
+        paths = [ config.services.jellyfin.dataDir ];
+        exclude = [ "${config.services.jellyfin.dataDir}/log" ];
       };
 
       homeServer.mediaServer.directoryMap.jellyfin = [
@@ -32,6 +34,6 @@ in {
       group = "media";
     };
 
-    users.users.jellyfin.extraGroups = ["certs"];
+    users.users.jellyfin.extraGroups = [ "certs" ];
   };
 }

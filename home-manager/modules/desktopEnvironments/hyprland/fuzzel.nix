@@ -3,7 +3,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   colors =
     {
       "catppuccin-macchiato-mauve" = {
@@ -20,31 +21,32 @@
         border = "c7a0f6ff";
       };
     }
-    .${
-      config.setup.desktopEnvironments.hyprland.theme
-    };
-in {
+    .${config.setup.desktopEnvironments.hyprland.theme};
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
-      bind = ["$mod, R, exec, $launchPrefix ${config.programs.fuzzel.package}/bin/fuzzel"];
+      bind = [ "$mod, R, exec, $launchPrefix ${config.programs.fuzzel.package}/bin/fuzzel" ];
     };
 
-    setup.impermanence.keepFiles = [".cache/fuzzel"];
+    setup.impermanence.keepFiles = [ ".cache/fuzzel" ];
 
     programs.fuzzel = {
       enable = true;
 
       settings = {
-        main = let
-          hyprlandLaunchPrefix = config.wayland.windowManager.hyprland.settings."$launchPrefix";
-        in {
-          font = "Hack Nerd Font Mono";
-          use-bold = true;
-          icons-enabled = true;
-          terminal = config.wayland.windowManager.hyprland.settings."$terminal";
+        main =
+          let
+            hyprlandLaunchPrefix = config.wayland.windowManager.hyprland.settings."$launchPrefix";
+          in
+          {
+            font = "Hack Nerd Font Mono";
+            use-bold = true;
+            icons-enabled = true;
+            terminal = config.wayland.windowManager.hyprland.settings."$terminal";
 
-          launch-prefix = lib.mkIf (hyprlandLaunchPrefix != "") hyprlandLaunchPrefix;
-        };
+            launch-prefix = lib.mkIf (hyprlandLaunchPrefix != "") hyprlandLaunchPrefix;
+          };
 
         inherit colors;
       };

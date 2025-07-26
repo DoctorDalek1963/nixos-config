@@ -2,16 +2,18 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
     setup = {
-      impermanence.keepDirs = ["/var/lib/private/jellyseerr"];
+      impermanence.keepDirs = [ "/var/lib/private/jellyseerr" ];
       backup = {
-        paths = ["/var/lib/private/jellyseerr"];
-        exclude = ["/var/lib/private/jellyseerr/logs"];
+        paths = [ "/var/lib/private/jellyseerr" ];
+        exclude = [ "/var/lib/private/jellyseerr/logs" ];
       };
     };
 

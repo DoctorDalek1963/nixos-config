@@ -2,17 +2,19 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.music) {
     setup = {
-      impermanence.keepDirs = [config.services.lidarr.dataDir];
+      impermanence.keepDirs = [ config.services.lidarr.dataDir ];
 
       homeServer.mediaServer.directoryMap = {
-        lidarr = ["${cfgMs.mediaRoot}/music"];
-        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/music"];
+        lidarr = [ "${cfgMs.mediaRoot}/music" ];
+        transmission = [ "${cfgMs.mediaRoot}/torrents/downloads/music" ];
       };
     };
 
@@ -53,8 +55,8 @@ in {
     };
 
     systemd.services.lidarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

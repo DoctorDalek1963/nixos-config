@@ -3,23 +3,27 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.secrets;
 
-  bash-script = let
-    nmcli = "${pkgs.networkmanager}/bin/nmcli";
-    nmcli-command-blocks = map (name:
-      # bash
-      ''
-        ${nmcli} connection delete $(get_ssid "${name}") || true
-        ${nmcli} connection add type wifi con-name $(get_ssid "${name}") ifname "$wifi_device" ssid $(get_ssid "${name}")
-        ${nmcli} connection modify $(get_ssid "${name}") wifi-sec.key-mgmt wpa-psk wifi-sec.psk $(get_psk "${name}")
-      '')
-    cfg.networking.simpleWifiNetworkNames;
-    getFromEnv = type: ''
-      ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=)\S+" ${config.sops.secrets."networking/simple.env".path}
-    '';
-  in
+  bash-script =
+    let
+      nmcli = "${pkgs.networkmanager}/bin/nmcli";
+      nmcli-command-blocks = map (
+        name:
+        # bash
+        ''
+          ${nmcli} connection delete $(get_ssid "${name}") || true
+          ${nmcli} connection add type wifi con-name $(get_ssid "${name}") ifname "$wifi_device" ssid $(get_ssid "${name}")
+          ${nmcli} connection modify $(get_ssid "${name}") wifi-sec.key-mgmt wpa-psk wifi-sec.psk $(get_psk "${name}")
+        '') cfg.networking.simpleWifiNetworkNames;
+      getFromEnv = type: ''
+        ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=)\S+" ${
+          config.sops.secrets."networking/simple.env".path
+        }
+      '';
+    in
     pkgs.writeShellScriptBin "add-wifi-networks-simple" ''
       wifi_device="$(${nmcli} device | ${pkgs.gawk}/bin/awk '$2 == "wifi" {print $1}')"
 
@@ -32,7 +36,8 @@
 
       ${lib.concatStringsSep "\n\n\n" nmcli-command-blocks}
     '';
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.networking.enable) {
     sops.secrets."networking/simple.env" = {
       mode = "0644";
@@ -45,8 +50,8 @@ in {
         RestartSec = "3s";
         ExecStart = "${bash-script}/bin/add-wifi-networks-simple";
       };
-      wants = ["network-online.target"];
-      wantedBy = ["multi-user.target"];
+      wants = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
     };
   };
 }

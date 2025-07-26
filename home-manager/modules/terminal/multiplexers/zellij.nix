@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.terminal;
-in {
+in
+{
   config = lib.mkIf (cfg.multiplexer == "zellij") {
     programs.zellij = {
       enable = true;
@@ -23,29 +25,29 @@ in {
     xdg.configFile = {
       "zellij/config.kdl".text =
         lib.mkAfter
-        # kdl
-        ''
-          keybinds {
-              normal {
-                  bind "Alt x" { ToggleFocusFullscreen; }
-                  bind "Alt q" { CloseFocus; }
-              }
+          # kdl
+          ''
+            keybinds {
+                normal {
+                    bind "Alt x" { ToggleFocusFullscreen; }
+                    bind "Alt q" { CloseFocus; }
+                }
 
-              // Even in locked mode, I want basic navigation
-              locked {
-                  bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-                  bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
-                  bind "Alt j" "Alt Down" { MoveFocus "Down"; }
-                  bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+                // Even in locked mode, I want basic navigation
+                locked {
+                    bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+                    bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+                    bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+                    bind "Alt k" "Alt Up" { MoveFocus "Up"; }
 
-                  bind "Alt n" { NewPane; }
-                  bind "Alt q" { CloseFocus; }
+                    bind "Alt n" { NewPane; }
+                    bind "Alt q" { CloseFocus; }
 
-                  // See "Alt x" in normal block
-                  bind "Alt x" { ToggleFocusFullscreen; }
-              }
-          }
-        '';
+                    // See "Alt x" in normal block
+                    bind "Alt x" { ToggleFocusFullscreen; }
+                }
+            }
+          '';
 
       # The original default layout but we default to a vertical split
       # instead of a horizontal one
@@ -169,7 +171,7 @@ in {
 
     setup = {
       terminal.shellAliases.z = "${config.programs.zellij.package}/bin/zellij";
-      impermanence.keepDirs = [".cache/zellij"];
+      impermanence.keepDirs = [ ".cache/zellij" ];
     };
   };
 }

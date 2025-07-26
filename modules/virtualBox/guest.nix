@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.virtualBox.guest.enable {
     virtualisation.virtualbox.guest.enable = true;
 

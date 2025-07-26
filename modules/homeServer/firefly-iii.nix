@@ -4,13 +4,15 @@
   config,
   options,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.firefly-iii.enable) {
     setup = {
-      impermanence.keepDirs = [config.services.firefly-iii.dataDir];
-      backup.paths = ["${config.services.firefly-iii.dataDir}/storage/database/database.sqlite"];
+      impermanence.keepDirs = [ config.services.firefly-iii.dataDir ];
+      backup.paths = [ "${config.services.firefly-iii.dataDir}/storage/database/database.sqlite" ];
     };
 
     sops.secrets = {
@@ -26,7 +28,10 @@ in {
         enable = true;
 
         package = pkgs.firefly-iii.overrideAttrs (oldAttrs: {
-          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.fd pkgs.sd];
+          nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [
+            pkgs.fd
+            pkgs.sd
+          ];
 
           preBuild = ''
             fd . -e twig . -X sd -F "route('index')" "route('home')"
@@ -35,12 +40,10 @@ in {
 
         inherit (config.services.nginx) group;
 
-        poolConfig =
-          options.services.firefly-iii.poolConfig.default
-          // {
-            "listen.mode" = "0666";
-            "access.log" = "${config.services.firefly-iii.dataDir}/access.log";
-          };
+        poolConfig = options.services.firefly-iii.poolConfig.default // {
+          "listen.mode" = "0666";
+          "access.log" = "${config.services.firefly-iii.dataDir}/access.log";
+        };
 
         settings = {
           APP_KEY_FILE = config.sops.secrets."home-server/firefly-iii/key-file".path;

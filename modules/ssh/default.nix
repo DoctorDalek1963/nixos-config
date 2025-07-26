@@ -3,11 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.ssh;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkgs.sshfs];
+    environment.systemPackages = [ pkgs.sshfs ];
 
     programs.mosh.enable = cfg.mosh;
 

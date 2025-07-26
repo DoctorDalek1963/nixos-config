@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   mp = config.setup.misc.programs;
-in {
+in
+{
   imports = [
     ./anki.nix
     ./discord.nix

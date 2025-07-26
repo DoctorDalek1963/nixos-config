@@ -2,13 +2,15 @@
   self,
   nixpkgs,
   inputs,
-}: {
-  iso = let
-    system = "x86_64-linux";
-  in
+}:
+{
+  iso =
+    let
+      system = "x86_64-linux";
+    in
     nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit self inputs system;};
+      specialArgs = { inherit self inputs system; };
       modules = [
         "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ./iso
@@ -16,24 +18,28 @@
         # Include everything for certain machines so we don't have to download
         # tons from the cache at installation time
         {
-          environment.systemPackages = let
-            # deadnix: skip
-            allPkgs = hostname: users:
-              self.outputs.nixosConfigurations."${hostname}".config.environment.systemPackages
-              ++ (nixpkgs.lib.lists.flatten
-                (builtins.map
-                  (user: self.outputs.nixosConfigurations."${hostname}".config.home-manager.users."${user}".home.packages)
-                  users));
-          in
+          environment.systemPackages =
+            let
+              # deadnix: skip
+              allPkgs =
+                hostname: users:
+                self.outputs.nixosConfigurations."${hostname}".config.environment.systemPackages
+                ++ (nixpkgs.lib.lists.flatten (
+                  builtins.map (
+                    user:
+                    self.outputs.nixosConfigurations."${hostname}".config.home-manager.users."${user}".home.packages
+                  ) users
+                ));
+            in
             # allPkgs "VirtualBox-NixOS" ["dyson"];
-            [];
+            [ ];
         }
       ];
     };
 
   "Alex-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit self inputs system;};
+    specialArgs = { inherit self inputs system; };
     modules = [
       ./setup.nix
       ./machines/Alex-NixOS
@@ -48,14 +54,14 @@
 
           backup = {
             enable = true;
-            users = ["dyson"];
-            startAt = [];
+            users = [ "dyson" ];
+            startAt = [ ];
           };
 
           virtualBox.host = {
             # enable = true;
             asSpecialisation = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           profilePictures.dyson = ./files/profile-pictures/dyson.png;
@@ -68,7 +74,7 @@
 
           printing = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
             # specificPrinters.canonPixmaMG3250 = true;
           };
 
@@ -77,14 +83,14 @@
             userPasswords.enable = true;
             networking = {
               enable = true;
-              simpleWifiNetworkNames = ["HOME"];
+              simpleWifiNetworkNames = [ "HOME" ];
             };
             vpn.enable = true;
           };
 
           uinput = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           openRGB = {
@@ -96,7 +102,7 @@
 
           androidTools = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           desktopEnvironments.hyprland.enable = true;
@@ -106,12 +112,13 @@
     ];
   };
 
-  "Bert-NixOS" = let
-    system = "aarch64-linux";
-  in
+  "Bert-NixOS" =
+    let
+      system = "aarch64-linux";
+    in
     nixpkgs.lib.nixosSystem {
       inherit system;
-      specialArgs = {inherit self inputs system;};
+      specialArgs = { inherit self inputs system; };
       modules = [
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -147,7 +154,7 @@
               };
               networking = {
                 enable = true;
-                simpleWifiNetworkNames = ["HOME"];
+                simpleWifiNetworkNames = [ "HOME" ];
               };
               vpn.enable = false;
             };
@@ -163,7 +170,7 @@
 
   "Harold-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit self inputs system;};
+    specialArgs = { inherit self inputs system; };
     modules = [
       ./setup.nix
       ./machines/Harold-NixOS
@@ -179,8 +186,8 @@
 
           backup = {
             enable = true;
-            users = ["dyson"];
-            startAt = [];
+            users = [ "dyson" ];
+            startAt = [ ];
           };
 
           profilePictures.dyson = ./files/profile-pictures/dyson.png;
@@ -202,12 +209,12 @@
 
           uinput = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           androidTools = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           desktopEnvironments.hyprland.enable = true;
@@ -219,7 +226,7 @@
 
   "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit self inputs system;};
+    specialArgs = { inherit self inputs system; };
     modules = [
       ./setup.nix
       ./machines/Olivia-NixOS
@@ -234,7 +241,10 @@
 
           printing = {
             enable = true;
-            users = ["dyson" "rebecca"];
+            users = [
+              "dyson"
+              "rebecca"
+            ];
             specificPrinters.canonPixmaMG3250 = true;
           };
 
@@ -243,7 +253,7 @@
             userPasswords.enable = true;
             networking = {
               enable = true;
-              simpleWifiNetworkNames = ["HOME"];
+              simpleWifiNetworkNames = [ "HOME" ];
             };
           };
 
@@ -259,7 +269,7 @@
 
   "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit self inputs system;};
+    specialArgs = { inherit self inputs system; };
     modules = [
       ./setup.nix
       ./machines/Sasha-NixOS
@@ -275,7 +285,7 @@
 
           backup = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
             startAt = "03:00";
             ntfy.url = "http://localhost:4000";
           };
@@ -318,14 +328,14 @@
             userPasswords.enable = true;
             networking = {
               enable = true;
-              simpleWifiNetworkNames = ["HOME"];
+              simpleWifiNetworkNames = [ "HOME" ];
             };
             vpn = {
               enable = true;
               vpns = [
                 {
                   vpnName = "ch_airvpn";
-                  users = ["dyson"];
+                  users = [ "dyson" ];
                 }
               ];
             };
@@ -337,7 +347,7 @@
 
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
-    specialArgs = {inherit self inputs system;};
+    specialArgs = { inherit self inputs system; };
     modules = [
       ./setup.nix
       ./machines/VirtualBox-NixOS
@@ -363,7 +373,7 @@
 
           uinput = {
             enable = true;
-            users = ["dyson"];
+            users = [ "dyson" ];
           };
 
           desktopEnvironments.gnome.enable = true;

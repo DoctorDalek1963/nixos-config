@@ -3,29 +3,32 @@
   lib,
   config,
   ...
-}: let
-  safeeyes-config-json = (pkgs.formats.json {}).generate "safeeyes-config.json" {
+}:
+let
+  safeeyes-config-json = (pkgs.formats.json { }).generate "safeeyes-config.json" {
     allow_postpone = true;
     postpone_duration = 1;
-    plugins =
+    plugins = [
+      {
+        id = "donotdisturb";
+        enabled = false;
+      }
+    ]
+    ++ (map
+      (name: {
+        id = name;
+        enabled = true;
+      })
       [
-        {
-          id = "donotdisturb";
-          enabled = false;
-        }
+        "audiblealert"
+        "healthstats"
+        "mediacontrol"
+        "notification"
+        "screensaver"
+        "smartpause"
+        "trayicon"
       ]
-      ++ (map (name: {
-          id = name;
-          enabled = true;
-        }) [
-          "audiblealert"
-          "healthstats"
-          "mediacontrol"
-          "notification"
-          "screensaver"
-          "smartpause"
-          "trayicon"
-        ]);
+    );
   };
 
   path = "${config.xdg.configHome}/safeeyes/safeeyes.json";
@@ -41,11 +44,14 @@
         cp "${safeeyes-config-json}" "${path}"
     fi
   '';
-in {
+in
+{
   config = lib.mkIf config.setup.misc.services.safeeyes {
     services.safeeyes.enable = true;
 
-    home.activation.setSafeeyesConfig = lib.hm.dag.entryAfter ["writeBoundary"] "$DRY_RUN_CMD ${set-safeeyes-config}";
+    home.activation.setSafeeyesConfig = lib.hm.dag.entryAfter [
+      "writeBoundary"
+    ] "$DRY_RUN_CMD ${set-safeeyes-config}";
     setup.impermanence.keepDirs = ".config/safeeyes";
   };
 }

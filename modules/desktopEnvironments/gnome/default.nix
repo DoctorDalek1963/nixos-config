@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.desktopEnvironments.gnome;
 
   chaff = with pkgs; [
@@ -25,16 +26,14 @@
     totem # Video player
     yelp # Help view
   ];
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     services.desktopManager.gnome.enable = cfg.enable;
 
     programs.dconf.enable = cfg.enable;
 
     # Get rid of all the chaff
-    environment.gnome.excludePackages =
-      if (cfg.enable && cfg.minimal)
-      then chaff
-      else [];
+    environment.gnome.excludePackages = if (cfg.enable && cfg.minimal) then chaff else [ ];
   };
 }

@@ -3,58 +3,63 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.secrets.vpn;
 
-  optSet = cond: set:
-    if cond
-    then set
-    else {};
+  optSet = cond: set: if cond then set else { };
 
-  vpnEnabled = name: builtins.elem name (map ({vpnName, ...}: vpnName) cfg.vpns);
+  vpnEnabled = name: builtins.elem name (map ({ vpnName, ... }: vpnName) cfg.vpns);
 
-  bash-script = let
-    nmcli = "${pkgs.networkmanager}/bin/nmcli";
-    nmcli-command-blocks = map ({
-      vpnName,
-      users,
-    }: let
-      perm-commands =
-        map
-        (username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'")
-        users;
+  bash-script =
+    let
+      nmcli = "${pkgs.networkmanager}/bin/nmcli";
+      nmcli-command-blocks = map (
+        {
+          vpnName,
+          users,
+        }:
+        let
+          perm-commands = map (
+            username: "${nmcli} connection modify ${vpnName} +connection.permissions '${username}'"
+          ) users;
 
-      add-credentials =
-        if lib.hasSuffix "hotspotshield" vpnName
-        then
-          # bash
-          ''
-            ${nmcli} connection modify ${vpnName} vpn.user-name "$(head -1 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path})"
-            ${nmcli} connection modify ${vpnName} -vpn.data "password-flags=1"
-            ${nmcli} connection modify ${vpnName} +vpn.data "password-flags=0"
-            ${nmcli} connection modify ${vpnName} vpn.secrets "password=$(head -2 ${config.sops.secrets."openvpn/${vpnName}/user-pass".path} | tail -1)"
-          ''
-        else "";
+          add-credentials =
+            if lib.hasSuffix "hotspotshield" vpnName then
+              # bash
+              ''
+                ${nmcli} connection modify ${vpnName} vpn.user-name "$(head -1 ${
+                  config.sops.secrets."openvpn/${vpnName}/user-pass".path
+                })"
+                ${nmcli} connection modify ${vpnName} -vpn.data "password-flags=1"
+                ${nmcli} connection modify ${vpnName} +vpn.data "password-flags=0"
+                ${nmcli} connection modify ${vpnName} vpn.secrets "password=$(head -2 ${
+                  config.sops.secrets."openvpn/${vpnName}/user-pass".path
+                } | tail -1)"
+              ''
+            else
+              "";
+        in
+        # bash
+        ''
+          ${nmcli} connection delete ${vpnName} || true
+          ${nmcli} connection import type openvpn file "/etc/openvpn/${vpnName}.ovpn"
+
+          ${nmcli} connection modify ${vpnName} connection.permissions ""
+          ${lib.concatStringsSep "\n" perm-commands}
+
+          ${add-credentials}
+        ''
+      ) cfg.vpns;
     in
-      # bash
-      ''
-        ${nmcli} connection delete ${vpnName} || true
-        ${nmcli} connection import type openvpn file "/etc/openvpn/${vpnName}.ovpn"
-
-        ${nmcli} connection modify ${vpnName} connection.permissions ""
-        ${lib.concatStringsSep "\n" perm-commands}
-
-        ${add-credentials}
-      '')
-    cfg.vpns;
-  in
     pkgs.writeShellScriptBin "import-ovpn-files" (lib.concatStringsSep "\n\n\n" nmcli-command-blocks);
-in {
+in
+{
   config = lib.mkIf config.setup.secrets.vpn.enable {
-    environment.systemPackages = [pkgs.openvpn];
+    environment.systemPackages = [ pkgs.openvpn ];
 
     sops.secrets =
-      {}
+      { }
       // optSet (vpnEnabled "ch_airvpn") {
         "openvpn/ch_airvpn/ca" = {
           mode = "0644";
@@ -98,38 +103,39 @@ in {
         };
       };
 
-    networking.networkmanager.plugins = [pkgs.networkmanager-openvpn];
+    networking.networkmanager.plugins = [ pkgs.networkmanager-openvpn ];
 
-    environment.etc = let
-      build-airvpn-ovpn = country: {
-        "openvpn/${country}_airvpn.ovpn".text = ''
-          client
-          dev tun
-          remote ${country}3.vpn.airdns.org 443
-          resolv-retry infinite
-          nobind
-          persist-key
-          persist-tun
-          auth-nocache
-          verb 3
-          explicit-exit-notify 5
-          push-peer-info
-          setenv UV_IPV6 yes
-          setenv IPV6 yes
-          remote-cert-tls server
-          comp-lzo no
-          data-ciphers AES-256-GCM:AES-256-CBC:AES-192-GCM:AES-192-CBC:AES-128-GCM:AES-128-CBC
-          data-ciphers-fallback AES-256-CBC
-          proto udp
-          auth SHA512
+    environment.etc =
+      let
+        build-airvpn-ovpn = country: {
+          "openvpn/${country}_airvpn.ovpn".text = ''
+            client
+            dev tun
+            remote ${country}3.vpn.airdns.org 443
+            resolv-retry infinite
+            nobind
+            persist-key
+            persist-tun
+            auth-nocache
+            verb 3
+            explicit-exit-notify 5
+            push-peer-info
+            setenv UV_IPV6 yes
+            setenv IPV6 yes
+            remote-cert-tls server
+            comp-lzo no
+            data-ciphers AES-256-GCM:AES-256-CBC:AES-192-GCM:AES-192-CBC:AES-128-GCM:AES-128-CBC
+            data-ciphers-fallback AES-256-CBC
+            proto udp
+            auth SHA512
 
-          ca ${config.sops.secrets."openvpn/${country}_airvpn/ca".path}
-          cert ${config.sops.secrets."openvpn/${country}_airvpn/cert".path}
-          key ${config.sops.secrets."openvpn/${country}_airvpn/key".path}
-          tls-crypt ${config.sops.secrets."openvpn/${country}_airvpn/tls-crypt".path}
-        '';
-      };
-    in
+            ca ${config.sops.secrets."openvpn/${country}_airvpn/ca".path}
+            cert ${config.sops.secrets."openvpn/${country}_airvpn/cert".path}
+            key ${config.sops.secrets."openvpn/${country}_airvpn/key".path}
+            tls-crypt ${config.sops.secrets."openvpn/${country}_airvpn/tls-crypt".path}
+          '';
+        };
+      in
       optSet (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
       // optSet (vpnEnabled "gb_airvpn") (build-airvpn-ovpn "gb")
       // optSet (vpnEnabled "us_airvpn") (build-airvpn-ovpn "us");
@@ -141,7 +147,7 @@ in {
         RestartSec = "3s";
         ExecStart = "${bash-script}/bin/import-ovpn-files";
       };
-      wantedBy = ["network-online.target"];
+      wantedBy = [ "network-online.target" ];
     };
   };
 }

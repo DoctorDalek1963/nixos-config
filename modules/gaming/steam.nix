@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.gaming;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.steam.enable) {
     programs = {
       gamescope = {
@@ -19,14 +21,11 @@ in {
         gamescopeSession.enable = true;
         protontricks.enable = true;
 
-        extraCompatPackages =
-          if cfg.steam.enableProtonGE
-          then [pkgs.proton-ge-bin]
-          else [];
+        extraCompatPackages = if cfg.steam.enableProtonGE then [ pkgs.proton-ge-bin ] else [ ];
 
         package = pkgs.steam.override {
-          extraPkgs = p:
-            with p; [
+          extraPkgs =
+            p: with p; [
               libkrb5
               keyutils
             ];

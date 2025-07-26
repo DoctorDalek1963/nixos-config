@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.maths;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     home = {
       packages = [
@@ -21,6 +23,6 @@ in {
       '';
     };
 
-    setup.impermanence.keepFiles = [".local/share/octave/history"];
+    setup.impermanence.keepFiles = [ ".local/share/octave/history" ];
   };
 }

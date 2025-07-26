@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
@@ -23,10 +25,16 @@ in {
     };
 
     systemd.services.nginx = {
-      after = ["network.target" "tailscale-certificates.service"];
-      requires = ["tailscale-certificates.service"];
+      after = [
+        "network.target"
+        "tailscale-certificates.service"
+      ];
+      requires = [ "tailscale-certificates.service" ];
     };
 
-    networking.firewall.allowedTCPPorts = [80 443];
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
   };
 }

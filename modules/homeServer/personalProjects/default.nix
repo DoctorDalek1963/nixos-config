@@ -1,3 +1,6 @@
 {
-  imports = [./nginx.nix ./winter-wonderlights.nix];
+  imports = [
+    ./nginx.nix
+    ./winter-wonderlights.nix
+  ];
 }

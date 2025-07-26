@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   mkGdmUserConf = icon: ''
     [User]
     Session=
@@ -12,19 +13,21 @@
   '';
 
   mkCommand = name: icon: "echo -e '${mkGdmUserConf icon}' > /var/lib/AccountsService/users/${name}";
-in {
+in
+{
   config = lib.mkIf config.setup.displayManagers.gdm.enable {
     systemd.services.populate-gdm-profile-pictures = {
       description = "Populate profile pictures in /var/lib/AccountsService for GDM";
-      wantedBy = ["multi-user.target" "accounts-daemon.service"];
-      before = ["accounts-daemon.service"];
+      wantedBy = [
+        "multi-user.target"
+        "accounts-daemon.service"
+      ];
+      before = [ "accounts-daemon.service" ];
 
       script = ''
         mkdir -p /var/lib/AccountsService/users
         ${builtins.concatStringsSep "\n" (
-          builtins.attrValues (
-            builtins.mapAttrs mkCommand config.setup.profilePictures
-          )
+          builtins.attrValues (builtins.mapAttrs mkCommand config.setup.profilePictures)
         )}
       '';
     };

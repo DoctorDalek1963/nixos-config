@@ -1,3 +1,3 @@
 {
-  imports = [./foldingAtHome.nix];
+  imports = [ ./foldingAtHome.nix ];
 }

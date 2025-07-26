@@ -4,7 +4,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   inherit (lib.hm.gvariant) mkTuple mkUint32;
 
   cfg = config.setup.desktopEnvironments;
@@ -22,10 +23,9 @@
         desktop = "terminator.desktop";
       };
     }
-    .${
-      config.setup.terminal.emulator
-    };
-in {
+    .${config.setup.terminal.emulator};
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
     assertions = [
       {
@@ -43,31 +43,46 @@ in {
         };
 
         "org/gnome/shell" = {
-          favorite-apps =
-            [terminal-emulator.desktop]
-            ++ lib.optional config.setup.librewolf.enable ["librewolf.desktop"];
+          favorite-apps = [
+            terminal-emulator.desktop
+          ]
+          ++ lib.optional config.setup.librewolf.enable [ "librewolf.desktop" ];
         };
 
         "org/gnome/desktop/background" = {
           color-shading-type = "solid";
           picture-options = "zoom";
           picture-uri = "file://${
-            if builtins.isPath cfg.background
-            then cfg.background
-            else cfg.background.light
+            if builtins.isPath cfg.background then cfg.background else cfg.background.light
           }";
           picture-uri-dark = "file://${
-            if builtins.isPath cfg.background
-            then cfg.background
-            else cfg.background.dark
+            if builtins.isPath cfg.background then cfg.background else cfg.background.dark
           }";
           show-desktop-icons = false;
         };
 
         "org/gnome/desktop/input-sources" = {
-          mru-sources = [(mkTuple ["xkb" "gb"]) (mkTuple ["xkb" "gr"])];
+          mru-sources = [
+            (mkTuple [
+              "xkb"
+              "gb"
+            ])
+            (mkTuple [
+              "xkb"
+              "gr"
+            ])
+          ];
           per-window = false;
-          sources = [(mkTuple ["xkb" "gb"]) (mkTuple ["xkb" "gr"])];
+          sources = [
+            (mkTuple [
+              "xkb"
+              "gb"
+            ])
+            (mkTuple [
+              "xkb"
+              "gr"
+            ])
+          ];
           xkb-options = [
             "caps:escape" # Use caps lock as escape, mostly for nvim
             "numpad:mac" # Num lock is always on
@@ -129,7 +144,7 @@ in {
         "org/gnome/desktop/wm/preferences" = {
           button-layout = ":minimize,maximize,close";
           resize-with-right-button = false;
-          workspace-names = [];
+          workspace-names = [ ];
         };
 
         "org/gnome/evince/default" = {
@@ -157,13 +172,36 @@ in {
         };
 
         "org/gnome/nautilus/icon-view" = {
-          captions = ["size" "date_modified" "permissions"];
+          captions = [
+            "size"
+            "date_modified"
+            "permissions"
+          ];
           default-zoom-level = "small-plus";
         };
 
         "org/gnome/nautilus/list-view" = {
-          default-column-order = ["name" "size" "type" "owner" "group" "permissions" "where" "date_modified" "date_modified_with_time" "date_accessed" "recency" "starred" "detailed_type"];
-          default-visible-columns = ["name" "size" "date_modified" "starred"];
+          default-column-order = [
+            "name"
+            "size"
+            "type"
+            "owner"
+            "group"
+            "permissions"
+            "where"
+            "date_modified"
+            "date_modified_with_time"
+            "date_accessed"
+            "recency"
+            "starred"
+            "detailed_type"
+          ];
+          default-visible-columns = [
+            "name"
+            "size"
+            "date_modified"
+            "starred"
+          ];
         };
 
         "org/gnome/nautilus/preferences" = {
@@ -173,7 +211,10 @@ in {
         };
 
         "org/gnome/nautilus/window-state" = {
-          initial-size = mkTuple [950 600];
+          initial-size = mkTuple [
+            950
+            600
+          ];
           maximized = false;
           sidebar-width = 200;
         };
@@ -195,15 +236,15 @@ in {
         };
 
         "org/gnome/settings-daemon/plugins/media-keys" = {
-          area-screenshot-clip = ["<Shift><Super>s"];
+          area-screenshot-clip = [ "<Shift><Super>s" ];
           custom-keybindings = [
             "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" # Open terminal
           ];
-          home = ["<Super>e"];
-          terminal = ["<Primary><Alt>t"];
-          volume-down = ["<Primary>Down"];
-          volume-mute = ["AudioMute"];
-          volume-up = ["<Primary>Up"];
+          home = [ "<Super>e" ];
+          terminal = [ "<Primary><Alt>t" ];
+          volume-down = [ "<Primary>Down" ];
+          volume-mute = [ "AudioMute" ];
+          volume-up = [ "<Primary>Up" ];
         };
 
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -214,7 +255,7 @@ in {
 
         "org/gnome/shell/weather" = {
           automatic-location = true;
-          locations = [];
+          locations = [ ];
         };
 
         "org/gnome/system/location" = {

@@ -4,14 +4,20 @@
   config,
   osConfig,
   ...
-}: let
-  launch-btop = lib.mkIf config.setup.terminal.tools.btop.enable "${config.wayland.windowManager.hyprland.settings."$launchInTerminal"} ${config.programs.btop.package}/bin/btop";
+}:
+let
+  launch-btop = lib.mkIf config.setup.terminal.tools.btop.enable "${
+    config.wayland.windowManager.hyprland.settings."$launchInTerminal"
+  } ${config.programs.btop.package}/bin/btop";
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   hyprctl-exit = "${hyprctl} dispatch exit";
 
-  zenity-confirm = actionName: command: ''if ${pkgs.zenity}/bin/zenity --question --title="${actionName}" --text="Are you sure you want to ${lib.toLower actionName}?" --default-cancel; then ${command}; fi'';
-in {
+  zenity-confirm =
+    actionName: command:
+    ''if ${pkgs.zenity}/bin/zenity --question --title="${actionName}" --text="Are you sure you want to ${lib.toLower actionName}?" --default-cancel; then ${command}; fi'';
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings.exec-once = [
       "${config.programs.waybar.package}/bin/waybar"
@@ -20,9 +26,9 @@ in {
     systemd.user.services.playerctld = {
       Unit = {
         Description = "playerctl daemon";
-        After = ["graphical-session.target"];
+        After = [ "graphical-session.target" ];
       };
-      Install.WantedBy = ["default.target"];
+      Install.WantedBy = [ "default.target" ];
 
       Service = {
         Type = "simple";
@@ -55,23 +61,22 @@ in {
             # for some bizarre reason
             "custom/clock"
           ];
-          modules-right =
-            [
-              "tray"
-              "custom/current-age"
-            ]
-            ++ lib.optional config.services.hypridle.enable "idle_inhibitor"
-            ++ [
-              "group/audio"
-              "network"
-            ]
-            ++ lib.optional osConfig.setup.hasBluetooth "bluetooth"
-            ++ lib.optional osConfig.setup.isLaptop "battery"
-            ++ [
-              "group/power"
-            ];
+          modules-right = [
+            "tray"
+            "custom/current-age"
+          ]
+          ++ lib.optional config.services.hypridle.enable "idle_inhibitor"
+          ++ [
+            "group/audio"
+            "network"
+          ]
+          ++ lib.optional osConfig.setup.hasBluetooth "bluetooth"
+          ++ lib.optional osConfig.setup.isLaptop "battery"
+          ++ [
+            "group/power"
+          ];
 
-          "hyprland/workspaces" = {};
+          "hyprland/workspaces" = { };
 
           # "group/stats" = {
           #   orientation = "inherit";
@@ -143,19 +148,21 @@ in {
             show-passive-items = true;
           };
 
-          "custom/current-age" = let
-            current-age = pkgs.stdenv.mkDerivation {
-              name = "current-age";
-              propagatedBuildInputs = [(pkgs.python3.withPackages (p: [p.python-dateutil]))];
-              dontUnpack = true;
-              installPhase = "install -Dm755 ${./current_age.py} $out/bin/current-age";
+          "custom/current-age" =
+            let
+              current-age = pkgs.stdenv.mkDerivation {
+                name = "current-age";
+                propagatedBuildInputs = [ (pkgs.python3.withPackages (p: [ p.python-dateutil ])) ];
+                dontUnpack = true;
+                installPhase = "install -Dm755 ${./current_age.py} $out/bin/current-age";
+              };
+            in
+            {
+              format = "󰃮 {}";
+              exec = "${current-age}/bin/current-age";
+              interval = 1;
+              tooltip-format = "Current age";
             };
-          in {
-            format = "󰃮 {}";
-            exec = "${current-age}/bin/current-age";
-            interval = 1;
-            tooltip-format = "Current age";
-          };
 
           idle_inhibitor = {
             format = "{icon}";
@@ -209,11 +216,15 @@ in {
           pulseaudio = {
             format = "{icon} {volume}%";
             format-icons = {
-              default = ["" "" " "];
+              default = [
+                ""
+                ""
+                " "
+              ];
               default-muted = " ";
             };
 
-            ignored-sinks = ["Easy Effects Sink"];
+            ignored-sinks = [ "Easy Effects Sink" ];
             max-volume = 150;
             scroll-step = 5;
 
@@ -244,7 +255,14 @@ in {
 
           battery = {
             format = "{icon} {capacity}%";
-            format-icons = ["󰂎" "󰁻" "󰁽" "󰁿" "󰂁" "󰁹"];
+            format-icons = [
+              "󰂎"
+              "󰁻"
+              "󰁽"
+              "󰁿"
+              "󰂁"
+              "󰁹"
+            ];
 
             format-charging = "󱐋{icon} {capacity}%";
             format-full = "󰚥 {capacity}%";
@@ -298,12 +316,10 @@ in {
         }
       ];
 
-      style = let
-        font-size =
-          if osConfig.setup.isLaptop
-          then "16px"
-          else "14px";
-      in
+      style =
+        let
+          font-size = if osConfig.setup.isLaptop then "16px" else "14px";
+        in
         # css
         ''
           @define-color rosewater #f4dbd6;

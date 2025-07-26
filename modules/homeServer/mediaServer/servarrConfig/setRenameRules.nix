@@ -3,25 +3,20 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  indent4 = code:
-    builtins.concatStringsSep "\n"
-    (
-      builtins.map (line: "    ${line}")
-      (
-        builtins.filter
-        (x: builtins.isString x && x != "")
-        (lib.strings.split "\n" code)
+  indent4 =
+    code:
+    builtins.concatStringsSep "\n" (
+      builtins.map (line: "    ${line}") (
+        builtins.filter (x: builtins.isString x && x != "") (lib.strings.split "\n" code)
       )
     );
 
-  optSnippet = cond: code:
-    if cond
-    then indent4 code
-    else "";
+  optSnippet = cond: code: if cond then indent4 code else "";
 
   readarr = optSnippet config.services.readarr.enable ''
     set_naming_config(
@@ -87,14 +82,21 @@
         "{Release-Date}', 1, 4)"
     )
   '';
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.set-servarr-rename-rules = {
       description = "Set the renaming rules for all the servarr apps";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "set_servarr_rename_rules.py" {flakeIgnore = ["W293" "E303"];}
+        ExecStart = "${pkgs.writers.writePython3 "set_servarr_rename_rules.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "E303"
+            ];
+          }
           ''
             import os
             import sqlite3
@@ -123,7 +125,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

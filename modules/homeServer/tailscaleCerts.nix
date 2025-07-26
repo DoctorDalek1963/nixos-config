@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup;
   cfgHs = cfg.homeServer;
 
@@ -11,7 +12,10 @@
 
   bash-script = pkgs.writeShellApplication {
     name = "tailscale-certificates";
-    runtimeInputs = with pkgs; [tailscale openssl];
+    runtimeInputs = with pkgs; [
+      tailscale
+      openssl
+    ];
 
     text = ''
       set -euo pipefail
@@ -37,7 +41,8 @@
       chmod -R g+r /etc/tailscale-certificates
     '';
   };
-in {
+in
+{
   config = lib.mkIf cfgHs.enable {
     assertions = [
       {
@@ -55,7 +60,7 @@ in {
       }
     ];
 
-    users.groups.certs = {};
+    users.groups.certs = { };
 
     systemd = {
       services.tailscale-certificates = {
@@ -65,8 +70,15 @@ in {
           Group = "certs";
         };
 
-        after = ["network.target" "network-online.target" "tailscaled.service"];
-        wants = ["network-online.target" "tailscaled.service"];
+        after = [
+          "network.target"
+          "network-online.target"
+          "tailscaled.service"
+        ];
+        wants = [
+          "network-online.target"
+          "tailscaled.service"
+        ];
       };
 
       timers.tailscale-certificates = {
@@ -75,7 +87,7 @@ in {
           Unit = "tailscale-certificates.service";
         };
 
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
       };
     };
   };

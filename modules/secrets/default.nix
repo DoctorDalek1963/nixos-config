@@ -3,9 +3,11 @@
   config,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.setup;
-in {
+in
+{
   imports = [
     inputs.sops-nix.nixosModules.sops
     ./cachix.nix
@@ -19,9 +21,10 @@ in {
       defaultSopsFile = ../../sops-secrets/secrets.yaml;
       age = {
         keyFile =
-          if cfg.impermanence.enable
-          then "/persist/etc/nixos/sops-secrets/key.txt"
-          else "/etc/nixos/sops-secrets/key.txt";
+          if cfg.impermanence.enable then
+            "/persist/etc/nixos/sops-secrets/key.txt"
+          else
+            "/etc/nixos/sops-secrets/key.txt";
         generateKey = false;
       };
     };

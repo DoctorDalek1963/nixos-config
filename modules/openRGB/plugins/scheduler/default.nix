@@ -25,7 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
     fetchSubmodules = true;
   };
 
-  patches = [./install-libs.patch];
+  patches = [ ./install-libs.patch ];
 
   postPatch = ''
     # Use the source of openrgb from nixpkgs instead of the submodule

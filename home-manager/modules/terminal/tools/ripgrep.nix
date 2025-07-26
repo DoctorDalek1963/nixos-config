@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.terminal.tools.ripgrep {
     programs.ripgrep = {
       enable = true;

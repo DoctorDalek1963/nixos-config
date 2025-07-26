@@ -1,7 +1,10 @@
 {
   stdenv,
   fetchFromGitHub,
-}: {background ? null}:
+}:
+{
+  background ? null,
+}:
 stdenv.mkDerivation {
   name = "sddm-sugar-light";
 
@@ -12,17 +15,17 @@ stdenv.mkDerivation {
     hash = "sha256-KddZtCTionZntQPD8ttXhHFLZl8b1NsawG9qbjuI1fc=";
   };
 
-  buildPhase =
-    ''
-      sed -i 's/ForceHideCompletePassword=false/ForceHideCompletePassword=true/' theme.conf
-    ''
-    + (
-      if background != null
-      then ''
+  buildPhase = ''
+    sed -i 's/ForceHideCompletePassword=false/ForceHideCompletePassword=true/' theme.conf
+  ''
+  + (
+    if background != null then
+      ''
         cp -v ${background} Background.jpg
       ''
-      else ""
-    );
+    else
+      ""
+  );
 
   installPhase = ''
     mkdir -p $out

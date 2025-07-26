@@ -3,8 +3,9 @@
   lib,
   config,
   ...
-}: {
-  imports = [./extra-firmware-config.nix];
+}:
+{
+  imports = [ ./extra-firmware-config.nix ];
 
   # Most of this config was taken from
   # https://github.com/mcdonc/nixos-pi-zero-2/blob/385daa4529528901a318129c3517f845dce49240/common.nix
@@ -21,8 +22,7 @@
     # https://github.com/NixOS/nixpkgs/issues/154163#issuecomment-1350599022
     overlays = [
       (_final: super: {
-        makeModulesClosure = x:
-          super.makeModulesClosure (x // {allowMissing = true;});
+        makeModulesClosure = x: super.makeModulesClosure (x // { allowMissing = true; });
       })
     ];
   };
@@ -35,10 +35,10 @@
   # Keep this to make sure wifi works
   hardware = {
     enableRedistributableFirmware = lib.mkForce false;
-    firmware = [pkgs.raspberrypiWirelessFirmware];
+    firmware = [ pkgs.raspberrypiWirelessFirmware ];
   };
 
-  users.groups.gpio.members = ["pi"];
+  users.groups.gpio.members = [ "pi" ];
 
   boot = {
     loader = {
@@ -51,7 +51,7 @@
 
     # Disable strict checking of IO memory accesses. This allows the rpi_ws281x
     # library used by Winter WonderLights to work properly
-    kernelParams = ["iomem=relaxed"];
+    kernelParams = [ "iomem=relaxed" ];
 
     # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set.
     # This will cause the `mdmon` service to crash.
@@ -86,7 +86,13 @@
     ethtool
     libraspberrypi
     minicom
-    (python311.withPackages (p: with p; [gpiozero pyserial rpi-gpio]))
+    (python311.withPackages (
+      p: with p; [
+        gpiozero
+        pyserial
+        rpi-gpio
+      ]
+    ))
     raspberrypi-eeprom
     usbutils
   ];

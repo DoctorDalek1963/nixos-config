@@ -1,3 +1,6 @@
 {
-  imports = [./adguardhome.nix ./unbound.nix];
+  imports = [
+    ./adguardhome.nix
+    ./unbound.nix
+  ];
 }

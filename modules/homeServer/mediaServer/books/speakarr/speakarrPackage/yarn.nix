@@ -1,7 +1,8 @@
 {
   fetchurl,
   linkFarm,
-}: rec {
+}:
+rec {
   offline_cache = linkFarm "offline" packages;
   packages = [
     {

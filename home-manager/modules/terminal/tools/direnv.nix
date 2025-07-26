@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.terminal;
-in {
+in
+{
   config = lib.mkMerge [
     (lib.mkIf cfg.tools.direnv {
       programs.direnv = {
@@ -16,7 +18,7 @@ in {
       };
 
       setup = {
-        impermanence.keepDirs = [".local/share/direnv"];
+        impermanence.keepDirs = [ ".local/share/direnv" ];
         terminal.shellAliases.ndr = "nix-direnv-reload";
       };
     })
@@ -26,7 +28,7 @@ in {
         # is merged and in a release, we can remove this patch
         direnv = {
           package = pkgs.direnv.overrideAttrs (oldAttrs: {
-            patches = (oldAttrs.patches or []) ++ [./direnv-bash-hook.patch];
+            patches = (oldAttrs.patches or [ ]) ++ [ ./direnv-bash-hook.patch ];
           });
 
           enableBashIntegration = false;

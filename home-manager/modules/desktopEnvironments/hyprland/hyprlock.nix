@@ -4,7 +4,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.setup.desktopEnvironments;
 
   theme =
@@ -17,13 +18,12 @@
         fail_color = "rgb(237, 135, 150)";
       };
     }
-    .${
-      cfg.hyprland.theme
-    };
+    .${cfg.hyprland.theme};
 
   pauseCommand = "${pkgs.playerctl}/bin/playerctl pause";
   lockCommand = "${config.programs.hyprlock.package}/bin/hyprlock";
-in {
+in
+{
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     wayland.windowManager.hyprland.settings = {
       bind = [
@@ -48,11 +48,7 @@ in {
         };
 
         background = {
-          path = "${
-            if builtins.isPath cfg.background
-            then cfg.background
-            else cfg.background.dark
-          }";
+          path = "${if builtins.isPath cfg.background then cfg.background else cfg.background.dark}";
           blur_passes = 3;
           blur_size = 4;
 
@@ -76,7 +72,12 @@ in {
           placeholder_text = "";
           fail_text = "Incorrect password ($ATTEMPTS fails)";
 
-          inherit (theme) font_color inner_color outer_color fail_color;
+          inherit (theme)
+            font_color
+            inner_color
+            outer_color
+            fail_color
+            ;
         };
       };
     };

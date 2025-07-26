@@ -3,7 +3,8 @@
   config,
   osConfig,
   ...
-}: {
+}:
+{
   config = lib.mkIf osConfig.setup.androidTools.enable {
     setup = {
       programming.jetbrains = true;

@@ -4,7 +4,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   switch-or-activate = pkgs.writeShellScriptBin "switch-or-activate" ''
     window_name=
     if [ -z "$1" ]; then
@@ -68,25 +69,40 @@
       condition = config.setup.librewolf.enable;
       keymap = {
         name = "LibreWolf";
-        remap.alt-c.launch = [soa-bin "LibreWolf" "${config.programs.librewolf.package}/bin/librewolf"];
+        remap.alt-c.launch = [
+          soa-bin
+          "LibreWolf"
+          "${config.programs.librewolf.package}/bin/librewolf"
+        ];
       };
     }
     {
       condition = config.setup.terminal.defaultEmulator == "terminator";
       keymap = {
         name = "Terminator";
-        remap.alt-t.launch = [soa-bin "terminator" "${pkgs.terminator}/bin/terminator" "--class"];
+        remap.alt-t.launch = [
+          soa-bin
+          "terminator"
+          "${pkgs.terminator}/bin/terminator"
+          "--class"
+        ];
       };
     }
     {
       condition = config.setup.terminal.defaultEmulator == "wezterm";
       keymap = {
         name = "WezTerm";
-        remap.alt-t.launch = [soa-bin "org.wezfurlong.wezterm" "${config.programs.wezterm.package}/bin/wezterm" "--class"];
+        remap.alt-t.launch = [
+          soa-bin
+          "org.wezfurlong.wezterm"
+          "${config.programs.wezterm.package}/bin/wezterm"
+          "--class"
+        ];
       };
     }
   ];
-in {
+in
+{
   services.xremap = {
     enable = config.setup.misc.programs.xremap;
 
@@ -96,14 +112,15 @@ in {
     # withHypr = osConfig.setup.desktopEnvironments.hyprland.enable;
 
     config = {
-      keymap = lib.lists.flatten (builtins.map ({
-        condition,
-        keymap,
-      }:
-        if condition
-        then [keymap]
-        else [])
-      conditional-keymaps);
+      keymap = lib.lists.flatten (
+        builtins.map (
+          {
+            condition,
+            keymap,
+          }:
+          if condition then [ keymap ] else [ ]
+        ) conditional-keymaps
+      );
     };
   };
 

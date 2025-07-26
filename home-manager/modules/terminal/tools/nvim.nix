@@ -4,10 +4,14 @@
   system,
   inputs,
   ...
-}: let
+}:
+let
   nvim-extend = pkgs.writeShellApplication {
     name = "nvim-extend";
-    runtimeInputs = [pkgs.mktemp pkgs.nix];
+    runtimeInputs = [
+      pkgs.mktemp
+      pkgs.nix
+    ];
     text = ''
       if [ $# -lt 1 ]; then
         echo "Usage: nvim-extend '<config options>'"
@@ -47,7 +51,8 @@
       fi
     '';
   };
-in {
+in
+{
   consts.nvimPkg =
     {
       stock = pkgs.neovim;
@@ -56,9 +61,7 @@ in {
       medium = inputs.nixvim-config.packages.${system}.nvim-medium;
       full = inputs.nixvim-config.packages.${system}.nvim-full;
     }
-    .${
-      config.setup.terminal.tools.nvim
-    };
+    .${config.setup.terminal.tools.nvim};
 
   setup.terminal.shellAliases = {
     v = config.consts.nvimPath;
@@ -72,7 +75,7 @@ in {
   };
 
   home = {
-    packages = [nvim-extend];
+    packages = [ nvim-extend ];
     sessionVariables.MANPAGER = "${config.consts.nvimPath} +Man!";
   };
 }

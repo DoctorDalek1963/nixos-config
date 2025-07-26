@@ -3,10 +3,11 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.programming.haskell {
     home = {
-      packages = [pkgs.ghc];
+      packages = [ pkgs.ghc ];
 
       file.".ghci".text =
         # haskell

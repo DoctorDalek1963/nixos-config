@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   theme =
     {
       # Taken mostly from https://github.com/catppuccin/zathura/blob/main/src/catppuccin-macchiato
@@ -47,10 +48,10 @@
         highlight-fg = "rgba(245, 189, 230, 0.4)";
         highlight-active-color = "rgba(245, 189, 230, 0.4)";
       };
-    }.${
-      config.setup.terminal.theme
-    };
-in {
+    }
+    .${config.setup.terminal.theme};
+in
+{
   config = lib.mkIf config.setup.misc.programs.zathura {
     programs.zathura = {
       enable = true;
@@ -59,22 +60,21 @@ in {
         c = "nohlsearch";
       };
 
-      options =
-        {
-          guioptions = "sv"; # Statusbar and vertical scroll bar
-          font = lib.mkIf config.setup.fonts.hackNerdFont "Hack Nerd Font 9";
+      options = {
+        guioptions = "sv"; # Statusbar and vertical scroll bar
+        font = lib.mkIf config.setup.fonts.hackNerdFont "Hack Nerd Font 9";
 
-          statusbar-home-tilde = true;
+        statusbar-home-tilde = true;
 
-          synctex-editor-command = ''${config.consts.nvimPath} --headless -c \"VimtexInverseSearch %{line} '%{input}'\"'';
-        }
-        // theme;
+        synctex-editor-command = ''${config.consts.nvimPath} --headless -c \"VimtexInverseSearch %{line} '%{input}'\"'';
+      }
+      // theme;
     };
 
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
-        "application/pdf" = ["org.pwmt.zathura.desktop"];
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };
     };
   };

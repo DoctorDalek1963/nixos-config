@@ -1,3 +1,8 @@
 {
-  imports = [./shells ./emulators ./multiplexers ./tools];
+  imports = [
+    ./shells
+    ./emulators
+    ./multiplexers
+    ./tools
+  ];
 }

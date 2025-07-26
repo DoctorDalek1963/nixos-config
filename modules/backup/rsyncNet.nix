@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.backup;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     # These secrets are owned by nobody and group readable so that any user in
     # the backup group can use them, for example in the generated wrapper
@@ -27,15 +29,20 @@ in {
       };
     };
 
-    systemd.tmpfiles.rules = lib.lists.flatten (map (user: let
-        sshDir = "${config.home-manager.users."${user}".home.homeDirectory}/.ssh";
-        privKeyPath = config.sops.secrets."ssh/rsync.net/keys/rsync_net".path;
-        pubKeyPath = config.sops.secrets."ssh/rsync.net/keys/rsync_net.pub".path;
-      in [
-        "L+ ${sshDir}/rsync_net 0440 ${user} backup - ${privKeyPath}"
-        "L+ ${sshDir}/rsync_net.pub 0444 ${user} backup - ${pubKeyPath}"
-      ])
-      cfg.users);
+    systemd.tmpfiles.rules = lib.lists.flatten (
+      map (
+        user:
+        let
+          sshDir = "${config.home-manager.users."${user}".home.homeDirectory}/.ssh";
+          privKeyPath = config.sops.secrets."ssh/rsync.net/keys/rsync_net".path;
+          pubKeyPath = config.sops.secrets."ssh/rsync.net/keys/rsync_net.pub".path;
+        in
+        [
+          "L+ ${sshDir}/rsync_net 0440 ${user} backup - ${privKeyPath}"
+          "L+ ${sshDir}/rsync_net.pub 0444 ${user} backup - ${pubKeyPath}"
+        ]
+      ) cfg.users
+    );
 
     programs.ssh.knownHostsFiles = [
       (pkgs.writeText "zh5288.rsync.net.keys" ''

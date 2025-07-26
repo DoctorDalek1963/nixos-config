@@ -1,12 +1,20 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   boot = {
     initrd = {
-      availableKernelModules = ["ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod"];
-      kernelModules = [];
+      availableKernelModules = [
+        "ata_piix"
+        "ohci_pci"
+        "ehci_pci"
+        "ahci"
+        "sd_mod"
+        "sr_mod"
+      ];
+      kernelModules = [ ];
     };
 
-    kernelModules = [];
-    extraModulePackages = [];
+    kernelModules = [ ];
+    extraModulePackages = [ ];
 
     loader = {
       grub = {

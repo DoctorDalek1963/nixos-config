@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf;
   cfg = config.setup;
 
@@ -13,7 +14,8 @@
       delay = cfg.pamShortenFailDelay.microseconds;
     };
   };
-in {
+in
+{
   # Shorten delay when getting password wrong
   security.pam.services = mkIf cfg.pamShortenFailDelay.enable {
     gdm-password = mkIf cfg.displayManagers.gdm.enable shortenFailDelay;

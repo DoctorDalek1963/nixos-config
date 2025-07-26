@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (config.consts) nvimPath;
-in {
+in
+{
   config = lib.mkIf config.setup.terminal.tools.lazygit {
     programs.lazygit = {
       enable = true;
@@ -20,7 +22,7 @@ in {
 
     setup = {
       terminal.shellAliases.lg = "${config.programs.lazygit.package}/bin/lazygit";
-      impermanence.keepFiles = [".local/state/lazygit/state.yml"];
+      impermanence.keepFiles = [ ".local/state/lazygit/state.yml" ];
     };
   };
 }

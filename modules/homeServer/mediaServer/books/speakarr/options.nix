@@ -5,12 +5,21 @@
   config,
   modulesPath,
   ...
-}: let
-  inherit (lib) mkOption mkEnableOption mkIf types;
+}:
+let
+  inherit (lib)
+    mkOption
+    mkEnableOption
+    mkIf
+    types
+    ;
   cfg = config.services.speakarr;
 
-  servarr = import (modulesPath + "/services/misc/servarr/settings-options.nix") {inherit lib pkgs;};
-in {
+  servarr = import (modulesPath + "/services/misc/servarr/settings-options.nix") {
+    inherit lib pkgs;
+  };
+in
+{
   options = {
     services.speakarr = {
       enable = mkEnableOption "Speakarr, a Usenet/BitTorrent audiobook downloader (Readarr fork)";
@@ -23,7 +32,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        default = pkgs.callPackage ./speakarrPackage {};
+        default = pkgs.callPackage ./speakarrPackage { };
         description = "The speakarr package to use.";
       };
 
@@ -65,8 +74,8 @@ in {
 
     systemd.services.speakarr = {
       description = "Speakarr";
-      after = ["network.target"];
-      wantedBy = ["multi-user.target"];
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
       environment = servarr.mkServarrSettingsEnvVars "SPEAKARR" cfg.settings;
 
       serviceConfig = {
@@ -79,7 +88,7 @@ in {
     };
 
     networking.firewall = mkIf cfg.openFirewall {
-      allowedTCPPorts = [cfg.settings.server.port];
+      allowedTCPPorts = [ cfg.settings.server.port ];
     };
 
     users.users = mkIf (cfg.user == "speakarr") {
@@ -92,7 +101,7 @@ in {
     };
 
     users.groups = mkIf (cfg.group == "speakarr") {
-      speakarr = {};
+      speakarr = { };
     };
   };
 }

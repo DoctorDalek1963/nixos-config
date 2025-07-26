@@ -3,16 +3,18 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  transmission-ntfy = pkgs.callPackage ./package.nix {};
+  transmission-ntfy = pkgs.callPackage ./package.nix { };
   working-dir = "/var/lib/transmission-ntfy";
 
   user = "ntfy-sh";
   group = "ntfy-sh";
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfg.ntfy.enable) {
     setup.impermanence.keepDirs = [
       {
@@ -27,10 +29,16 @@ in {
         transmission-ntfy = {
           description = "Send notifications about Transmission with Ntfy";
 
-          after = ["transmission.service" "ntfy-sh.service"];
-          requires = ["transmission.service" "ntfy-sh.service"];
+          after = [
+            "transmission.service"
+            "ntfy-sh.service"
+          ];
+          requires = [
+            "transmission.service"
+            "ntfy-sh.service"
+          ];
 
-          wantedBy = ["multi-user.target"];
+          wantedBy = [ "multi-user.target" ];
 
           environment = rec {
             TURL =
@@ -56,7 +64,9 @@ in {
             User = user;
             Group = group;
 
-            ExecStartPre = ["${pkgs.ntfy-sh}/bin/ntfy user add --ignore-exists --role=user transmission-ntfy"];
+            ExecStartPre = [
+              "${pkgs.ntfy-sh}/bin/ntfy user add --ignore-exists --role=user transmission-ntfy"
+            ];
             ExecStart = "${transmission-ntfy}/bin/transmission_api_client";
             WorkingDirectory = working-dir;
           };

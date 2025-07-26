@@ -3,15 +3,17 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.androidTools;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [pkgs.android-tools];
+    environment.systemPackages = [ pkgs.android-tools ];
 
     services.udev = {
       enable = true;
-      packages = [pkgs.android-udev-rules];
+      packages = [ pkgs.android-udev-rules ];
     };
 
     users.groups.plugdev.members = cfg.users;

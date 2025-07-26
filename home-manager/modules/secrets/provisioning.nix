@@ -4,7 +4,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   homedir = config.home.homeDirectory;
   cfg = config.setup;
 
@@ -13,7 +14,7 @@
   isDyson = config.home.username == "dyson";
 
   ssh-key-secrets = lib.optionalAttrs isDyson {
-    "ssh/id_ed25519/passphrase" = {};
+    "ssh/id_ed25519/passphrase" = { };
     "ssh/id_ed25519/keys/id_ed25519" = {
       path = "${homedir}/.ssh/id_ed25519";
       mode = "0600";
@@ -25,7 +26,7 @@
   };
 
   git-ssh-secrets = lib.optionalAttrs (isDyson && cfg.terminal.tools.git) {
-    "ssh/github_main/passphrase" = {};
+    "ssh/github_main/passphrase" = { };
     "ssh/github_main/keys/github_main" = {
       path = "${homedir}/.ssh/github_main";
       mode = "0600";
@@ -35,7 +36,7 @@
       mode = "0644";
     };
 
-    "ssh/git_main_signing/passphrase" = {};
+    "ssh/git_main_signing/passphrase" = { };
     "ssh/git_main_signing/keys/git_main_signing" = {
       path = "${homedir}/.ssh/git_main_signing";
       mode = "0600";
@@ -47,12 +48,17 @@
   };
 
   irc-secrets = lib.optionalAttrs (isDyson && cfg.misc.programs.hexchat) {
-    "irc/libera/password" = {mode = "0400";};
-    "irc/oftc/password" = {mode = "0400";};
+    "irc/libera/password" = {
+      mode = "0400";
+    };
+    "irc/oftc/password" = {
+      mode = "0400";
+    };
   };
-in {
+in
+{
   config = lib.mkIf cfg.secrets.enable {
-    home.packages = [pkgs.openssh];
+    home.packages = [ pkgs.openssh ];
 
     setup.impermanence.keepFiles = [
       ".config/sops/age/keys.txt"
@@ -75,21 +81,20 @@ in {
         generateKey = false;
       };
 
-      secrets =
-        {
-          "nix/nixconf" = {
-            path = "${homedir}/.config/nix/nix.conf";
-            mode = "0600";
-          };
+      secrets = {
+        "nix/nixconf" = {
+          path = "${homedir}/.config/nix/nix.conf";
+          mode = "0600";
+        };
 
-          "ssh/config" = {
-            path = "${homedir}/.ssh/config";
-            mode = "0644";
-          };
-        }
-        // ssh-key-secrets
-        // git-ssh-secrets
-        // irc-secrets;
+        "ssh/config" = {
+          path = "${homedir}/.ssh/config";
+          mode = "0644";
+        };
+      }
+      // ssh-key-secrets
+      // git-ssh-secrets
+      // irc-secrets;
     };
   };
 }

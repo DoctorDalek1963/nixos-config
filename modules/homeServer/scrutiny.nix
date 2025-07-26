@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
-in {
+in
+{
   config = lib.mkIf cfg.scrutiny.enable {
     setup.impermanence.keepDirs = [
       {

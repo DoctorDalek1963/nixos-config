@@ -2,20 +2,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
-      impermanence.keepDirs = [config.services.whisparr.dataDir];
+      impermanence.keepDirs = [ config.services.whisparr.dataDir ];
 
       homeServer.mediaServer.directoryMap = {
-        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/porn"];
-        whisparr = ["${cfgMs.mediaRoot}/porn/staging"];
+        transmission = [ "${cfgMs.mediaRoot}/torrents/downloads/porn" ];
+        whisparr = [ "${cfgMs.mediaRoot}/porn/staging" ];
       };
 
-      backup.exclude = ["${cfgMs.mediaRoot}/porn/staging"];
+      backup.exclude = [ "${cfgMs.mediaRoot}/porn/staging" ];
     };
 
     services = {
@@ -55,8 +57,8 @@ in {
     };
 
     systemd.services.whisparr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

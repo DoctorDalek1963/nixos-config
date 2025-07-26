@@ -3,12 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   theme =
     {
       onedark = {
         name = "OneHalfDark";
-        pkgs = {}; # Built-in to bat
+        pkgs = { }; # Built-in to bat
       };
       catppuccin-macchiato = {
         name = "catppuccin-macchiato";
@@ -25,10 +26,9 @@
         };
       };
     }
-    .${
-      config.setup.terminal.theme
-    };
-in {
+    .${config.setup.terminal.theme};
+in
+{
   config = lib.mkIf config.setup.terminal.tools.bat {
     programs.bat = {
       enable = true;

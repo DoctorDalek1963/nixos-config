@@ -5,11 +5,16 @@
   lib,
   osConfig,
   ...
-}: {
-  imports = [./dconf.nix ./extensions ./themes.nix];
+}:
+{
+  imports = [
+    ./dconf.nix
+    ./extensions
+    ./themes.nix
+  ];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.gnome.enable {
-    home.packages = [pkgs.gnome-tweaks];
+    home.packages = [ pkgs.gnome-tweaks ];
 
     setup.impermanence.keepDirs = [
       ".local/share/keyrings"

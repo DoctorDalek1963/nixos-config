@@ -2,11 +2,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.ntfy.enable) {
-    setup.impermanence.keepDirs = ["/var/lib/ntfy-sh"];
+    setup.impermanence.keepDirs = [ "/var/lib/ntfy-sh" ];
 
     services.ntfy-sh = {
       enable = true;
@@ -29,8 +31,11 @@ in {
     };
 
     systemd.services.ntfy-sh = {
-      after = ["network.target" "tailscale-certificates.service"];
-      requires = ["tailscale-certificates.service"];
+      after = [
+        "network.target"
+        "tailscale-certificates.service"
+      ];
+      requires = [ "tailscale-certificates.service" ];
 
       serviceConfig = {
         DynamicUser = lib.mkForce false;

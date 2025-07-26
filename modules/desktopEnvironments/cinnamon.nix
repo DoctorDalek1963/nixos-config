@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.desktopEnvironments.cinnamon;
-in {
+in
+{
   config = lib.mkIf cfg.enable {
     environment.cinnamon.excludePackages = with pkgs; [
       blueberry

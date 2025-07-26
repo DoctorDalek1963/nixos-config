@@ -3,8 +3,9 @@
   lib,
   config,
   ...
-}: let
-  feishin-config-json = (pkgs.formats.json {}).generate "feishin-config.json" {
+}:
+let
+  feishin-config-json = (pkgs.formats.json { }).generate "feishin-config.json" {
     disable_auto_updates = true;
     mpv_path = "${pkgs.mpv}/bin/mpv";
     password_store = "gnome_libsecret";
@@ -27,16 +28,17 @@
         cp "${feishin-config-json}" "${path}"
     fi
   '';
-in {
+in
+{
   config = lib.mkIf config.setup.misc.programs.feishin {
     home = {
-      packages = [pkgs.feishin];
+      packages = [ pkgs.feishin ];
 
-      activation.setFeishinConfig =
-        lib.hm.dag.entryAfter ["writeBoundary"]
-        "$DRY_RUN_CMD ${set-feishin-config}";
+      activation.setFeishinConfig = lib.hm.dag.entryAfter [
+        "writeBoundary"
+      ] "$DRY_RUN_CMD ${set-feishin-config}";
     };
 
-    setup.impermanence.keepDirs = [".config/feishin"];
+    setup.impermanence.keepDirs = [ ".config/feishin" ];
   };
 }

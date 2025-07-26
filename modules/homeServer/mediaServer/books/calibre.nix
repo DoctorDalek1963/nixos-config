@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
@@ -15,7 +16,7 @@
     dontUnpack = true;
     dontConfigure = true;
 
-    nativeBuildInputs = [pkgs.sqlite];
+    nativeBuildInputs = [ pkgs.sqlite ];
 
     buildPhase = ''
       sqlite3 users.db ".read ${pkgs.writeText "new-calibre-server-users.sql" ''
@@ -40,7 +41,8 @@
       cp users.db $out/users.db
     '';
   };
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     setup = {
       impermanence.keepDirs = [
@@ -67,7 +69,7 @@ in {
         host = "0.0.0.0";
         port = cfg.ports.mediaServer.calibre.server;
 
-        libraries = ["${libraryPath}"];
+        libraries = [ "${libraryPath}" ];
 
         auth = {
           enable = true;
@@ -95,13 +97,13 @@ in {
 
     systemd.services = {
       calibre-server = {
-        requires = ["create-calibre-library.service"];
-        after = ["create-calibre-library.service"];
+        requires = [ "create-calibre-library.service" ];
+        after = [ "create-calibre-library.service" ];
       };
 
       calibre-web = {
-        requires = ["create-calibre-library.service"];
-        after = ["create-calibre-library.service"];
+        requires = [ "create-calibre-library.service" ];
+        after = [ "create-calibre-library.service" ];
       };
 
       create-calibre-library = {

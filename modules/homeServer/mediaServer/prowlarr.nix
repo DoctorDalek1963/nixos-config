@@ -2,12 +2,14 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
-    setup.impermanence.keepDirs = [config.services.prowlarr.dataDir];
+    setup.impermanence.keepDirs = [ config.services.prowlarr.dataDir ];
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -50,8 +52,8 @@ in {
     };
 
     systemd.services.prowlarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
 
       serviceConfig = {
         DynamicUser = lib.mkForce false;

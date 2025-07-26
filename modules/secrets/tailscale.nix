@@ -3,11 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.secrets;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfg.tailscale.enable) {
-    environment.systemPackages = [pkgs.tailscale];
+    environment.systemPackages = [ pkgs.tailscale ];
 
     sops.secrets."tailscale/${config.setup.hostname}" = {
       mode = "0400";
@@ -16,9 +18,9 @@ in {
     services.tailscale = {
       enable = true;
       authKeyFile = config.sops.secrets."tailscale/${config.setup.hostname}".path;
-      extraDaemonFlags = ["--no-logs-no-support"];
+      extraDaemonFlags = [ "--no-logs-no-support" ];
     };
 
-    setup.impermanence.keepDirs = ["/var/lib/tailscale"];
+    setup.impermanence.keepDirs = [ "/var/lib/tailscale" ];
   };
 }

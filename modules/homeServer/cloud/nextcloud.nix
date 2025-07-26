@@ -3,17 +3,19 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgNc = config.setup.homeServer.cloud.nextcloud;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgNc.enable) {
     setup = {
       impermanence.keepDirs = [
         config.services.nextcloud.home
         "/var/lib/redis-nextcloud"
       ];
-      backup.paths = [config.services.nextcloud.datadir];
+      backup.paths = [ config.services.nextcloud.datadir ];
     };
 
     sops.secrets = {
@@ -60,8 +62,8 @@ in {
           overwrite.cli.url = "https://${cfg.domainName}/nextcloud/";
           htaccess.RewriteBase = "/nextcloud";
 
-          trusted_domains = [cfg.domainName];
-          trusted_proxies = ["127.0.0.1"];
+          trusted_domains = [ cfg.domainName ];
+          trusted_proxies = [ "127.0.0.1" ];
 
           log_type = "syslog";
           syslog_tag = "Nextcloud";

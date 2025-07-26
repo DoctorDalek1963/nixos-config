@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.terminal.tools.fzf {
     programs.fzf = {
       enable = true;

@@ -6,11 +6,15 @@
   sqlite,
   libz,
   writeShellScript,
-}: let
+}:
+let
   version = "25.6.9.5574";
 
   dotnet = dotnetCorePackages.aspnetcore_8_0;
-  buildInputs = [sqlite libz];
+  buildInputs = [
+    sqlite
+    libz
+  ];
 
   server-script = writeShellScript "fileflows-server-unsubstituted.sh" ''
     export LD_LIBRARY_PATH="${lib.makeLibraryPath buildInputs}:$LD_LIBRARY_PATH"
@@ -49,39 +53,39 @@
     exec "${dotnet}/bin/dotnet" FileFlows.Node.dll "$@"
   '';
 in
-  stdenvNoCC.mkDerivation rec {
-    pname = "fileflows";
-    inherit version;
+stdenvNoCC.mkDerivation rec {
+  pname = "fileflows";
+  inherit version;
 
-    src = fetchzip {
-      url = "https://fileflows.com/downloads/Zip/${version}";
-      extension = "zip";
-      hash = "sha256-ah5WT0FDZzKdouDhSEdnjKzRO2rZUKkxtoSQ4NLpMlk=";
-      stripRoot = false;
-    };
+  src = fetchzip {
+    url = "https://fileflows.com/downloads/Zip/${version}";
+    extension = "zip";
+    hash = "sha256-ah5WT0FDZzKdouDhSEdnjKzRO2rZUKkxtoSQ4NLpMlk=";
+    stripRoot = false;
+  };
 
-    inherit buildInputs;
+  inherit buildInputs;
 
-    dontConfigure = true;
-    dontBuild = true;
+  dontConfigure = true;
+  dontBuild = true;
 
-    installPhase = ''
-      mkdir -p $out/fileflows
-      cp -r ./ $out/fileflows
+  installPhase = ''
+    mkdir -p $out/fileflows
+    cp -r ./ $out/fileflows
 
-      mkdir $out/bin
+    mkdir $out/bin
 
-      cp ${server-script} $out/bin/server
-      cp ${node-script} $out/bin/node
+    cp ${server-script} $out/bin/server
+    cp ${node-script} $out/bin/node
 
-      substituteInPlace $out/bin/server $out/bin/node --replace-fail @OUT@ $out
-    '';
+    substituteInPlace $out/bin/server $out/bin/node --replace-fail @OUT@ $out
+  '';
 
-    meta = {
-      description = "FileFlows server and node with wrapper scripts";
-      homepage = "https://fileflows.com/";
-      license = lib.licenses.unfree;
-      platforms = ["x86_64-linux"];
-      maintainers = [];
-    };
-  }
+  meta = {
+    description = "FileFlows server and node with wrapper scripts";
+    homepage = "https://fileflows.com/";
+    license = lib.licenses.unfree;
+    platforms = [ "x86_64-linux" ];
+    maintainers = [ ];
+  };
+}

@@ -2,21 +2,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
 
-  unboundUpstreams =
-    ["127.0.0.1:${toString cfg.ports.unbound}"]
-    ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
+  unboundUpstreams = [
+    "127.0.0.1:${toString cfg.ports.unbound}"
+  ]
+  ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
 
-  tailnetName = with builtins;
-    concatStringsSep "."
-    (filter isString
-      (tail
-        (split "\\." cfg.domainName)));
-in {
+  tailnetName =
+    with builtins;
+    concatStringsSep "." (filter isString (tail (split "\\." cfg.domainName)));
+in
+{
   config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
-    setup.impermanence.keepDirs = ["/var/lib/private/AdGuardHome"];
+    setup.impermanence.keepDirs = [ "/var/lib/private/AdGuardHome" ];
 
     services.adguardhome = {
       enable = true;
@@ -31,7 +32,7 @@ in {
       mutableSettings = true;
       settings = {
         dns = {
-          bind_hosts = ["0.0.0.0"];
+          bind_hosts = [ "0.0.0.0" ];
 
           enable_dnssec = true;
           cache_optimistic = true;
@@ -93,13 +94,19 @@ in {
     };
 
     systemd.services.adguardhome = {
-      after = ["network.target" "tailscale-certificates.service"];
+      after = [
+        "network.target"
+        "tailscale-certificates.service"
+      ];
       serviceConfig.Group = "certs";
     };
 
     networking.firewall = {
-      allowedTCPPorts = [cfg.ports.adguardhome.dnsOverTls cfg.ports.adguardhome.https];
-      allowedUDPPorts = [cfg.ports.adguardhome.dnsOverQuic]; # QUIC uses UDP
+      allowedTCPPorts = [
+        cfg.ports.adguardhome.dnsOverTls
+        cfg.ports.adguardhome.https
+      ];
+      allowedUDPPorts = [ cfg.ports.adguardhome.dnsOverQuic ]; # QUIC uses UDP
     };
   };
 }

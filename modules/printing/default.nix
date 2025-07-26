@@ -3,10 +3,12 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkIf mkMerge;
   cfg = config.setup.printing;
-in {
+in
+{
   config = mkMerge [
     (mkIf cfg.enable {
       # CUPS
@@ -24,14 +26,14 @@ in {
     (mkIf (cfg.enable && cfg.scanning) {
       hardware.sane = {
         enable = true;
-        extraBackends = [pkgs.sane-airscan];
-        disabledDefaultBackends = ["escl"];
+        extraBackends = [ pkgs.sane-airscan ];
+        disabledDefaultBackends = [ "escl" ];
       };
 
       users.groups.scanner.members = cfg.users;
     })
     (mkIf (cfg.enable && cfg.specificPrinters.canonPixmaMG3250) {
-      services.printing.drivers = [pkgs.cnijfilter_4_00];
+      services.printing.drivers = [ pkgs.cnijfilter_4_00 ];
     })
   ];
 }

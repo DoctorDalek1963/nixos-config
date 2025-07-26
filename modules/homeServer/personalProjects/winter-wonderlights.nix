@@ -5,7 +5,8 @@
   inputs,
   system,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgPp = cfg.personalProjects;
 
@@ -21,14 +22,18 @@
     SCANNER_SERVER_URL = "wss://${cfg.domainName}:${SCANNER_PORT}";
   };
 
-  winter-wonderlights-web = (inputs.winter-wonderlights.packages.${system}.client-web.override env)
-    .overrideAttrs {
-    TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
-  };
+  winter-wonderlights-web =
+    (inputs.winter-wonderlights.packages.${system}.client-web.override env).overrideAttrs
+      {
+        TRUNK_BUILD_PUBLIC_URL = "/winter-wonderlights/";
+      };
   winter-wonderlights-doc = inputs.winter-wonderlights.packages.${system}.doc;
 
-  winter-wonderlights-server = inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override env;
-in {
+  winter-wonderlights-server =
+    inputs.winter-wonderlights.packages.${system}.server-raspi-ws2811.override
+      env;
+in
+{
   config = lib.mkIf (cfg.enable && cfgPp.enable && cfgPp.winter-wonderlights) {
     setup.impermanence.keepDirs = env.DATA_DIR;
 
@@ -73,7 +78,10 @@ in {
 
         ExecStart = "${winter-wonderlights-server}/bin/ww-server --require-tls";
       };
-      wantedBy = ["network-online.target" "tailscale-certificates.service"];
+      wantedBy = [
+        "network-online.target"
+        "tailscale-certificates.service"
+      ];
     };
 
     users.users.winter-wonderlights = {

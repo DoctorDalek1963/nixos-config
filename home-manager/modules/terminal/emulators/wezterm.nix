@@ -3,7 +3,8 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.setup.terminal;
 
   color-scheme =
@@ -19,11 +20,9 @@
     }
     ."${cfg.theme}";
 
-  default-cursor-style =
-    if osConfig.setup.isLaptop
-    then "SteadyBlock"
-    else "BlinkingBlock";
-in {
+  default-cursor-style = if osConfig.setup.isLaptop then "SteadyBlock" else "BlinkingBlock";
+in
+{
   config = lib.mkIf (cfg.emulator == "wezterm") {
     programs.wezterm = {
       enable = true;

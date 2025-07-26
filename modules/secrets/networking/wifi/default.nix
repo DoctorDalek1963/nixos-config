@@ -1,3 +1,6 @@
 {
-  imports = [./simple.nix ./eduroam.nix];
+  imports = [
+    ./simple.nix
+    ./eduroam.nix
+  ];
 }

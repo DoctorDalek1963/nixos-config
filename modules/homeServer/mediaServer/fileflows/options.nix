@@ -3,20 +3,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.services.fileflows;
 
   inherit (lib) mkOption types;
-in {
+in
+{
   options.services.fileflows = {
     package = mkOption {
       type = types.package;
-      default = pkgs.callPackage ./package.nix {};
+      default = pkgs.callPackage ./package.nix { };
     };
 
     extraPkgs = mkOption {
       type = types.listOf types.package;
-      default = [];
+      default = [ ];
       example = lib.literalMD "with pkgs; [jellyfin-ffmpeg]";
       description = "Extra packages to install in `config.services.fileflows.binDir`.";
     };
@@ -91,10 +93,12 @@ in {
 
   config = lib.mkMerge [
     (lib.mkIf (cfg.server.enable || cfg.node.enable) {
-      systemd.tmpfiles.settings.fileflowsDirs."${cfg.binDir}"."L+".argument = "${pkgs.symlinkJoin {
-        name = "fileflows-extra-pkgs";
-        paths = cfg.extraPkgs;
-      }}/bin";
+      systemd.tmpfiles.settings.fileflowsDirs."${cfg.binDir}"."L+".argument = "${
+        pkgs.symlinkJoin {
+          name = "fileflows-extra-pkgs";
+          paths = cfg.extraPkgs;
+        }
+      }/bin";
     })
 
     (lib.mkIf cfg.server.enable {
@@ -108,9 +112,9 @@ in {
           description = "FileFlows server with integrated node";
           script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.server.port}";
 
-          requires = ["network-online.target"];
-          after = ["network-online.target"];
-          wantedBy = ["multi-user.target"];
+          requires = [ "network-online.target" ];
+          after = [ "network-online.target" ];
+          wantedBy = [ "multi-user.target" ];
 
           environment.FILEFLOWS_SERVER_BASE_DIR = cfg.server.baseDir;
 
@@ -133,7 +137,7 @@ in {
       };
 
       networking.firewall = lib.mkIf cfg.server.openFirewall {
-        allowedTCPPorts = [cfg.server.port];
+        allowedTCPPorts = [ cfg.server.port ];
       };
     })
 
@@ -151,9 +155,9 @@ in {
           startLimitIntervalSec = 200;
           startLimitBurst = 3;
 
-          requires = ["network-online.target"];
-          after = ["network-online.target"];
-          wantedBy = ["multi-user.target"];
+          requires = [ "network-online.target" ];
+          after = [ "network-online.target" ];
+          wantedBy = [ "multi-user.target" ];
 
           environment.FILEFLOWS_NODE_BASE_DIR = cfg.node.baseDir;
 

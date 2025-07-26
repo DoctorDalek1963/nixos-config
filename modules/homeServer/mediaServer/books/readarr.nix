@@ -2,13 +2,15 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     setup = {
-      impermanence.keepDirs = [config.services.readarr.dataDir];
+      impermanence.keepDirs = [ config.services.readarr.dataDir ];
       homeServer.mediaServer.directoryMap.transmission = [
         "${cfgMs.mediaRoot}/torrents/downloads/ebooks"
       ];
@@ -51,8 +53,8 @@ in {
     };
 
     systemd.services.readarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

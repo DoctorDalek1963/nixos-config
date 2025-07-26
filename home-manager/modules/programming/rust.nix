@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.programming.rust {
     home.file.".cargo/config.toml".text = ''
       [alias]
@@ -24,8 +25,8 @@
 
     setup = {
       impermanence = {
-        keepFiles = [".cargo/.global-cache"];
-        keepDirs = [".cargo/registry"];
+        keepFiles = [ ".cargo/.global-cache" ];
+        keepDirs = [ ".cargo/registry" ];
       };
 
       terminal.shellAliases = {

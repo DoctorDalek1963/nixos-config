@@ -3,22 +3,27 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
-  optStr = cond: str:
-    if cond
-    then str
-    else "";
-in {
+  optStr = cond: str: if cond then str else "";
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     systemd.services.populate-prowlarr = {
       description = "Populate the Prowlarr database with applications and tags";
 
       serviceConfig = {
         Type = "simple";
-        ExecStart = "${pkgs.writers.writePython3 "populate_prowlarr.py" {flakeIgnore = ["W293" "E303"];}
+        ExecStart = "${pkgs.writers.writePython3 "populate_prowlarr.py"
+          {
+            flakeIgnore = [
+              "W293"
+              "E303"
+            ];
+          }
           ''
             import os
             import sqlite3
@@ -122,7 +127,8 @@ in {
 
             if __name__ == '__main__':
                 main()
-          ''}";
+          ''
+        }";
       };
     };
   };

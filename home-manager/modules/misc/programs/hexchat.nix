@@ -3,20 +3,22 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup;
 
   hexchat-theme =
     {
-      "catppuccin-macchiato" = let
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "hexchat";
-          rev = "f84284c9d8363066d04c262717750cad623c1e8c";
-          hash = "sha256-yTTHRjKv4PmB+pvxlI1jHBfiCAfquAdwBnPPl5viRr8=";
-          sparseCheckout = ["macchiato/colors.conf"];
-        };
-      in
+      "catppuccin-macchiato" =
+        let
+          src = pkgs.fetchFromGitHub {
+            owner = "catppuccin";
+            repo = "hexchat";
+            rev = "f84284c9d8363066d04c262717750cad623c1e8c";
+            hash = "sha256-yTTHRjKv4PmB+pvxlI1jHBfiCAfquAdwBnPPl5viRr8=";
+            sparseCheckout = [ "macchiato/colors.conf" ];
+          };
+        in
         pkgs.stdenvNoCC.mkDerivation {
           name = "catppuccin-macchiato-hexchat-theme";
           inherit src;
@@ -27,11 +29,9 @@
           '';
         };
     }
-    .${
-      cfg.terminal.theme
-    }
-    or null;
-in {
+    .${cfg.terminal.theme} or null;
+in
+{
   config = lib.mkIf cfg.misc.programs.hexchat {
     programs.hexchat = rec {
       enable = true;
@@ -96,101 +96,118 @@ in {
         text_wordwrap = "1";
       };
 
-      channels = let
-        optPassword = name:
-          if cfg.secrets.enable
-          then {password = "READPASSWORD(${config.sops.secrets."irc/${name}/password".path})";}
-          else {};
+      channels =
+        let
+          optPassword =
+            name:
+            if cfg.secrets.enable then
+              { password = "READPASSWORD(${config.sops.secrets."irc/${name}/password".path})"; }
+            else
+              { };
 
-        mkServerConfig = {
-          serverName,
-          server,
-          userName,
-          autojoin,
-        }:
-          {
-            inherit userName;
+          mkServerConfig =
+            {
+              serverName,
+              server,
+              userName,
+              autojoin,
+            }:
+            {
+              inherit userName;
 
-            realName = "Dyson";
-            servers = [server];
-            loginMethod = "sasl";
+              realName = "Dyson";
+              servers = [ server ];
+              loginMethod = "sasl";
 
-            nickname = settings.irc_nick1;
-            nickname2 = settings.irc_nick2;
+              nickname = settings.irc_nick1;
+              nickname2 = settings.irc_nick2;
 
-            inherit autojoin;
-            charset = "UTF-8 (Unicode)";
-            options = {
-              acceptInvalidSSLCertificates = false;
-              autoconnect = true;
-              connectToSelectedServerOnly = true;
-              useGlobalUserInformation = false;
-              forceSSL = true;
-            };
-          }
-          // optPassword serverName;
-      in {
-        libera = mkServerConfig {
-          serverName = "libera";
-          server = "irc.libera.chat";
-          userName = "doctordalek";
-          autojoin = ["#linux" "#nixos" "##rust"];
+              inherit autojoin;
+              charset = "UTF-8 (Unicode)";
+              options = {
+                acceptInvalidSSLCertificates = false;
+                autoconnect = true;
+                connectToSelectedServerOnly = true;
+                useGlobalUserInformation = false;
+                forceSSL = true;
+              };
+            }
+            // optPassword serverName;
+        in
+        {
+          libera = mkServerConfig {
+            serverName = "libera";
+            server = "irc.libera.chat";
+            userName = "doctordalek";
+            autojoin = [
+              "#linux"
+              "#nixos"
+              "##rust"
+            ];
+          };
+          oftc = mkServerConfig {
+            serverName = "oftc";
+            server = "irc.oftc.net";
+            userName = "doctordalek";
+            autojoin = [
+              "#home-manager"
+              "#linux"
+            ];
+          };
         };
-        oftc = mkServerConfig {
-          serverName = "oftc";
-          server = "irc.oftc.net";
-          userName = "doctordalek";
-          autojoin = ["#home-manager" "#linux"];
-        };
-      };
     };
 
     home.activation = lib.mkIf (cfg.secrets.enable && cfg.misc.programs.hexchat) {
-      populateHexchatPasswords = let
-        raw-python-script = pkgs.writeScript "populate-hexchat-passwords" ''
-          #!/usr/bin/env python
+      populateHexchatPasswords =
+        let
+          raw-python-script = pkgs.writeScript "populate-hexchat-passwords" ''
+            #!/usr/bin/env python
 
-          import os
-          import re
+            import os
+            import re
 
-          SERVLIST_PATH = "${config.xdg.configHome}/hexchat/servlist.conf"
-
-
-          def main() -> None:
-              with open(SERVLIST_PATH, "r") as f:
-                  servlist = f.read()
-
-              new_servlist = servlist
-
-              for filename in re.findall(r"READPASSWORD\(([/\a-zA-Z0-9_-]*?)\)", servlist):
-                  with open(filename, "r") as f:
-                      password = f.read().strip()
-
-                  new_servlist = new_servlist.replace(f"READPASSWORD({filename})", password)
-
-              os.remove(SERVLIST_PATH)
-
-              with open(SERVLIST_PATH, "w") as f:
-                  f.write(new_servlist)
+            SERVLIST_PATH = "${config.xdg.configHome}/hexchat/servlist.conf"
 
 
-          if __name__ == "__main__":
-              main()
-        '';
-        populate = pkgs.stdenvNoCC.mkDerivation {
-          name = "populate-hexchat-passwords";
-          src = raw-python-script;
+            def main() -> None:
+                with open(SERVLIST_PATH, "r") as f:
+                    servlist = f.read()
 
-          dontUnpack = true;
-          buildInputs = with pkgs; [python311];
+                new_servlist = servlist
 
-          installPhase = ''
-            mkdir -p $out/bin
-            cp $src $out/bin/populate-hexchat-passwords
+                for filename in re.findall(r"READPASSWORD\(([/\a-zA-Z0-9_-]*?)\)", servlist):
+                    with open(filename, "r") as f:
+                        password = f.read().strip()
+
+                    new_servlist = new_servlist.replace(f"READPASSWORD({filename})", password)
+
+                os.remove(SERVLIST_PATH)
+
+                with open(SERVLIST_PATH, "w") as f:
+                    f.write(new_servlist)
+
+
+            if __name__ == "__main__":
+                main()
           '';
-        };
-      in
-        lib.hm.dag.entryAfter ["writeBoundary" "sops-nix" "restartSopsNix"] "$DRY_RUN_CMD ${populate}/bin/populate-hexchat-passwords";
+          populate = pkgs.stdenvNoCC.mkDerivation {
+            name = "populate-hexchat-passwords";
+            src = raw-python-script;
+
+            dontUnpack = true;
+            buildInputs = with pkgs; [ python311 ];
+
+            installPhase = ''
+              mkdir -p $out/bin
+              cp $src $out/bin/populate-hexchat-passwords
+            '';
+          };
+        in
+        lib.hm.dag.entryAfter [
+          "writeBoundary"
+          "sops-nix"
+          "restartSopsNix"
+        ] "$DRY_RUN_CMD ${populate}/bin/populate-hexchat-passwords";
     };
   };
 }

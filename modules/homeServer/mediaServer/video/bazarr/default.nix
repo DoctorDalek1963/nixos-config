@@ -2,14 +2,16 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
-  imports = [./whisper.nix];
+in
+{
+  imports = [ ./whisper.nix ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && (cfgMs.movies || cfgMs.telly)) {
-    setup.impermanence.keepDirs = ["/var/lib/bazarr"];
+    setup.impermanence.keepDirs = [ "/var/lib/bazarr" ];
 
     services = {
       nginx.virtualHosts."${cfg.domainName}".locations = {
@@ -38,8 +40,8 @@ in {
     };
 
     systemd.services.bazarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

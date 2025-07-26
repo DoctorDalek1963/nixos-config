@@ -1,3 +1,6 @@
 {
-  imports = [./easyeffects ./safeeyes.nix];
+  imports = [
+    ./easyeffects
+    ./safeeyes.nix
+  ];
 }

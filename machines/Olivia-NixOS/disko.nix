@@ -27,32 +27,38 @@
             size = "100%";
             content = {
               type = "btrfs";
-              extraArgs = ["-f" "--label" "NixOS"];
+              extraArgs = [
+                "-f"
+                "--label"
+                "NixOS"
+              ];
 
-              subvolumes = let
-                mount-options = compression-level: [
-                  "compress=zstd:${compression-level}"
-                  "discard=async"
-                  "noatime"
-                ];
-              in {
-                "/rootfs" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/";
+              subvolumes =
+                let
+                  mount-options = compression-level: [
+                    "compress=zstd:${compression-level}"
+                    "discard=async"
+                    "noatime"
+                  ];
+                in
+                {
+                  "/rootfs" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/nix";
+                  };
+                  "/home" = {
+                    mountOptions = mount-options "2";
+                    mountpoint = "/home";
+                  };
+                  "/home/.snapshots" = {
+                    mountOptions = mount-options "5";
+                    mountpoint = "/home/.snapshots";
+                  };
                 };
-                "/nix" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/nix";
-                };
-                "/home" = {
-                  mountOptions = mount-options "2";
-                  mountpoint = "/home";
-                };
-                "/home/.snapshots" = {
-                  mountOptions = mount-options "5";
-                  mountpoint = "/home/.snapshots";
-                };
-              };
             };
           };
         };

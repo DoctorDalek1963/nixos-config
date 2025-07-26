@@ -2,26 +2,35 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   inherit (lib) mkOption types;
 
-  stringList = strings:
+  stringList =
+    strings:
     mkOption {
       type = types.listOf types.str;
       default = strings;
     };
-in {
+in
+{
   # Here we can define constant values that can be referenced from any other files
   options.consts = {
-    valid-gnome-themes = stringList ["catppuccin-adaptive-macchiato-mauve" "vimix-amethyst"];
-    valid-hyprland-themes = stringList ["catppuccin-macchiato-mauve"];
+    valid-gnome-themes = stringList [
+      "catppuccin-adaptive-macchiato-mauve"
+      "vimix-amethyst"
+    ];
+    valid-hyprland-themes = stringList [ "catppuccin-macchiato-mauve" ];
 
-    valid-terminal-themes = stringList ["catppuccin-macchiato" "onedark"];
+    valid-terminal-themes = stringList [
+      "catppuccin-macchiato"
+      "onedark"
+    ];
 
-    valid-shells = stringList ["bash"];
+    valid-shells = stringList [ "bash" ];
 
     # Defined in modules/terminal/tools/nvim.nix
-    nvimPkg = mkOption {type = types.package;};
+    nvimPkg = mkOption { type = types.package; };
 
     nvimPath = mkOption {
       type = types.nonEmptyStr;

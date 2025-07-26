@@ -4,11 +4,12 @@
   config,
   osConfig,
   ...
-}: let
+}:
+let
   cfg = config.setup;
   cfgFf = cfg.librewolf;
 
-  extensions = import ./extensions {inherit pkgs lib config;};
+  extensions = import ./extensions { inherit pkgs lib config; };
 
   common-profile = {
     search = {
@@ -119,7 +120,8 @@
       "reader.color_scheme" = "light";
     };
   };
-in {
+in
+{
   config = lib.mkIf cfgFf.enable {
     setup.impermanence = {
       keepDirs = [
@@ -135,10 +137,9 @@ in {
     programs.librewolf = {
       enable = true;
 
-      nativeMessagingHosts =
-        lib.optional
-        (cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable)
-        pkgs.gnome-browser-connector;
+      nativeMessagingHosts = lib.optional (
+        cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable
+      ) pkgs.gnome-browser-connector;
 
       profiles = {
         "${cfg.username}" = lib.mkMerge [
@@ -161,23 +162,22 @@ in {
               # Dev tools window
               "devtools.everOpened" = true;
               "devtools.gridinspector.showGridAreas" = true;
-              "devtools.toolbox.tabsOrder" =
-                builtins.concatStringsSep ","
-                [
-                  "inspector"
-                  "jsdebugger"
-                  "webconsole"
-                  "netmonitor"
-                  "styleeditor"
-                  "performance"
-                  "memory"
-                  "storage"
-                  "accessibility"
-                  "application"
-                ];
+              "devtools.toolbox.tabsOrder" = builtins.concatStringsSep "," [
+                "inspector"
+                "jsdebugger"
+                "webconsole"
+                "netmonitor"
+                "styleeditor"
+                "performance"
+                "memory"
+                "storage"
+                "accessibility"
+                "application"
+              ];
 
               # Set device name
-              "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf on ${osConfig.setup.hostname}";
+              "identity.fxaccounts.account.device.name" =
+                "${cfg.username}'s LibreWolf on ${osConfig.setup.hostname}";
 
               # Pre-fetching allows the browser to fetch pages before I click them by
               # guessing which links I might click. It is a privacy concern, but I'm
@@ -200,7 +200,8 @@ in {
             id = 1;
             settings = {
               # Set device name
-              "identity.fxaccounts.account.device.name" = "${cfg.username}'s LibreWolf (basic profile) on ${osConfig.setup.hostname}";
+              "identity.fxaccounts.account.device.name" =
+                "${cfg.username}'s LibreWolf (basic profile) on ${osConfig.setup.hostname}";
             };
           }
         ];

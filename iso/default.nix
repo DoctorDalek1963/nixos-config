@@ -5,7 +5,8 @@
   system,
   inputs,
   ...
-}: let
+}:
+let
   install-nixos-with-disko = pkgs.writeShellApplication {
     name = "install-nixos-with-disko";
     runtimeInputs = [
@@ -15,9 +16,10 @@
     text = builtins.readFile ./install-nixos-with-disko.sh;
   };
 
-  connect-wifi = let
-    nmcli = "${pkgs.networkmanager}/bin/nmcli";
-  in
+  connect-wifi =
+    let
+      nmcli = "${pkgs.networkmanager}/bin/nmcli";
+    in
     pkgs.writeShellScriptBin "connect-wifi" ''
       if [[ -z "$1" || -z "$2" ]]; then
         echo "Usage: $0 SSID PSK"
@@ -51,7 +53,8 @@
       printf "\033[31;1mERROR!\033[0m Passwords did not match"
     fi
   '';
-in {
+in
+{
   environment.systemPackages = [
     pkgs.git
     pkgs.neovim
@@ -72,7 +75,10 @@ in {
 
   nix.settings = {
     # Enable flakes
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
 
     # Use more caches
     substituters = [
@@ -89,7 +95,7 @@ in {
   systemd.services.copy-nixos-config-to-tmp = {
     description = "Copy /iso/nixos-config to /tmp/nixos-config";
 
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "simple";
@@ -108,16 +114,18 @@ in {
     # These paths will end up in /iso when in the installation medium
     contents = [
       {
-        source = let
-          excludeFilter = path: _type:
-            (lib.hasInfix ".direnv" path)
-            || (lib.hasSuffix "pi.img" path)
-            || (lib.hasSuffix ".pre-commit-config.yaml" path)
-            || (lib.hasInfix "result" path);
-        in
+        source =
+          let
+            excludeFilter =
+              path: _type:
+              (lib.hasInfix ".direnv" path)
+              || (lib.hasSuffix "pi.img" path)
+              || (lib.hasSuffix ".pre-commit-config.yaml" path)
+              || (lib.hasInfix "result" path);
+          in
           lib.cleanSourceWith {
             src = self;
-            filter = path: type: ! (excludeFilter path type);
+            filter = path: type: !(excludeFilter path type);
           };
         target = "/nixos-config";
       }

@@ -1,4 +1,5 @@
-{fetchNuGet}: [
+{ fetchNuGet }:
+[
   (fetchNuGet {
     pname = "AutoFixture";
     version = "4.17.0";

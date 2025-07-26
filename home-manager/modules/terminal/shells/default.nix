@@ -2,8 +2,9 @@
   pkgs,
   osConfig,
   ...
-}: {
-  imports = [./bash.nix];
+}:
+{
+  imports = [ ./bash.nix ];
 
   # TODO: Do something with config.setup.defaultShell
 
@@ -27,13 +28,15 @@
       ps = "${pkgs.procps}/bin/ps auxf";
       rm = "${pkgs.coreutils}/bin/rm -v";
 
-      resetwifi = let
-        nmcli = "${pkgs.networkmanager}/bin/nmcli";
-        tailscale = "${osConfig.services.tailscale.package}/bin/tailscale";
-      in
-        if osConfig.services.tailscale.enable
-        then "${nmcli} networking off; ${tailscale} down; sleep 5; ${nmcli} networking on; ${tailscale} up"
-        else "${nmcli} networking off; sleep 5; ${nmcli} networking on";
+      resetwifi =
+        let
+          nmcli = "${pkgs.networkmanager}/bin/nmcli";
+          tailscale = "${osConfig.services.tailscale.package}/bin/tailscale";
+        in
+        if osConfig.services.tailscale.enable then
+          "${nmcli} networking off; ${tailscale} down; sleep 5; ${nmcli} networking on; ${tailscale} up"
+        else
+          "${nmcli} networking off; sleep 5; ${nmcli} networking on";
     };
   };
 }

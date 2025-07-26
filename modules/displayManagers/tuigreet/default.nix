@@ -3,11 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfgDmSd = config.services.displayManager.sessionData;
-in {
+in
+{
   config = lib.mkIf config.setup.displayManagers.tuigreet.enable {
-    setup.impermanence.keepDirs = ["/var/cache/tuigreet"];
+    setup.impermanence.keepDirs = [ "/var/cache/tuigreet" ];
 
     services.greetd = {
       enable = true;
@@ -26,12 +28,14 @@ in {
         "--window-padding 3"
         "--prompt-padding 0"
         "--asterisks"
-        "--theme '${lib.concatMapAttrsStringSep ";" (name: value: "${name}=${value}") {
-          time = "magenta";
-          title = "red";
-          greet = "green";
-          prompt = "cyan";
-        }}'"
+        "--theme '${
+          lib.concatMapAttrsStringSep ";" (name: value: "${name}=${value}") {
+            time = "magenta";
+            title = "red";
+            greet = "green";
+            prompt = "cyan";
+          }
+        }'"
       ];
     };
   };

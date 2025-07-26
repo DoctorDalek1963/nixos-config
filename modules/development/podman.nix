@@ -2,7 +2,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   config = lib.mkIf config.setup.podman.enable {
     virtualisation = {
       containers.enable = true;

@@ -2,18 +2,20 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
+in
+{
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.movies) {
     setup = {
-      impermanence.keepDirs = [config.services.radarr.dataDir];
-      backup.exclude = ["${cfgMs.mediaRoot}/jellyfin/movies"];
+      impermanence.keepDirs = [ config.services.radarr.dataDir ];
+      backup.exclude = [ "${cfgMs.mediaRoot}/jellyfin/movies" ];
 
       homeServer.mediaServer.directoryMap = {
-        jellyfin = ["${cfgMs.mediaRoot}/jellyfin/movies"];
-        transmission = ["${cfgMs.mediaRoot}/torrents/downloads/movies"];
+        jellyfin = [ "${cfgMs.mediaRoot}/jellyfin/movies" ];
+        transmission = [ "${cfgMs.mediaRoot}/torrents/downloads/movies" ];
       };
     };
 
@@ -54,8 +56,8 @@ in {
     };
 
     systemd.services.radarr = {
-      after = ["servarr-config.service"];
-      requires = ["servarr-config.service"];
+      after = [ "servarr-config.service" ];
+      requires = [ "servarr-config.service" ];
     };
   };
 }

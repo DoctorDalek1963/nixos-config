@@ -3,11 +3,13 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   custom-nh = pkgs.nh.overrideAttrs (oldAttrs: {
-    patches = (oldAttrs.patches or []) ++ [./nh_clean_show_output.patch];
+    patches = (oldAttrs.patches or [ ]) ++ [ ./nh_clean_show_output.patch ];
   });
-in {
+in
+{
   config = lib.mkIf config.setup.programming.nix {
     home.packages = with pkgs; [
       custom-nh

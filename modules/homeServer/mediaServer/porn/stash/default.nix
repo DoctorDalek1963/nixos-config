@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
 
@@ -17,22 +18,26 @@
       hash = "sha256-krruLbBI4FMruoXPiJEde9403hY7se6aeDsO+AqA8jo=";
     };
 
-    build-system = [pkgs.python3.pkgs.setuptools];
+    build-system = [ pkgs.python3.pkgs.setuptools ];
 
-    dependencies = [pkgs.python3.pkgs.requests];
+    dependencies = [ pkgs.python3.pkgs.requests ];
   };
 
-  python = pkgs.python3.withPackages (p: [stashapp-tools p.pyyaml]);
-in {
-  imports = [./customJs];
+  python = pkgs.python3.withPackages (p: [
+    stashapp-tools
+    p.pyyaml
+  ]);
+in
+{
+  imports = [ ./customJs ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
-      impermanence.keepDirs = [config.services.stash.dataDir];
+      impermanence.keepDirs = [ config.services.stash.dataDir ];
 
       backup = {
-        paths = [config.services.stash.dataDir];
-        exclude = [config.services.stash.settings.cache];
+        paths = [ config.services.stash.dataDir ];
+        exclude = [ config.services.stash.settings.cache ];
       };
 
       homeServer.mediaServer.directoryMap.stash = [
@@ -42,42 +47,47 @@ in {
       ];
     };
 
-    sops.secrets = let
-      perms = {
-        owner = "stash";
-        group = "media";
-        mode = "0400";
+    sops.secrets =
+      let
+        perms = {
+          owner = "stash";
+          group = "media";
+          mode = "0400";
+        };
+      in
+      {
+        "home-server/stash/password" = perms;
+        "home-server/stash/jwt-secret" = perms;
+        "home-server/stash/session-store-secret" = perms;
+        "home-server/stash/api-key" = perms;
       };
-    in {
-      "home-server/stash/password" = perms;
-      "home-server/stash/jwt-secret" = perms;
-      "home-server/stash/session-store-secret" = perms;
-      "home-server/stash/api-key" = perms;
-    };
 
     systemd.services.stash.serviceConfig = {
       # We want plugins to be able to change files, like renaming them
-      BindReadOnlyPaths = lib.mkForce [];
+      BindReadOnlyPaths = lib.mkForce [ ];
 
       ExecStartPre = [
         (
           let
             inherit (config.services.stash.settings) plugins_path;
           in
-            pkgs.writeShellScript "copy-stash-plugins.sh" ''
-              mkdir -p ${plugins_path}
-              cp -r ${(import ./plugins {inherit pkgs;}).outPath}/* ${plugins_path}/
-              chown -R ${config.services.stash.user}:media ${plugins_path}
-              chmod -R u+rw,g+rw ${plugins_path}
-            ''
+          pkgs.writeShellScript "copy-stash-plugins.sh" ''
+            mkdir -p ${plugins_path}
+            cp -r ${(import ./plugins { inherit pkgs; }).outPath}/* ${plugins_path}/
+            chown -R ${config.services.stash.user}:media ${plugins_path}
+            chmod -R u+rw,g+rw ${plugins_path}
+          ''
         )
-        (let
-          script = pkgs.writeShellScript "set-stash-api-key.sh" ''
-            env apiKey="$(< ${config.sops.secrets."home-server/stash/api-key".path})" \
-              ${lib.getExe pkgs.yq-go} -i '.api_key = strenv(apiKey)' ${config.services.stash.dataDir}/config.yml
-          '';
-          # Why the plus? So that this script is run as root and we can actually read the secret API key
-        in "+${script}")
+        (
+          let
+            script = pkgs.writeShellScript "set-stash-api-key.sh" ''
+              env apiKey="$(< ${config.sops.secrets."home-server/stash/api-key".path})" \
+                ${lib.getExe pkgs.yq-go} -i '.api_key = strenv(apiKey)' ${config.services.stash.dataDir}/config.yml
+            '';
+            # Why the plus? So that this script is run as root and we can actually read the secret API key
+          in
+          "+${script}"
+        )
       ];
     };
 
@@ -104,7 +114,7 @@ in {
         # TODO (stash 0.29): We should be able to remove this patch once
         # https://github.com/stashapp/stash/pull/5791 lands in a release
         package = pkgs.stash.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or []) ++ [./hls-dash-streaming-segments.patch];
+          patches = (oldAttrs.patches or [ ]) ++ [ ./hls-dash-streaming-segments.patch ];
         });
 
         username = "dyson";
@@ -154,9 +164,9 @@ in {
 
             taskDefaults = {
               autoTag = {
-                performers = [];
-                studios = [];
-                tags = [];
+                performers = [ ];
+                studios = [ ];
+                tags = [ ];
               };
 
               scan = {

@@ -3,14 +3,18 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.secrets;
-in {
+in
+{
   config = lib.mkIf cfg.cachix.enable {
-    environment.systemPackages = [pkgs.cachix];
+    environment.systemPackages = [ pkgs.cachix ];
 
     sops.secrets = {
-      "cachix/tokens/doctordalek1963" = {mode = "0400";};
+      "cachix/tokens/doctordalek1963" = {
+        mode = "0400";
+      };
     };
 
     # services.cachix-watch-store = {

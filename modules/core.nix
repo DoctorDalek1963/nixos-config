@@ -6,18 +6,26 @@
   # system,
   self,
   ...
-}: let
+}:
+let
   cfg = config.setup;
-in {
+in
+{
   nix = {
     settings = {
       # Keep the nix store optimised
       auto-optimise-store = true;
 
       # Enable flakes
-      experimental-features = ["nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
-      trusted-users = ["root" "@wheel"];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
     };
 
     # Garbage collect old packages every week
@@ -51,7 +59,8 @@ in {
       # These are lists of allowed unfree and insecure packages respectively.
       # They are allowed on any host (since this is core.nix), but they're
       # only actually installed by certain modules.
-      allowUnfreePredicate = pkg:
+      allowUnfreePredicate =
+        pkg:
         builtins.elem (lib.getName pkg) [
           # === System-wide
           # Gaming
@@ -139,29 +148,41 @@ in {
   # This is a very weird quirk that really should be fixed upstream but I don't
   # understand the root cause. See https://github.com/NixOS/nixpkgs/issues/296953
   systemd.services.NetworkManager-wait-online = {
-    serviceConfig.ExecStart = ["" "${pkgs.networkmanager}/bin/nm-online -q"];
+    serviceConfig.ExecStart = [
+      ""
+      "${pkgs.networkmanager}/bin/nm-online -q"
+    ];
   };
 
-  system = let
-    cfg = config.system.nixos;
+  system =
+    let
+      cfg = config.system.nixos;
 
-    nixosVersion = builtins.concatStringsSep "." [
-      cfg.release
-      (builtins.substring 0 8 inputs.nixpkgs.sourceInfo.lastModifiedDate)
-      inputs.nixpkgs.sourceInfo.shortRev
-    ];
+      nixosVersion = builtins.concatStringsSep "." [
+        cfg.release
+        (builtins.substring 0 8 inputs.nixpkgs.sourceInfo.lastModifiedDate)
+        inputs.nixpkgs.sourceInfo.shortRev
+      ];
 
-    configurationRevision = self.sourceInfo.shortRev or self.sourceInfo.dirtyShortRev;
+      configurationRevision = self.sourceInfo.shortRev or self.sourceInfo.dirtyShortRev;
 
-    buildVersion = builtins.concatStringsSep "." [
-      (builtins.substring 0 8 self.sourceInfo.lastModifiedDate)
-      configurationRevision
-    ];
-  in {
-    inherit configurationRevision;
+      buildVersion = builtins.concatStringsSep "." [
+        (builtins.substring 0 8 self.sourceInfo.lastModifiedDate)
+        configurationRevision
+      ];
+    in
+    {
+      inherit configurationRevision;
 
-    stateVersion = "23.11";
+      stateVersion = "23.11";
 
-    nixos.label = builtins.concatStringsSep "-" (cfg.tags ++ [nixosVersion] ++ ["build" buildVersion]);
-  };
+      nixos.label = builtins.concatStringsSep "-" (
+        cfg.tags
+        ++ [ nixosVersion ]
+        ++ [
+          "build"
+          buildVersion
+        ]
+      );
+    };
 }

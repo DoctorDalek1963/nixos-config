@@ -3,15 +3,17 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
-in {
-  imports = [./options.nix];
+in
+{
+  imports = [ ./options.nix ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     services.fileflows = {
-      extraPkgs = [pkgs.jellyfin-ffmpeg];
+      extraPkgs = [ pkgs.jellyfin-ffmpeg ];
 
       server = {
         enable = true;
@@ -28,7 +30,7 @@ in {
 
     setup = {
       backup = {
-        paths = [config.services.fileflows.server.baseDir];
+        paths = [ config.services.fileflows.server.baseDir ];
         exclude = [
           "${config.services.fileflows.server.baseDir}/Temp"
           "${config.services.fileflows.server.baseDir}/Server"

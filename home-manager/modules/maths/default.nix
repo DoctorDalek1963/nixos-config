@@ -5,10 +5,15 @@
   system,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.setup.maths;
-in {
-  imports = [./octave.nix ./sage.nix];
+in
+{
+  imports = [
+    ./octave.nix
+    ./sage.nix
+  ];
 
   config = lib.mkIf cfg.enable {
     home.packages =
@@ -18,10 +23,14 @@ in {
       ++ lib.optional cfg.zotero pkgs.zotero;
 
     setup.impermanence = {
-      keepDirs =
-        [".cache/mathlib"] # Mathlib for Lean 4, which I only use in devShells
-        ++ lib.optional cfg.lintrans ".lintrans"
-        ++ lib.optionals cfg.zotero [".zotero/zotero" "Zotero"];
+      keepDirs = [
+        ".cache/mathlib"
+      ] # Mathlib for Lean 4, which I only use in devShells
+      ++ lib.optional cfg.lintrans ".lintrans"
+      ++ lib.optionals cfg.zotero [
+        ".zotero/zotero"
+        "Zotero"
+      ];
     };
   };
 }
