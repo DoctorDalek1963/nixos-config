@@ -129,7 +129,11 @@
               excludes = [''.+\.patch$''];
             };
 
-            alejandra.enable = true;
+            nixfmt-rfc-style = {
+              enable = true;
+              package = pkgs.nixfmt;
+            };
+
             deadnix.enable = true;
             statix.enable = true;
           };
