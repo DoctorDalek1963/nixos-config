@@ -7,8 +7,6 @@
 let
   cfg = config.setup.secrets.vpn;
 
-  optSet = cond: set: if cond then set else { };
-
   vpnEnabled = name: builtins.elem name (map ({ vpnName, ... }: vpnName) cfg.vpns);
 
   bash-script =
@@ -60,7 +58,7 @@ in
 
     sops.secrets =
       { }
-      // optSet (vpnEnabled "ch_airvpn") {
+      // lib.optionalAttrs (vpnEnabled "ch_airvpn") {
         "openvpn/ch_airvpn/ca" = {
           mode = "0644";
         };
@@ -74,7 +72,7 @@ in
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "gb_airvpn") {
+      // lib.optionalAttrs (vpnEnabled "gb_airvpn") {
         "openvpn/gb_airvpn/ca" = {
           mode = "0644";
         };
@@ -88,7 +86,7 @@ in
           mode = "0644";
         };
       }
-      // optSet (vpnEnabled "us_airvpn") {
+      // lib.optionalAttrs (vpnEnabled "us_airvpn") {
         "openvpn/us_airvpn/ca" = {
           mode = "0644";
         };
@@ -136,9 +134,9 @@ in
           '';
         };
       in
-      optSet (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
-      // optSet (vpnEnabled "gb_airvpn") (build-airvpn-ovpn "gb")
-      // optSet (vpnEnabled "us_airvpn") (build-airvpn-ovpn "us");
+      lib.optionalAttrs (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
+      // lib.optionalAttrs (vpnEnabled "gb_airvpn") (build-airvpn-ovpn "gb")
+      // lib.optionalAttrs (vpnEnabled "us_airvpn") (build-airvpn-ovpn "us");
 
     systemd.services.networkmanager-import-ovpn-files = {
       serviceConfig = {

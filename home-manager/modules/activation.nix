@@ -4,8 +4,6 @@
   ...
 }:
 let
-  fillIf = condition: content: if condition then content else { };
-
   mkScript = script: lib.hm.dag.entryAfter [ "writeBoundary" ] script;
 
   mkSystemdRestart =
@@ -16,7 +14,7 @@ let
 
   cfg = config.setup;
 
-  restartRcloneMounts = fillIf cfg.rclone.enable (
+  restartRcloneMounts = lib.optionalAttrs cfg.rclone.enable (
     builtins.listToAttrs (
       builtins.map (
         { remote, ... }:
@@ -28,8 +26,12 @@ let
     )
   );
 
-  restartSopsNix = fillIf cfg.secrets.enable { restartSopsNix = mkSystemdRestart "sops-nix"; };
-  restartXremap = fillIf cfg.misc.programs.xremap { restartXremap = mkSystemdRestart "xremap"; };
+  restartSopsNix = lib.optionalAttrs cfg.secrets.enable {
+    restartSopsNix = mkSystemdRestart "sops-nix";
+  };
+  restartXremap = lib.optionalAttrs cfg.misc.programs.xremap {
+    restartXremap = mkSystemdRestart "xremap";
+  };
 in
 {
   home.activation = restartRcloneMounts // restartSopsNix // restartXremap;

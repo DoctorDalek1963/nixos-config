@@ -100,10 +100,9 @@ in
         let
           optPassword =
             name:
-            if cfg.secrets.enable then
-              { password = "READPASSWORD(${config.sops.secrets."irc/${name}/password".path})"; }
-            else
-              { };
+            lib.optionalAttrs cfg.secrets.enable {
+              password = "READPASSWORD(${config.sops.secrets."irc/${name}/password".path})";
+            };
 
           mkServerConfig =
             {
