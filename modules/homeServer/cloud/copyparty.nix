@@ -14,6 +14,7 @@ in
   config = lib.mkIf (cfg.enable && cfgCp.enable) {
     nixpkgs.overlays = [ inputs.copyparty.overlays.default ];
 
+    setup.backup.paths = [ cfgCp.cloudRoot ];
     sops.secrets."home-server/copyparty/dyson/password".mode = "0444";
 
     services.copyparty = {
