@@ -230,7 +230,9 @@ in
             whisper-asr = port 9000;
           };
 
-          nextcloud = port 38260;
+          cloud = {
+            nextcloud = port 38260;
+          };
 
           personalProjects = {
             winter-wonderlights = {

@@ -75,12 +75,12 @@ in
         "${config.services.nextcloud.hostName}".listen = [
           {
             addr = "127.0.0.1";
-            port = cfg.ports.nextcloud;
+            port = cfg.ports.cloud.nextcloud;
           }
         ];
 
         "${cfg.domainName}".locations."/nextcloud/" = {
-          proxyPass = "http://127.0.0.1:${toString cfg.ports.nextcloud}/";
+          proxyPass = "http://127.0.0.1:${toString cfg.ports.cloud.nextcloud}/";
 
           recommendedProxySettings = false;
 
