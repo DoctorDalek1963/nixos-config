@@ -16,6 +16,7 @@ in
 
     setup.backup.paths = [ cfgCp.cloudRoot ];
     sops.secrets."home-server/copyparty/dyson/password".mode = "0444";
+    users.groups.copyparty.members = [ cfg.manager ];
 
     services.copyparty = {
       enable = true;
