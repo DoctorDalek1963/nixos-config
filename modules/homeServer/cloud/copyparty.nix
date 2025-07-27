@@ -18,25 +18,52 @@ in
     sops.secrets."home-server/copyparty/dyson/password".mode = "0444";
     users.groups.copyparty.members = [ cfg.manager ];
 
-    services.copyparty = {
-      enable = true;
+    services = {
+      copyparty = {
+        enable = true;
 
-      settings = {
-        p = [ cfg.ports.cloud.copyparty ];
+        settings = {
+          i = [ "127.0.0.1" ];
+          p = [ cfg.ports.cloud.copyparty ];
 
-        zm = true; # zeroconf mDNS
-        z-on = [ "100.0.0.0/8" ]; # Only do zeroconf for 100.*.*.* addresses
+          zm = true; # zeroconf mDNS
+          z-on = [ "100.0.0.0/8" ]; # Only do zeroconf for 100.*.*.* addresses
 
-        e2dsa = true; # File indexing, scan all
-        e2ts = true; # Metadata indexing, scan new
+          e2dsa = true; # File indexing, scan all
+          e2ts = true; # Metadata indexing, scan new
+
+          rp-loc = "/copyparty"; # Reverse proxy location
+        };
+
+        accounts.dyson.passwordFile = config.sops.secrets."home-server/copyparty/dyson/password".path;
+
+        volumes."/" = {
+          path = cfgCp.cloudRoot;
+          access.A = [ "dyson" ];
+          flags = { };
+        };
       };
 
-      accounts.dyson.passwordFile = config.sops.secrets."home-server/copyparty/dyson/password".path;
+      nginx = {
+        upstreams.copyparty_tcp = {
+          servers."127.0.0.1:${toString cfg.ports.cloud.copyparty}" = {
+            fail_timeout = "1s";
+          };
 
-      volumes."/" = {
-        path = cfgCp.cloudRoot;
-        access.A = [ "dyson" ];
-        flags = { };
+          extraConfig = ''
+            keepalive 1;
+          '';
+        };
+
+        virtualHosts."${cfg.domainName}".locations."/copyparty" = {
+          proxyPass = "http://copyparty_tcp/copyparty";
+          extraConfig = ''
+            proxy_redirect off;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $http_connection;
+          '';
+        };
       };
     };
   };
