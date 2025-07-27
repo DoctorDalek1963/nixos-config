@@ -409,7 +409,7 @@ in
             {
               Misc = {
                 style = "row";
-                columns = 2;
+                columns = 3;
                 icon = "mdi-cog-box";
               };
             }
