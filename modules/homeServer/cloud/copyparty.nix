@@ -33,6 +33,8 @@ in
           e2ts = true; # Metadata indexing, scan new
 
           rp-loc = "/copyparty"; # Reverse proxy location
+
+          grid = true;
         };
 
         accounts.dyson.passwordFile = config.sops.secrets."home-server/copyparty/dyson/password".path;
