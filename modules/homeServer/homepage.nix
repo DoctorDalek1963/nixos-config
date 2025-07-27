@@ -33,6 +33,16 @@ let
               description = "";
             }
           ];
+        }
+        ++ lib.optional config.services.copyparty.enable {
+          "copyparty" = [
+            {
+              abbr = "CP";
+              icon = "sh-copyparty.svg";
+              href = "https://${cfg.domainName}/copyparty";
+              description = "";
+            }
+          ];
         };
     in
     if builtins.length list > 0 then [ { Misc = list; } ] else [ ];
