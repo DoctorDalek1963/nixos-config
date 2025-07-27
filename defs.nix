@@ -314,7 +314,7 @@
               transmission.ovpnName = "ch_airvpn";
             };
 
-            cloud.basic.enable = true;
+            cloud.copyparty.enable = true;
 
             personalProjects = {
               enable = true;

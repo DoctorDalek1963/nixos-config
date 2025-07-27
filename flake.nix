@@ -35,6 +35,10 @@
     wordle.url = "github:DoctorDalek1963/wordle";
 
     # Other home server stuff
+    copyparty = {
+      url = "github:9001/copyparty";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     whisper-asr-webservice-flake.url = "github:DoctorDalek1963/whisper-asr-webservice-flake";
 
     # home-manager stuff

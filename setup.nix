@@ -231,6 +231,7 @@ in
           };
 
           cloud = {
+            copyparty = port 8426;
             nextcloud = port 38260;
           };
 
@@ -299,6 +300,16 @@ in
 
       cloud = {
         basic = {
+          enable = defaultFalse;
+
+          # See dataRoot for note about persisting on impermanent setups
+          cloudRoot = mkOption {
+            type = types.nonEmptyStr;
+            default = "${config.setup.homeServer.dataRoot}/cloud";
+          };
+        };
+
+        copyparty = {
           enable = defaultFalse;
 
           # See dataRoot for note about persisting on impermanent setups
