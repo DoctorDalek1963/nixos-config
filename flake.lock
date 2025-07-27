@@ -37,6 +37,27 @@
         "type": "github"
       }
     },
+    "copyparty": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1753554171,
+        "narHash": "sha256-pYkP9F7J1Dx3oQH+ZeoDSVNF+4rfRUJDxR05hA+0Skk=",
+        "owner": "9001",
+        "repo": "copyparty",
+        "rev": "48705a74c6d6c8c1dd7595deaf4e2af65c0adcb0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "9001",
+        "repo": "copyparty",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1739936662,
@@ -475,6 +496,21 @@
       }
     },
     "flake-utils": {
+      "locked": {
+        "lastModified": 1678901627,
+        "narHash": "sha256-U02riOqrKKzwjsxc/400XnElV+UtPUQWpANPlyazjH0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "93a2b84fc4b70d9e089d029deacc3583435c2ed6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
       "inputs": {
         "systems": "systems"
       },
@@ -492,7 +528,7 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
+    "flake-utils_3": {
       "inputs": {
         "systems": "systems_3"
       },
@@ -1562,7 +1598,7 @@
     },
     "nuschtosSearch": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "ixx": "ixx",
         "nixpkgs": [
           "nixvim-config",
@@ -1586,7 +1622,7 @@
     },
     "poetry2nix": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": "flake-utils_3",
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": "nixpkgs_5",
         "systems": "systems_4",
@@ -1770,6 +1806,7 @@
     },
     "root": {
       "inputs": {
+        "copyparty": "copyparty",
         "disko": "disko",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",

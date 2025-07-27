@@ -33,6 +33,16 @@ let
               description = "";
             }
           ];
+        }
+        ++ lib.optional config.services.copyparty.enable {
+          "copyparty" = [
+            {
+              abbr = "CP";
+              icon = "sh-copyparty.svg";
+              href = "https://${cfg.domainName}/copyparty";
+              description = "";
+            }
+          ];
         };
     in
     if builtins.length list > 0 then [ { Misc = list; } ] else [ ];
@@ -399,7 +409,7 @@ in
             {
               Misc = {
                 style = "row";
-                columns = 2;
+                columns = 3;
                 icon = "mdi-cog-box";
               };
             }
