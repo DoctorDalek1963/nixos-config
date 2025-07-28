@@ -8,6 +8,32 @@ let
   cfg = config.services.fileflows;
 
   inherit (lib) mkOption types;
+
+  mkSystemdService =
+    {
+      description,
+      script,
+      environment,
+      user,
+      group,
+      extra ? { },
+    }:
+    lib.attrsets.recursiveUpdate {
+      inherit description script environment;
+
+      requires = [ "network-online.target" ];
+      after = [ "network-online.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        Type = "simple";
+        User = user;
+        Group = group;
+
+        Restart = "always";
+        RestartSec = 10;
+      };
+    } extra;
 in
 {
   options.services.fileflows = {
@@ -108,26 +134,15 @@ in
           inherit (cfg.server) user group;
         };
 
-        services.fileflows-server = {
+        services.fileflows-server = mkSystemdService {
           description = "FileFlows server with integrated node";
           script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.server.port}";
 
-          requires = [ "network-online.target" ];
-          after = [ "network-online.target" ];
-          wantedBy = [ "multi-user.target" ];
-
           environment.FILEFLOWS_SERVER_BASE_DIR = cfg.server.baseDir;
 
-          serviceConfig = {
-            Type = "simple";
-            User = cfg.server.user;
-            Group = cfg.server.group;
+          inherit (cfg.server) user group;
 
-            Restart = "always";
-            RestartSec = 10;
-
-            TasksMax = 1000;
-          };
+          extra.serviceConfig.TasksMax = 1000;
         };
       };
 
@@ -148,26 +163,17 @@ in
           inherit (cfg.node) user group;
         };
 
-        services.fileflows-node = {
+        services.fileflows-node = mkSystemdService {
           description = "FileFlows node";
           script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.node.serverUrl}";
 
-          startLimitIntervalSec = 200;
-          startLimitBurst = 3;
-
-          requires = [ "network-online.target" ];
-          after = [ "network-online.target" ];
-          wantedBy = [ "multi-user.target" ];
-
           environment.FILEFLOWS_NODE_BASE_DIR = cfg.node.baseDir;
 
-          serviceConfig = {
-            Type = "simple";
-            User = cfg.node.user;
-            Group = cfg.node.group;
+          inherit (cfg.node) user group;
 
-            Restart = "always";
-            RestartSec = 10;
+          extra = {
+            startLimitIntervalSec = 200;
+            startLimitBurst = 3;
           };
         };
       };
