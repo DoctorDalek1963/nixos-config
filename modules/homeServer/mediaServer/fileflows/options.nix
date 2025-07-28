@@ -32,6 +32,26 @@ let
 
         Restart = "always";
         RestartSec = 10;
+
+        # Hardening
+        IPAddressAllow = "192.168.1.0/24";
+        LockPersonality = true;
+        NoNewPrivileges = true;
+
+        PrivateTmp = true;
+        PrivateUsers = false;
+
+        ProtectClock = true;
+        ProtectControlGroups = true;
+        ProtectHome = true;
+        ProtectKernelLogs = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        ProtectProc = "invisible";
+        ProtectSystem = "full";
+
+        RestrictSUIDSGID = true;
+        SystemCallArchitectures = "native";
       };
     } extra;
 in
