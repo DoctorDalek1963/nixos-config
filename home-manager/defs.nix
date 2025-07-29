@@ -18,6 +18,12 @@
     rclone = {
       enable = true;
       automounts = [
+        # Go to <url>/copyparty/?hc for instructions
+        {
+          remote = "sasha-copyparty";
+          remotePath = "/copyparty";
+          mountpoint = "/home/dyson/copyparty";
+        }
         # STFP, don't set pub_key_file, just set key_file and key_file_pass and
         # it will find the public key automatically
         {
@@ -166,6 +172,12 @@
     rclone = {
       enable = true;
       automounts = [
+        # Go to <url>/copyparty/?hc for instructions
+        {
+          remote = "sasha-copyparty";
+          remotePath = "/copyparty";
+          mountpoint = "/home/dyson/copyparty";
+        }
         # STFP, don't set pub_key_file, just set key_file and key_file_pass and
         # it will find the public key automatically
         {
