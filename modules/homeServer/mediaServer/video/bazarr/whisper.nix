@@ -23,13 +23,14 @@ in
 
     services.whisper-asr = {
       enable = true;
-      autoStart = false;
+      autoStart = true;
       group = "media";
     };
 
     systemd.services.whisper-asr.environment = {
       ASR_MODEL = "small";
       # ASR_ENGINE = "faster_whisper"; # Needs old, incompatible CUDA libraries
+      MODEL_IDLE_TIMEOUT = "300"; # Unload model from VRAM after 5 minutes
     };
   };
 }
