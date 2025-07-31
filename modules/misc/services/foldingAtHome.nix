@@ -21,14 +21,15 @@ in
       ];
     };
 
-    # FIXME: Currently this runs the service as root, which is obviously very
-    # bad because Folding@home downloads and runs untrusted binary blobs, so
-    # this is very insecure, but at least it works.
+    # Currently this runs the service as root, which is obviously bad because
+    # Folding@home downloads and runs untrusted binary blobs, so this is quite
+    # insecure, but at least it works.
 
     # Personally I trust the binaries because Folding@home is a long-running
     # project being run and managed by trusted scientists and programmers, and
     # large parts of the project are open source. Still, running everything as
-    # root is rather sub-optimal.
+    # root is rather sub-optimal. Hardening the systemd service helps a lot,
+    # but it's still not perfect.
 
     # The default config uses a dynamic user but for me, every time fah-client
     # tries to start a subprocess, it fails immediately. Specifically, execve
@@ -50,6 +51,42 @@ in
 
         StateDirectory = "foldingathome";
         WorkingDirectory = lib.mkForce "/var/lib/foldingathome";
+
+        # Hardening
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_NETLINK"
+          "AF_INET"
+          "AF_INET6"
+        ];
+
+        LockPersonality = true;
+        NoNewPrivileges = true;
+
+        PrivateTmp = true;
+        PrivateUsers = "self";
+
+        ProtectClock = true;
+        ProtectControlGroups = true;
+        ProtectHome = true;
+        ProtectKernelLogs = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        ProtectProc = "invisible";
+        ProtectSystem = "strict";
+        ReadWritePaths = [ "/var/lib/foldingathome" ];
+
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+        SystemCallArchitectures = "native";
+        MemoryDenyWriteExecute = true;
+
+        AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
+        SystemCallFilter = [
+          "@system-service"
+          "@mount"
+        ];
       };
     };
   };
