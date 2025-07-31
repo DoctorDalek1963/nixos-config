@@ -15,6 +15,8 @@ in
     services.fileflows = {
       extraPkgs = [ pkgs.jellyfin-ffmpeg ];
 
+      libraryPaths = [ cfg.mediaServer.mediaRoot ];
+
       server = {
         enable = true;
         group = "media";

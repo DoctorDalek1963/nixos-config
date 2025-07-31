@@ -60,9 +60,10 @@ let
         RestrictRealtime = true;
         RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
+        MemoryDenyWriteExecute = false;
 
-        AmbientCapabilities = [ ];
-        CapabilityBoundingSet = [ ];
+        AmbientCapabilities = "";
+        CapabilityBoundingSet = "";
         SystemCallFilter = [ "@system-service" ];
       };
     } extra;
@@ -85,6 +86,11 @@ in
       type = types.nonEmptyStr;
       default = "/var/lib/fileflows/bin";
       description = "The directory where the extraPkgs will be symlinked.";
+    };
+
+    libraryPaths = mkOption {
+      type = types.listOf types.nonEmptyStr;
+      description = "List of paths containing file libraries. These libraries contain the files you want to flow.";
     };
 
     server = {
@@ -180,7 +186,8 @@ in
             ReadWritePaths = [
               cfg.server.baseDir
               cfg.binDir
-            ];
+            ]
+            ++ cfg.libraryPaths;
           };
         };
       };
@@ -218,7 +225,8 @@ in
               ReadWritePaths = [
                 cfg.node.baseDir
                 cfg.binDir
-              ];
+              ]
+              ++ cfg.libraryPaths;
             };
           };
         };
