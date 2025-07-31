@@ -97,7 +97,7 @@
       ga = "git add -A";
       gf = "git fetch";
       gpl = "git pull";
-      # gfpl = "git fetch && git pull";
+      gfpl = "git fetch && git pull";
       gflg = "git fetch && git lg";
 
       cdgr = ''cd "$(git rev-parse --show-toplevel)"'';
