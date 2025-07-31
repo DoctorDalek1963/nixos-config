@@ -34,12 +34,19 @@ let
         RestartSec = 10;
 
         # Hardening
-        IPAddressAllow = "192.168.1.0/24";
+        IPAddressAllow = "127.0.0.1";
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_NETLINK"
+          "AF_INET"
+          "AF_INET6"
+        ];
+
         LockPersonality = true;
         NoNewPrivileges = true;
 
         PrivateTmp = true;
-        PrivateUsers = false;
+        PrivateUsers = "self";
 
         ProtectClock = true;
         ProtectControlGroups = true;
@@ -48,10 +55,15 @@ let
         ProtectKernelModules = true;
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
-        ProtectSystem = "full";
+        ProtectSystem = "strict";
 
+        RestrictRealtime = true;
         RestrictSUIDSGID = true;
         SystemCallArchitectures = "native";
+
+        AmbientCapabilities = [ ];
+        CapabilityBoundingSet = [ ];
+        SystemCallFilter = [ "@system-service" ];
       };
     } extra;
 in
@@ -162,7 +174,14 @@ in
 
           inherit (cfg.server) user group;
 
-          extra.serviceConfig.TasksMax = 1000;
+          extra.serviceConfig = {
+            TasksMax = 1000;
+
+            ReadWritePaths = [
+              cfg.server.baseDir
+              cfg.binDir
+            ];
+          };
         };
       };
 
@@ -194,6 +213,13 @@ in
           extra = {
             startLimitIntervalSec = 200;
             startLimitBurst = 3;
+
+            serviceConfig = {
+              ReadWritePaths = [
+                cfg.node.baseDir
+                cfg.binDir
+              ];
+            };
           };
         };
       };
