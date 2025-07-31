@@ -2074,11 +2074,11 @@
         "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1753868980,
-        "narHash": "sha256-CRt+ZWo66XFo2KL8boQXFsRYLG/Fovw28IT0lovdRqY=",
+        "lastModified": 1753976382,
+        "narHash": "sha256-BwGQ8qCPcc2FR8AcjqkaxB2UQyLU050aMnFV2hiSNMQ=",
         "owner": "DoctorDalek1963",
         "repo": "whisper-asr-webservice-flake",
-        "rev": "47cb09dd9b92aa05b30cba79c1725aecaf01a622",
+        "rev": "c1a5b2f15b147752a627d5b80d8c5b451949ee5c",
         "type": "github"
       },
       "original": {
