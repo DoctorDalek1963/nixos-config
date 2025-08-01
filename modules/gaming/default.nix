@@ -23,6 +23,6 @@
       mangohud
     ];
 
-    systemd.extraConfig = "DefaultLimitNOFILE=${toString (2048 * 64)}:${toString (2048 * 256)}";
+    systemd.settings.Manager.DefaultLimitNOFILE = "${toString (2048 * 64)}:${toString (2048 * 256)}";
   };
 }
