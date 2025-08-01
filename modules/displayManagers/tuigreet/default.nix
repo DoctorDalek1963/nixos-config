@@ -37,5 +37,31 @@ in
         }'"
       ];
     };
+
+    # Disable systemd status logging on /dev/console before launching tuigreet
+    # and re-enable it afterwards. See the following:
+    # https://unix.stackexchange.com/a/796531
+    # https://www.man7.org/linux/man-pages/man1/systemd.1.html
+    # https://www.man7.org/linux/man-pages/man5/org.freedesktop.systemd1.5.html
+    systemd.services.greetd.serviceConfig =
+      let
+        dbusCmd =
+          arg:
+          lib.concatStringsSep " " [
+            "/run/current-system/sw/bin/busctl"
+            "call"
+            "org.freedesktop.systemd1"
+            "/org/freedesktop/systemd1"
+            "org.freedesktop.systemd1.Manager"
+            "SetShowStatus"
+            "s"
+            arg
+            "--expect-reply=yes"
+          ];
+      in
+      {
+        ExecStartPre = [ (dbusCmd "0") ];
+        ExecStopPost = [ (dbusCmd "1") ];
+      };
   };
 }
