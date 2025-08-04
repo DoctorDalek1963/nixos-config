@@ -125,8 +125,6 @@ in
   config = lib.mkIf cfgFf.enable {
     setup.impermanence = {
       keepDirs = [
-        ".cache/mozilla/firefox"
-        ".mozilla/firefox"
         ".cache/librewolf"
         ".librewolf"
       ];
