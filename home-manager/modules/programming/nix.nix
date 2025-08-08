@@ -15,6 +15,7 @@ in
       custom-nh
       nix-output-monitor
       nix-tree
+      nixpkgs-reviewFull
     ];
 
     setup.terminal.shellAliases = {
