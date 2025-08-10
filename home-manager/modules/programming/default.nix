@@ -9,4 +9,6 @@
     ./python.nix
     ./rust.nix
   ];
+
+  setup.impermanence.keepFiles = [ ".config/gdb/gdbinit" ];
 }
