@@ -3,6 +3,7 @@
   lib,
   config,
   osConfig,
+  inputs,
   ...
 }:
 let
@@ -103,6 +104,8 @@ let
   ];
 in
 {
+  imports = [ inputs.xremap.homeManagerModules.default ];
+
   services.xremap = {
     enable = config.setup.misc.programs.xremap;
 

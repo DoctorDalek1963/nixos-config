@@ -2,7 +2,6 @@
   lib,
   config,
   osConfig,
-  inputs,
   ...
 }:
 let
@@ -22,8 +21,9 @@ let
     default = false;
     type = types.bool;
   };
-
-  file-modules = [
+in
+{
+  imports = [
     ./consts.nix
 
     ./modules/core.nix
@@ -41,14 +41,6 @@ let
     ./modules/rclone
     ./modules/secrets
   ];
-  other-modules = [
-    inputs.nix-index-database.homeModules.nix-index
-    inputs.sops-nix.homeManagerModules.sops
-    inputs.xremap.homeManagerModules.default
-  ];
-in
-{
-  imports = file-modules ++ other-modules;
 
   options.setup = {
     username = mkOption {
