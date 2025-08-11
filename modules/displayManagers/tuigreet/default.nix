@@ -15,7 +15,7 @@ in
       enable = true;
 
       settings.default_session.command = builtins.concatStringsSep " " [
-        "${pkgs.greetd.tuigreet}/bin/tuigreet"
+        "${pkgs.tuigreet}/bin/tuigreet"
         "--sessions ${cfgDmSd.desktops}/share/wayland-sessions"
         "--xsessions ${cfgDmSd.desktops}/share/xsessions"
         "--xsession-wrapper ${cfgDmSd.wrapper}"
