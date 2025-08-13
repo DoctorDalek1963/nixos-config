@@ -298,15 +298,15 @@
             dataRoot = "/data";
             manager = "dyson";
 
-            adguardhome.enable = true;
             myspeed.enable = true;
             ntfy.enable = true;
-
             firefly-iii.enable = true;
-
             squid.enable = true;
-
             scrutiny.enable = true;
+
+            dns = {
+              enable = true;
+            };
 
             mediaServer = {
               enable = true;

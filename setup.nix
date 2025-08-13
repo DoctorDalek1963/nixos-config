@@ -243,15 +243,15 @@ in
           };
         };
 
-      adguardhome.enable = defaultFalse;
       myspeed.enable = defaultFalse;
       ntfy.enable = defaultFalse;
-
       firefly-iii.enable = defaultFalse;
-
       squid.enable = defaultFalse;
-
       scrutiny.enable = defaultFalse;
+
+      dns = {
+        enable = defaultFalse;
+      };
 
       homeAutomation = { };
 

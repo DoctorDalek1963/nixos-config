@@ -5,8 +5,8 @@
 }:
 {
   imports = [
-    ./adguardhome
     ./cloud
+    ./dns
     ./mediaServer
     ./myspeed
     ./personalProjects

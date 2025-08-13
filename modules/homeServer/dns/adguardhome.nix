@@ -16,7 +16,7 @@ let
     concatStringsSep "." (filter isString (tail (split "\\." cfg.domainName)));
 in
 {
-  config = lib.mkIf (cfg.enable && cfg.adguardhome.enable) {
+  config = lib.mkIf (cfg.enable && cfg.dns.enable) {
     setup.impermanence.keepDirs = [ "/var/lib/private/AdGuardHome" ];
 
     services.adguardhome = {
