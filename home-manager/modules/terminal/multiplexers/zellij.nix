@@ -16,6 +16,7 @@ in
         theme = "catppuccin-macchiato";
         default_mode = "locked";
         show_startup_tips = false;
+        advanced_mouse_actions = false; # Multiple pane select
 
         layout_dir = "${config.xdg.configHome}/zellij/layouts";
         default_layout = "custom_default";
@@ -41,10 +42,20 @@ in
                     bind "Alt k" "Alt Up" { MoveFocus "Up"; }
 
                     bind "Alt n" { NewPane; }
+                    bind "Alt t" { NewTab; }
                     bind "Alt q" { CloseFocus; }
 
-                    // See "Alt x" in normal block
                     bind "Alt x" { ToggleFocusFullscreen; }
+
+                    bind "Alt 1" { GoToTab 1; }
+                    bind "Alt 2" { GoToTab 2; }
+                    bind "Alt 3" { GoToTab 3; }
+                    bind "Alt 4" { GoToTab 4; }
+                    bind "Alt 5" { GoToTab 5; }
+                    bind "Alt 6" { GoToTab 6; }
+                    bind "Alt 7" { GoToTab 7; }
+                    bind "Alt 8" { GoToTab 8; }
+                    bind "Alt 9" { GoToTab 9; }
                 }
             }
           '';
