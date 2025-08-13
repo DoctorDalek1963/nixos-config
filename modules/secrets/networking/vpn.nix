@@ -146,6 +146,8 @@ in
         ExecStart = "${bash-script}/bin/import-ovpn-files";
       };
       wantedBy = [ "network-online.target" ];
+      requires = [ "NetworkManager.service" ];
+      after = [ "NetworkManager.service" ];
     };
   };
 }
