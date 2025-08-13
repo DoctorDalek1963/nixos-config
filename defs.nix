@@ -306,6 +306,11 @@
 
             dns = {
               enable = true;
+
+              vpn = {
+                enable = true;
+                ovpnName = "ch_airvpn";
+              };
             };
 
             mediaServer = {

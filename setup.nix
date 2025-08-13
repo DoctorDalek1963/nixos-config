@@ -251,6 +251,21 @@ in
 
       dns = {
         enable = defaultFalse;
+
+        # Use a VPN to protect against [DNS leaks](https://dnsleaktest.com/what-is-a-dns-leak.html)
+        # See `mediaServer.transmission` for details of options
+        vpn = {
+          enable = defaultFalse;
+
+          ovpnName = mkOption {
+            type = types.nonEmptyStr;
+          };
+
+          thirdOctet = mkOption {
+            type = types.ints.between 1 255;
+            default = 10;
+          };
+        };
       };
 
       homeAutomation = { };

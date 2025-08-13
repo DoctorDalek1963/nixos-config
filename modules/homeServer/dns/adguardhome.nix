@@ -6,10 +6,14 @@
 let
   cfg = config.setup.homeServer;
 
-  unboundUpstreams = [
-    "127.0.0.1:${toString cfg.ports.unbound}"
-  ]
-  ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}";
+  unboundUpstreams =
+    if cfg.dns.vpn.enable then
+      [ "192.168.${toString cfg.dns.vpn.thirdOctet}.2:${toString cfg.ports.unbound}" ]
+    else
+      (
+        [ "127.0.0.1:${toString cfg.ports.unbound}" ]
+        ++ lib.optional config.networking.enableIPv6 "[::1]:${toString cfg.ports.unbound}"
+      );
 
   tailnetName =
     with builtins;
