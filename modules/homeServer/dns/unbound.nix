@@ -52,6 +52,11 @@ in
       })
 
       (lib.mkIf cfgD.vpn.enable {
+        # When we're setting up the VPN namespace, we need to resolve the
+        # domain name for the VPN server, but we can't do that with unbound
+        # yet, so we need to use the default ISP nameserver
+        services.unbound.resolveLocalQueries = false;
+
         # Copied from my config for transmission
         systemd.services =
           let
@@ -97,6 +102,12 @@ in
                 "create-unbound-veth.service"
                 "resolvconf.service"
               ];
+
+              # Normally, nss-lookup would depend on unbound, but this creates
+              # a dependency cycle where unbound needs openvpn-ns, which needs
+              # nss-lookup, which needs unbound. That's bad
+              before = lib.mkForce [ ];
+              wantedBy = lib.mkForce [ "multi-user.target" ];
 
               serviceConfig = {
                 ExecStartPre = [ "${pkgs.curl}/bin/curl icanhazip.com" ];
