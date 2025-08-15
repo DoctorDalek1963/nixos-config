@@ -265,6 +265,8 @@ in
 
             For example, `[ "wikipedia_en_all_maxi" ]` would download
             `wikipedia_en_all_maxi_YYYY-DD.zim` for the most recent available month.
+
+            See <https://download.kiwix.org/zim/> for an index.
           '';
         };
       };
