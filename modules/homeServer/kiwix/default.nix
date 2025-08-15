@@ -105,7 +105,7 @@ in
             ProtectKernelTunables = true;
             ProtectProc = "invisible";
             ProtectSystem = "strict";
-            BindReadOnlyPaths = [ "/var/lib/kiwix/zim" ];
+            ReadOnlyPaths = [ "/var/lib/kiwix/zim" ];
 
             RestrictRealtime = true;
             RestrictSUIDSGID = true;
@@ -157,7 +157,7 @@ in
             ProtectKernelTunables = true;
             ProtectProc = "invisible";
             ProtectSystem = "strict";
-            BindReadWritePaths = [ "/var/lib/kiwix/zim" ];
+            ReadWritePaths = [ "/var/lib/kiwix/zim" ];
 
             RestrictRealtime = true;
             RestrictSUIDSGID = true;
