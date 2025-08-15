@@ -330,15 +330,7 @@
               enable = true;
               simpleWifiNetworkNames = [ "HOME" ];
             };
-            vpn = {
-              enable = true;
-              vpns = [
-                {
-                  vpnName = "ch_airvpn";
-                  users = [ "dyson" ];
-                }
-              ];
-            };
+            vpn.enable = true;
           };
         };
       }
