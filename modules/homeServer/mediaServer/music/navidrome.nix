@@ -58,7 +58,7 @@ in
       };
 
     systemd.services.navidrome.serviceConfig = {
-      BindReadOnlyPaths = [
+      ReadOnlyPaths = [
         config.sops.secrets."home-server/navidrome/spotify/id".path
         config.sops.secrets."home-server/navidrome/spotify/secret".path
         config.sops.secrets."home-server/navidrome/lastfm/apikey".path
