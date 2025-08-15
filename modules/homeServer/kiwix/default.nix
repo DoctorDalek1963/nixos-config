@@ -80,8 +80,12 @@ in
           serviceConfig = {
             ExecStart = [ "${kiwix-serve}/bin/kiwix-serve" ];
 
+            Type = "simple";
             User = "kiwix";
             Group = "kiwix";
+
+            Restart = "on-failure";
+            RestartSec = "5s";
 
             # Hardening
             RestrictAddressFamilies = [
@@ -130,10 +134,14 @@ in
                 ++ cfg.kiwix.zimFilePrefixes
               ))
             ];
-            ExecStopPost = [ "/run/current-system/sw/bin/systemctl try-restart kiwix-serve.service" ];
+            ExecStopPost = [ "+/run/current-system/sw/bin/systemctl try-restart kiwix-serve.service" ];
 
+            Type = "oneshot";
             User = "kiwix";
             Group = "kiwix";
+
+            Restart = "on-failure";
+            RestartSec = "5s";
 
             # Hardening
             RestrictAddressFamilies = [
