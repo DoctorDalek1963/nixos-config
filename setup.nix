@@ -201,6 +201,8 @@ in
           squid = port 3128;
           scrutiny = port 29517;
 
+          kiwix = port 46217;
+
           mediaServer = {
             audiobookshelf = port 8000;
             calibre = {
@@ -252,6 +254,20 @@ in
       squid.enable = defaultFalse;
 
       scrutiny.enable = defaultFalse;
+
+      kiwix = {
+        enable = defaultFalse;
+
+        zimFilePrefixes = mkOption {
+          type = types.nonEmptyListOf types.nonEmptyStr;
+          description = ''
+            The prefixes of the ZIM files to download. Do not include the date and extension.
+
+            For example, `[ "wikipedia_en_all_maxi" ]` would download
+            `wikipedia_en_all_maxi_YYYY-DD.zim` for the most recent available month.
+          '';
+        };
+      };
 
       homeAutomation = { };
 
