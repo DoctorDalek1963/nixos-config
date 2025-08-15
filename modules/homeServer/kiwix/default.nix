@@ -82,6 +82,39 @@ in
 
             User = "kiwix";
             Group = "kiwix";
+
+            # Hardening
+            RestrictAddressFamilies = [
+              "AF_UNIX"
+              "AF_NETLINK"
+              "AF_INET"
+              "AF_INET6"
+            ];
+
+            LockPersonality = true;
+            NoNewPrivileges = true;
+
+            PrivateTmp = true;
+            PrivateUsers = "self";
+
+            ProtectClock = true;
+            ProtectControlGroups = true;
+            ProtectHome = true;
+            ProtectKernelLogs = true;
+            ProtectKernelModules = true;
+            ProtectKernelTunables = true;
+            ProtectProc = "invisible";
+            ProtectSystem = "strict";
+            BindReadOnlyPaths = [ "/var/lib/kiwix/zim" ];
+
+            RestrictRealtime = true;
+            RestrictSUIDSGID = true;
+            SystemCallArchitectures = "native";
+            MemoryDenyWriteExecute = true;
+
+            AmbientCapabilities = [ ];
+            CapabilityBoundingSet = [ ];
+            SystemCallFilter = [ "@system-service" ];
           };
         };
 
@@ -101,6 +134,39 @@ in
 
             User = "kiwix";
             Group = "kiwix";
+
+            # Hardening
+            RestrictAddressFamilies = [
+              "AF_UNIX"
+              "AF_NETLINK"
+              "AF_INET"
+              "AF_INET6"
+            ];
+
+            LockPersonality = true;
+            NoNewPrivileges = true;
+
+            PrivateTmp = true;
+            PrivateUsers = "self";
+
+            ProtectClock = true;
+            ProtectControlGroups = true;
+            ProtectHome = true;
+            ProtectKernelLogs = true;
+            ProtectKernelModules = true;
+            ProtectKernelTunables = true;
+            ProtectProc = "invisible";
+            ProtectSystem = "strict";
+            BindReadWritePaths = [ "/var/lib/kiwix/zim" ];
+
+            RestrictRealtime = true;
+            RestrictSUIDSGID = true;
+            SystemCallArchitectures = "native";
+            MemoryDenyWriteExecute = true;
+
+            AmbientCapabilities = [ ];
+            CapabilityBoundingSet = [ ];
+            SystemCallFilter = [ "@system-service" ];
           };
         };
       };
