@@ -311,9 +311,11 @@
             kiwix = {
               enable = true;
               zimFilePrefixes = [
-                "stack_exchange/superuser.stackexchange.com_en_all"
+                "stack_exchange/math.stackexchange.com_en_all"
+                "stack_exchange/superuser.com_en_all"
                 "stack_exchange/tex.stackexchange.com_en_all"
                 "stack_exchange/unix.stackexchange.com_en_all"
+                "stack_exchange/vi.stackexchange.com_en_all"
                 "wikipedia/wikipedia_en_computer_maxi"
                 "wikipedia/wikipedia_en_geography_maxi"
                 "wikipedia/wikipedia_en_history_maxi"
