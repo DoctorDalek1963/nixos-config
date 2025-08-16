@@ -327,7 +327,7 @@
             mediaServer = {
               enable = true;
               porn = true;
-              transmission.ovpnName = "ch_airvpn";
+              transmission.ovpnName = "eu_airvpn";
             };
 
             cloud.copyparty.enable = true;
@@ -346,7 +346,18 @@
               enable = true;
               simpleWifiNetworkNames = [ "HOME" ];
             };
-            vpn.enable = true;
+            vpn = {
+              enable = true;
+              vpns = [
+                {
+                  vpnName = "eu_airvpn";
+                  users = [
+                    "dyson"
+                    "transmission"
+                  ];
+                }
+              ];
+            };
           };
         };
       }

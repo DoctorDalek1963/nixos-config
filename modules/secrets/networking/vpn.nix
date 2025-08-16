@@ -72,6 +72,20 @@ in
           mode = "0644";
         };
       }
+      // lib.optionalAttrs (vpnEnabled "eu_airvpn") {
+        "openvpn/eu_airvpn/ca" = {
+          mode = "0644";
+        };
+        "openvpn/eu_airvpn/cert" = {
+          mode = "0644";
+        };
+        "openvpn/eu_airvpn/key" = {
+          mode = "0644";
+        };
+        "openvpn/eu_airvpn/tls-crypt" = {
+          mode = "0644";
+        };
+      }
       // lib.optionalAttrs (vpnEnabled "gb_airvpn") {
         "openvpn/gb_airvpn/ca" = {
           mode = "0644";
@@ -135,6 +149,7 @@ in
         };
       in
       lib.optionalAttrs (vpnEnabled "ch_airvpn") (build-airvpn-ovpn "ch")
+      // lib.optionalAttrs (vpnEnabled "eu_airvpn") (build-airvpn-ovpn "eu")
       // lib.optionalAttrs (vpnEnabled "gb_airvpn") (build-airvpn-ovpn "gb")
       // lib.optionalAttrs (vpnEnabled "us_airvpn") (build-airvpn-ovpn "us");
 
