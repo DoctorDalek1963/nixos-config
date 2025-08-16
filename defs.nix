@@ -70,7 +70,13 @@
 
           # podman.enable = true;
 
-          misc.services.foldingAtHome.enable = true;
+          misc = {
+            programs.eddie = {
+              enable = true;
+              users = [ "dyson" ];
+            };
+            services.foldingAtHome.enable = true;
+          };
 
           printing = {
             enable = true;

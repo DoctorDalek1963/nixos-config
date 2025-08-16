@@ -1,3 +1,6 @@
 {
-  imports = [ ./services ];
+  imports = [
+    ./programs
+    ./services
+  ];
 }

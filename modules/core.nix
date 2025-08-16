@@ -96,6 +96,10 @@ in
         ];
 
       permittedInsecurePackages = [
+        # Used by Eddie, the UI for AirVPN
+        "dotnet-sdk-6.0.428"
+        "dotnet-runtime-6.0.36"
+
         # HTTP proxy used on home server. It's okay because it's only
         # accessible to devices on my tailnet and not the public internet
         "squid-7.0.1"

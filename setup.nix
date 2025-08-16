@@ -359,6 +359,17 @@ in
 
     # === Misc
     misc = {
+      programs = {
+        eddie = {
+          enable = defaultFalse;
+          users = mkOption {
+            type = types.listOf types.nonEmptyStr;
+            default = [ ];
+            description = "The users who are allowed to run Eddie without authenticating.";
+          };
+        };
+      };
+
       services = {
         foldingAtHome.enable = defaultFalse;
       };
