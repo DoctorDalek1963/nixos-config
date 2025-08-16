@@ -7,6 +7,7 @@
   imports = [
     ./adguardhome
     ./cloud
+    ./kiwix
     ./mediaServer
     ./myspeed
     ./personalProjects

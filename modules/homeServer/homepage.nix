@@ -43,6 +43,16 @@ let
               description = "";
             }
           ];
+        }
+        ++ lib.optional config.setup.homeServer.kiwix.enable {
+          "Kiwix" = [
+            {
+              abbr = "K";
+              icon = "kiwix.svg";
+              href = "https://${cfg.domainName}/wiki";
+              description = "";
+            }
+          ];
         };
     in
     if builtins.length list > 0 then [ { Misc = list; } ] else [ ];
