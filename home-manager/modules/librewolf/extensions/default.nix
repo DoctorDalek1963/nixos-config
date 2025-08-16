@@ -23,10 +23,11 @@ let
 
         # YouTube
         dearrow
-        enhancer-for-youtube # Unfree
+        # enhancer-for-youtube # Unfree, discontinued, old version at https://github.com/PerchunPak/storage/raw/ae69d69b3323ea56b86c7ec2c07f3ece677dfb20/firefox/enhancer_for_youtube-2.0.130.1.xpi
         leechblock-ng
         return-youtube-dislikes
         sponsorblock
+        tweaks-for-youtube
         youtube-recommended-videos # Old name for Unhook, also unfree
 
         # Misc

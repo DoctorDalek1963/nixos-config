@@ -87,6 +87,7 @@ in
           # Firefox extensions
           "dashlane"
           "enhancer-for-youtube"
+          "tweaks-for-youtube"
           "youtube-recommended-videos" # Unhook
 
           # Microsoft fonts
