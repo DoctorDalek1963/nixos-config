@@ -99,6 +99,7 @@ in
         git = defaultTrue;
         git-all = defaultTrue;
         gh = defaultTrue;
+        navi = defaultTrue;
         nvim = mkOption {
           type = types.enum [
             "stock"

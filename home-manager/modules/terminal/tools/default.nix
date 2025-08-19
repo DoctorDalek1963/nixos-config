@@ -10,6 +10,8 @@ let
 in
 {
   imports = [
+    ./navi
+
     ./aria2.nix
     ./bat.nix
     ./btop.nix
