@@ -1,6 +1,7 @@
 {
   imports = [
     ./android.nix
+    ./gdb.nix
     ./haskell.nix
     ./jetbrains.nix
     ./julia.nix
@@ -9,6 +10,4 @@
     ./python.nix
     ./rust.nix
   ];
-
-  setup.impermanence.keepFiles = [ ".config/gdb/gdbinit" ];
 }
