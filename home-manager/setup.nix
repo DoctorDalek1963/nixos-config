@@ -237,6 +237,7 @@ in
         loupe = mkOption {
           default = osConfig.setup.isGraphical;
         };
+        mediaCuration = defaultFalse;
         ms-teams = defaultFalse;
         obsidian = defaultFalse;
         rustdesk = defaultFalse;

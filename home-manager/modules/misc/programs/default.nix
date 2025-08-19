@@ -15,6 +15,7 @@ in
     ./feishin.nix
     ./hexchat.nix
     ./loupe.nix
+    ./mediaCuration.nix
     ./ms-teams.nix
     ./obsidian.nix
     ./xremap.nix

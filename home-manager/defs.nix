@@ -50,6 +50,7 @@
         anki = true;
         discord = true;
         feishin = true;
+        mediaCuration = true;
         ms-teams = true;
         obsidian = true;
         rustdesk = true;
