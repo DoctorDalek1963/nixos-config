@@ -206,6 +206,7 @@
               simpleWifiNetworkNames = [
                 "HOME"
                 "IZZY_LINEAGE"
+                "WIFE_PHONE"
                 "FRIEND_1"
                 "FRIEND_2"
               ];

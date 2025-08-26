@@ -14,12 +14,12 @@ let
         name:
         # bash
         ''
-          ${nmcli} connection delete $(get_ssid "${name}") || true
-          ${nmcli} connection add type wifi con-name $(get_ssid "${name}") ifname "$wifi_device" ssid $(get_ssid "${name}")
-          ${nmcli} connection modify $(get_ssid "${name}") wifi-sec.key-mgmt wpa-psk wifi-sec.psk $(get_psk "${name}")
+          ${nmcli} connection delete "$(get_ssid "${name}")" || true
+          ${nmcli} connection add type wifi con-name "$(get_ssid "${name}")" ifname "$wifi_device" ssid "$(get_ssid "${name}")"
+          ${nmcli} connection modify "$(get_ssid "${name}")" wifi-sec.key-mgmt wpa-psk wifi-sec.psk "$(get_psk "${name}")"
         '') cfg.networking.simpleWifiNetworkNames;
       getFromEnv = type: ''
-        ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=)\S+" ${
+        ${pkgs.gnugrep}/bin/grep --color=never -Po "(?<=''${1}_${type}=).+" ${
           config.sops.secrets."networking/simple.env".path
         }
       '';
