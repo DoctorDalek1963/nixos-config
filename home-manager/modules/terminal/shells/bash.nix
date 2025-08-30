@@ -161,13 +161,6 @@ in
           fi
         }
 
-        # This is a function because if it's an alias, the curl command gets
-        # evaluated when the file is sourced rather than when the alias is run
-        # We run it through echo to get a newline at the end
-        myip() {
-            echo $(curl --silent ipinfo.io/ip)
-        }
-
         # Create executable file and open it with nvim
         vex() {
             ${nvimPath} "$1"

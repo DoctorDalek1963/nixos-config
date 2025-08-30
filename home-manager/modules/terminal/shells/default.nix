@@ -40,5 +40,28 @@
         else
           "${nmcli} networking off; sleep 5; ${nmcli} networking on";
     };
+
+    home.packages = [
+      (pkgs.writeShellApplication {
+        name = "myip";
+        runtimeInputs = with pkgs; [
+          gum
+          jq
+          sd
+        ];
+
+        # Taken from https://flox.dev/blog/layering-and-composing-flox-environments
+        text = ''
+          ip=$(curl -s https://ipinfo.io)
+          gum style --padding "1 2" \
+              "$(gum style --foreground 12 --bold "Your Public IP:")" \
+              "" \
+              "$(gum style --foreground 11 --bold "IP:")        $(gum style --foreground 2 "$(echo "$ip" | jq -r .ip)")" \
+              "$(gum style --foreground 11 --bold "Location:")  $(gum style --foreground 2 "$(echo "$ip" | jq -r '.city + ", " + .region + ", " + .country')")" \
+              "$(gum style --foreground 11 --bold "ISP:")       $(gum style --foreground 2 "$(echo "$ip" | jq -r .org)")" \
+              "$(gum style --foreground 11 --bold "Coords:")    $(gum style --foreground 2 "$(echo "$ip" | jq -r .loc | sd -F ',' ', ')")"
+        '';
+      })
+    ];
   };
 }
