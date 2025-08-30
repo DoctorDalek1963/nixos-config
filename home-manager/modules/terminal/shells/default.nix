@@ -18,6 +18,8 @@
       cdnc = "cd /etc/nixos";
       cdhm = "cd /etc/nixos/home-manager";
 
+      cdtmp = "cd $(mktemp -d)";
+
       # Single letters
       c = "cat";
       t = "touch";
