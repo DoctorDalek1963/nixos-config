@@ -8,7 +8,7 @@
   writeShellScript,
 }:
 let
-  version = "25.6.9.5574";
+  version = "25.8.9.5897";
 
   dotnet = dotnetCorePackages.aspnetcore_8_0;
   buildInputs = [
@@ -60,7 +60,7 @@ stdenvNoCC.mkDerivation rec {
   src = fetchzip {
     url = "https://fileflows.com/downloads/Zip/${version}";
     extension = "zip";
-    hash = "sha256-ah5WT0FDZzKdouDhSEdnjKzRO2rZUKkxtoSQ4NLpMlk=";
+    hash = "sha256-TUYfIkPM2TTsWvbfxyk4yKxvEsX7j7QzvQShWWo3ACQ=";
     stripRoot = false;
   };
 
