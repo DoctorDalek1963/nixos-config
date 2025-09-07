@@ -171,7 +171,7 @@ in
           ];
 
           serviceConfig = {
-            ExecStartPre = [ "${pkgs.curl}/bin/curl icanhazip.com" ];
+            ExecStartPre = [ "${pkgs.curl}/bin/curl ipinfo.io" ];
 
             RestartSec = "5s";
             Restart = "always";
