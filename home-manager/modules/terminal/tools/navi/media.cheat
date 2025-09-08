@@ -1,12 +1,11 @@
 % media curation
+@ common
 
 # convert to HEVC with VAAPI
 ffmpeg -init_hw_device vaapi=foo:/dev/dri/renderD128 -hwaccel vaapi -hwaccel_output_format vaapi -hwaccel_device foo -i <file> -filter_hw_device foo -vf 'format=nv12|vaapi,hwupload' -noautoscale -c:v hevc_vaapi -c:a aac <output>
 
 # download HLS .m3u8 stream
-ffmpeg -i <url> -c copy -bsf:a aac_adtstoasc <output>
+ffmpeg -i "<url>" -c copy -bsf:a aac_adtstoasc <output>
 
 # compress JPEG
 magick <file> -define jpeg:extent=300kb <output>
-
-$ file: ls

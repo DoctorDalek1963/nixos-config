@@ -7,7 +7,10 @@
 let
   cfg = config.setup.terminal;
 
-  cheat-files = lib.optional config.setup.misc.programs.mediaCuration ./media.cheat;
+  cheat-files = [
+    ./common.cheat
+  ]
+  ++ lib.optional config.setup.misc.programs.mediaCuration ./media.cheat;
 
   cheat-drvs = map (
     f:
@@ -22,6 +25,9 @@ in
 {
   config = lib.mkMerge [
     (lib.mkIf cfg.tools.navi {
+      # Packages for common.cheat
+      home.packages = [ pkgs.inotify-tools ];
+
       setup.terminal.shellAliases.na = "navi";
 
       programs.navi = {

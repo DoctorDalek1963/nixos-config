@@ -1,0 +1,6 @@
+% common
+
+$ file: ls
+
+# watch files
+while inotifywait -q -e modify <file>; do <command>; done
