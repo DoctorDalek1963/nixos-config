@@ -32,6 +32,19 @@ let
     '';
   };
 
+  CommunityScriptsUILibrary = mkDerivation {
+    name = "stash-plugin-CommunityScriptsUILibrary";
+    dontBuild = true;
+
+    src = commonSrcs.CommunityScripts;
+
+    installPhase = ''
+      mkdir $out
+      cd plugins/CommunityScriptsUILibrary
+      cp cs-ui-lib.js CommunityScriptsUILibrary.yml $out/
+    '';
+  };
+
   renamer = mkDerivation {
     name = "stash-plugin-renamer";
     dontBuild = true;
@@ -61,6 +74,7 @@ mkDerivation {
     mkdir $out
 
     cp -r ${AudioPlayer} $out/AudioPlayer
+    cp -r ${CommunityScriptsUILibrary} $out/CommunityScriptsUILibrary
     cp -r ${renamer} $out/renamer
   '';
 }
