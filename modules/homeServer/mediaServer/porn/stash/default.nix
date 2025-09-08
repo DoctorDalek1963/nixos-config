@@ -44,6 +44,7 @@ in
         "${cfgMs.mediaRoot}/porn"
         "${cfgMs.mediaRoot}/porn/videos"
         "${cfgMs.mediaRoot}/porn/images"
+        "${cfgMs.mediaRoot}/porn/audios"
       ];
     };
 
@@ -135,6 +136,11 @@ in
             {
               path = "${cfgMs.mediaRoot}/porn/images";
               excludevideo = true;
+            }
+            {
+              path = "${cfgMs.mediaRoot}/porn/audios";
+              excludevideo = true;
+              excludeimage = true;
             }
           ];
 
