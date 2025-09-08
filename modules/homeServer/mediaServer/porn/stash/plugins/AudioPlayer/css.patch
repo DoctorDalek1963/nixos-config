@@ -1,0 +1,10 @@
+--- a/plugins/AudioPlayer/AudioPlayer.css
++++ b/plugins/AudioPlayer/AudioPlayer.css
+@@ -23,6 +23,7 @@
+ .VideoPlayer.audio .video-wrapper {
+     height: 7rem !important;
+     overflow: visible;
++    margin: auto 0;
+ }
+ .VideoPlayer.audio > .vjs-poster {
+     height: 56.25vw !important;

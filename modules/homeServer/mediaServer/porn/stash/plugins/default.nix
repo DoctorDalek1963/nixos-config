@@ -23,6 +23,7 @@ let
     name = "stash-plugin-AudioPlayer";
     dontBuild = true;
 
+    patches = [ ./AudioPlayer/css.patch ];
     src = commonSrcs.CommunityScripts;
 
     installPhase = ''
