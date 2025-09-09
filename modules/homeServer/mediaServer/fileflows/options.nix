@@ -33,7 +33,7 @@ let
         Restart = "always";
         RestartSec = 10;
 
-        BindReadOnlyPaths = [ "/bin:${cfg.binDir}" ];
+        BindReadOnlyPaths = [ "${cfg.binDir}:/bin" ];
 
         # Hardening
         IPAddressAllow = "127.0.0.1";
@@ -178,10 +178,7 @@ in
           description = "FileFlows server with integrated node";
           script = "${cfg.package}/bin/server --no-gui --systemd-service --urls=http://[::]:${toString cfg.server.port}";
 
-          environment = {
-            FILEFLOWS_BIN_DIR = cfg.binDir;
-            FILEFLOWS_SERVER_BASE_DIR = cfg.server.baseDir;
-          };
+          environment.FILEFLOWS_SERVER_BASE_DIR = cfg.server.baseDir;
 
           inherit (cfg.server) user group;
 
@@ -218,10 +215,7 @@ in
           description = "FileFlows node";
           script = "${cfg.package}/bin/node --no-gui --systemd-service --server ${cfg.node.serverUrl}";
 
-          environment = {
-            FILEFLOWS_BIN_DIR = cfg.binDir;
-            FILEFLOWS_NODE_BASE_DIR = cfg.node.baseDir;
-          };
+          environment.FILEFLOWS_NODE_BASE_DIR = cfg.node.baseDir;
 
           inherit (cfg.node) user group;
 
