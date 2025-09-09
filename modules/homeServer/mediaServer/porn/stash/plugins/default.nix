@@ -26,18 +26,17 @@ let
     };
   };
 
-  # Requires CommunityScriptsUILibrary
-  AudioPlayer = mkDerivation {
-    name = "stash-plugin-AudioPlayer";
+  AudioPlayerLite = mkDerivation {
+    name = "stash-plugin-AudioPlayerLite";
     dontBuild = true;
 
-    patches = [ ./AudioPlayer/css.patch ];
+    patches = [ ./AudioPlayerLite/css.patch ];
     src = commonSrcs.CommunityScripts;
 
     installPhase = ''
       mkdir $out
-      cd plugins/AudioPlayer
-      cp AudioPlayer.js AudioPlayer.css AudioPlayer.yml $out/
+      cd plugins/AudioPlayerLite
+      cp AudioPlayerLite.js AudioPlayerLite.css AudioPlayerLite.yml $out/
     '';
   };
 
@@ -96,7 +95,7 @@ mkDerivation {
   installPhase = ''
     mkdir $out
 
-    cp -r ${AudioPlayer} $out/AudioPlayer
+    cp -r ${AudioPlayerLite} $out/AudioPlayerLite
     cp -r ${audioTab} $out/audioTab
     cp -r ${CommunityScriptsUILibrary} $out/CommunityScriptsUILibrary
     cp -r ${renamer} $out/renamer

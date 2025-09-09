@@ -1,5 +1,5 @@
---- a/plugins/AudioPlayer/AudioPlayer.css
-+++ b/plugins/AudioPlayer/AudioPlayer.css
+--- a/plugins/AudioPlayerLite/AudioPlayerLite.css
++++ b/plugins/AudioPlayerLite/AudioPlayerLite.css
 @@ -23,6 +23,7 @@
  .VideoPlayer.audio .video-wrapper {
      height: 7rem !important;
