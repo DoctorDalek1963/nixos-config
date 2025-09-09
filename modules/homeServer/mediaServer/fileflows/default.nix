@@ -13,7 +13,10 @@ in
 
   config = lib.mkIf (cfg.enable && cfgMs.enable) {
     services.fileflows = {
-      extraPkgs = [ pkgs.jellyfin-ffmpeg ];
+      extraPkgs = with pkgs; [
+        bashNonInteractive
+        jellyfin-ffmpeg
+      ];
 
       libraryPaths = [ cfg.mediaServer.mediaRoot ];
 
