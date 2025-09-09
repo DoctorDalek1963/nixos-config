@@ -33,6 +33,8 @@ let
         Restart = "always";
         RestartSec = 10;
 
+        BindReadOnlyPaths = [ "/bin:${cfg.binDir}" ];
+
         # Hardening
         IPAddressAllow = "127.0.0.1";
         RestrictAddressFamilies = [
@@ -62,14 +64,8 @@ let
         SystemCallArchitectures = "native";
         MemoryDenyWriteExecute = false;
 
-        AmbientCapabilities = [
-          "CAP_SYS_ADMIN"
-          "CAP_SYS_CHROOT"
-        ];
-        CapabilityBoundingSet = [
-          "CAP_SYS_ADMIN"
-          "CAP_SYS_CHROOT"
-        ];
+        AmbientCapabilities = "";
+        CapabilityBoundingSet = "";
         SystemCallFilter = [ "@system-service" ];
       };
     } extra;
