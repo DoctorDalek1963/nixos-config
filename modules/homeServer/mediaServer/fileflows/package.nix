@@ -19,6 +19,14 @@ let
   server-script = writeShellScript "fileflows-server-unsubstituted.sh" ''
     export LD_LIBRARY_PATH="${lib.makeLibraryPath buildInputs}:$LD_LIBRARY_PATH"
 
+    if [ -z "$FILEFLOWS_BIN_DIR" ]; then
+        echo "ERROR: Environment variable FILEFLOWS_BIN_DIR is not defined"
+        exit 1
+    fi
+
+    unshare --mount
+    mount "$FILEFLOWS_BIN_DIR" /bin/
+
     if [ -z "$FILEFLOWS_SERVER_BASE_DIR" ]; then
         echo "ERROR: Environment variable FILEFLOWS_SERVER_BASE_DIR is not defined"
         exit 1
@@ -37,6 +45,14 @@ let
 
   node-script = writeShellScript "fileflows-node-unsubstituted.sh" ''
     export LD_LIBRARY_PATH="${lib.makeLibraryPath buildInputs}:$LD_LIBRARY_PATH"
+
+    if [ -z "$FILEFLOWS_BIN_DIR" ]; then
+        echo "ERROR: Environment variable FILEFLOWS_BIN_DIR is not defined"
+        exit 1
+    fi
+
+    unshare --mount
+    mount "$FILEFLOWS_BIN_DIR" /bin/
 
     if [ -z "$FILEFLOWS_NODE_BASE_DIR" ]; then
         echo "ERROR: Environment variable FILEFLOWS_NODE_BASE_DIR is not defined"
