@@ -62,8 +62,14 @@ let
         SystemCallArchitectures = "native";
         MemoryDenyWriteExecute = false;
 
-        AmbientCapabilities = [ "CAP_SYS_CHROOT" ];
-        CapabilityBoundingSet = [ "CAP_SYS_CHROOT" ];
+        AmbientCapabilities = [
+          "CAP_SYS_ADMIN"
+          "CAP_SYS_CHROOT"
+        ];
+        CapabilityBoundingSet = [
+          "CAP_SYS_ADMIN"
+          "CAP_SYS_CHROOT"
+        ];
         SystemCallFilter = [ "@system-service" ];
       };
     } extra;

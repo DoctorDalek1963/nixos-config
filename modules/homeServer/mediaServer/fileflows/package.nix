@@ -6,6 +6,7 @@
   sqlite,
   libz,
   writeShellScript,
+  util-linux,
 }:
 let
   version = "25.8.9.5897";
@@ -24,8 +25,8 @@ let
         exit 1
     fi
 
-    unshare --mount
-    mount "$FILEFLOWS_BIN_DIR" /bin/
+    ${util-linux}/bin/unshare --mount
+    ${util-linux}/bin/mount "$FILEFLOWS_BIN_DIR" /bin/
 
     if [ -z "$FILEFLOWS_SERVER_BASE_DIR" ]; then
         echo "ERROR: Environment variable FILEFLOWS_SERVER_BASE_DIR is not defined"
@@ -51,8 +52,8 @@ let
         exit 1
     fi
 
-    unshare --mount
-    mount "$FILEFLOWS_BIN_DIR" /bin/
+    ${util-linux}/bin/unshare --mount
+    ${util-linux}/bin/mount "$FILEFLOWS_BIN_DIR" /bin/
 
     if [ -z "$FILEFLOWS_NODE_BASE_DIR" ]; then
         echo "ERROR: Environment variable FILEFLOWS_NODE_BASE_DIR is not defined"
