@@ -17,8 +17,16 @@ let
       rev = "13cf83cd3599afc0c7c76a0854acef88b2bf4ff6";
       hash = "sha256-4vS0OV02A1UPbn6T1/6LLq9vGrJDfEX/0NmjJO6XkGE=";
     };
+
+    sneakyninja-stash-plugins = fetchFromGitHub {
+      owner = "sneakyninja256";
+      repo = "stash-plugins";
+      rev = "6597262c060faa867df7e218088ad1bcf0f01dc1";
+      hash = "sha256-gjePXhzDAYJUvHTznSbovgzpY06BattulsQzGZwjEyE=";
+    };
   };
 
+  # Requires CommunityScriptsUILibrary
   AudioPlayer = mkDerivation {
     name = "stash-plugin-AudioPlayer";
     dontBuild = true;
@@ -30,6 +38,20 @@ let
       mkdir $out
       cd plugins/AudioPlayer
       cp AudioPlayer.js AudioPlayer.css AudioPlayer.yml $out/
+    '';
+  };
+
+  # Requires CommunityScriptsUILibrary
+  audioTab = mkDerivation {
+    name = "stash-plugin-audioTab";
+    dontBuild = true;
+
+    src = commonSrcs.sneakyninja-stash-plugins;
+
+    installPhase = ''
+      mkdir $out
+      cd plugins/audioTab
+      cp audioTab.js audioTab.yml $out/
     '';
   };
 
@@ -75,6 +97,7 @@ mkDerivation {
     mkdir $out
 
     cp -r ${AudioPlayer} $out/AudioPlayer
+    cp -r ${audioTab} $out/audioTab
     cp -r ${CommunityScriptsUILibrary} $out/CommunityScriptsUILibrary
     cp -r ${renamer} $out/renamer
   '';
