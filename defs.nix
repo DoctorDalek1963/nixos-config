@@ -334,7 +334,7 @@
             mediaServer = {
               enable = true;
               porn = true;
-              transmission.ovpnName = "eu_airvpn";
+              transmission.ovpnName = "europe_airvpn";
             };
 
             cloud.copyparty.enable = true;
@@ -357,7 +357,7 @@
               enable = true;
               vpns = [
                 {
-                  vpnName = "eu_airvpn";
+                  vpnName = "europe_airvpn";
                   users = [
                     "dyson"
                     "transmission"
