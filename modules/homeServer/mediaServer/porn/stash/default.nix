@@ -164,26 +164,6 @@ in
             "tags"
           ];
 
-          video_extensions = [
-            "m4v"
-            "mp4"
-            "mov"
-            "wmv"
-            "avi"
-            "mpg"
-            "mpeg"
-            "rmvb"
-            "rm"
-            "flv"
-            "asf"
-            "mkv"
-            "webm"
-            "f4v"
-            # Also audio extensions
-            "mp3"
-            "m4a"
-          ];
-
           ui = {
             advancedMode = true;
 

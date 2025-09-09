@@ -26,20 +26,6 @@ let
     };
   };
 
-  AudioPlayerLite = mkDerivation {
-    name = "stash-plugin-AudioPlayerLite";
-    dontBuild = true;
-
-    patches = [ ./AudioPlayerLite/css.patch ];
-    src = commonSrcs.CommunityScripts;
-
-    installPhase = ''
-      mkdir $out
-      cd plugins/AudioPlayerLite
-      cp AudioPlayerLite.js AudioPlayerLite.css AudioPlayerLite.yml $out/
-    '';
-  };
-
   # Requires CommunityScriptsUILibrary
   audioTab = mkDerivation {
     name = "stash-plugin-audioTab";
@@ -95,7 +81,6 @@ mkDerivation {
   installPhase = ''
     mkdir $out
 
-    cp -r ${AudioPlayerLite} $out/AudioPlayerLite
     cp -r ${audioTab} $out/audioTab
     cp -r ${CommunityScriptsUILibrary} $out/CommunityScriptsUILibrary
     cp -r ${renamer} $out/renamer
