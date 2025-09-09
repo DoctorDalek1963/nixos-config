@@ -33,6 +33,7 @@ let
         Restart = "always";
         RestartSec = 10;
 
+        ReadOnlyPaths = [ cfg.binDir ];
         BindReadOnlyPaths = [ "${cfg.binDir}:/bin" ];
 
         # Hardening
@@ -185,11 +186,7 @@ in
           extra.serviceConfig = {
             TasksMax = 1000;
 
-            ReadWritePaths = [
-              cfg.server.baseDir
-              cfg.binDir
-            ]
-            ++ cfg.libraryPaths;
+            ReadWritePaths = [ cfg.server.baseDir ] ++ cfg.libraryPaths;
           };
         };
       };
@@ -224,11 +221,7 @@ in
             startLimitBurst = 3;
 
             serviceConfig = {
-              ReadWritePaths = [
-                cfg.node.baseDir
-                cfg.binDir
-              ]
-              ++ cfg.libraryPaths;
+              ReadWritePaths = [ cfg.node.baseDir ] ++ cfg.libraryPaths;
             };
           };
         };
