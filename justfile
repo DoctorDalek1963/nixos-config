@@ -74,14 +74,6 @@ set-git-remote:
     git fetch
     git branch --set-upstream-to=origin/main main
 
-# make sure everything is set up properly after a fresh install
-[group("setup")]
-post-install user='dyson':
-    sudo chown -R {{ user }}:users /etc/nixos
-    chmod -R u+w /etc/nixos
-    sudo nixos-rebuild switch
-    @just set-git-remote
-
 # copy sops keys to ~/.config/sops/age/keys.txt (WILL OVERWRITE)
 [group("setup")]
 copy-sops-keys:
@@ -93,3 +85,13 @@ copy-sops-keys:
 [group("setup")]
 cachix-authtoken:
     cachix authtoken "$(sudo cat /run/secrets/cachix/tokens/doctordalek1963)"
+
+# make sure everything is set up properly after a fresh install
+[group("setup")]
+post-install user='dyson':
+    sudo chown -R {{ user }}:users /etc/nixos
+    chmod -R u+w /etc/nixos
+    sudo nixos-rebuild switch
+    @just set-git-remote
+    @just copy-sops-keys
+    @just cachix-authtoken
