@@ -64,7 +64,7 @@ cachix-push-raspi: (cachix-push-systems "Bert-NixOS")
 
 # push store paths for all my systems
 [group("cache")]
-cachix-push-all: (cachix-push-systems "Alex-NixOS" "Bert-NixOS" "Harold-NixOS" "Sasha-NixOS")
+cachix-push-all: (cachix-push-systems "Alex-NixOS" "Bert-NixOS" "Harold-NixOS" "Olivia-NixOS" "Sasha-NixOS")
 
 # set the git remote to use my SSH key
 [group("setup")]
