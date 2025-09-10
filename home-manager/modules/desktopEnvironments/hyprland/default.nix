@@ -84,12 +84,12 @@ in
 
     ./clipboard.nix
     ./dunst.nix
-    ./fuzzel.nix
     ./gtk.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
     ./overview.nix
+    ./wofi.nix
   ];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
