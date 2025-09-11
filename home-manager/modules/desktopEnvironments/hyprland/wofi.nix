@@ -29,6 +29,7 @@ in
         allow_images = true;
         insensitive = true;
         matching = "fuzzy";
+        prompt = "";
         term = config.wayland.windowManager.hyprland.settings."$terminal";
 
         normal_window = true;
