@@ -29,6 +29,16 @@ in
               libkrb5
               keyutils
             ];
+
+          # Awkward workaround to let Wofi launch Steam, courtesy of https://www.reddit.com/r/linux_gaming/comments/1casb3t/comment/l0u2o70
+          steam-unwrapped = pkgs.steam-unwrapped.overrideAttrs (oldAttrs: {
+            postInstall = ''
+              ${oldAttrs.postInstall or ""}
+
+              substituteInPlace $out/share/applications/steam.desktop \
+                --replace-fail "PrefersNonDefaultGPU=true" "PrefersNonDefaultGPU=false"
+            '';
+          });
         };
       };
     };
