@@ -54,6 +54,7 @@
         ms-teams = true;
         obsidian = true;
         rustdesk = true;
+        timewarrior = true;
         vlc = true;
         zoom = true;
       };
@@ -206,6 +207,7 @@
         ms-teams = true;
         obsidian = true;
         rustdesk = true;
+        timewarrior = true;
         vlc = true;
       };
       services.easyeffects = true;

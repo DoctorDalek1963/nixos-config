@@ -54,13 +54,18 @@ in
             # "group/stats"
             "cpu"
             "memory"
+          ]
+          ++ lib.optional config.setup.misc.programs.timewarrior "custom/timewarrior"
+          ++ [
             "hyprland/window"
           ];
+
           modules-center = [
             # The builtin clock module doesn't support stripping leading zeroes
             # for some bizarre reason
             "custom/clock"
           ];
+
           modules-right = [
             "tray"
             "custom/current-age"
@@ -126,6 +131,9 @@ in
 
             on-click = launch-btop;
           };
+
+          "custom/timewarrior" =
+            lib.mkIf config.setup.misc.programs.timewarrior config.setup.shared.timewarrior-waybar-module;
 
           "hyprland/window" = {
             format = "{title}";
@@ -406,6 +414,10 @@ in
           /* Hide window section when no window is open on the current desktop */
           window#waybar.empty #window {
               background-color: transparent;
+          }
+
+          #custom-timewarrior {
+              color: @sapphire;
           }
 
           #custom-clock {

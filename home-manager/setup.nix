@@ -242,6 +242,7 @@ in
         ms-teams = defaultFalse;
         obsidian = defaultFalse;
         rustdesk = defaultFalse;
+        timewarrior = defaultFalse;
         vlc = defaultFalse;
         xremap = defaultFalse;
         zathura = mkOption {

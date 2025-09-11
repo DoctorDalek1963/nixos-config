@@ -88,6 +88,7 @@ in
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./timewarrior.nix
     ./wofi.nix
   ];
 
