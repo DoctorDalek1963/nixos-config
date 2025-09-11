@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   config,
   system,
   inputs,
@@ -53,29 +54,55 @@ let
   };
 in
 {
-  consts.nvimPkg =
-    {
-      stock = pkgs.neovim;
-      tiny = inputs.nixvim-config.packages.${system}.nvim-tiny;
-      small = inputs.nixvim-config.packages.${system}.nvim-small;
-      medium = inputs.nixvim-config.packages.${system}.nvim-medium;
-      full = inputs.nixvim-config.packages.${system}.nvim-full;
-    }
-    .${config.setup.terminal.tools.nvim};
+  options.setup.shared.nvim = {
+    package = lib.mkOption {
+      description = "The package for Neovim";
+      type = lib.types.package;
+    };
 
-  setup.terminal.shellAliases = {
-    v = config.consts.nvimPath;
-
-    nvim-dev = "nix run ${config.home.homeDirectory}/repos/nixvim-config --";
-
-    nvim-tiny = "nix run github:DoctorDalek1963/nixvim-config#nvim-tiny";
-    nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
-    nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
-    nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
+    path = lib.mkOption {
+      description = "The path to the executable of the Neovim package";
+      type = lib.types.nonEmptyStr;
+      default = lib.getExe config.setup.shared.nvim.package;
+      readOnly = true;
+    };
   };
 
-  home = {
-    packages = [ nvim-extend ];
-    sessionVariables.MANPAGER = "${config.consts.nvimPath} +Man!";
+  config = {
+    setup = {
+      shared.nvim.package =
+        {
+          stock = pkgs.neovim;
+          tiny = inputs.nixvim-config.packages.${system}.nvim-tiny;
+          small = inputs.nixvim-config.packages.${system}.nvim-small;
+          medium = inputs.nixvim-config.packages.${system}.nvim-medium;
+          full = inputs.nixvim-config.packages.${system}.nvim-full;
+        }
+        .${config.setup.terminal.tools.nvim};
+
+      terminal.shellAliases = {
+        v = config.setup.shared.nvim.path;
+
+        nvim-dev = "nix run ${config.home.homeDirectory}/repos/nixvim-config --";
+
+        nvim-tiny = "nix run github:DoctorDalek1963/nixvim-config#nvim-tiny";
+        nvim-small = "nix run github:DoctorDalek1963/nixvim-config#nvim-small";
+        nvim-medium = "nix run github:DoctorDalek1963/nixvim-config#nvim-medium";
+        nvim-full = "nix run github:DoctorDalek1963/nixvim-config#nvim-full";
+      };
+    };
+
+    home = {
+      packages = [
+        config.setup.shared.nvim.package
+        nvim-extend
+      ];
+
+      sessionVariables = {
+        EDITOR = config.setup.shared.nvim.path;
+        MANPAGER = "${config.setup.shared.nvim.path} +Man!";
+      };
+
+    };
   };
 }

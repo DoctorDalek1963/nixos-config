@@ -62,7 +62,7 @@
       };
 
       extraConfig = {
-        core.editor = config.consts.nvimPath;
+        core.editor = config.setup.shared.nvim.path;
         diff.colorMoved = "default";
         fetch.prune = true;
         gpg.format = "ssh";

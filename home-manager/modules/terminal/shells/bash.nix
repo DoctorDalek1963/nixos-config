@@ -4,9 +4,6 @@
   config,
   ...
 }:
-let
-  inherit (config.consts) nvimPath;
-in
 {
   config = lib.mkIf config.setup.terminal.shells.bash {
     setup.impermanence = {
@@ -27,7 +24,7 @@ in
       file.".blerc".text =
         # bash
         ''
-          bleopt editor=${nvimPath}
+          bleopt editor=${config.setup.shared.nvim.path}
 
           # I put any non-zero exit code in my PS1, so I don't need it from ble as well
           bleopt exec_errexit_mark=
@@ -163,10 +160,9 @@ in
 
         # Create executable file and open it with nvim
         vex() {
-            ${nvimPath} "$1"
-            if [ -f "$1" ]; then
-                chmod +x "$1"
-            fi
+            touch "$1"
+            chmod +x "$1"
+            ${config.setup.shared.nvim.path} "$1"
         }
 
         clip() {

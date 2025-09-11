@@ -1,15 +1,9 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, ... }:
 let
-  inherit (lib) mkOption types;
-
   stringList =
     strings:
-    mkOption {
-      type = types.listOf types.str;
+    lib.mkOption {
+      type = lib.types.listOf lib.types.nonEmptyStr;
       default = strings;
     };
 in
@@ -28,13 +22,5 @@ in
     ];
 
     valid-shells = stringList [ "bash" ];
-
-    # Defined in modules/terminal/tools/nvim.nix
-    nvimPkg = mkOption { type = types.package; };
-
-    nvimPath = mkOption {
-      type = types.nonEmptyStr;
-      default = "${config.consts.nvimPkg}/bin/nvim";
-    };
   };
 }

@@ -10,7 +10,7 @@
       enable = true;
       settings = {
         git_protocol = "ssh";
-        editor = config.consts.nvimPath;
+        editor = config.setup.shared.nvim.path;
         prompt = "enabled";
         pager = "${pkgs.delta}/bin/delta";
       };

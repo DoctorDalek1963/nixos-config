@@ -66,7 +66,7 @@ in
 
         statusbar-home-tilde = true;
 
-        synctex-editor-command = ''${config.consts.nvimPath} --headless -c \"VimtexInverseSearch %{line} '%{input}'\"'';
+        synctex-editor-command = ''${config.setup.shared.nvim.path} --headless -c \"VimtexInverseSearch %{line} '%{input}'\"'';
       }
       // theme;
     };

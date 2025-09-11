@@ -13,7 +13,7 @@
         # haskell
         ''
           :set prompt "\ESC[1;35m\STXλ> \ESC[m\STX"
-          :set editor "${config.consts.nvimPath}"
+          :set editor "${config.setup.shared.nvim.path}"
           naturals = [1..]
           sieve (p : xs) = p : sieve [ x | x <- xs, x `mod` p > 0 ]
           primes = 2 : sieve [3,5..]
