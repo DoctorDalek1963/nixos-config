@@ -55,8 +55,8 @@ copy-raspi-sd device: build-raspi-sd
 [group("cache")]
 cachix-push-systems +names:
     for name in {{ names }}; do nix build {{ justfile_directory() }}#nixosConfigurations."$name".config.system.build.toplevel --keep-going --print-build-logs; done
-    RUST_LOG=debug {{ justfile_directory() }}/cachix_push_missing_paths.rs "{{ justfile_directory() }}" {{ names }}
-    # Don't forget to add substituters to CI to avoid duplicate work in future
+    # Only push to Cachix when not in CI because it's broken in CI for some reason
+    if [ -z "${CI:-}" ]; then RUST_LOG=debug {{ justfile_directory() }}/cachix_push_missing_paths.rs "{{ justfile_directory() }}" {{ names }}; fi
 
 # push store paths for Bert-NixOS to Cachix
 [group("cache")]

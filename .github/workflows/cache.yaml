@@ -2,6 +2,9 @@ name: Cache missing paths on Cachix
 
 on: push
 
+env:
+  CI: true
+
 jobs:
   push-cache:
     runs-on: ubuntu-latest
