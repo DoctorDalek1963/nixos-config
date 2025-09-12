@@ -6,6 +6,8 @@
 }:
 {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
+    home.packages = [ pkgs.sunsetr ];
+
     wayland.windowManager.hyprland.settings.exec-once = [ (lib.getExe pkgs.sunsetr) ];
 
     xdg.configFile."sunsetr/sunsetr.toml".source =
