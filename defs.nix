@@ -59,7 +59,7 @@
           };
 
           virtualBox.host = {
-            # enable = true;
+            enable = true;
             asSpecialisation = true;
             users = [ "dyson" ];
           };
