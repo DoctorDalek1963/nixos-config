@@ -11,6 +11,7 @@
       imagemagick
       jellyfin-ffmpeg
       kdePackages.kdenlive
+      inkscape
     ];
   };
 }
