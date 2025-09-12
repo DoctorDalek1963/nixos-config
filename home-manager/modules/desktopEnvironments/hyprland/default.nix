@@ -79,7 +79,6 @@ let
 in
 {
   imports = [
-    ./sunsetr
     ./waybar
 
     ./clipboard.nix
@@ -88,6 +87,7 @@ in
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
+    ./sunsetr.nix
     ./timewarrior.nix
     ./wofi.nix
   ];
