@@ -47,6 +47,9 @@ in
     (mkIf osSetup.openRGB.enable {
       setup.impermanence.keepDirs = [ ".config/OpenRGB" ];
     })
+    (mkIf osSetup.virtManager.host.enable {
+      setup.impermanence.keepDirs = [ "virt-manager" ];
+    })
     (mkIf osSetup.virtualBox.host.enable {
       setup.impermanence.keepDirs = [ "VirtualBox VMs" ];
     })

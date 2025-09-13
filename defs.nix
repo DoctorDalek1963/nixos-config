@@ -58,8 +58,13 @@
             startAt = [ ];
           };
 
-          virtualBox.host = {
+          virtManager.host = {
             enable = true;
+            users = [ "dyson" ];
+          };
+
+          virtualBox.host = {
+            # enable = true;
             asSpecialisation = true;
             users = [ "dyson" ];
           };

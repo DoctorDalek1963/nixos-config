@@ -41,6 +41,7 @@ in
     ./modules/ssh
     ./modules/uinput
     ./modules/users
+    ./modules/virtManager
     ./modules/virtualBox
   ];
 
@@ -541,6 +542,18 @@ in
       dyson = defaultTrue;
       pi = defaultFalse;
       rebecca = defaultFalse;
+    };
+
+    # === Virt-manager
+    virtManager = {
+      # guest.enable = defaultFalse;
+      host = {
+        enable = defaultFalse;
+        users = mkOption {
+          type = types.listOf types.nonEmptyStr;
+          default = [ ];
+        };
+      };
     };
 
     # === VirtualBox
