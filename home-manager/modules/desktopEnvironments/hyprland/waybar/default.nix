@@ -219,6 +219,11 @@ in
             dynamic-len = -1;
 
             player = "playerctld";
+
+            # These are not defined by default so accidentally scrolling on
+            # this module would crash the whole bar
+            on-scroll-up = "";
+            on-scroll-down = "";
           };
 
           pulseaudio = {
