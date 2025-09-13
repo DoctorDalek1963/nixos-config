@@ -13,6 +13,7 @@ let
     "add-transmission-to-servarr-apps.service"
     "add-user-to-servarr-apps.service"
     "populate-prowlarr.service"
+    "set-bazarr-language-profiles.service"
     "set-servarr-config-files.service"
     "set-servarr-date-formats.service"
     "set-servarr-rename-rules.service"
@@ -28,6 +29,7 @@ in
     ./notifications.nix
     ./populateProwlarr.nix
     ./rootFolders.nix
+    ./setBazarrLanguageProfiles.nix
     ./setDateFormats.nix
     ./setRenameRules.nix
     ./setQualityProfiles.nix
