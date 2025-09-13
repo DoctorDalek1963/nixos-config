@@ -199,8 +199,6 @@ in
             format = "{player_icon} {status_icon} {dynamic}";
             format-stopped = "";
 
-            tooltip-format = "";
-
             player-icons = {
               default = "󰝚";
               firefox = "";
@@ -217,6 +215,14 @@ in
             ];
             dynamic-separator = " – "; # En dash
             dynamic-len = -1;
+
+            title-len = 30;
+            artist-len = 15;
+            album-len = 25;
+
+            # Use full dynamic format in tooltip
+            tooltip-format = "{player_icon} {dynamic}";
+            enable-tooltip-len-limits = false;
 
             player = "playerctld";
 
