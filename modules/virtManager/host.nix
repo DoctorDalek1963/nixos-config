@@ -17,5 +17,7 @@ in
     };
 
     users.groups.libvirtd.members = cfg.users;
+
+    setup.impermanence.keepDirs = [ "/var/lib/libvirt" ];
   };
 }
