@@ -222,11 +222,6 @@ in
             dim_strength = 0.15;
           };
 
-          gestures = {
-            workspace_swipe = true;
-            workspace_swipe_fingers = 4;
-          };
-
           misc = {
             disable_hyprland_logo = true;
             force_default_wallpaper = 0;
