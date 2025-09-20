@@ -37,12 +37,12 @@ let
               keyword general:allow_tearing 1"
           dunstctl set-paused true
           pkill -USR1 waybar
-          sunsetr --test 6500 100 & disown
+          sunsetr preset gaming
       else
           hyprctl reload
           dunstctl set-paused false
           pkill -USR1 waybar
-          sunsetr --reload
+          sunsetr preset default
       fi
     '';
   };
