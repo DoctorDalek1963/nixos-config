@@ -85,5 +85,18 @@ in
         wantedBy = [ "timers.target" ];
       };
     };
+
+    # Allow anyone in the media group to manually trigger a directory map
+    security.sudo.extraRules = [
+      {
+        commands = [
+          {
+            command = "/run/current-system/sw/bin/systemctl start set-permissions-for-media-server-directory-map.service";
+            options = [ "NOPASSWD" ];
+          }
+        ];
+        groups = [ "media" ];
+      }
+    ];
   };
 }
