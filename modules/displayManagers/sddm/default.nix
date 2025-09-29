@@ -30,17 +30,5 @@ in
         )
       ];
     })
-    (lib.mkIf (cfg.enable && cfg.theme == "sugar-light-nixos-simple-blue") {
-      services.displayManager.sddm =
-        let
-          theme-pkg = (pkgs.callPackage ./themes/sugar-light.nix { }) {
-            background = ../../../home-manager/files/desktop-backgrounds/nixos-simple-blue.png;
-          };
-        in
-        {
-          theme = "${theme-pkg}";
-          package = pkgs.plasma5Packages.sddm; # This theme needs Qt5
-        };
-    })
   ];
 }

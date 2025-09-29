@@ -272,7 +272,7 @@
           desktopEnvironments.cinnamon.enable = true;
           displayManagers.sddm = {
             enable = true;
-            theme = "sugar-light-nixos-simple-blue";
+            theme = "catppuccin-macchiato";
           };
         };
       }
