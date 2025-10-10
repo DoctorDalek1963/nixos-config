@@ -198,8 +198,8 @@ in
           };
 
           general = {
-            gaps_in = 5;
-            gaps_out = 10;
+            gaps_in = 3;
+            gaps_out = 5;
 
             layout = "dwindle";
 
@@ -216,10 +216,9 @@ in
           };
 
           decoration = {
-            rounding = 7;
+            rounding = 5;
 
-            dim_inactive = true;
-            dim_strength = 0.15;
+            dim_inactive = false;
           };
 
           misc = {
@@ -237,9 +236,9 @@ in
           binds.movefocus_cycles_fullscreen = true;
 
           animation = [
-            "windows, 1, 2.5, overshot"
-            "windowsOut, 1, 2.5, easeInOutQuart"
-            "workspaces, 1, 2.5, easeInOutQuart"
+            "windows, 1, 1.5, overshot"
+            "windowsOut, 1, 1.5, easeInOutQuart"
+            "workspaces, 1, 1.5, easeInOutQuart"
           ]
           ++ (lib.optional cfgB.animateGradientAngle.enable "borderangle, 1, ${
             toString (10 * cfgB.animateGradientAngle.speedSecs)
