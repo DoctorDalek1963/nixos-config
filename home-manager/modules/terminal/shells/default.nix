@@ -19,6 +19,7 @@
       cdhm = "cd /etc/nixos/home-manager";
 
       cdtmp = "cd $(mktemp -d)";
+      cdun = "cd ~/repos/uni";
 
       # Single letters
       c = "cat";
