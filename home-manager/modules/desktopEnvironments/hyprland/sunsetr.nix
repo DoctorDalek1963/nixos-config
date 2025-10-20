@@ -6,8 +6,7 @@
 }:
 let
   sunsetr-config = {
-    backend = "wayland";
-    start_hyprsunset = false;
+    backend = "hyprland";
 
     smoothing = true;
     startup_duration = 1; # Seconds
