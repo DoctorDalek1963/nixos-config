@@ -14,6 +14,7 @@ in
       backup.paths = [
         "/var/lib/audiobookshelf/config/absdatabase.sqlite"
         "/var/lib/audiobookshelf/metadata"
+        "${cfgMs.mediaRoot}/audiobookshelf/big-finish"
       ];
 
       homeServer.mediaServer.directoryMap.audiobookshelf = [
