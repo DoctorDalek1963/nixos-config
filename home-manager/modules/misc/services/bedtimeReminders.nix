@@ -30,7 +30,7 @@
         };
 
         Timer = {
-          OnCalendar = "*-*-* 00..06:00/5:00";
+          OnCalendar = "Mon..Fri *-*-* 00..06:00/5:00";
           Unit = "bedtime-reminders.service";
         };
       };
