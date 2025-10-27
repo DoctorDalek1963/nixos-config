@@ -15,7 +15,6 @@ in
     ./bat.nix
     ./btop.nix
     ./comma.nix
-    ./delta.nix
     ./direnv.nix
     ./eza.nix
     ./fd.nix

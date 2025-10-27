@@ -92,7 +92,6 @@ in
           gpuSupport = defaultTrue;
         };
         comma = defaultTrue;
-        delta = defaultTrue;
         direnv = defaultTrue;
         fd = defaultTrue;
         fzf = defaultTrue;

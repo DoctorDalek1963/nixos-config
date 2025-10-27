@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -12,7 +11,7 @@
         git_protocol = "ssh";
         editor = config.setup.shared.nvim.path;
         prompt = "enabled";
-        pager = "${pkgs.delta}/bin/delta";
+        pager = lib.getExe config.programs.delta.package;
       };
     };
 
