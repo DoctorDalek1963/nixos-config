@@ -80,6 +80,7 @@ in
 
           # === home-manager
           "discord"
+          "geogebra"
           "libsciter" # For RustDesk
           "obsidian"
           "zoom"

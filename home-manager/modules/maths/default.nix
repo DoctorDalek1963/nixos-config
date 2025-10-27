@@ -17,7 +17,8 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages =
-      lib.optional cfg.lintrans inputs.lintrans.packages."${system}".default
+      lib.optional cfg.geogebra pkgs.geogebra
+      ++ lib.optional cfg.lintrans inputs.lintrans.packages."${system}".default
       ++ lib.optional cfg.tikzit pkgs.tikzit
       ++ lib.optional cfg.weylus pkgs.weylus
       ++ lib.optional cfg.zotero pkgs.zotero;

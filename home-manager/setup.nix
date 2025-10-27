@@ -218,6 +218,7 @@ in
     maths = {
       enable = defaultFalse;
 
+      geogebra = defaultTrue;
       lintrans = defaultTrue;
       octave = defaultTrue;
       sage = defaultTrue;
