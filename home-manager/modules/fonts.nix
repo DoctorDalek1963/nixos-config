@@ -16,6 +16,6 @@ in
     nerdfontFonts
     ++ lib.optionals cfg.microsoftFonts [
       pkgs.corefonts
-      pkgs.vistafonts
+      pkgs.vista-fonts
     ];
 }
