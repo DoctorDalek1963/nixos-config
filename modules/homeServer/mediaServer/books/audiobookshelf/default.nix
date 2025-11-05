@@ -7,9 +7,18 @@
 let
   cfg = config.setup.homeServer;
   cfgMs = cfg.mediaServer;
+
+  audiobookshelf = pkgs.callPackage ./package.nix { };
 in
 {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
+    assertions = [
+      {
+        assertion = audiobookshelf.version == pkgs.audiobookshelf.version;
+        message = "You need to update your slightly modified audiobookshelf package (remember to patch twice)";
+      }
+    ];
+
     setup = {
       impermanence.keepDirs = [ "/var/lib/audiobookshelf" ];
       backup.paths = [
@@ -28,9 +37,7 @@ in
       group = "media";
       port = cfg.ports.mediaServer.audiobookshelf;
 
-      package = pkgs.audiobookshelf.overrideAttrs (oldAttrs: {
-        patches = (oldAttrs.patches or [ ]) ++ [ ./hidden-series.patch ];
-      });
+      package = audiobookshelf;
     };
   };
 }
