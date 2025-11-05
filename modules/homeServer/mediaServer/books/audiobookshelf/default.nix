@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -26,6 +27,10 @@ in
       enable = true;
       group = "media";
       port = cfg.ports.mediaServer.audiobookshelf;
+
+      package = pkgs.audiobookshelf.overrideAttrs (oldAttrs: {
+        patches = (oldAttrs.patches or [ ]) ++ [ ./hidden-series.patch ];
+      });
     };
   };
 }

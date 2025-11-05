@@ -1,6 +1,6 @@
 {
   imports = [
-    ./audiobookshelf.nix
+    ./audiobookshelf
     ./calibre.nix
     ./readarr.nix
     ./speakarr
