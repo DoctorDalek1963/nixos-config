@@ -112,12 +112,6 @@ in
         enable = true;
         group = "media";
 
-        # TODO (stash 0.29): We should be able to remove this patch once
-        # https://github.com/stashapp/stash/pull/5791 lands in a release
-        package = pkgs.stash.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or [ ]) ++ [ ./hls-dash-streaming-segments.patch ];
-        });
-
         username = "dyson";
         passwordFile = config.sops.secrets."home-server/stash/password".path;
         jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
