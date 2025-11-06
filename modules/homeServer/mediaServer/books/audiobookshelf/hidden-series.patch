@@ -10,7 +10,7 @@
 +          action: 'hide-series'
          }
        ]
-
+ 
 @@ -301,6 +305,10 @@ export default {
        if (!this.seriesId) return false
        return this.$store.getters['user/getIsSeriesRemovedFromContinueListening'](this.seriesId)
@@ -121,7 +121,7 @@
 @@ -381,6 +381,44 @@ class MeController {
      res.json(req.user.toOldJSONForBrowser())
    }
-
+ 
 +  /**
 +   * GET: /api/me/series/:id/hide
 +   *
@@ -194,7 +194,7 @@
 @@ -938,6 +940,38 @@ class User extends Model {
      return true
    }
-
+ 
 +  /**
 +   *
 +   * @param {string} seriesId
@@ -240,25 +240,22 @@
 +    this.router.get('/me/series/:id/unhide', MeController.unhideSeries.bind(this))
      this.router.get('/me/stats/year/:year', MeController.getStatsForYear.bind(this))
      this.router.post('/me/ereader-devices', MeController.updateUserEReaderDevices.bind(this))
-
+ 
 --- a/server/utils/queries/seriesFilters.js
 +++ b/server/utils/queries/seriesFilters.js
-@@ -145,7 +145,7 @@ module.exports = {
-       order.push(Database.sequelize.random())
+@@ -106,6 +106,15 @@ module.exports = {
+       }
      }
-
--    const { rows: series, count } = await Database.seriesModel.findAndCountAll({
-+    let { rows: series, count } = await Database.seriesModel.findAndCountAll({
-       where: seriesWhere,
-       limit,
-       offset,
-@@ -178,6 +178,9 @@ module.exports = {
-       order
-     })
-
-+    series = series.filter((series) => !user.extraData.hiddenSeries?.includes(series.dataValues.id))
-+    count = series.length
+ 
++    // Don't return hidden series
++    if (user.extraData.hiddenSeries) {
++      seriesWhere.push({
++        id: {
++          [Sequelize.Op.notIn]: user.extraData.hiddenSeries
++        }
++      })
++    }
 +
-     // Map series to old series
-     const allOldSeries = []
-     for (const s of series) {
+     if (attrQuery) {
+       seriesWhere.push(
+         Sequelize.where(Sequelize.literal(`(${attrQuery})`), {
