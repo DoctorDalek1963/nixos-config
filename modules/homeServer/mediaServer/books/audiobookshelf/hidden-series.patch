@@ -10,7 +10,7 @@
 +          action: 'hide-series'
          }
        ]
- 
+
 @@ -301,6 +305,10 @@ export default {
        if (!this.seriesId) return false
        return this.$store.getters['user/getIsSeriesRemovedFromContinueListening'](this.seriesId)
@@ -35,7 +35,7 @@
        } else if (this.handleSubtitlesAction(action)) {
          return
        } else if (this.handleCollapseSubSeriesAction(action)) {
-@@ -566,6 +580,33 @@ export default {
+@@ -566,6 +580,35 @@ export default {
        }
        this.$store.commit('globals/setConfirmPrompt', payload)
      },
@@ -47,9 +47,11 @@
 +        callback: (confirmed) => {
 +          if (confirmed) {
 +            this.processingSeries = true
-+            const endpoint = newIsHidden ? 'hide' : 'unhide'
++            const payload = {
++              makeHidden: newIsHidden
++            }
 +            this.$axios
-+              .$get(`/api/me/series/${this.seriesId}/${endpoint}`)
++              .$post(`/api/me/series/${this.seriesId}/hide`, payload)
 +              .then(() => {
 +                this.$toast.success(this.$strings.ToastSeriesUpdateSuccess)
 +              })
@@ -118,12 +120,12 @@
    "MessageDownloadingEpisode": "Downloading episode",
 --- a/server/controllers/MeController.js
 +++ b/server/controllers/MeController.js
-@@ -381,6 +381,44 @@ class MeController {
+@@ -381,6 +381,27 @@ class MeController {
      res.json(req.user.toOldJSONForBrowser())
    }
- 
+
 +  /**
-+   * GET: /api/me/series/:id/hide
++   * POST: /api/me/series/:id/hide
 +   *
 +   * @param {RequestWithUser} req
 +   * @param {Response} res
@@ -134,26 +136,9 @@
 +      return res.sendStatus(404)
 +    }
 +
-+    const hasUpdated = await req.user.hideSeries(req.params.id)
-+    if (hasUpdated) {
-+      SocketAuthority.clientEmitter(req.user.id, 'user_updated', req.user.toOldJSONForBrowser())
-+    }
-+    res.json(req.user.toOldJSONForBrowser())
-+  }
++    const { makeHidden } = req.body
 +
-+  /**
-+   * GET: /api/me/series/:id/unhide
-+   *
-+   * @param {RequestWithUser} req
-+   * @param {Response} res
-+   */
-+  async unhideSeries(req, res) {
-+    if (!(await Database.seriesModel.checkExistsById(req.params.id))) {
-+      Logger.error(`[MeController] unhideSeries: Series ${req.params.id} not found`)
-+      return res.sendStatus(404)
-+    }
-+
-+    const hasUpdated = await req.user.unhideSeries(req.params.id)
++    const hasUpdated = await req.user.hideSeries(req.params.id, makeHidden)
 +    if (hasUpdated) {
 +      SocketAuthority.clientEmitter(req.user.id, 'user_updated', req.user.toOldJSONForBrowser())
 +    }
@@ -191,36 +176,28 @@
        bookmarks: this.bookmarks?.map((b) => ({ ...b })) || [],
        isActive: this.isActive,
        isLocked: this.isLocked,
-@@ -938,6 +940,38 @@ class User extends Model {
+@@ -938,6 +940,30 @@ class User extends Model {
      return true
    }
- 
+
 +  /**
 +   *
 +   * @param {string} seriesId
++   * @param {boolean} makeHidden
 +   * @returns {Promise<boolean>}
 +   */
-+  async hideSeries(seriesId) {
++  async hideSeries(seriesId, makeHidden) {
 +    if (!this.extraData) this.extraData = {}
 +    const hiddenSeries = this.extraData.hiddenSeries || []
-+    if (hiddenSeries.includes(seriesId)) return false
-+    hiddenSeries.push(seriesId)
-+    this.extraData.hiddenSeries = hiddenSeries
-+    this.changed('extraData', true)
-+    await this.save()
-+    return true
-+  }
 +
-+  /**
-+   *
-+   * @param {string} seriesId
-+   * @returns {Promise<boolean>}
-+   */
-+  async unhideSeries(seriesId) {
-+    if (!this.extraData) this.extraData = {}
-+    let hiddenSeries = this.extraData.hiddenSeries || []
-+    if (!hiddenSeries.includes(seriesId)) return false
-+    hiddenSeries = hiddenSeries.filter((sid) => sid !== seriesId)
++    if (makeHidden) {
++      if (hiddenSeries.includes(seriesId)) return false
++      hiddenSeries.push(seriesId)
++    } else {
++      if (!hiddenSeries.includes(seriesId)) return false
++      hiddenSeries = hiddenSeries.filter((sid) => sid !== seriesId)
++    }
++
 +    this.extraData.hiddenSeries = hiddenSeries
 +    this.changed('extraData', true)
 +    await this.save()
@@ -232,21 +209,20 @@
     *
 --- a/server/routers/ApiRouter.js
 +++ b/server/routers/ApiRouter.js
-@@ -186,6 +186,8 @@ class ApiRouter {
+@@ -186,6 +186,7 @@ class ApiRouter {
      this.router.get('/me/items-in-progress', MeController.getAllLibraryItemsInProgress.bind(this))
      this.router.get('/me/series/:id/remove-from-continue-listening', MeController.removeSeriesFromContinueListening.bind(this))
      this.router.get('/me/series/:id/readd-to-continue-listening', MeController.readdSeriesFromContinueListening.bind(this))
-+    this.router.get('/me/series/:id/hide', MeController.hideSeries.bind(this))
-+    this.router.get('/me/series/:id/unhide', MeController.unhideSeries.bind(this))
++    this.router.post('/me/series/:id/hide', MeController.hideSeries.bind(this))
      this.router.get('/me/stats/year/:year', MeController.getStatsForYear.bind(this))
      this.router.post('/me/ereader-devices', MeController.updateUserEReaderDevices.bind(this))
- 
+
 --- a/server/utils/queries/seriesFilters.js
 +++ b/server/utils/queries/seriesFilters.js
 @@ -106,6 +106,15 @@ module.exports = {
        }
      }
- 
+
 +    // Don't return hidden series
 +    if (user.extraData.hiddenSeries) {
 +      seriesWhere.push({

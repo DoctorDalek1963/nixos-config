@@ -35,7 +35,7 @@
        } else if (this.handleSubtitlesAction(action)) {
          return
        } else if (this.handleCollapseSubSeriesAction(action)) {
-@@ -566,6 +580,33 @@ export default {
+@@ -566,6 +580,35 @@ export default {
        }
        this.$store.commit('globals/setConfirmPrompt', payload)
      },
@@ -47,9 +47,11 @@
 +        callback: (confirmed) => {
 +          if (confirmed) {
 +            this.processingSeries = true
-+            const endpoint = newIsHidden ? 'hide' : 'unhide'
++            const payload = {
++              makeHidden: newIsHidden
++            }
 +            this.$axios
-+              .$get(`/api/me/series/${this.seriesId}/${endpoint}`)
++              .$post(`/api/me/series/${this.seriesId}/hide`, payload)
 +              .then(() => {
 +                this.$toast.success(this.$strings.ToastSeriesUpdateSuccess)
 +              })
