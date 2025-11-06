@@ -188,7 +188,7 @@
 +   */
 +  async hideSeries(seriesId, makeHidden) {
 +    if (!this.extraData) this.extraData = {}
-+    const hiddenSeries = this.extraData.hiddenSeries || []
++    let hiddenSeries = this.extraData.hiddenSeries || []
 +
 +    if (makeHidden) {
 +      if (hiddenSeries.includes(seriesId)) return false
