@@ -14,6 +14,10 @@
           edit = "${config.setup.shared.nvim.path} {{filename}}";
           editInTerminal = true;
         };
+        keybinding.universal = {
+          quit = "Q";
+          quitWithoutChangingDirectory = "q";
+        };
       };
     };
 
