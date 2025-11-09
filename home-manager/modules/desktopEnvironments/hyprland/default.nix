@@ -190,6 +190,7 @@ in
 
             # Hovering over a window won't focus it until you click
             follow_mouse = 2;
+            float_switch_override_focus = 0;
           };
 
           "input:touchpad" = {
