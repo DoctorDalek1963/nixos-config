@@ -1,6 +1,6 @@
 {
   lib,
-  config,
+  # config,
   osConfig,
   ...
 }:
@@ -21,6 +21,9 @@ in
     (mkIf (cfgGaming.enable && cfgGaming.steam.enable) {
       setup.impermanence.keepDirs = [
         ".local/share/Steam"
+        ".local/share/doublefine"
+        ".local/share/FasterThanLight"
+        ".local/share/Euro Truck Simulator 2"
         ".factorio"
       ];
     })
