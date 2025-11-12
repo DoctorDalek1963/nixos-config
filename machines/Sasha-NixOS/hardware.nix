@@ -24,6 +24,9 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
 
+    # Prefer to keep processes in RAM
+    kernel.sysctl."vm.swappiness" = 10;
+
     loader = {
       grub = {
         enable = true;
