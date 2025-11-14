@@ -226,10 +226,9 @@ in
 
             player = "playerctld";
 
-            # These are not defined by default so accidentally scrolling on
-            # this module would crash the whole bar
-            on-scroll-up = "";
-            on-scroll-down = "";
+            # Skip forward and back by 10 seconds
+            on-scroll-up = "${lib.getExe pkgs.playerctl} position 10+";
+            on-scroll-down = "${lib.getExe pkgs.playerctl} position 10-";
           };
 
           pulseaudio = {
