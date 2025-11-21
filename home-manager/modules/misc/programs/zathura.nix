@@ -64,6 +64,7 @@ in
         guioptions = "sv"; # Statusbar and vertical scroll bar
         font = lib.mkIf config.setup.fonts.hackNerdFont "Hack Nerd Font 9";
 
+        selection-clipboard = "clipboard";
         statusbar-home-tilde = true;
 
         synctex-editor-command = ''${config.setup.shared.nvim.path} --headless -c \"VimtexInverseSearch %{line} '%{input}'\"'';
