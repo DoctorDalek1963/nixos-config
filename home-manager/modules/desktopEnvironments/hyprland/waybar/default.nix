@@ -201,7 +201,8 @@ in
 
             player-icons = {
               default = "󰝚";
-              firefox = "";
+              firefox = "󰈹";
+              vlc = "󰕼";
             };
             status-icons = {
               playing = "";
