@@ -58,7 +58,6 @@
         vlc = true;
         zoom = true;
       };
-      services.easyeffects = true;
     };
 
     office.onlyoffice = true;
@@ -210,7 +209,6 @@
         timewarrior = true;
         vlc = true;
       };
-      services.easyeffects = true;
     };
 
     office.onlyoffice = true;
