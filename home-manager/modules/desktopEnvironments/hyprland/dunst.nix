@@ -70,8 +70,9 @@ in
       builtins.concatStringsSep "\n" (
         map toDunstIni [
           {
-            easyeffects_preset_switcher_urgency = {
-              summary = "EasyEffects Preset Switcher";
+            easyeffects_preset_loaded_urgency = {
+              appname = "easyeffects";
+              summary = "Preset Loaded";
               urgency = "low";
             };
           }
@@ -95,8 +96,9 @@ in
             };
           }
           {
-            easyeffects_preset_switcher_timeout = {
-              summary = "EasyEffects Preset Switcher";
+            easyeffects_preset_loaded_timeout = {
+              appname = "easyeffects";
+              summary = "Preset Loaded";
               # Regular timeout doesn't work here because it gets overriden by urgency_low
               override_dbus_timeout = 2;
             };

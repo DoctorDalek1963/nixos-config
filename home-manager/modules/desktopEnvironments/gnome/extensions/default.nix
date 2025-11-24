@@ -10,21 +10,16 @@ let
     (pkgs.callPackage ./thanatophobia.nix { })
   ];
 
-  optionalExtensions =
-    lib.optionals config.setup.misc.programs.xremap [
-      {
-        uuid = "activate-window-by-title@lucaswerkmeister.de";
-        pkg = pkgs.gnomeExtensions.activate-window-by-title;
-      }
-      {
-        uuid = "xremap@k0kubun.com";
-        pkg = pkgs.gnomeExtensions.xremap;
-      }
-    ]
-    ++ lib.optional config.services.easyeffects.enable {
-      uuid = "eepresetselector@ulville.github.io";
-      pkg = pkgs.gnomeExtensions.easyeffects-preset-selector;
-    };
+  optionalExtensions = lib.optionals config.setup.misc.programs.xremap [
+    {
+      uuid = "activate-window-by-title@lucaswerkmeister.de";
+      pkg = pkgs.gnomeExtensions.activate-window-by-title;
+    }
+    {
+      uuid = "xremap@k0kubun.com";
+      pkg = pkgs.gnomeExtensions.xremap;
+    }
+  ];
 in
 {
   config =

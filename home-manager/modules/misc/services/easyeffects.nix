@@ -1,13 +1,9 @@
 {
-  pkgs,
   lib,
   config,
   osConfig,
   ...
 }:
-let
-  preset-switcher = pkgs.callPackage ./presetSwitcherPackage.nix { };
-in
 {
   config = lib.mkIf config.setup.misc.services.easyeffects {
     assertions = [
@@ -17,30 +13,9 @@ in
       }
     ];
 
-    services.easyeffects = {
-      enable = true;
-      preset = "BasicAutogain";
-    };
+    services.easyeffects.enable = true;
 
-    systemd.user.services.easyeffects-preset-switcher = {
-      Unit = {
-        Description = "Run the easyeffects-preset-switcher in the systray";
-        After = [ "graphical-session.target" ];
-      };
-
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
-
-      Service = {
-        Type = "simple";
-        ExecStart = lib.getExe preset-switcher;
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-    };
-
-    xdg.configFile =
+    home.file =
       let
         basic-autogain = {
           bypass = false;
@@ -53,20 +28,20 @@ in
         };
       in
       {
-        "easyeffects/output/Nothing.json".text = lib.generators.toJSON { } {
+        ".local/share/easyeffects/output/Nothing.json".text = lib.generators.toJSON { } {
           output = {
             blocklist = [ ];
             plugins_order = [ ];
           };
         };
-        "easyeffects/output/BasicAutogain.json".text = lib.generators.toJSON { } {
+        ".local/share/easyeffects/output/BasicAutogain.json".text = lib.generators.toJSON { } {
           output = {
             "autogain#0" = basic-autogain;
             blocklist = [ ];
             plugins_order = [ "autogain#0" ];
           };
         };
-        "easyeffects/output/AutogainWithNoiseReduction.json".text = lib.generators.toJSON { } {
+        ".local/share/easyeffects/output/AutogainWithNoiseReduction.json".text = lib.generators.toJSON { } {
           output = {
             "autogain#0" = basic-autogain;
             "rnnoise#0" = {
