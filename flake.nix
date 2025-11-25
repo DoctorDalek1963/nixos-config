@@ -146,7 +146,10 @@
               };
 
               deadnix.enable = true;
-              statix.enable = true;
+              statix = {
+                enable = true;
+                stages = [ "pre-push" ];
+              };
             };
           };
         };
