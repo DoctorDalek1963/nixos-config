@@ -12,17 +12,15 @@ in
 {
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     systemd.tmpfiles.settings.stash = {
-      "${config.services.stash.dataDir}/custom.js".C = {
+      "${config.services.stash.dataDir}/custom.css".C = {
         user = "stash";
         group = "media";
         mode = "755";
         argument = toString (
           pkgs.writeTextFile {
-            name = "stash-custom.js";
+            name = "stash-custom.css";
             text = ''
-              ${readFile ./transgenderSymbols.js}
-              ${readFile ./hlsDefault.js}
-              ${readFile ./ratingBanner.js}
+              ${readFile ./ratingBanner.css}
             '';
           }
         );

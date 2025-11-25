@@ -29,7 +29,10 @@ let
   ]);
 in
 {
-  imports = [ ./customJs ];
+  imports = [
+    ./customCss
+    ./customJs
+  ];
 
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.porn) {
     setup = {
@@ -140,6 +143,7 @@ in
           port = cfg.ports.mediaServer.stash;
           plugins_path = lib.mkForce "${config.services.stash.dataDir}/plugins";
           language = "en-GB";
+          cssenabled = true;
           javascriptenabled = true;
 
           ffmpeg.hardware_acceleration = true;
