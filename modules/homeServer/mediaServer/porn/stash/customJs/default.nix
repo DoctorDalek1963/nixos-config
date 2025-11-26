@@ -15,7 +15,7 @@ in
       "${config.services.stash.dataDir}/custom.js".C = {
         user = "stash";
         group = "media";
-        mode = "755";
+        mode = "644";
         argument = toString (
           pkgs.writeTextFile {
             name = "stash-custom.js";
