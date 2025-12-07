@@ -147,6 +147,31 @@ in
           };
 
           volume-adjust = "${volume-adjust-pkg}/bin/volume-adjust";
+
+          zoom-change-pkg = pkgs.writeShellApplication {
+            name = "zoom-change";
+
+            runtimeInputs = [ pkgs.bc ];
+
+            text = ''
+              zoom="$(hyprctl getoption cursor:zoom_factor | awk '$1=="float:" {print $2}')"
+
+              case "$1" in
+                "=")
+                  hyprctl keyword cursor:zoom_factor 1
+                  ;;
+                "-")
+                  hyprctl keyword cursor:zoom_factor "$(bc <<< "x=$zoom - 0.5; if (x < 1) { x=1; }; x")"
+                  ;;
+                "+")
+                  hyprctl keyword cursor:zoom_factor "$(bc <<< "$zoom + 0.5")"
+                  ;;
+              esac
+
+            '';
+          };
+
+          zoom-change = lib.getExe zoom-change-pkg;
         in
         {
           exec-once = [ "systemctl --user start hyprpolkitagent" ];
@@ -222,6 +247,9 @@ in
             dim_inactive = false;
           };
 
+          # No anti-aliasing when zoomed in
+          cursor.zoom_disable_aa = true;
+
           misc = {
             disable_hyprland_logo = true;
             force_default_wallpaper = 0;
@@ -240,6 +268,7 @@ in
             "windows, 1, 1.5, overshot"
             "windowsOut, 1, 1.5, easeInOutQuart"
             "workspaces, 1, 1.5, easeInOutQuart"
+            "zoomFactor, 1, 1.5, easeInOutQuart"
           ]
           ++ (lib.optional cfgB.animateGradientAngle.enable "borderangle, 1, ${
             toString (10 * cfgB.animateGradientAngle.speedSecs)
@@ -342,6 +371,12 @@ in
               ", print, exec, ${hyprshot} -o ${downloads} -m region"
               "SHIFT, print, exec, ${hyprshot} -o ${downloads} -m window"
               "CTRL, print, exec, ${hyprshot} -o ${downloads} -m output -m active"
+            ]
+            # Zooming
+            ++ [
+              "$mod, equal, exec, ${zoom-change} ="
+              "$mod SHIFT, equal, exec, ${zoom-change} +"
+              "$mod, minus, exec, ${zoom-change} -"
             ]
             # This is absolutely bizarre and I don't understand it, but certain
             # programs like Dyson Sphere Program don't recognise middle click,
