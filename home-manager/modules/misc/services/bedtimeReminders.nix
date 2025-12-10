@@ -13,21 +13,13 @@
           Type = "oneshot";
         };
 
-        Install = {
-          WantedBy = [ "default.target" ];
-        };
-
-        Service = {
-          ExecStart = pkgs.writeShellScript "bedtime-reminder" ''
-            ${pkgs.dunst}/bin/dunstify "Bedtime" "Go to bed now" --urgency=critical
-          '';
-        };
+        Service.ExecStart = pkgs.writeShellScript "bedtime-reminder" ''
+          ${pkgs.dunst}/bin/dunstify "Bedtime" "Go to bed now" --urgency=critical
+        '';
       };
 
       timers.bedtime-reminders = {
-        Install = {
-          WantedBy = [ "timers.target" ];
-        };
+        Install.WantedBy = [ "timers.target" ];
 
         Timer = {
           OnCalendar = "Mon..Fri *-*-* 00..06:00/5:00";
