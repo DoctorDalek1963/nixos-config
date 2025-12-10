@@ -58,6 +58,7 @@
         vlc = true;
         zoom = true;
       };
+      services.bedtimeLock = true;
     };
 
     office.onlyoffice = true;

@@ -252,6 +252,7 @@ in
       };
 
       services = {
+        bedtimeLock = defaultFalse;
         bedtimeReminders = defaultTrue;
         easyeffects = defaultFalse;
         safeeyes = defaultFalse;
