@@ -16,7 +16,10 @@ in
       setup.impermanence.keepDirs = [ "repos" ];
     })
     (mkIf cfgGaming.enable {
-      setup.impermanence.keepDirs = [ "Games" ];
+      setup.impermanence.keepDirs = [
+        "Games"
+        ".config/ludusavi"
+      ];
     })
     (mkIf (cfgGaming.enable && cfgGaming.steam.enable) {
       setup.impermanence.keepDirs = [
