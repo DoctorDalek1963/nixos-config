@@ -58,7 +58,10 @@
         vlc = true;
         zoom = true;
       };
-      services.bedtimeLock = true;
+      services = {
+        bedtimeLock = true;
+        easyeffects = true;
+      };
     };
 
     office.onlyoffice = true;
