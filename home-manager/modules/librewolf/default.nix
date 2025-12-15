@@ -56,6 +56,21 @@ let
       "browser.urlbar.quicksuggest.scenario" = "history";
       "browser.urlbar.showSearchSuggestionsFirst" = false;
 
+      # Disable AI
+      "browser.ml.enable" = false;
+      "browser.ml.chat.enabled" = false;
+      "browser.ml.chat.sidebar" = false;
+      "browser.ml.chat.menu" = false;
+      "browser.ml.chat.page" = false;
+      "extensions.ml.enabled" = false;
+      "browser.ml.linkPreview.enabled" = false;
+      "browser.ml.pageAssist.enabled" = false;
+      "browser.ml.smartAssist.enabled" = false;
+      "browser.tabs.groups.smart.enabled" = false;
+      "browser.tabs.groups.smart.userEnabled" = false;
+      "pdfjs.enableAltTextModelDownload" = false;
+      "pdfjs.enableGuessAltText" = false;
+
       "extensions.activeThemeID" = "default-theme@mozilla.org";
       "extensions.formautofill.creditCards.enabled" = false;
       "extensions.pocket.enabled" = false;
