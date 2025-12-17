@@ -120,7 +120,7 @@ in
         jwtSecretKeyFile = config.sops.secrets."home-server/stash/jwt-secret".path;
         sessionStoreKeyFile = config.sops.secrets."home-server/stash/session-store-secret".path;
 
-        mutableSettings = false;
+        mutableSettings = true;
         mutablePlugins = false;
         mutableScrapers = true; # I can't be bothered to declare all of these
 
@@ -173,7 +173,7 @@ in
               };
 
               scan = {
-                rescan = true;
+                rescan = false;
                 scanGenerateClipPreviews = false;
                 scanGenerateCovers = true;
                 scanGenerateImagePreviews = false;
