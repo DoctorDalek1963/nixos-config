@@ -9,7 +9,7 @@ let
   mkSystemdRestart =
     serviceName:
     mkScript ''
-      $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user ${serviceName}
+      $DRY_RUN_CMD /run/current-system/sw/bin/systemctl restart --user ${serviceName} || true
     '';
 
   cfg = config.setup;
