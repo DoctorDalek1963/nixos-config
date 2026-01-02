@@ -66,7 +66,7 @@ in
   # Allow ISO to connect to WiFi
   networking = {
     networkmanager.enable = true;
-    wireless.enable = false;
+    wireless.enable = lib.mkForce false;
   };
 
   # Use British keyboard
