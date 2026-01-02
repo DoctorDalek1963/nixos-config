@@ -19,7 +19,7 @@ in
     ./ms-teams.nix
     ./obsidian.nix
     ./timewarrior.nix
-    ./xremap.nix
+    # ./xremap.nix
     ./zathura.nix
   ];
 
