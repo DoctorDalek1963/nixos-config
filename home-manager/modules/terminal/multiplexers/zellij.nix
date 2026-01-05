@@ -178,10 +178,23 @@ in
             }
         }
       '';
+
+      "zellij/layouts/uni.kdl".text = ''
+        layout {
+            pane edit="main.tex"
+
+            pane size=6 command="direnv" {
+                args "exec" "." "just" "watch"
+            }
+        }
+      '';
     };
 
     setup = {
-      terminal.shellAliases.z = "${config.programs.zellij.package}/bin/zellij";
+      terminal.shellAliases = {
+        z = "${config.programs.zellij.package}/bin/zellij";
+        zun = "${config.programs.zellij.package}/bin/zellij --layout ${config.xdg.configHome}/zellij/layouts/uni.kdl";
+      };
       impermanence.keepDirs = [ ".cache/zellij" ];
     };
   };
