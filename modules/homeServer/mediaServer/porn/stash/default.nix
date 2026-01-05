@@ -66,33 +66,40 @@ in
         "home-server/stash/api-key" = perms;
       };
 
-    systemd.services.stash.serviceConfig = {
-      # We want plugins to be able to change files, like renaming them
-      BindReadOnlyPaths = lib.mkForce [ ];
-
-      ExecStartPre = [
-        (
-          let
-            inherit (config.services.stash.settings) plugins_path;
-          in
-          pkgs.writeShellScript "copy-stash-plugins.sh" ''
-            mkdir -p ${plugins_path}
-            cp -r ${(import ./plugins { inherit pkgs; }).outPath}/* ${plugins_path}/
-            chown -R ${config.services.stash.user}:media ${plugins_path}
-            chmod -R u+rw,g+rw ${plugins_path}
-          ''
-        )
-        (
-          let
-            script = pkgs.writeShellScript "set-stash-api-key.sh" ''
-              env apiKey="$(< ${config.sops.secrets."home-server/stash/api-key".path})" \
-                ${lib.getExe pkgs.yq-go} -i '.api_key = strenv(apiKey)' ${config.services.stash.dataDir}/config.yml
-            '';
-            # Why the plus? So that this script is run as root and we can actually read the secret API key
-          in
-          "+${script}"
-        )
+    systemd.services.stash = {
+      path = [
+        pkgs.jellyfin-ffmpeg
+        python
       ];
+
+      serviceConfig = {
+        # We want plugins to be able to change files, like renaming them
+        BindReadOnlyPaths = lib.mkForce [ ];
+
+        ExecStartPre = [
+          (
+            let
+              inherit (config.services.stash.settings) plugins_path;
+            in
+            pkgs.writeShellScript "copy-stash-plugins.sh" ''
+              mkdir -p ${plugins_path}
+              cp -r ${(import ./plugins { inherit pkgs; }).outPath}/* ${plugins_path}/
+              chown -R ${config.services.stash.user}:media ${plugins_path}
+              chmod -R u+rw,g+rw ${plugins_path}
+            ''
+          )
+          (
+            let
+              script = pkgs.writeShellScript "set-stash-api-key.sh" ''
+                env apiKey="$(< ${config.sops.secrets."home-server/stash/api-key".path})" \
+                  ${lib.getExe pkgs.yq-go} -i '.api_key = strenv(apiKey)' ${config.services.stash.dataDir}/config.yml
+              '';
+              # Why the plus? So that this script is run as root and we can actually read the secret API key
+            in
+            "+${script}"
+          )
+        ];
+      };
     };
 
     services = {
@@ -147,9 +154,6 @@ in
           javascriptenabled = true;
 
           ffmpeg.hardware_acceleration = true;
-          ffmpeg_path = "${pkgs.jellyfin-ffmpeg}/bin/ffmpeg";
-          ffprobe_path = "${pkgs.jellyfin-ffmpeg}/bin/ffprobe";
-          python_path = "${python}/bin/python3";
           scraper_cdp_path = "${pkgs.ungoogled-chromium}/bin/chromium";
 
           menu_items = [
