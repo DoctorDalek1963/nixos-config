@@ -67,7 +67,7 @@ in
       };
 
     systemd.services.stash = {
-      path = [
+      path = lib.mkBefore [
         pkgs.jellyfin-ffmpeg
         python
       ];
