@@ -21,6 +21,7 @@ in
             name = "stash-custom.css";
             text = ''
               ${readFile ./ratingBanner.css}
+              ${readFile ./progressBar.css}
             '';
           }
         );
