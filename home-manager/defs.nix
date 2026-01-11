@@ -47,7 +47,6 @@
 
     misc = {
       programs = {
-        anki = true;
         discord = true;
         feishin = true;
         mediaCuration = true;
@@ -205,7 +204,6 @@
 
     misc = {
       programs = {
-        anki = true;
         feishin = true;
         ms-teams = true;
         obsidian = true;
