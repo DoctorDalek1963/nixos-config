@@ -25,9 +25,12 @@ in
               "${cfg.background.dark}"
             ];
 
-        wallpaper = [
-          ",${if builtins.isPath cfg.background then cfg.background else cfg.background.dark}"
-        ];
+        splash = false;
+
+        wallpaper = {
+          monitor = "";
+          path = "${if builtins.isPath cfg.background then cfg.background else cfg.background.dark}";
+        };
       };
     };
   };
