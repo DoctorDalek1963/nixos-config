@@ -99,6 +99,17 @@ in
       packages = [ pkgs.hyprpolkitagent ];
     };
 
+    # Catppuccin macchiato (mauve), taken from https://github.com/SchweGELBin/catppuccin-hyprtoolkit
+    xdg.configFile."hypr/hyprtoolkit.conf".text = ''
+      background=0xff181926
+      base=0xff24273a
+      alternate_base=0xff1e2030
+      text=0xffcad3f5
+      bright_text=0xffb8c0e0
+      accent=0xffc6a0f6
+      accent_secondary=0xffb7bdf8
+    '';
+
     wayland.windowManager.hyprland = {
       enable = true;
 
