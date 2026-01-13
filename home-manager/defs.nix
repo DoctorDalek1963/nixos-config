@@ -152,7 +152,7 @@
     terminal = {
       tools = {
         git-all = false;
-        nvim = "small";
+        nvim = "tiny";
       };
     };
   };
