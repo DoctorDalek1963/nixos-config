@@ -94,6 +94,7 @@ in
         minimal = defaultTrue;
       };
       hyprland.enable = defaultFalse;
+      kodi.enable = defaultFalse;
     };
 
     displayManagers = {
