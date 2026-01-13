@@ -88,7 +88,7 @@
     minicom
     (python311.withPackages (
       p: with p; [
-        gpiozero
+        # gpiozero
         pyserial
         rpi-gpio
       ]
