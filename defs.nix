@@ -138,21 +138,7 @@
         {
           setup = {
             hostname = "Bert-NixOS";
-            isGraphical = false;
-
-            homeServer = {
-              enable = true;
-              domainName = "bert-nixos.triceratops-egret.ts.net";
-              dataRoot = "/data";
-              manager = "pi";
-
-              personalProjects = {
-                enable = true;
-                # I only need to enable this around Christmas, when I'm
-                # actually using the lights
-                winter-wonderlights = false;
-              };
-            };
+            desktopEnvironments.androidTv.enable = true;
 
             secrets = {
               enable = true;
