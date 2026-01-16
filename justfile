@@ -95,3 +95,16 @@ post-install user='dyson':
     @just set-git-remote
     @just copy-sops-keys
     @just cachix-authtoken
+
+# initialise Android TV in Waydroid
+[group("android-tv")]
+atv-init:
+    sudo waydroid init --force --system_channel https://ota.supechicken666.dev/system --vendor_channel https://ota.supechicken666.dev/vendor --rom_type lineage --system_type GAPPS
+    sudo waydroid upgrade
+
+# find the code to register this Waydroid install
+[group("android-tv")]
+atv-register:
+    @echo "Go to https://www.google.com/android/uncertified and enter the following code:"
+    sudo waydroid shell -- sh -c "sqlite3 /data/data/*/*/gservices.db 'select value from main where name = \"android_id\";'"
+    @echo "Then wait a few minutes and reboot"
