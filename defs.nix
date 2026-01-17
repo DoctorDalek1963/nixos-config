@@ -116,7 +116,14 @@
             users = [ "dyson" ];
           };
 
-          desktopEnvironments.hyprland.enable = true;
+          desktopEnvironments = {
+            hyprland.enable = true;
+            androidTv = {
+              enable = true;
+              asSession = true;
+            };
+          };
+
           displayManagers.tuigreet.enable = true;
         };
       }
