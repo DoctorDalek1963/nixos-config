@@ -14,7 +14,7 @@ let
       [Desktop Entry]
       Name=Android TV
       Comment=Android TV in Waydroid
-      Exec=${lib.getExe pkgs.cage} ${lib.getExe waydroid} show-full-ui
+      Exec=${lib.getExe pkgs.cage} -s -- ${lib.getExe waydroid} show-full-ui
       Type=Application
     '').overrideAttrs
       (_: {
@@ -51,6 +51,7 @@ in
       (lib.mkIf (!cfg.asSession) {
         services.cage = {
           enable = true;
+          extraArguments = [ "-s" ];
           program = "${lib.getExe waydroid} show-full-ui";
         };
       })
