@@ -159,6 +159,30 @@ in
 
           volume-adjust = "${volume-adjust-pkg}/bin/volume-adjust";
 
+          brightness-adjust-pkg = pkgs.writeShellApplication {
+            name = "volume-adjust";
+
+            runtimeInputs = with pkgs; [
+              brightnessctl
+              bc
+              dunst
+            ];
+
+            text = ''
+              brightnessctl set "$1"
+
+              current="$(brightnessctl --machine-readable get)"
+              maximum="$(brightnessctl --machine-readable max)"
+
+              brightness_float="$(bc <<< "scale=5; ($current * 100) / $maximum + 0.5")"
+              brightness="$(bc <<< "$brightness_float / 1")"
+
+              dunstify "Brightness" "''${brightness}%" --urgency=low --hints=int:value:"$brightness" --hints=string:x-dunst-stack-tag:brightness-adjust
+            '';
+          };
+
+          brightness-adjust = "${brightness-adjust-pkg}/bin/brightness-adjust";
+
           zoom-change-pkg = pkgs.writeShellApplication {
             name = "zoom-change";
 
@@ -407,15 +431,10 @@ in
               "CTRL, down, exec, ${volume-adjust} .05-"
             ]
             # Brightness controls
-            ++ (
-              let
-                brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-              in
-              [
-                ", XF86MonBrightnessUp, exec, ${brightnessctl} set +5%"
-                ", XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
-              ]
-            );
+            ++ [
+              ", XF86MonBrightnessUp, exec, ${brightness-adjust} +5%"
+              ", XF86MonBrightnessDown, exec, ${brightness-adjust} 5%-"
+            ];
 
           # Mouse binds
           bindm = [

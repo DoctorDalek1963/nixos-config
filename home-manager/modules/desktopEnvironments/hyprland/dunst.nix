@@ -108,6 +108,12 @@ in
               stack_tag = "volume-adjust";
               timeout = 2;
             };
+
+            brightness_adjust = {
+              summary = "Brightness";
+              stack_tag = "Brightness-adjust";
+              timeout = 2;
+            };
           }
         ]
       )
