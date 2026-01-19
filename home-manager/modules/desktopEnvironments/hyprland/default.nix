@@ -69,7 +69,7 @@ let
         in
         {
           "col.active_border" = "${
-            lib.concatStringsSep " " (builtins.map (colour: "rgba(${colour}ff)") active_colours)
+            lib.concatStringsSep " " (map (colour: "rgba(${colour}ff)") active_colours)
           } 45deg";
           "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
           gamemode-active-border = "rgba(5b6078ff)"; # Surface 2
