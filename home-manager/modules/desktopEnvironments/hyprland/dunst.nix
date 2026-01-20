@@ -111,7 +111,7 @@ in
 
             brightness_adjust = {
               summary = "Brightness";
-              stack_tag = "Brightness-adjust";
+              stack_tag = "brightness-adjust";
               timeout = 2;
             };
           }

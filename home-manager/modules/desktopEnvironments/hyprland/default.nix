@@ -157,10 +157,10 @@ in
             '';
           };
 
-          volume-adjust = "${volume-adjust-pkg}/bin/volume-adjust";
+          volume-adjust = lib.getExe volume-adjust-pkg;
 
           brightness-adjust-pkg = pkgs.writeShellApplication {
-            name = "volume-adjust";
+            name = "brightness-adjust";
 
             runtimeInputs = with pkgs; [
               brightnessctl
@@ -181,7 +181,7 @@ in
             '';
           };
 
-          brightness-adjust = "${brightness-adjust-pkg}/bin/brightness-adjust";
+          brightness-adjust = lib.getExe brightness-adjust-pkg;
 
           zoom-change-pkg = pkgs.writeShellApplication {
             name = "zoom-change";
