@@ -69,7 +69,7 @@ let
         in
         {
           "col.active_border" = "${
-            lib.concatStringsSep " " (builtins.map (colour: "rgba(${colour}ff)") active_colours)
+            lib.concatStringsSep " " (map (colour: "rgba(${colour}ff)") active_colours)
           } 45deg";
           "col.inactive_border" = "rgba(494d64ff)"; # Surface 1
           gamemode-active-border = "rgba(5b6078ff)"; # Surface 2
@@ -158,6 +158,30 @@ in
           };
 
           volume-adjust = "${volume-adjust-pkg}/bin/volume-adjust";
+
+          brightness-adjust-pkg = pkgs.writeShellApplication {
+            name = "volume-adjust";
+
+            runtimeInputs = with pkgs; [
+              brightnessctl
+              bc
+              dunst
+            ];
+
+            text = ''
+              brightnessctl set "$1"
+
+              current="$(brightnessctl --machine-readable get)"
+              maximum="$(brightnessctl --machine-readable max)"
+
+              brightness_float="$(bc <<< "scale=5; ($current * 100) / $maximum + 0.5")"
+              brightness="$(bc <<< "$brightness_float / 1")"
+
+              dunstify "Brightness" "''${brightness}%" --urgency=low --hints=int:value:"$brightness" --hints=string:x-dunst-stack-tag:brightness-adjust
+            '';
+          };
+
+          brightness-adjust = "${brightness-adjust-pkg}/bin/brightness-adjust";
 
           zoom-change-pkg = pkgs.writeShellApplication {
             name = "zoom-change";
@@ -295,7 +319,17 @@ in
             "overshot, 0.05, 0.9, 0.1, 1.1"
           ];
 
-          windowrulev2 = [ "float, size <60% <60%, onworkspace:s[1]" ];
+          windowrule = [
+            {
+              name = "small-in-special-workspace";
+
+              "match:workspace" = "s[1]";
+
+              float = true;
+              size = "(monitor_w*0.6) (monitor_h*0.6)";
+              center = true;
+            }
+          ];
 
           bind =
             # General window management
@@ -407,15 +441,10 @@ in
               "CTRL, down, exec, ${volume-adjust} .05-"
             ]
             # Brightness controls
-            ++ (
-              let
-                brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-              in
-              [
-                ", XF86MonBrightnessUp, exec, ${brightnessctl} set +5%"
-                ", XF86MonBrightnessDown, exec, ${brightnessctl} set 5%-"
-              ]
-            );
+            ++ [
+              ", XF86MonBrightnessUp, exec, ${brightness-adjust} +5%"
+              ", XF86MonBrightnessDown, exec, ${brightness-adjust} 5%-"
+            ];
 
           # Mouse binds
           bindm = [

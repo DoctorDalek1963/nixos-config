@@ -22,10 +22,17 @@ in
     wayland.windowManager.hyprland.settings = {
       exec-once = [ "${clipse} -listen" ];
 
-      windowrulev2 = [
-        "float, class:(clipse)"
-        "size 622 652, class:(clipse)"
+      windowrule = [
+        {
+          name = "clipse";
+
+          "match:class" = "clipse";
+
+          float = true;
+          size = "622 652";
+        }
       ];
+
       bind = [ "SUPER, V, exec, $launchPrefix ${terminal-command}" ];
     };
   };
