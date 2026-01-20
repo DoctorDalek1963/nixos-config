@@ -319,7 +319,17 @@ in
             "overshot, 0.05, 0.9, 0.1, 1.1"
           ];
 
-          windowrulev2 = [ "float, size <60% <60%, onworkspace:s[1]" ];
+          windowrule = [
+            {
+              name = "small-in-special-workspace";
+
+              "match:workspace" = "s[1]";
+
+              float = true;
+              size = "(monitor_w*0.6) (monitor_h*0.6)";
+              center = true;
+            }
+          ];
 
           bind =
             # General window management
