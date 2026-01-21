@@ -1,9 +1,6 @@
 { pkgs }:
-let
-  plugin-scheduler = pkgs.libsForQt5.callPackage ./plugins/scheduler { };
-in
 pkgs.openrgb.withPlugins [
   pkgs.openrgb-plugin-effects
   pkgs.openrgb-plugin-hardwaresync
-  plugin-scheduler # TODO: Is this broken or am I stupid?
+  # (pkgs.libsForQt5.callPackage ./plugins/scheduler { }) # TODO: Is this broken or am I stupid?
 ]
