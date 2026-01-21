@@ -52,7 +52,6 @@
         mediaCuration = true;
         ms-teams = true;
         obsidian = true;
-        rustdesk = true;
         timewarrior = true;
         vlc = true;
         zoom = true;
