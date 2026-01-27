@@ -22,6 +22,7 @@
         Timer = {
           OnCalendar = "Mon..Fri *-*-* 01..06:00/10:00";
           Unit = "bedtime-lock.service";
+          Persistent = false;
         };
       };
     };
