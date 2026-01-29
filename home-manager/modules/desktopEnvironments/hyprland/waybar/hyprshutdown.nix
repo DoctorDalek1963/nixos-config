@@ -14,15 +14,18 @@
   libdrm,
   pixman,
 }:
+let
+  version = "0.1.0";
+in
 stdenv.mkDerivation {
   pname = "hyprshutdown";
-  version = "git-0c9cec7";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "hyprwm";
     repo = "hyprshutdown";
-    rev = "0c9cec7809a715c5c9a99a585db0b596bfb96a59";
-    hash = "sha256-JMpLic41Jw6kDXXMtj6tEYUMu3QQ0Sg/M8EBxmAwapU=";
+    rev = "v${version}";
+    hash = "sha256-dp5lyZzKsjdqJLfwr0S4ILets8eu1kLfBB2y/LxspsU=";
   };
 
   nativeBuildInputs = [
