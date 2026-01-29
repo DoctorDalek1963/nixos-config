@@ -22,3 +22,7 @@ Some things are very difficult or impossible to configure declaratively.
 You'll have to login to Firefox to enable Firefox Sync. The device name should already be set up.
 
 You'll also have to add any rclone remotes manually. Then add the names of the remotes and their mountpoints to `home-manager/defs.nix`.
+
+### Android TV
+
+For an Android TV installation, make sure the Tailscale key is set correctly before install so that you can SSH into the device immediately. Then run `just atv-init`, reboot, then run `just atv-register` and follow the instructions.

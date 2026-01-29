@@ -86,6 +86,10 @@ in
     };
 
     desktopEnvironments = {
+      androidTv = {
+        enable = defaultFalse;
+        asSession = defaultFalse;
+      };
       cinnamon = {
         enable = defaultFalse;
       };
