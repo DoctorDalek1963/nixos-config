@@ -181,10 +181,18 @@ in
 
       "zellij/layouts/uni.kdl".text = ''
         layout {
+            pane size=1 borderless=true {
+                plugin location="tab-bar"
+            }
+
             pane edit="main.tex"
 
             pane size=6 command="direnv" {
                 args "exec" "." "just" "watch"
+            }
+
+            pane size=1 borderless=true {
+                plugin location="status-bar"
             }
         }
       '';
