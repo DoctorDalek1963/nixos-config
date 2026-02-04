@@ -66,7 +66,7 @@ in
           # Gaming
           "steam"
           "steam-unwrapped"
-          "xow_dongle-firmware" # Needed for xone driver
+          "xone-dongle-firmware" # Needed for xone driver
 
           # Printing
           "cnijfilter" # Canon Pixma driver
