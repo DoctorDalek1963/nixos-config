@@ -38,6 +38,11 @@
   #           size = "100%";
   #           content = {
   #             type = "btrfs";
+  #             extraArgs = [
+  #               "-f"
+  #               "--label"
+  #               "data"
+  #             ];
   #
   #             subvolumes = {
   #               "/data" = {

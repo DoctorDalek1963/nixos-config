@@ -5,5 +5,6 @@
     ./disko.nix
     ./hardware.nix
     ./snapper.nix
+    ./btrfs.nix
   ];
 }
