@@ -188,6 +188,8 @@ in
               };
             };
 
+            alwaysStartFromBeginning = true;
+            maxOptionsShown = 25;
             showChildStudioContent = true;
             ratingSystemOptions.type = "decimal";
           };
