@@ -18,10 +18,7 @@
     hardware.xone.enable = true;
     programs.gamemode.enable = true;
 
-    environment.systemPackages = with pkgs; [
-      ludusavi
-      mangohud
-    ];
+    environment.systemPackages = with pkgs; [ ludusavi ];
 
     systemd.settings.Manager.DefaultLimitNOFILE = "${toString (2048 * 64)}:${toString (2048 * 256)}";
   };

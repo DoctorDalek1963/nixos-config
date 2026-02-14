@@ -35,6 +35,7 @@ in
     ./modules/impermanence
     ./modules/librewolf
     ./modules/maths
+    ./modules/gaming
     ./modules/misc
     ./modules/office
     ./modules/programming
