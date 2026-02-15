@@ -29,7 +29,7 @@ in
       setup.impermanence.keepFiles = [ ".config/cachix/cachix.dhall" ];
     })
     (mkIf osConfig.virtualisation.waydroid.enable {
-      setup.impermanence.keepFiles = [ ".local/share/waydroid" ];
+      setup.impermanence.keepDirs = [ ".local/share/waydroid" ];
     })
   ];
 }
