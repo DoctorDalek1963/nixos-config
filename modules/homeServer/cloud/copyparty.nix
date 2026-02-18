@@ -33,6 +33,7 @@ in
           e2ts = true; # Metadata indexing, scan new
 
           rp-loc = "/copyparty"; # Reverse proxy location
+          rproxy = 1;
 
           grid = true;
         };
