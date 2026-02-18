@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -33,6 +34,10 @@ in
 
       bazarr = {
         enable = true;
+        package = pkgs.bazarr.override {
+          python3 = pkgs.python312;
+        };
+
         group = "media";
         # dataDir = "/var/lib/bazarr";
         listenPort = cfg.ports.mediaServer.bazarr;
