@@ -204,6 +204,7 @@ in
           scrutiny = port 29517;
 
           kiwix = port 46217;
+          mealie = port 38602;
 
           mediaServer = {
             audiobookshelf = port 8000;
