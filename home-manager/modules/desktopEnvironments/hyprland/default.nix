@@ -363,6 +363,8 @@ in
               "$mod, L, movefocus, r"
               "$mod, left, movefocus, l"
               "$mod, right, movefocus, r"
+              "ALT, tab, cyclenext"
+              "ALT SHIFT, tab, cyclenext, prev"
             ]
             # Move windows
             ++ [
