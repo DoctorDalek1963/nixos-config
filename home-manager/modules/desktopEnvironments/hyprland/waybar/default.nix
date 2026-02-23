@@ -13,8 +13,6 @@ let
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
   hyprctl-exit = "${hyprctl} dispatch exit";
 
-  hyprshutdown = pkgs.callPackage ./hyprshutdown.nix { stdenv = pkgs.gcc15Stdenv; };
-
   zenity-confirm =
     actionName: command:
     ''if ${pkgs.zenity}/bin/zenity --question --title="${actionName}" --text="Are you sure you want to ${lib.toLower actionName}?" --default-cancel; then ${command}; fi'';
@@ -314,7 +312,7 @@ in
           "custom/power" = {
             format = "";
             tooltip-format = "Shutdown";
-            on-click = zenity-confirm "Shutdown" "${lib.getExe hyprshutdown} -t 'Shutting down...' --post-cmd '/run/current-system/sw/bin/shutdown -P 0'";
+            on-click = zenity-confirm "Shutdown" "${lib.getExe pkgs.hyprshutdown} -t 'Shutting down...' --post-cmd '/run/current-system/sw/bin/shutdown -P 0'";
           };
 
           "custom/logout" = {
@@ -332,7 +330,7 @@ in
           "custom/reboot" = {
             format = "";
             tooltip-format = "Reboot";
-            on-click = zenity-confirm "Reboot" "${lib.getExe hyprshutdown} -t 'Rebooting...' --post-cmd '/run/current-system/sw/bin/shutdown -r 0'";
+            on-click = zenity-confirm "Reboot" "${lib.getExe pkgs.hyprshutdown} -t 'Rebooting...' --post-cmd '/run/current-system/sw/bin/shutdown -r 0'";
           };
         }
       ];
