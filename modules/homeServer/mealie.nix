@@ -16,8 +16,6 @@ in
     services.mealie = {
       enable = true;
       port = cfg.ports.mealie;
-
-      settings = { };
     };
   };
 }

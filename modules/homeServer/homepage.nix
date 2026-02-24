@@ -236,6 +236,19 @@ let
             };
           };
         }
+        ++ lib.optional config.services.mealie.enable {
+          "Mealie" = {
+            icon = "mealie.svg";
+            href = "https://${cfg.domainName}:${toString cfg.ports.mealie}";
+            description = "Recipe manager";
+            widget = {
+              type = "mealie";
+              url = "http://localhost:${toString cfg.ports.mealie}";
+              key = "{{HOMEPAGE_VAR_MEALIE_KEY}}";
+              version = 3;
+            };
+          };
+        }
       );
     in
     if builtins.length list > 0 then [ { Media = list; } ] else [ ];
