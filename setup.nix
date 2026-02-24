@@ -258,6 +258,8 @@ in
 
       scrutiny.enable = defaultFalse;
 
+      mealie.enable = defaultFalse;
+
       kiwix = {
         enable = defaultFalse;
 
