@@ -31,7 +31,7 @@ in
             sleep 15
 
             current=$(date +'%s')
-            start=$(date -d '7:30' +'%s')
+            start=$(date -d '8:30' +'%s')
             end=$(date -d '22:30' +'%s')
 
             if [ $current -ge $start -a $current -lt $end ]; then
@@ -46,7 +46,7 @@ in
       timers.openrgb-daytime-rainbow = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = "07,22:30";
+          OnCalendar = "08,22:30";
           Unit = "openrgb-daytime-rainbow.service";
         };
       };
