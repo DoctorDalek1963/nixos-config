@@ -185,7 +185,10 @@ in
                 plugin location="tab-bar"
             }
 
-            pane edit="main.tex"
+            // We can't use edit="main.tex" because we need to run nvim through direnv to get chktex
+            pane command="direnv" {
+                args "exec" "." "nvim" "main.tex"
+            }
 
             pane size=6 command="direnv" {
                 args "exec" "." "just" "watch"
