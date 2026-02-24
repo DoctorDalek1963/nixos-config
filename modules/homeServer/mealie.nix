@@ -18,7 +18,7 @@ in
       port = cfg.ports.mealie;
     };
 
-    services.mealie.serviceConfig = {
+    systemd.services.mealie.serviceConfig = {
       DynamicUser = lib.mkForce false;
 
       StateDirectory = "mealie";
