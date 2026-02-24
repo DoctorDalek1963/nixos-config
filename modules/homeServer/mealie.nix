@@ -17,5 +17,12 @@ in
       enable = true;
       port = cfg.ports.mealie;
     };
+
+    services.mealie.serviceConfig = {
+      DynamicUser = lib.mkForce false;
+
+      StateDirectory = "mealie";
+      WorkingDirectory = lib.mkForce "/var/lib/mealie";
+    };
   };
 }
