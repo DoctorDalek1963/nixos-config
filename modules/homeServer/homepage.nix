@@ -416,9 +416,8 @@ in
                       "2" = 2;
                       "3" = 3;
                       "4" = 2;
-                      "5" = 3;
                     }
-                    .${toString cols};
+                    .${toString cols} or 3;
                   icon = "si-jellyfin";
                 };
             }
