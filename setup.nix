@@ -178,6 +178,7 @@ in
         {
           haproxy = {
             myspeed = port 5217;
+            mealie = port 38683;
 
             mediaServer = {
               audiobookshelf = port 8001;
@@ -204,7 +205,7 @@ in
           scrutiny = port 29517;
 
           kiwix = port 46217;
-          mealie = port 38602;
+          mealie = port 38682;
 
           mediaServer = {
             audiobookshelf = port 8000;

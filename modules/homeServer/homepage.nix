@@ -239,7 +239,7 @@ let
         ++ lib.optional config.services.mealie.enable {
           "Mealie" = {
             icon = "mealie.svg";
-            href = "https://${cfg.domainName}:${toString cfg.ports.mealie}";
+            href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mealie}";
             description = "Recipe manager";
             widget = {
               type = "mealie";
