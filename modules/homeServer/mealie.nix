@@ -16,8 +16,17 @@ in
           group = "mealie";
           mode = "u=rwx,g=rx,o=rx";
         }
+        {
+          directory = "/var/lib/postgresql";
+          user = "postgres";
+          group = "postgres";
+          mode = "u=rwx,g=rx,o=";
+        }
       ];
-      backup.paths = [ "/var/lib/mealie" ];
+      backup.paths = [
+        "/var/lib/mealie"
+        "/var/lib/postgresql"
+      ];
     };
 
     services.mealie = {
