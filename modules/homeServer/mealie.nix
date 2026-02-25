@@ -24,6 +24,9 @@ in
       enable = true;
       port = cfg.ports.mealie;
 
+      # Use PostgreSQL instead of SQLite
+      database.createLocally = true;
+
       settings = {
         PUID = config.users.users.mealie.uid;
         PGID = config.users.groups.mealie.gid;
