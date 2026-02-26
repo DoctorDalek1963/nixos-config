@@ -313,6 +313,8 @@
 
             scrutiny.enable = true;
 
+            mealie.enable = true;
+
             kiwix = {
               enable = true;
               zimFilePrefixes = [

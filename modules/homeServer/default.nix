@@ -15,6 +15,7 @@
     ./haproxy.nix
     ./homepage.nix
     ./firefly-iii.nix
+    ./mealie.nix
     ./nginx.nix
     ./ntfy.nix
     ./scrutiny.nix

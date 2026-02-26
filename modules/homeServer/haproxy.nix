@@ -47,6 +47,8 @@ in
 
             ${optProxy cfg.myspeed.enable "myspeed" cfg.ports.haproxy.myspeed cfg.ports.myspeed ""}
 
+            ${optProxy cfg.mealie.enable "mealie" cfg.ports.haproxy.mealie cfg.ports.mealie ""}
+
             ${optProxy cfgMs.books "audiobookshelf" cfg.ports.haproxy.mediaServer.audiobookshelf
               cfg.ports.mediaServer.audiobookshelf
               "option http-server-close" # No Keep-Alive, hopefully makes websockets better
