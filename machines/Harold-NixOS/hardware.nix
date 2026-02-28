@@ -3,11 +3,21 @@
   lib,
   config,
   modulesPath,
+  inputs,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
+
+  environment.systemPackages = [
+    pkgs.sbctl
+  ];
+
+  setup.impermanence.keepDirs = [
+    "/var/lib/sbctl"
   ];
 
   boot = {
@@ -25,11 +35,13 @@
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
-      };
+      systemd-boot.enable = false; # lanzaboote instead
       efi.canTouchEfiVariables = true;
       timeout = 2;
     };
