@@ -47,7 +47,10 @@
     };
 
     loader = {
-      systemd-boot.enable = false; # lanzaboote instead
+      systemd-boot = {
+        enable = false; # lanzaboote instead
+        configurationLimit = 10;
+      };
       efi.canTouchEfiVariables = true;
       timeout = 2;
     };
