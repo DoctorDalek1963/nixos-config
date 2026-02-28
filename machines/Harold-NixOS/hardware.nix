@@ -26,11 +26,9 @@
     extraModulePackages = [ ];
 
     loader = {
-      grub = {
+      systemd-boot = {
         enable = true;
-        device = "nodev";
-        efiSupport = true;
-        timeoutStyle = "hidden";
+        configurationLimit = 10;
       };
       efi.canTouchEfiVariables = true;
       timeout = 2;
