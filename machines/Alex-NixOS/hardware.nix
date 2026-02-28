@@ -36,9 +36,14 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = false; # lanzaboote instead
         configurationLimit = 10;
       };
       efi.canTouchEfiVariables = true;
