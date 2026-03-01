@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   config,
   ...
@@ -27,5 +28,7 @@ in
     };
 
     setup.backup.paths = [ cfgMs.mediaRoot ];
+
+    environment.systemPackages = [ pkgs.gdu ];
   };
 }
