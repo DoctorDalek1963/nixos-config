@@ -44,6 +44,11 @@ in
             ++ lib.optional config.setup.secrets.tailscale.enable "[/${tailnetName}/]100.100.100.100";
 
           bootstrap_dns = unboundUpstreams;
+
+          fallback_dns = [
+            # Quad9 with ECS, meaning slightly worse privacy but faster CDN access
+            "tls://9.9.9.11"
+          ];
         };
 
         filtering = {
