@@ -11,5 +11,10 @@
       pkgs.hexyl
       pkgs.numbat
     ];
+
+    setup.terminal.shellAliases = {
+      "hd" = lib.getExe pkgs.hexyl;
+      "nb" = lib.getExe pkgs.numbat;
+    };
   };
 }
