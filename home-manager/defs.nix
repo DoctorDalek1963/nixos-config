@@ -52,7 +52,6 @@
         mediaCuration = true;
         ms-teams = true;
         obsidian = true;
-        timewarrior = true;
         vlc = true;
         zoom = true;
       };
@@ -206,7 +205,6 @@
         feishin = true;
         ms-teams = true;
         obsidian = true;
-        timewarrior = true;
         vlc = true;
       };
     };
