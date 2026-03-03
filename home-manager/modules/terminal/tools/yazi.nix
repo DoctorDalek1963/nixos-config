@@ -13,6 +13,8 @@ in
       enable = true;
       enableBashIntegration = cfg.shells.bash;
 
+      shellWrapperName = "y";
+
       keymap.mgr.prepend_keymap = [
         {
           on = [
@@ -57,7 +59,5 @@ in
         })
       ];
     };
-
-    setup.terminal.shellAliases.y = "${config.programs.yazi.package}/bin/yazi";
   };
 }
