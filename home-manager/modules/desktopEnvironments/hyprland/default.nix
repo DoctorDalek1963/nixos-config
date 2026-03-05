@@ -94,14 +94,8 @@ in
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home = {
-      sessionVariables = {
-        # Hint Electron apps to use Wayland
-        NIXOS_OZONE_WL = "1";
-
-        # Open apps from .desktop files with the right terminal
-        TERMINAL = config.wayland.windowManager.hyprland.settings."$launchInTerminal";
-      };
-
+      # Hint Electron apps to use Wayland
+      sessionVariables.NIXOS_OZONE_WL = "1";
       packages = [ pkgs.hyprpolkitagent ];
     };
 
