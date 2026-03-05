@@ -24,6 +24,15 @@ let
 in
 {
   config = lib.mkIf (cfg.emulator == "wezterm") {
+    xdg.terminal-exec = {
+      enable = true;
+      settings = {
+        default = [
+          "wezterm.desktop"
+        ];
+      };
+    };
+
     programs.wezterm = {
       enable = true;
       enableBashIntegration = cfg.shells.bash;
