@@ -214,7 +214,7 @@ in
           monitor =
             (
               {
-                # "Alex-NixOS" = [];
+                "Alex-NixOS" = [ "desc:HP Inc. HP 27fw 3CM03900GW, 1920x1080@74.97, 0x0, 1" ];
                 "Harold-NixOS" = [ "eDP-1, 1920x1080@60, 0x0, 1" ];
                 # "Olivia-NixOS" = [];
               }
