@@ -490,23 +490,10 @@ in
           #battery.warning {
               color: @peach;
           }
-
-          /* Flash text in battery section when critical and not charging */
-          @keyframes blink {
-              to {
-                  background-color: @red;
-              }
-          }
           #battery.critical:not(.charging) {
-              color: @text;
-              /* Using steps() instead of linear as a timing function to limit cpu usage */
-              animation-name: blink;
-              animation-duration: 0.5s;
-              animation-timing-function: steps(6);
-              animation-iteration-count: infinite;
-              animation-direction: alternate;
+              color: @surface0;
+              background-color: @red;
           }
-
           #battery.charging, #battery.plugged {
               color: @sapphire;
           }
