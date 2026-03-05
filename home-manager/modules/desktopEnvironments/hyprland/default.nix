@@ -345,7 +345,7 @@ in
             # Spawn new windows
             ++ [
               "$mod, T, exec, $launchPrefix $terminal"
-              "$mod, E, exec, [float; size 50% 50%] $launchPrefix $fileManager"
+              "$mod, E, exec, [float; center; size (monitor_w*0.6) (monitor_h*0.6)] $launchPrefix $fileManager"
             ]
             ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${lib.getExe config.programs.librewolf.package}"
             ++ lib.optional cfg.misc.programs.anki "$mod, A, exec, $launchPrefix ${lib.getExe pkgs.anki}"
