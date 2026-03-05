@@ -211,8 +211,6 @@ in
         {
           exec-once = [ "systemctl --user start hyprpolkitagent" ];
 
-          env = [ "NIXOS_OZONE_WL,1" ];
-
           monitor = [ ", preferred, auto, 1, vrr, 2" ];
 
           "$mod" = "SUPER";
@@ -347,7 +345,6 @@ in
             # Spawn new windows
             ++ [
               "$mod, T, exec, $launchPrefix $terminal"
-              "$mod SHIFT, T, exec, [float; size 50% 50%] $launchPrefix $terminal"
               "$mod, E, exec, [float; size 50% 50%] $launchPrefix $fileManager"
             ]
             ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${lib.getExe config.programs.librewolf.package}"
