@@ -211,7 +211,17 @@ in
         {
           exec-once = [ "systemctl --user start hyprpolkitagent" ];
 
-          monitor = [ ", preferred, auto, 1, vrr, 2" ];
+          monitor =
+            (
+              {
+                # "Alex-NixOS" = [];
+                "Harold-NixOS" = [ "eDP-1, 1920x1080@60, 0x0, 1" ];
+                # "Olivia-NixOS" = [];
+              }
+              .${osConfig.setup.hostname} or [ ]
+            )
+            # Sensible defaults for other monitors
+            ++ [ ", preferred, auto, 1" ];
 
           "$mod" = "SUPER";
 
