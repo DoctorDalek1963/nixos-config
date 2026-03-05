@@ -151,6 +151,9 @@ in
     wget
   ];
 
+  # Show asterisks when typing password
+  security.sudo.extraConfig = "Defaults pwfeedback";
+
   # This is a very weird quirk that really should be fixed upstream but I don't
   # understand the root cause. See https://github.com/NixOS/nixpkgs/issues/296953
   systemd.services.NetworkManager-wait-online = {
