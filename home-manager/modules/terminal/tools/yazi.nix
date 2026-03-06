@@ -9,6 +9,13 @@ let
 in
 {
   config = lib.mkIf cfg.tools.yazi {
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = [ "yazi.desktop" ];
+      };
+    };
+
     programs.yazi = {
       enable = true;
       enableBashIntegration = cfg.shells.bash;
