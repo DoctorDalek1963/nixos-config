@@ -1,6 +1,6 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 {
-  system.stateVersion = "23.11";
+  services.postgresql.package = pkgs.postgresql_15;
 
   imports = [
     inputs.disko.nixosModules.disko
