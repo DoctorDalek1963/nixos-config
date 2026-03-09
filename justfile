@@ -51,6 +51,11 @@ build-raspi-sd:
 copy-raspi-sd device: build-raspi-sd
     sudo dd if=/etc/nixos/pi.img of={{ device }} status=progress conv=fsync
 
+# enter a shell with oddlama's nixos-config tool
+[group("build")]
+nixos-config-shell:
+    nix shell github:oddlama/nix/thunk-origins-v1 github:oddlama/nixpkgs/thunk-origins-v1#nixos-config
+
 # push store paths for the given system to Cachix
 [group("cache")]
 cachix-push-systems +names:
