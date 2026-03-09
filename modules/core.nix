@@ -186,7 +186,7 @@ in
     {
       inherit configurationRevision;
 
-      stateVersion = "23.11";
+      stateVersion = lib.mkDefault "25.11";
 
       nixos.label = builtins.concatStringsSep "-" (
         cfg.tags
