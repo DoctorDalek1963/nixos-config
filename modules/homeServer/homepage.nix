@@ -372,7 +372,7 @@ in
       homepage-dashboard = {
         enable = true;
 
-        environmentFile = config.sops.secrets."home-server/homepage.env".path;
+        environmentFiles = [ config.sops.secrets."home-server/homepage.env".path ];
         listenPort = cfg.ports.homepage;
         allowedHosts = cfg.domainName;
 
