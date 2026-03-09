@@ -16,6 +16,9 @@ in
       # Keep the nix store optimised
       auto-optimise-store = true;
 
+      # Default is 64 * 1024 * 1024
+      download-buffer-size = 256 * 1024 * 1024;
+
       # Enable flakes
       experimental-features = [
         "nix-command"
