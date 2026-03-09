@@ -3,7 +3,7 @@
 
   inputs = {
     # Core
-    nixpkgs.url = "github:oddlama/nixpkgs/thunk-origins-v1";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # Useful when the system uses a stable branch
     nur = {
       url = "github:nix-community/nur";

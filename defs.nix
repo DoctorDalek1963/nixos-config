@@ -40,7 +40,6 @@
   "Alex-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs system; };
-    trackDependencies = true;
     modules = [
       ./setup.nix
       ./machines/Alex-NixOS
@@ -138,7 +137,6 @@
     nixpkgs.lib.nixosSystem {
       inherit system;
       specialArgs = { inherit self inputs system; };
-      trackDependencies = true;
       modules = [
         inputs.nixos-hardware.nixosModules.raspberry-pi-4
         "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
@@ -177,7 +175,6 @@
   "Harold-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs system; };
-    trackDependencies = true;
     modules = [
       ./setup.nix
       ./machines/Harold-NixOS
@@ -235,7 +232,6 @@
   "Olivia-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs system; };
-    trackDependencies = true;
     modules = [
       ./setup.nix
       ./machines/Olivia-NixOS
@@ -279,7 +275,6 @@
   "Sasha-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs system; };
-    trackDependencies = true;
     modules = [
       ./setup.nix
       ./machines/Sasha-NixOS
@@ -379,7 +374,6 @@
   "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
     system = "x86_64-linux";
     specialArgs = { inherit self inputs system; };
-    trackDependencies = true;
     modules = [
       ./setup.nix
       ./machines/VirtualBox-NixOS
