@@ -1,5 +1,7 @@
-{ inputs, ... }:
+{ pkgs, inputs, ... }:
 {
+  services.postgresql.package = pkgs.postgresql_15;
+
   imports = [
     inputs.disko.nixosModules.disko
     ./disko.nix
