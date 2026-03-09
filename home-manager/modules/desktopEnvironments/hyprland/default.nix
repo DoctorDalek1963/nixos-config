@@ -38,11 +38,17 @@ let
           dunstctl set-paused true
           pkill -USR1 waybar
           sunsetr preset gaming
+          ${
+            if config.setup.misc.services.bedtimeLock then "systemctl --user stop bedtime-lock.timer" else ""
+          }
       else
           hyprctl reload
           dunstctl set-paused false
           pkill -USR1 waybar
           sunsetr preset default
+          ${
+            if config.setup.misc.services.bedtimeLock then "systemctl --user start bedtime-lock.timer" else ""
+          }
       fi
     '';
   };
