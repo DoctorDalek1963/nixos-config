@@ -119,7 +119,7 @@
           desktopEnvironments = {
             hyprland.enable = true;
             androidTv = {
-              enable = true;
+              # enable = true;
               asSession = true;
             };
           };
@@ -145,7 +145,6 @@
         {
           setup = {
             hostname = "Bert-NixOS";
-            desktopEnvironments.androidTv.enable = true;
 
             secrets = {
               enable = true;
