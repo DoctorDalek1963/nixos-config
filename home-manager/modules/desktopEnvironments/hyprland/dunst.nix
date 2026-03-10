@@ -44,7 +44,6 @@ in
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     services.dunst = {
       enable = true;
-      inherit (config.gtk) iconTheme;
 
       settings = {
         global = {

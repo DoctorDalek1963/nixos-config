@@ -89,12 +89,12 @@ in
 
     ./clipboard.nix
     ./dunst.nix
-    ./gtk.nix
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
     ./sunsetr.nix
     ./timewarrior.nix
+    ./theme.nix
     ./wofi.nix
   ];
 
