@@ -11,7 +11,11 @@ let
   } ${config.programs.btop.package}/bin/btop";
 
   hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-  hyprctl-exit = "${hyprctl} dispatch exit";
+  hyprctl-exit =
+    if osConfig.programs.hyprland.withUWSM then
+      "${lib.getExe osConfig.programs.uwsm.package} stop"
+    else
+      "${hyprctl} dispatch exit";
 
   zenity-confirm =
     actionName: command:
