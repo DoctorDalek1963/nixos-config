@@ -93,7 +93,10 @@ let
 
   theme-switcher = pkgs.writeShellApplication {
     name = "theme-switcher";
-    runtimeInputs = [ pkgs.sunwait ];
+    runtimeInputs = [
+      pkgs.sunwait
+      pkgs.glib
+    ];
 
     # Script inspired by https://dominic-boettger.com/blog/auto-dark-mode-linux-sunrise-sunset/
     text = ''
@@ -111,7 +114,8 @@ let
           ln -sf "${gtk.file-light-3}" ~/.config/gtk-3.0/settings.ini
           ln -sf "${gtk.file-light-4}" ~/.config/gtk-4.0/settings.ini
 
-          dconf write /org/gnome/desktop/interface/color-scheme "'prefer-light'"
+          gsettings set org.gnome.desktop.interface gtk-theme "${gtk.light.theme-name}"
+          gsettings set org.gnome.desktop.interface color-scheme "prefer-light"
 
           # TODO: Wezterm
       }
@@ -124,7 +128,8 @@ let
           ln -sf "${gtk.file-dark-3}" ~/.config/gtk-3.0/settings.ini
           ln -sf "${gtk.file-dark-4}" ~/.config/gtk-4.0/settings.ini
 
-          dconf write /org/gnome/desktop/interface/color-scheme "'prefer-dark'"
+          gsettings set org.gnome.desktop.interface gtk-theme "${gtk.dark.theme-name}"
+          gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
           # TODO: Wezterm
       }
@@ -161,7 +166,16 @@ in
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     # TODO: Systemd service and timer to auto switch
 
-    home.packages = gtk.packages;
+    home.packages = [
+      pkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ]
+    ++ gtk.packages;
+
+    xdg.configFile."xdg-desktop-portal/hyprland-portals.conf".text = ''
+      [preferred]
+      default=hyprland;gtk
+    '';
 
     wayland.windowManager.hyprland.settings.bind = [
       "$mod, D, exec, ${lib.getExe theme-switcher-wofi}"
