@@ -217,17 +217,38 @@ in
         {
           exec-once = [ "systemctl --user start hyprpolkitagent" ];
 
-          monitor =
+          monitorv2 =
             (
               {
-                "Alex-NixOS" = [ "desc:HP Inc. HP 27fw 3CM03900GW, 1920x1080@74.97, 0x0, 1" ];
-                "Harold-NixOS" = [ "eDP-1, 1920x1080@60, 0x0, 1" ];
+                "Alex-NixOS" = [
+                  {
+                    output = "desc:HP Inc. HP 27fw 3CM03900GW";
+                    mode = "1920x1080@74.97";
+                    position = "0x0";
+                    scale = "1";
+                  }
+                ];
+                "Harold-NixOS" = [
+                  {
+                    output = "eDP-1";
+                    mode = "1920x1080@60";
+                    position = "0x0";
+                    scale = "1";
+                  }
+                ];
                 # "Olivia-NixOS" = [];
               }
               .${osConfig.setup.hostname} or [ ]
             )
             # Sensible defaults for other monitors
-            ++ [ ", preferred, auto, 1" ];
+            ++ [
+              {
+                output = null;
+                mode = "preferred";
+                position = "auto";
+                scale = "1";
+              }
+            ];
 
           "$mod" = "SUPER";
 
