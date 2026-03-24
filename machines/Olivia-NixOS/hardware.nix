@@ -55,6 +55,16 @@
     };
   };
 
+  services.fwupd = {
+    enable = true;
+    daemonSettings.DisabledPlugins = [
+      "test"
+      "test_ble"
+      "invalid"
+      "bios"
+    ];
+  };
+
   swapDevices = [ ];
 
   nix.settings.max-jobs = 3;
