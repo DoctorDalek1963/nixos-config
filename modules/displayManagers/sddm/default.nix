@@ -15,7 +15,7 @@ in
     })
     (lib.mkIf (cfg.enable && cfg.theme == "catppuccin-macchiato") {
       services.displayManager.sddm = {
-        theme = "catppuccin-macchiato";
+        theme = "catppuccin-macchiato-mauve";
         package = pkgs.kdePackages.sddm; # This theme needs Qt6
       };
 
@@ -23,6 +23,7 @@ in
         (
           (pkgs.catppuccin-sddm.override {
             flavor = "macchiato";
+            accent = "mauve";
           }).overrideAttrs
           {
             patches = [ ./themes/catppuccin-sddm-custom.patch ];

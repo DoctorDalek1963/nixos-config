@@ -1,12 +1,14 @@
---- a/src/Components/Clock.qml
-+++ b/src/Components/Clock.qml
-@@ -1,14 +1,45 @@
+--- a/templates/Components/Clock.tera
++++ b/templates/Components/Clock.tera
+@@ -8,16 +8,47 @@ whiskers:
+   filename: "./themes/catppuccin-{{flavor.identifier}}-{{accent}}/Components/Clock.qml"
+ ---
  import QtQuick 2.15
 -import SddmComponents 2.0
  
 -Clock {
 -  id: time
--  color: config.text
+-  color: {{text.hex}}
 -  timeFont.family: config.Font
 -  dateFont.family: config.Font
 +// Copied and tweaked from https://github.com/sddm/sddm/blob/v0.21.0/components/2.0/Clock.qml
@@ -15,7 +17,7 @@
 +  id: container
 +
 +  property date dateTime: new Date()
-+  property color color: "white"
++  property color color: {{text.hex}}
 +  property alias timeFont: time.font
 +  property alias dateFont: date.font
 +
@@ -52,43 +54,14 @@
 +    font.pointSize: 24
 +  }
  }
---- a/src/Components/LoginPanel.qml
-+++ b/src/Components/LoginPanel.qml
-@@ -88,7 +88,7 @@ Item {
-       }
-       background: Rectangle {
-         id: buttonBackground
--        color: config.sapphire
-+        color: config.mauve
-         radius: 3
-       }
-       states: [
-@@ -97,7 +97,7 @@ Item {
-           when: loginButton.down
-           PropertyChanges {
-             target: buttonBackground
--            color: config.teal
-+            color: config.pink
-           }
-           PropertyChanges {
-             target: buttonText
-@@ -108,7 +108,7 @@ Item {
-           when: loginButton.hovered
-           PropertyChanges {
-             target: buttonBackground
--            color: config.teal
-+            color: config.pink
-           }
-           PropertyChanges {
-             target: buttonText
---- a/src/Components/SessionPanel.qml
-+++ b/src/Components/SessionPanel.qml
-@@ -26,10 +26,18 @@ Item {
+--- a/templates/Components/SessionPanel.tera
++++ b/templates/Components/SessionPanel.tera
+@@ -37,10 +37,18 @@ Item {
        }
        background: Rectangle {
          id: sessionEntryBackground
--        color: config.surface1
-+        color: config.surface0
+-        color: {{surface1.hex}}
++        color: {{surface0.hex}}
          radius: 3
        }
        states: [
@@ -97,13 +70,13 @@
 +          when: highlighted
 +          PropertyChanges {
 +            target: sessionEntryBackground
-+            color: config.surface1
++            color: {{surface1.hex}}
 +          }
 +        },
          State {
            name: "hovered"
            when: sessionEntry.hovered
-@@ -42,7 +50,7 @@ Item {
+@@ -53,7 +61,7 @@ Item {
        transitions: Transition {
          PropertyAnimation {
            property: "color"
@@ -112,7 +85,7 @@
          }
        }
        MouseArea {
-@@ -112,7 +120,7 @@ Item {
+@@ -123,7 +131,7 @@ Item {
      width: inputWidth + padding * 2
      x: (sessionButton.width + sessionList.spacing) * -7.6
      y: -(contentHeight + padding * 2) + sessionButton.height
@@ -120,8 +93,8 @@
 +    padding: inputHeight / 5
      background: Rectangle {
        radius: 5.4
-       color: config.surface0
-@@ -131,14 +139,14 @@ Item {
+       color: {{surface0.hex}}
+@@ -142,14 +150,14 @@ Item {
            property: "opacity"
            from: 0
            to: 1
@@ -138,13 +111,13 @@
            easing.type: Easing.OutExpo
          }
        }
---- a/src/Main.qml
-+++ b/src/Main.qml
-@@ -38,6 +38,9 @@ Item {
+--- a/templates/Main.tera
++++ b/templates/Main.tera
+@@ -47,6 +47,9 @@ Item {
      }
      Clock {
        id: time
-+      color: config.text
++      color: {{text.hex}}
 +      timeFont.family: config.Font
 +      dateFont.family: config.Font
        visible: config.ClockEnabled == "true" ? true : false
