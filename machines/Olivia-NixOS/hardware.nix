@@ -3,11 +3,17 @@
   lib,
   config,
   modulesPath,
+  inputs,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
+
+  environment.systemPackages = [
+    pkgs.sbctl
   ];
 
   powerManagement.enable = false;
@@ -29,13 +35,11 @@
     extraModulePackages = [ ];
 
     loader = {
-      grub = {
+      systemd-boot = {
         enable = true;
-        device = "nodev";
-        efiSupport = true;
-        timeoutStyle = "hidden";
-        efiInstallAsRemovable = true;
+        configurationLimit = 10;
       };
+      efi.canTouchEfiVariables = true;
       timeout = 2;
     };
   };
