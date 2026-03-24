@@ -10,7 +10,7 @@ in
 {
   config = lib.mkIf cfg.enable {
     environment.cinnamon.excludePackages = with pkgs; [
-      blueberry
+      blueman
       warpinator
     ];
 

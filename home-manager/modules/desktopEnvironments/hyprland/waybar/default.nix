@@ -273,7 +273,7 @@ in
             format-connected = "󰂯 {device_alias}";
             format-connected-battery = "󰂯 {device_alias} {device_battery_percentage}%";
 
-            on-click = "${pkgs.blueberry}/bin/blueberry";
+            on-click = "${pkgs.blueman}/bin/blueman-manager";
           };
 
           battery = {
