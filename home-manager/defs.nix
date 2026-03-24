@@ -95,16 +95,6 @@
       };
 
       terminal.tools.nvim = "small";
-
-      librewolf = {
-        enable = true;
-        minimal = true;
-      };
-
-      misc.programs = {
-        rustdesk = true;
-        vlc = true;
-      };
     };
 
     rebecca.setup = {
@@ -135,7 +125,6 @@
 
       misc.programs = {
         evince = true;
-        rustdesk = true;
         vlc = true;
         zathura = false;
       };
