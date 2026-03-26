@@ -37,9 +37,14 @@
     # Prefer to keep processes in RAM
     kernel.sysctl."vm.swappiness" = 10;
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = false; # lanzaboote
         configurationLimit = 10;
       };
       efi.canTouchEfiVariables = true;
