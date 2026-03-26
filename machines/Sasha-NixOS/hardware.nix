@@ -58,6 +58,8 @@
     };
   };
 
+  services.fwupd.enable = true;
+
   swapDevices = [ ];
 
   nix.settings.max-jobs = 3;
