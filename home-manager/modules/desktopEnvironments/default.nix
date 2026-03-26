@@ -2,6 +2,6 @@
   imports = [
     ./cinnamon
     ./gnome
-    ./hyprland
+    ./wayland
   ];
 }
