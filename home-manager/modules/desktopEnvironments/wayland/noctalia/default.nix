@@ -17,6 +17,11 @@ in
   config = lib.mkIf config.wayland.windowManager.hyprland.enable {
     programs.noctalia-shell = {
       enable = true;
+
+      package = pkgs.noctalia-shell.override {
+        calendarSupport = false;
+      };
+
       settings = {
         # TODO: Create custom plugin for current_age.py
 
