@@ -15,7 +15,7 @@
       settings =
         let
           hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-          lock = "${lib.getExe config.programs.noctalia-shell} ipc call lockScreen lock";
+          lock = "${lib.getExe config.programs.noctalia-shell.package} ipc call lockScreen lock";
         in
         {
           general = {

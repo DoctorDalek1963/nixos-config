@@ -122,15 +122,13 @@ in
               cfg = config.setup.desktopEnvironments;
             in
             if !(builtins.isPath cfg.background) then
-              lib.getExe (
-                pkgs.writeShellScript "" ''
-                  if [ "$1" = "true" ]; then
-                    ${ipc} call wallpaper set ${cfg.background.dark} ""
-                  else
-                    ${ipc} call wallpaper set ${cfg.background.light} ""
-                  fi
-                ''
-              )
+              (pkgs.writeShellScript "change-noctalia-wallpaper-dark-mode" ''
+                if [ "$1" = "true" ]; then
+                  ${ipc} call wallpaper set ${cfg.background.dark} ""
+                else
+                  ${ipc} call wallpaper set ${cfg.background.light} ""
+                fi
+              '').outPath
             else
               "";
         };
