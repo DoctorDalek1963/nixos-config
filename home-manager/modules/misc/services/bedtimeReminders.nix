@@ -14,7 +14,7 @@
         };
 
         Service.ExecStart = pkgs.writeShellScript "bedtime-reminder" ''
-          ${pkgs.dunst}/bin/dunstify "Bedtime" "Go to bed now" --urgency=critical
+          ${pkgs.libnotify}/bin/notify-send --urgency=critical --app-name=Bedtime "Go to bed now"
         '';
       };
 

@@ -18,6 +18,8 @@ in
     programs.noctalia-shell = {
       enable = true;
       settings = {
+        # TODO: Create custom plugin for current_age.py
+
         desktopWidgets.enabled = false;
         dock.enabled = false;
         nightLight.enabled = false;
