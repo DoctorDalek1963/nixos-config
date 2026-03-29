@@ -19,6 +19,15 @@ in
       enable = true;
 
       package = pkgs.noctalia-shell.override {
+        bluetoothSupport = osConfig.setup.isLaptop;
+        brightnessctlSupport = true;
+        cavaSupport = false;
+        cliphistSupport = true;
+        ddcutilSupport = true;
+        wlsunsetSupport = false;
+        wl-clipboardSupport = true;
+        # wlr-randrSupport = true;
+        imagemagickSupport = true;
         calendarSupport = false;
       };
 
@@ -43,7 +52,7 @@ in
           };
 
           # Lock screen
-          compactLockScreen = false;
+          compactLockScreen = true;
           clockStyle = "custom";
           clockFormat = "h:mm ap";
           enableLockScreenCountdown = true;
@@ -74,7 +83,7 @@ in
           showScreenCorners = false;
           forceBlackScreenCorners = false;
 
-          enableShadows = true;
+          enableShadows = false;
           shadowDirection = "bottom_left";
           shadowOffsetX = -2;
           shadowOffsetY = 2;
@@ -224,7 +233,7 @@ in
           location = "bottom_center";
           autoHideMs = 2000;
           overlayLayer = true;
-          backgroundOpacity = 1;
+          backgroundOpacity = 0.75;
 
           enabledTypes = [
             0 # Output volume
