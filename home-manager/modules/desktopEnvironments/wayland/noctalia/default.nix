@@ -120,17 +120,16 @@ in
           darkModeChange =
             let
               cfg = config.setup.desktopEnvironments;
-            in
-            if !(builtins.isPath cfg.background) then
-              (pkgs.writeShellScript "change-noctalia-wallpaper-dark-mode" ''
+
+              change = pkgs.writeShellScript "change-noctalia-wallpaper-dark-mode" ''
                 if [ "$1" = "true" ]; then
                   ${ipc} call wallpaper set ${cfg.background.dark} ""
                 else
                   ${ipc} call wallpaper set ${cfg.background.light} ""
                 fi
-              '').outPath
-            else
-              "";
+              '';
+            in
+            if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
         };
 
         appLauncher =
