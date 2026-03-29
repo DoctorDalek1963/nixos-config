@@ -15,20 +15,6 @@ let
         };
 
         gtk = {
-          theme = {
-            package = pkgs.catppuccin-gtk.override {
-              accents = [ "mauve" ];
-              size = if osConfig.setup.isLaptop then "compact" else "standard";
-              tweaks = [ "rimless" ];
-              variant = "macchiato"; # Dark mode
-            };
-            name =
-              if osConfig.setup.isLaptop then
-                "catppuccin-macchiato-mauve-compact+rimless"
-              else
-                "catppuccin-macchiato-mauve-standard+rimless";
-          };
-
           iconTheme = {
             package = pkgs.catppuccin-papirus-folders.override {
               accent = "mauve";
@@ -52,8 +38,7 @@ in
 
     gtk = {
       enable = true;
-
-      inherit (theme-config.gtk) theme iconTheme;
+      inherit (theme-config.gtk) iconTheme;
     };
   };
 }

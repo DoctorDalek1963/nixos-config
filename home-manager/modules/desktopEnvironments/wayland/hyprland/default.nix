@@ -86,7 +86,7 @@ let
 in
 {
   imports = [
-    # ./gtk.nix
+    ./gtk.nix
     ./hypridle.nix
     ./sunsetr.nix
     ./timewarrior.nix
