@@ -19,6 +19,29 @@ in
       ".cache/noctalia"
     ];
 
+    home = {
+      sessionVariables.QT_QPA_PLATFORMTHEME = "qt6ct";
+
+      packages = [
+        pkgs.adw-gtk3
+        pkgs.nwg-look
+
+        pkgs.libsForQt5.qt5ct
+        pkgs.kdePackages.qt6ct
+      ];
+    };
+
+    qt = {
+      qt5ctSettings.Appearance = {
+        color_scheme_path = "${config.home.homeDirectory}/.config/qt5ct/colors/noctalia.conf";
+        custom_palette = true;
+      };
+      qt6ctSettings.Appearance = {
+        color_scheme_path = "${config.home.homeDirectory}/.config/qt6ct/colors/noctalia.conf";
+        custom_palette = true;
+      };
+    };
+
     programs.noctalia-shell = {
       enable = true;
 
@@ -134,13 +157,24 @@ in
             let
               cfg = config.setup.desktopEnvironments;
 
-              change = pkgs.writeShellScript "change-noctalia-wallpaper-dark-mode" ''
-                if [ "$1" = "true" ]; then
-                  ${ipc} call wallpaper set ${cfg.background.dark} ""
-                else
-                  ${ipc} call wallpaper set ${cfg.background.light} ""
-                fi
-              '';
+              change = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "noctalia-dark-mode-hook";
+                  runtimeInputs = [ pkgs.dconf ];
+
+                  text = ''
+                    dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
+
+                    if [ "$1" = "true" ]; then
+                      ${ipc} call wallpaper set ${cfg.background.dark} ""
+                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+                    else
+                      ${ipc} call wallpaper set ${cfg.background.light} ""
+                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+                    fi
+                  '';
+                }
+              );
             in
             if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
         };
@@ -382,12 +416,29 @@ in
           generationMethod = "tonal-spot";
 
           schedulingMode = "location";
-          predefinedScheme = "Catppuccin Lavender"; # TODO: Create custom
+          predefinedScheme = "Catppuccin"; # TODO: Create custom
         };
 
         templates = {
           enableUserTheming = false;
-          activeTemplates = [ ];
+
+          activeTemplates =
+            map
+              (id: {
+                inherit id;
+                enabled = true;
+              })
+              (
+                [
+                  "gtk"
+                  "qt"
+                  # "btop"
+                  # "wezterm"
+                  # "yazi"
+                  # "zathura"
+                ]
+                ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
+              );
         };
 
         ui = {
