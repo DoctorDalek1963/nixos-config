@@ -15,6 +15,10 @@ in
   imports = [ inputs.noctalia.homeModules.default ];
 
   config = lib.mkIf config.wayland.windowManager.hyprland.enable {
+    setup.impermanence.keepDirs = [
+      ".cache/noctalia"
+    ];
+
     programs.noctalia-shell = {
       enable = true;
 
