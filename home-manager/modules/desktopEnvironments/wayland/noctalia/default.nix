@@ -580,21 +580,20 @@ in
 
                 iconColor = "tertiary";
               }
-              {
-                # TODO: Conditional
-                id = "KeepAwake";
+            ]
+            ++ lib.optional config.services.hypridle.enable {
+              id = "KeepAwake";
 
-                iconColor = "secondary";
-                textColor = "none";
-              }
+              iconColor = "secondary";
+              textColor = "none";
+            }
+            ++ lib.optionals osConfig.setup.isLaptop [
               {
-                # TODO: Conditional
                 id = "PowerProfile";
 
                 iconColor = "none";
               }
               {
-                # TODO: Conditional
                 id = "Battery";
 
                 displayMode = "alwaysShow";
@@ -603,6 +602,8 @@ in
                 showNoctaliaPerformance = false;
                 showPowerProfiles = false;
               }
+            ]
+            ++ [
               {
                 id = "Volume";
 
