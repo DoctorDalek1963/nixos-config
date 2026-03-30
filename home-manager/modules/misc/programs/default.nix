@@ -18,7 +18,6 @@ in
     ./mediaCuration.nix
     ./ms-teams.nix
     ./obsidian.nix
-    ./timewarrior.nix
     # ./xremap.nix
     ./zathura.nix
   ];

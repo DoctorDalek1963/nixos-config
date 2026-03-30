@@ -59,7 +59,6 @@ in
             "cpu"
             "memory"
           ]
-          ++ lib.optional config.setup.misc.programs.timewarrior "custom/timewarrior"
           ++ [
             "hyprland/window"
           ];
@@ -135,9 +134,6 @@ in
 
             on-click = launch-btop;
           };
-
-          "custom/timewarrior" =
-            lib.mkIf config.setup.misc.programs.timewarrior config.setup.shared.timewarrior-waybar-module;
 
           "hyprland/window" = {
             format = "{title}";
@@ -429,10 +425,6 @@ in
           /* Hide window section when no window is open on the current desktop */
           window#waybar.empty #window {
               background-color: transparent;
-          }
-
-          #custom-timewarrior {
-              color: @sapphire;
           }
 
           #custom-clock {

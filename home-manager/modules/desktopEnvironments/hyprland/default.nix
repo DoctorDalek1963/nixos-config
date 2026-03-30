@@ -94,7 +94,6 @@ in
     ./hyprlock.nix
     ./hyprpaper.nix
     ./sunsetr.nix
-    ./timewarrior.nix
     ./wofi.nix
   ];
 
