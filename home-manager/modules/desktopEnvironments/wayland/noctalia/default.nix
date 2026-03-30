@@ -160,17 +160,38 @@ in
               change = lib.getExe (
                 pkgs.writeShellApplication {
                   name = "noctalia-dark-mode-hook";
-                  runtimeInputs = [ pkgs.dconf ];
+                  runtimeInputs = [
+                    pkgs.dconf
+                  ]
+                  ++ lib.optional config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package;
 
                   text = ''
                     dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
 
                     if [ "$1" = "true" ]; then
                       ${ipc} call wallpaper set ${cfg.background.dark} ""
+
                       dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+
+                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
+                      ${
+                        if config.wayland.windowManager.hyprland.enable then
+                          "hyprctl setcursors catppuccin-macchiato-light-cursors 24"
+                        else
+                          ""
+                      }
                     else
                       ${ipc} call wallpaper set ${cfg.background.light} ""
+
                       dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+
+                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
+                      ${
+                        if config.wayland.windowManager.hyprland.enable then
+                          "hyprctl setcursors catppuccin-latte-dark-cursors 24"
+                        else
+                          ""
+                      }
                     fi
                   '';
                 }

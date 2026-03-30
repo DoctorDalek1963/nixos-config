@@ -9,9 +9,15 @@ let
   theme-config =
     {
       "catppuccin-macchiato-mauve" = {
-        home.pointerCursor = {
+        cursor = {
           package = pkgs.catppuccin-cursors.macchiatoLight;
           name = "catppuccin-macchiato-light-cursors";
+          extras = [
+            {
+              package = pkgs.catppuccin-cursors.latteDark;
+              name = "catppuccin-latte-dark-cursors";
+            }
+          ];
         };
 
         gtk = {
@@ -29,11 +35,22 @@ let
 in
 {
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
-    home.pointerCursor = {
-      gtk.enable = true;
-      size = 24;
+    xdg.dataFile = lib.foldl (acc: attrs: acc // attrs) { } (
+      map (
+        { package, name }:
+        {
+          "icons/${name}".source = "${package}/share/icons/${name}";
+        }
+      ) theme-config.cursor.extras
+    );
 
-      inherit (theme-config.home.pointerCursor) package name;
+    home = {
+      pointerCursor = {
+        gtk.enable = true;
+        size = 24;
+
+        inherit (theme-config.cursor) name package;
+      };
     };
 
     gtk = {
