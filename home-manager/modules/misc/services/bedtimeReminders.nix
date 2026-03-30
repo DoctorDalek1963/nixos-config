@@ -22,7 +22,7 @@
         Install.WantedBy = [ "timers.target" ];
 
         Timer = {
-          OnCalendar = "*-*-* 00..06:00/5:00";
+          OnCalendar = "*-*-* 00..06:00/2:00";
           Unit = "bedtime-reminders.service";
           Persistent = false;
         };
