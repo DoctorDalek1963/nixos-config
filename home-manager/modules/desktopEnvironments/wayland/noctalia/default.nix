@@ -12,35 +12,17 @@ let
   useUwsm = config.wayland.windowManager.hyprland.enable && osConfig.programs.hyprland.withUWSM;
 in
 {
-  imports = [ inputs.noctalia.homeModules.default ];
+  imports = [
+    inputs.noctalia.homeModules.default
+
+    ./bar.nix
+    ./theme.nix
+  ];
 
   config = lib.mkIf config.wayland.windowManager.hyprland.enable {
     setup.impermanence.keepDirs = [
       ".cache/noctalia"
     ];
-
-    home = {
-      sessionVariables.QT_QPA_PLATFORMTHEME = "qt6ct";
-
-      packages = [
-        pkgs.adw-gtk3
-        pkgs.nwg-look
-
-        pkgs.libsForQt5.qt5ct
-        pkgs.kdePackages.qt6ct
-      ];
-    };
-
-    qt = {
-      qt5ctSettings.Appearance = {
-        color_scheme_path = "${config.home.homeDirectory}/.config/qt5ct/colors/noctalia.conf";
-        custom_palette = true;
-      };
-      qt6ctSettings.Appearance = {
-        color_scheme_path = "${config.home.homeDirectory}/.config/qt6ct/colors/noctalia.conf";
-        custom_palette = true;
-      };
-    };
 
     programs.noctalia-shell = {
       enable = true;
@@ -59,8 +41,6 @@ in
       };
 
       settings = {
-        # TODO: Create custom plugin for current_age.py
-
         desktopWidgets.enabled = false;
         dock.enabled = false;
         nightLight.enabled = false;
@@ -152,52 +132,6 @@ in
           enabled = true;
 
           screenLock = "${ipc} media pause";
-
-          darkModeChange =
-            let
-              cfg = config.setup.desktopEnvironments;
-
-              change = lib.getExe (
-                pkgs.writeShellApplication {
-                  name = "noctalia-dark-mode-hook";
-                  runtimeInputs = [
-                    pkgs.dconf
-                  ]
-                  ++ lib.optional config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package;
-
-                  text = ''
-                    dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
-
-                    if [ "$1" = "true" ]; then
-                      ${ipc} call wallpaper set ${cfg.background.dark} ""
-
-                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
-
-                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
-                      ${
-                        if config.wayland.windowManager.hyprland.enable then
-                          "hyprctl setcursors catppuccin-macchiato-light-cursors 24"
-                        else
-                          ""
-                      }
-                    else
-                      ${ipc} call wallpaper set ${cfg.background.light} ""
-
-                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
-
-                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
-                      ${
-                        if config.wayland.windowManager.hyprland.enable then
-                          "hyprctl setcursors catppuccin-latte-dark-cursors 24"
-                        else
-                          ""
-                      }
-                    fi
-                  '';
-                }
-              );
-            in
-            if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
         };
 
         appLauncher =
@@ -432,36 +366,6 @@ in
               ];
         };
 
-        colorSchemes = {
-          useWallpaperColors = false;
-          generationMethod = "tonal-spot";
-
-          schedulingMode = "location";
-          predefinedScheme = "Catppuccin"; # TODO: Create custom
-        };
-
-        templates = {
-          enableUserTheming = false;
-
-          activeTemplates =
-            map
-              (id: {
-                inherit id;
-                enabled = true;
-              })
-              (
-                [
-                  "gtk"
-                  "qt"
-                  # "btop"
-                  # "wezterm"
-                  # "yazi"
-                  # "zathura"
-                ]
-                ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
-              );
-        };
-
         ui = {
           fontDefault = "Sans Serif";
           fontDefaultScale = 1;
@@ -478,238 +382,6 @@ in
           settingsPanelMode = "attached";
           boxBorderEnabled = true;
           tooltipsEnabled = true;
-        };
-
-        wallpaper = {
-          enabled = true;
-          automationEnabled = false;
-
-          directory =
-            let
-              cfg = config.setup.desktopEnvironments;
-            in
-            (pkgs.runCommand "noctalia-wallpapers" { } (
-              if builtins.isPath cfg.background then
-                ''
-                  mkdir $out
-                  cp ${cfg.background} $out/
-                ''
-              else
-                ''
-                  mkdir $out
-                  cp ${cfg.background.light} $out/
-                  cp ${cfg.background.dark} $out/
-                ''
-            )).outPath;
-
-          fillMode = "crop";
-          fillColor = "#000000";
-
-          setWallpaperOnAllMonitors = true;
-          enableMultiMonitorDirectories = false;
-
-          panelPosition = "follow_bar";
-          hideWallpaperFilenames = true;
-          viewMode = "single";
-          sortOrder = "name";
-
-          transitionType = "random";
-          transitionDuration = 1500;
-          transitionEdgeSmoothness = 0.05;
-          skipStartupTransition = false;
-
-          overviewEnabled = false;
-          useSolidColor = false;
-          useWallhaven = false;
-        };
-
-        bar = {
-          barType = "simple";
-          position = "top";
-          density = "comfortable";
-
-          showCapsule = true;
-          capsuleOpacity = 1;
-
-          floating = false;
-          outerCorners = false;
-          displayMode = "always_visible";
-
-          useSeparateOpacity = true;
-          backgroundOpacity = 1;
-          frameRadius = 12;
-          frameThickness = 8;
-          marginHorizontal = 5;
-          marginVertical = 5;
-
-          widgets = {
-            left = [
-              {
-                id = "ControlCenter";
-
-                useDistroLogo = true;
-                enableColorization = true;
-                colorizeSystemIcon = "tertiary";
-              }
-              {
-                id = "Workspace";
-
-                showApplications = true;
-                showBadge = true;
-                colorizeIcons = false;
-                unfocusedIconsOpacity = 0.5;
-
-                groupedBorderOpacity = 1;
-                pillSize = 1;
-                iconScale = 0.8;
-                labelMode = "index";
-
-                enableScrollWheel = true;
-                reverseScroll = false;
-
-                focusedColor = "primary";
-                followFocusedScreen = false;
-
-                occupiedColor = "secondary";
-
-                emptyColor = "tertiary";
-                hideUnoccupied = true;
-              }
-              {
-                id = "SystemMonitor";
-
-                compactMode = false;
-                iconColor = "primary";
-                textColor = "none";
-                useMonospaceFont = true;
-
-                showCpuUsage = true;
-                showCpuTemp = true;
-                showCpuFreq = false;
-                showMemoryUsage = true;
-                showMemoryAsPercent = true;
-
-                showDiskUsage = false;
-                showGpuTemp = false;
-                showLoadAverage = false;
-                showNetworkStats = false;
-                showSwapUsage = false;
-              }
-              {
-                id = "ActiveWindow";
-
-                showIcon = true;
-                colorizeIcons = false;
-                textColor = "none";
-
-                hideMode = "hidden";
-                useFixedWidth = false;
-                maxWidth = 200;
-                scrollingMode = "hover";
-              }
-            ];
-
-            center = [
-              {
-                id = "Clock";
-
-                clockColor = "primary";
-                formatHorizontal = "h:mm:ss ap, dddd dd MMMM 12,0yy";
-                formatVertical = "";
-                tooltipFormat = "";
-                useCustomFont = false;
-              }
-              {
-                id = "MediaMini";
-
-                compactMode = true;
-                compactShowAlbumArt = true;
-                compactShowVisualizer = false;
-
-                hideMode = "idle";
-                useFixedWidth = false;
-                maxWidth = 200;
-                scrollingMode = "hover";
-
-                panelShowAlbumArt = true;
-                panelShowVisualizer = true;
-                showAlbumArt = true;
-                showArtistFirst = false;
-                showProgressRing = true;
-                showVisualizer = false;
-                textColor = "secondary";
-              }
-            ];
-
-            right = [
-              {
-                id = "Tray";
-
-                drawerEnabled = false;
-                colorizeIcons = false;
-                hidePassive = false;
-              }
-              {
-                id = "NotificationHistory";
-
-                iconColor = "secondary";
-                unreadBadgeColor = "primary";
-
-                hideWhenZero = false;
-                hideWhenZeroUnread = false;
-                showUnreadBadge = true;
-              }
-              {
-                id = "DarkMode";
-
-                iconColor = "tertiary";
-              }
-            ]
-            ++ lib.optional config.services.hypridle.enable {
-              id = "KeepAwake";
-
-              iconColor = "secondary";
-              textColor = "none";
-            }
-            ++ lib.optionals osConfig.setup.isLaptop [
-              {
-                id = "PowerProfile";
-
-                iconColor = "none";
-              }
-              {
-                id = "Battery";
-
-                displayMode = "alwaysShow";
-                hideIfIdle = false;
-                hideIfNotDetected = true;
-                showNoctaliaPerformance = false;
-                showPowerProfiles = false;
-              }
-            ]
-            ++ [
-              {
-                id = "Volume";
-
-                displayMode = "alwaysShow";
-                iconColor = "secondary";
-                textColor = "none";
-                middleClickCommand = "${lib.getExe pkgs.pwvucontrol}";
-              }
-              {
-                id = "Network";
-
-                displayMode = "alwaysShow";
-                iconColor = "tertiary";
-                textColor = "none";
-              }
-              {
-                id = "SessionMenu";
-
-                iconColor = "error";
-              }
-            ];
-          };
         };
       };
     };
