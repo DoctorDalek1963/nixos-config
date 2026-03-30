@@ -3,11 +3,21 @@
   config,
   lib,
   modulesPath,
+  inputs,
   ...
 }:
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.lanzaboote.nixosModules.lanzaboote
+  ];
+
+  environment.systemPackages = [
+    pkgs.sbctl
+  ];
+
+  setup.impermanence.keepDirs = [
+    "/var/lib/sbctl"
   ];
 
   boot = {
@@ -27,17 +37,28 @@
     # Prefer to keep processes in RAM
     kernel.sysctl."vm.swappiness" = 10;
 
-    loader = {
-      grub = {
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys = {
         enable = true;
-        device = "nodev";
-        efiSupport = true;
-        timeoutStyle = "hidden";
+        autoReboot = true;
+      };
+    };
+
+    loader = {
+      systemd-boot = {
+        enable = false; # lanzaboote
+        configurationLimit = 10;
       };
       efi.canTouchEfiVariables = true;
       timeout = 2;
     };
   };
+
+  services.fwupd.enable = true;
 
   swapDevices = [ ];
 
