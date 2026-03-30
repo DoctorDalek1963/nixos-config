@@ -127,7 +127,6 @@ in
       settings =
         let
           playerctl = "${pkgs.playerctl}/bin/playerctl";
-          hyprnome = "${pkgs.hyprnome}/bin/hyprnome";
           hyprshot = "${pkgs.hyprshot}/bin/hyprshot";
           downloads = config.xdg.userDirs.download;
 
@@ -406,17 +405,6 @@ in
               "$mod SHIFT, J, movewindow, d"
               "$mod SHIFT, K, movewindow, u"
               "$mod SHIFT, L, movewindow, r"
-            ]
-            # Move focus or window to relative workspace
-            ++ [
-              "$mod ALT, left, exec, ${hyprnome} --previous"
-              "$mod ALT, right, exec, ${hyprnome}"
-              "$mod ALT, H, exec, ${hyprnome} --previous"
-              "$mod ALT, L, exec, ${hyprnome}"
-              "$mod ALT SHIFT, left, exec, ${hyprnome} --previous --move"
-              "$mod ALT SHIFT, right, exec, ${hyprnome} --move"
-              "$mod ALT SHIFT, H, exec, ${hyprnome} --previous --move"
-              "$mod ALT SHIFT, L, exec, ${hyprnome} --move"
             ]
             # Move focus or window to explicit workspace
             ++ (
