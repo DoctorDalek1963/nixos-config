@@ -7,6 +7,7 @@
 {
   config = lib.mkIf config.setup.misc.programs.mediaCuration {
     home.packages = with pkgs; [
+      audacity
       gimp3
       imagemagick
       jellyfin-ffmpeg
