@@ -59,7 +59,7 @@
           };
 
           virtManager.host = {
-            enable = true;
+            # enable = true;
             users = [ "dyson" ];
           };
 
