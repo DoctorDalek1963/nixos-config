@@ -8,11 +8,15 @@ let
   cfg = config.setup.terminal;
 
   color-scheme =
-    {
-      "catppuccin-macchiato" = "Catppuccin Macchiato";
-      "onedark" = "One Dark (Gogh)";
-    }
-    ."${cfg.theme}";
+    if config.programs.noctalia-shell.enable then
+      "Noctalia"
+    # ~/.config/wezterm/colors/Noctalia.toml
+    else
+      {
+        "catppuccin-macchiato" = "Catppuccin Macchiato";
+        "onedark" = "One Dark (Gogh)";
+      }
+      ."${cfg.theme}";
 
   cursor-theme =
     {

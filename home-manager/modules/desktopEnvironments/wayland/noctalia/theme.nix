@@ -21,6 +21,132 @@ in
       ];
     };
 
+    xdg.configFile."noctalia/colorschemes/Catppuccin Macchiato/Catppuccin Macchiato.json".text =
+      builtins.toJSON
+        {
+          dark = {
+            mError = "#ed8796"; # Red
+            mOnError = "#181926"; # Crust
+
+            mHover = "#8bd5ca"; # Teal
+            mOnHover = "#181926"; # Crust
+
+            mPrimary = "#c6a0f6"; # Mauve
+            mOnPrimary = "#181926"; # Crust
+
+            mSecondary = "#f5a97f"; # Peach
+            mOnSecondary = "#181926"; # Crust
+
+            mTertiary = "#8bd5ca"; # Teal
+            mOnTertiary = "#181926"; # Crust
+
+            mSurface = "#24273a"; # Base
+            mOnSurface = "#cad3f5"; # Text
+
+            mSurfaceVariant = "#363a4f"; # Surface 0
+            mOnSurfaceVariant = "#b7bdf8"; # Lavender
+
+            mOutline = "#494d64"; # Surface 1
+
+            mShadow = "#181926"; # Crust
+
+            terminal = {
+              cursor = "#f4dbd6"; # Rosewater
+              cursorText = "#24273a"; # Base
+
+              background = "#24273a"; # Base
+              foreground = "#cad3f5"; # Text
+
+              selectionBg = "#5b6078"; # Surface 2
+              selectionFg = "#cad3f5"; # Text
+
+              # Taken from Wezterm Catppuccin theme
+              normal = {
+                black = "#494d64"; # Surface 1
+                red = "#ed8796"; # Red
+                green = "#a6da95"; # Green
+                yellow = "#eed49f"; # Yellow
+                blue = "#8aadf4"; # Blue
+                magenta = "#f5bde6"; # Pink
+                cyan = "#8bd5ca"; # Teal
+                white = "#b8c0e0"; # Subtext 1
+              };
+
+              bright = {
+                black = "#5b6078"; # Surface 2
+                red = "#ed8796"; # Red
+                green = "#a6da95"; # Green
+                yellow = "#eed49f"; # Yellow
+                blue = "#8aadf4"; # Blue
+                magenta = "#f5bde6"; # Pink
+                cyan = "#8bd5ca"; # Teal
+                white = "#a5adcb"; # Subtext 0
+              };
+            };
+          };
+
+          light = {
+            mError = "#d20f39"; # Red
+            mOnError = "#dce0e8"; # Crust
+
+            mHover = "#40a02b"; # Green
+            mOnHover = "#eff1f5"; # Base
+
+            mPrimary = "#8839ef"; # Mauve
+            mOnPrimary = "#eff1f5"; # Base
+
+            mSecondary = "#fe640b"; # Peach
+            mOnSecondary = "#eff1f5"; # Base
+
+            mTertiary = "#40a02b"; # Green
+            mOnTertiary = "#eff1f5"; # Base
+
+            mSurface = "#eff1f5"; # Base
+            mOnSurface = "#4c4f69"; # Text
+
+            mSurfaceVariant = "#ccd0da"; # Surface 0
+            mOnSurfaceVariant = "#6c6f85"; # Subtext 0
+
+            mOutline = "#acb0be"; # Surface 2
+
+            mShadow = "#dce0e8"; # Crust
+
+            terminal = {
+              cursor = "#dc8a78"; # Rosewater
+              cursorText = "#eff1f5"; # Base
+
+              background = "#eff1f5"; # Base
+              foreground = "#4c4f69"; # Text
+
+              selectionBg = "#acb0be"; # Surface 2
+              selectionFg = "#4c4f69"; # Text
+
+              # Taken from Wezterm Catppuccin theme
+              normal = {
+                black = "#bcc0cc"; # Surface 1
+                red = "#d20f39"; # Red
+                green = "#40a02b"; # Green
+                yellow = "#df8e1d"; # Yellow
+                blue = "#1e66f5"; # Blue
+                magenta = "#ea76cb"; # Pink
+                cyan = "#179299"; # Teal
+                white = "#5c5f77"; # Subtext 1
+              };
+
+              bright = {
+                black = "#acb0be"; # Surface 2
+                red = "#d20f39"; # Red
+                green = "#40a02b"; # Green
+                yellow = "#df8e1d"; # Yellow
+                blue = "#1e66f5"; # Blue
+                magenta = "#ea76cb"; # Pink
+                cyan = "#179299"; # Teal
+                white = "#6c6f85"; # Subtext 0
+              };
+            };
+          };
+        };
+
     qt = {
       qt5ctSettings.Appearance = {
         color_scheme_path = "${config.home.homeDirectory}/.config/qt5ct/colors/noctalia.conf";
@@ -38,7 +164,7 @@ in
         generationMethod = "tonal-spot";
 
         schedulingMode = "location";
-        predefinedScheme = "Catppuccin"; # TODO: Create custom
+        predefinedScheme = "Catppuccin Macchiato";
       };
 
       templates = {
@@ -55,11 +181,11 @@ in
                 "gtk"
                 "qt"
                 # "btop"
-                # "wezterm"
                 # "yazi"
                 # "zathura"
               ]
               ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
+              ++ lib.optional config.programs.wezterm.enable "wezterm"
             );
       };
 
