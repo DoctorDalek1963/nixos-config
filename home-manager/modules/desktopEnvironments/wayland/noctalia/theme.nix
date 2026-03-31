@@ -168,7 +168,7 @@ in
       };
 
       templates = {
-        enableUserTheming = false;
+        enableUserTheming = true;
 
         activeTemplates =
           map
@@ -236,45 +236,61 @@ in
         let
           cfg = config.setup.desktopEnvironments;
 
-          change = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "noctalia-dark-mode-hook";
-              runtimeInputs = [
-                pkgs.dconf
-              ]
-              ++ lib.optional config.wayland.windowManager.hyprland.enable config.wayland.windowManager.hyprland.package;
+          change =
+            let
+              is-hyprland = config.wayland.windowManager.hyprland.enable;
 
-              text = ''
-                dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
+              is-zellij = config.programs.zellij.enable;
 
-                if [ "$1" = "true" ]; then
-                  ${ipc} call wallpaper set ${cfg.background.dark} ""
-
-                  dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
-
-                  dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
-                  ${
-                    if config.wayland.windowManager.hyprland.enable then
-                      "hyprctl setcursors catppuccin-macchiato-light-cursors 24"
-                    else
-                      ""
-                  }
-                else
-                  ${ipc} call wallpaper set ${cfg.background.light} ""
-
-                  dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
-
-                  dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
-                  ${
-                    if config.wayland.windowManager.hyprland.enable then
-                      "hyprctl setcursors catppuccin-latte-dark-cursors 24"
-                    else
-                      ""
-                  }
-                fi
+              zellij-themes = pkgs.runCommand "zellij-noctalia" { } ''
+                mkdir $out
+                sed "s/catppuccin-macchiato/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-macchiato.kdl > $out/dark.kdl
+                sed "s/catppuccin-latte/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-latte.kdl > $out/light.kdl
               '';
-            }
-          );
+            in
+            lib.getExe (
+              pkgs.writeShellApplication {
+                name = "noctalia-dark-mode-hook";
+                runtimeInputs = [
+                  pkgs.dconf
+                ]
+                ++ lib.optional is-hyprland config.wayland.windowManager.hyprland.package;
+
+                text = ''
+                  dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
+
+                  if [ "$1" = "true" ]; then
+                    ${ipc} call wallpaper set ${cfg.background.dark} ""
+
+                    dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+
+                    dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
+                    ${if is-hyprland then "hyprctl setcursors catppuccin-macchiato-light-cursors 24" else ""}
+
+                    ${
+                      if is-zellij then
+                        "install -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
+                      else
+                        ""
+                    }
+                  else
+                    ${ipc} call wallpaper set ${cfg.background.light} ""
+
+                    dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+
+                    dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
+                    ${if is-hyprland then "hyprctl setcursors catppuccin-latte-dark-cursors 24" else ""}
+
+                    ${
+                      if is-zellij then
+                        "install -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
+                      else
+                        ""
+                    }
+                  fi
+                '';
+              }
+            );
         in
         if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
     };

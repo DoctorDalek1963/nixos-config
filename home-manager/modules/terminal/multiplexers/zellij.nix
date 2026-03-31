@@ -13,7 +13,7 @@ in
       enableBashIntegration = cfg.shells.bash;
 
       settings = {
-        theme = "catppuccin-macchiato";
+        theme = if config.programs.noctalia-shell.enable then "noctalia" else "catppuccin-macchiato";
         default_mode = "locked";
         show_startup_tips = false;
         advanced_mouse_actions = false; # Multiple pane select
