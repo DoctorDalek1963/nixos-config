@@ -95,7 +95,10 @@ in
     home = {
       # Hint Electron apps to use Wayland
       sessionVariables.NIXOS_OZONE_WL = "1";
-      packages = [ pkgs.hyprpolkitagent ];
+      packages = [
+        pkgs.hyprpolkitagent
+        pkgs.wl-clipboard
+      ];
     };
 
     wayland.windowManager.hyprland = {
