@@ -183,6 +183,14 @@
             textColor = "none";
             middleClickCommand = "${lib.getExe pkgs.pwvucontrol}";
           }
+        ]
+        ++ lib.optional osConfig.setup.isLaptop {
+          id = "Bluetooth";
+
+          iconColor = "tertiary";
+          displayMode = "alwaysHide";
+        }
+        ++ [
           {
             id = "Network";
 
