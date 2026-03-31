@@ -14,12 +14,6 @@ let
     }
     ."${cfg.theme}";
 
-  cursor-theme =
-    {
-      "catppuccin-macchiato" = "catppuccin-macchiato-light-cursors";
-    }
-    ."${cfg.theme}";
-
   default-cursor-style = if osConfig.setup.isLaptop then "SteadyBlock" else "BlinkingBlock";
 in
 {
@@ -27,9 +21,7 @@ in
     xdg.terminal-exec = {
       enable = true;
       settings = {
-        default = [
-          "wezterm.desktop"
-        ];
+        default = [ "wezterm.desktop" ];
       };
     };
 
@@ -55,7 +47,6 @@ in
             cursor_blink_ease_out = 'Constant',
             cursor_blink_rate = 650,
             default_cursor_style = '${default-cursor-style}',
-            xcursor_theme = "${cursor-theme}";
 
             enable_scroll_bar = false,
 
@@ -65,9 +56,6 @@ in
             keys = {
               { key = 'F11', action = act.ToggleFullScreen },
               { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment },
-
-              -- Zellij can't pick up two modifiers in one keybind for some reason
-              { key = 'x', mods = 'CTRL|SHIFT', action = act.SendKey {key = 'x', mods = 'ALT'} }
             },
 
             scrollback_lines = 7500,
