@@ -166,11 +166,12 @@
           {
             id = "Battery";
 
-            displayMode = "alwaysShow";
+            deviceNativePath = "__default__";
+            displayMode = "graphic";
             hideIfIdle = false;
-            hideIfNotDetected = true;
+            hideIfNotDetected = false;
             showNoctaliaPerformance = false;
-            showPowerProfiles = false;
+            showPowerProfiles = true;
           }
         ]
         ++ [
