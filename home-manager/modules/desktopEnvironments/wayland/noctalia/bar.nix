@@ -170,8 +170,8 @@
             displayMode = "graphic";
             hideIfIdle = false;
             hideIfNotDetected = false;
-            showNoctaliaPerformance = false;
-            showPowerProfiles = true;
+            showPowerProfiles = false;
+            showNoctaliaPerformance = true;
           }
         ]
         ++ [
