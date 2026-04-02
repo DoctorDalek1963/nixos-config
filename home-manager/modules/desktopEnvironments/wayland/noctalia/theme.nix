@@ -15,7 +15,8 @@
 
         pkgs.libsForQt5.qt5ct
         pkgs.kdePackages.qt6ct
-      ];
+      ]
+      ++ lib.optional config.programs.librewolf.enable pkgs.pywalfox-native;
     };
 
     xdg.configFile."noctalia/colorschemes/Catppuccin Macchiato/Catppuccin Macchiato.json".text =
@@ -182,6 +183,7 @@
                 # "zathura"
               ]
               ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
+              ++ lib.optional config.programs.librewolf.enable "pywalfox"
               ++ lib.optional config.programs.wezterm.enable "wezterm"
             );
       };
