@@ -156,170 +156,177 @@
       };
     };
 
-    programs.noctalia-shell.settings = {
-      colorSchemes = {
-        useWallpaperColors = false;
-        generationMethod = "tonal-spot";
+    programs.noctalia-shell = {
+      settings = {
+        colorSchemes = {
+          useWallpaperColors = false;
+          generationMethod = "tonal-spot";
 
-        schedulingMode = "location";
-        predefinedScheme = "Catppuccin Macchiato";
-      };
+          schedulingMode = "location";
+          predefinedScheme = "Catppuccin Macchiato";
+        };
 
-      templates = {
-        enableUserTheming = true;
+        templates = {
+          enableUserTheming = true;
 
-        activeTemplates =
-          map
-            (id: {
-              inherit id;
-              enabled = true;
-            })
-            (
-              [
-                "gtk"
-                "qt"
-                # "btop"
-                # "yazi"
-                # "zathura"
-              ]
-              ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
-              ++ lib.optional config.programs.librewolf.enable "pywalfox"
-              ++ lib.optional config.programs.wezterm.enable "wezterm"
-            );
-      };
-
-      wallpaper = {
-        enabled = true;
-        automationEnabled = false;
-
-        directory =
-          let
-            cfg = config.setup.desktopEnvironments;
-          in
-          (pkgs.runCommand "noctalia-wallpapers" { } (
-            if builtins.isPath cfg.background then
-              ''
-                mkdir $out
-                cp ${cfg.background} $out/
-              ''
-            else
-              ''
-                mkdir $out
-                cp ${cfg.background.light} $out/
-                cp ${cfg.background.dark} $out/
-              ''
-          )).outPath;
-
-        fillMode = "crop";
-        fillColor = "#000000";
-
-        setWallpaperOnAllMonitors = true;
-        enableMultiMonitorDirectories = false;
-
-        panelPosition = "follow_bar";
-        hideWallpaperFilenames = true;
-        viewMode = "single";
-        sortOrder = "name";
-
-        transitionType = "random";
-        transitionDuration = 1500;
-        transitionEdgeSmoothness = 0.05;
-        skipStartupTransition = false;
-
-        overviewEnabled = false;
-        useSolidColor = false;
-        useWallhaven = false;
-      };
-
-      hooks = {
-        startup = lib.getExe (
-          pkgs.writeShellApplication {
-            name = "noctalia-startup-hook";
-            runtimeInputs = [
-              pkgs.sunwait
-              config.programs.noctalia-shell.package
-            ];
-
-            bashOptions = [
-              # "errexit" # Sunwait exits non-zero
-              "nounset"
-              "pipefail"
-            ];
-
-            text = ''
-              # Location is London, same as sunsetr
-              r="$(sunwait poll civil 51.508415N 0.125533W 2> /dev/null)"
-              if [[ "$r" == "DAY" ]]; then
-                noctalia-shell ipc call darkMode setLight
-              else
-                noctalia-shell ipc call darkMode setDark
-              fi
-            '';
-          }
-        );
-
-        darkModeChange =
-          let
-            cfg = config.setup.desktopEnvironments;
-
-            change =
-              let
-                is-hyprland = config.wayland.windowManager.hyprland.enable;
-
-                is-zellij = config.programs.zellij.enable;
-
-                zellij-themes = pkgs.runCommand "zellij-noctalia" { } ''
-                  mkdir $out
-                  sed "s/catppuccin-macchiato/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-macchiato.kdl > $out/dark.kdl
-                  sed "s/catppuccin-latte/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-latte.kdl > $out/light.kdl
-                '';
-              in
-              lib.getExe (
-                pkgs.writeShellApplication {
-                  name = "noctalia-dark-mode-hook";
-                  runtimeInputs = [
-                    pkgs.dconf
-                    config.programs.noctalia-shell.package
-                  ]
-                  ++ lib.optional is-hyprland config.wayland.windowManager.hyprland.package;
-
-                  text = ''
-                    dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
-
-                    if [ "$1" = "true" ]; then
-                      noctalia-shell ipc call wallpaper set ${cfg.background.dark} ""
-
-                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
-
-                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
-                      ${if is-hyprland then "hyprctl setcursors catppuccin-macchiato-light-cursors 24" else ""}
-
-                      ${
-                        if is-zellij then
-                          "install -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
-                        else
-                          ""
-                      }
-                    else
-                      noctalia-shell ipc call wallpaper set ${cfg.background.light} ""
-
-                      dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
-
-                      dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
-                      ${if is-hyprland then "hyprctl setcursors catppuccin-latte-dark-cursors 24" else ""}
-
-                      ${
-                        if is-zellij then
-                          "install -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
-                        else
-                          ""
-                      }
-                    fi
-                  '';
-                }
+          activeTemplates =
+            map
+              (id: {
+                inherit id;
+                enabled = true;
+              })
+              (
+                [
+                  "gtk"
+                  "qt"
+                  # "btop"
+                  # "yazi"
+                  # "zathura"
+                ]
+                ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
+                ++ lib.optional config.programs.librewolf.enable "pywalfox"
+                ++ lib.optional config.programs.wezterm.enable "wezterm"
               );
-          in
-          if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
+        };
+
+        wallpaper = {
+          enabled = true;
+          automationEnabled = false;
+
+          directory =
+            let
+              cfg = config.setup.desktopEnvironments;
+            in
+            (pkgs.runCommand "noctalia-wallpapers" { } (
+              if builtins.isPath cfg.background then
+                ''
+                  mkdir $out
+                  cp ${cfg.background} $out/
+                ''
+              else
+                ''
+                  mkdir $out
+                  cp ${cfg.background.light} $out/
+                  cp ${cfg.background.dark} $out/
+                ''
+            )).outPath;
+
+          fillMode = "crop";
+          fillColor = "#000000";
+
+          setWallpaperOnAllMonitors = true;
+          enableMultiMonitorDirectories = false;
+
+          panelPosition = "follow_bar";
+          hideWallpaperFilenames = true;
+          viewMode = "single";
+          sortOrder = "name";
+
+          transitionType = "random";
+          transitionDuration = 1500;
+          transitionEdgeSmoothness = 0.05;
+          skipStartupTransition = false;
+
+          overviewEnabled = false;
+          useSolidColor = false;
+          useWallhaven = false;
+        };
+
+        hooks = {
+          startup = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "noctalia-startup-hook";
+              runtimeInputs = [
+                pkgs.sunwait
+                config.programs.noctalia-shell.package
+              ];
+
+              bashOptions = [
+                # "errexit" # Sunwait exits non-zero
+                "nounset"
+                "pipefail"
+              ];
+
+              text = ''
+                # Location is London, same as sunsetr
+                r="$(sunwait poll civil 51.508415N 0.125533W 2> /dev/null)"
+                if [[ "$r" == "DAY" ]]; then
+                  noctalia-shell ipc call darkMode setLight
+                else
+                  noctalia-shell ipc call darkMode setDark
+                fi
+              '';
+            }
+          );
+
+          darkModeChange =
+            let
+              cfg = config.setup.desktopEnvironments;
+
+              change =
+                let
+                  is-hyprland = config.wayland.windowManager.hyprland.enable;
+
+                  is-zellij = config.programs.zellij.enable;
+
+                  zellij-themes = pkgs.runCommand "zellij-noctalia" { } ''
+                    mkdir $out
+                    sed "s/catppuccin-macchiato/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-macchiato.kdl > $out/dark.kdl
+                    sed "s/catppuccin-latte/noctalia/" ${pkgs.zellij.src}/zellij-utils/assets/themes/catppuccin-latte.kdl > $out/light.kdl
+                  '';
+                in
+                lib.getExe (
+                  pkgs.writeShellApplication {
+                    name = "noctalia-dark-mode-hook";
+                    runtimeInputs = [
+                      pkgs.dconf
+                      config.programs.noctalia-shell.package
+                    ]
+                    ++ lib.optional is-hyprland config.wayland.windowManager.hyprland.package;
+
+                    text = ''
+                      dconf write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
+
+                      if [ "$1" = "true" ]; then
+                        noctalia-shell ipc call wallpaper set ${cfg.background.dark} ""
+
+                        dconf write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+
+                        dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"'
+                        ${if is-hyprland then "hyprctl setcursors catppuccin-macchiato-light-cursors 24" else ""}
+
+                        ${
+                          if is-zellij then
+                            "install -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
+                          else
+                            ""
+                        }
+                      else
+                        noctalia-shell ipc call wallpaper set ${cfg.background.light} ""
+
+                        dconf write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+
+                        dconf write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"'
+                        ${if is-hyprland then "hyprctl setcursors catppuccin-latte-dark-cursors 24" else ""}
+
+                        ${
+                          if is-zellij then
+                            "install -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl"
+                          else
+                            ""
+                        }
+                      fi
+                    '';
+                  }
+                );
+            in
+            if !(builtins.isPath cfg.background) then ''${change} "$1"'' else "";
+        };
+      };
+
+      user-templates = {
+        config = { };
+        templates = { };
       };
     };
   };
