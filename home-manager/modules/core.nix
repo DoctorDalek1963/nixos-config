@@ -26,24 +26,28 @@
 
   targets.genericLinux.enable = false;
 
-  xdg.userDirs =
-    let
-      home = "${config.home.homeDirectory}";
-    in
-    {
-      enable = osConfig.setup.isGraphical;
-      createDirectories = true;
+  xdg = {
+    enable = true;
 
-      documents = "${home}/Documents";
-      download = "${home}/Downloads";
-      music = "${home}/Music";
-      pictures = "${home}/Pictures";
-      videos = "${home}/Videos";
+    userDirs =
+      let
+        home = "${config.home.homeDirectory}";
+      in
+      {
+        enable = osConfig.setup.isGraphical;
+        createDirectories = true;
 
-      desktop = null;
-      publicShare = null;
-      templates = null;
-    };
+        documents = "${home}/Documents";
+        download = "${home}/Downloads";
+        music = "${home}/Music";
+        pictures = "${home}/Pictures";
+        videos = "${home}/Videos";
+
+        desktop = null;
+        publicShare = null;
+        templates = null;
+      };
+  };
 
   # Stuff tends to collect in my Downloads, so I'm intentionally not persisting it
   setup.impermanence.keepDirs = lib.mkIf osConfig.setup.isGraphical [
