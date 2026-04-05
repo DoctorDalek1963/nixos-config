@@ -248,6 +248,8 @@
               ];
 
               text = ''
+                export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_DIRS"
+
                 # Location is London, same as sunsetr
                 r="$(sunwait poll civil 51.51N 0.13W 2> /dev/null)"
                 if [[ "$r" == "DAY" ]]; then
@@ -259,20 +261,26 @@
             }
           );
 
-          darkModeChange = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "noctalia-dark-mode-hook";
-              runtimeInputs = [ config.services.darkman.package ];
+          darkModeChange =
+            let
+              script = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "noctalia-dark-mode-hook";
+                  runtimeInputs = [ config.services.darkman.package ];
 
-              text = ''
-                if [ "$1" = "true" ]; then
-                  darkman set dark
-                else
-                  darkman set light
-                fi
-              '';
-            }
-          );
+                  text = ''
+                    export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_DIRS"
+
+                    if [ "$1" = "true" ]; then
+                      darkman set dark
+                    else
+                      darkman set light
+                    fi
+                  '';
+                }
+              );
+            in
+            ''${script} "$1"'';
         };
       };
 
