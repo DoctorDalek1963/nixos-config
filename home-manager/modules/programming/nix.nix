@@ -31,8 +31,8 @@
         nhcl = "nh clean all --keep 3 --nogcroots";
         nrpl = "nix repl --file '<nixpkgs>'";
 
-        nhos-boot = "${nhos} boot --ask -- --max-jobs ${toString cores} --keep-going --show-trace --accept-flake-config";
-        nhos-switch = "${nhos} switch --ask -- --max-jobs ${toString cores} --keep-going --show-trace --accept-flake-config";
+        nhos-boot = "${nhos} boot --ask -- --max-jobs ${toString cores} --keep-going --show-trace";
+        nhos-switch = "${nhos} switch --ask -- --max-jobs ${toString cores} --keep-going --show-trace";
       };
   };
 }
