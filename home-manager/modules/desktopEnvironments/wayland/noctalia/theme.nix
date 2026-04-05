@@ -179,13 +179,13 @@
                 [
                   "gtk"
                   "qt"
-                  # "btop"
-                  # "yazi"
-                  # "zathura"
                 ]
                 ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
                 ++ lib.optional config.programs.librewolf.enable "pywalfox"
+                ++ lib.optional config.programs.btop.enable "btop"
                 ++ lib.optional config.programs.wezterm.enable "wezterm"
+                ++ lib.optional config.programs.yazi.enable "yazi"
+                ++ lib.optional config.programs.zathura.enable "zathura"
               );
         };
 
@@ -346,6 +346,12 @@
 
           hyprcursor = lib.mkIf is-hyprland "${hyprctl} setcursors catppuccin-macchiato-light-cursors 24";
 
+          bat = lib.mkIf config.programs.bat.enable ''
+            cd ${config.xdg.configHome}/bat/themes
+            ln -sf catppuccin-macchiato.tmTheme noctalia.tmTheme
+            ${lib.getExe config.programs.bat.package} cache --build
+          '';
+
           zellij = lib.mkIf is-zellij "install -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
         };
 
@@ -364,6 +370,12 @@
           xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"' '';
 
           hyprcursor = lib.mkIf is-hyprland "${hyprctl} setcursors catppuccin-latte-dark-cursors 24";
+
+          bat = lib.mkIf config.programs.bat.enable ''
+            cd ${config.xdg.configHome}/bat/themes
+            ln -sf catppuccin-latte.tmTheme noctalia.tmTheme
+            ${lib.getExe config.programs.bat.package} cache --build
+          '';
 
           zellij = lib.mkIf is-zellij "install -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
         };
