@@ -303,7 +303,12 @@
 
         is-hyprland = config.wayland.windowManager.hyprland.enable;
 
-        hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+        hyprctl =
+          let
+            find = lib.getExe' pkgs.findutils "find";
+            hctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+          in
+          "HYPRLAND_INSTANCE_SIGNATURE=$(${find} /run/user/$(id -u)/hypr/* -type d | head -1 | tr '/' '\\n' | tail -1) ${hctl}";
 
         is-zellij = config.programs.zellij.enable;
 
@@ -352,7 +357,7 @@
             ${lib.getExe config.programs.bat.package} cache --build
           '';
 
-          zellij = lib.mkIf is-zellij "install -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
+          zellij = lib.mkIf is-zellij "${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
         };
 
         lightModeScripts = {
@@ -377,7 +382,7 @@
             ${lib.getExe config.programs.bat.package} cache --build
           '';
 
-          zellij = lib.mkIf is-zellij "install -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
+          zellij = lib.mkIf is-zellij "${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
         };
       };
   };
