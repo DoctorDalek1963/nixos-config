@@ -18,11 +18,15 @@ let
 in
 {
   config = lib.mkIf (cfg.emulator == "wezterm") {
-    xdg.terminal-exec = {
-      enable = true;
-      settings = {
-        default = [ "wezterm.desktop" ];
+    xdg = {
+      terminal-exec = {
+        enable = true;
+        settings = {
+          default = [ "wezterm.desktop" ];
+        };
       };
+
+      configFile."wezterm/wezterm.lua".force = true;
     };
 
     programs.wezterm = {
