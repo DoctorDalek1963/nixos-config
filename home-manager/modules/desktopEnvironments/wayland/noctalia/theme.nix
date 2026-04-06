@@ -261,6 +261,13 @@
 
           darkModeChange =
             let
+              cfg = config.setup.desktopEnvironments;
+
+              ipc = "${lib.getExe config.programs.noctalia-shell.package} ipc";
+
+              is-hyprland = config.wayland.windowManager.hyprland.enable;
+
+              # Switching Noctalia wallpaper and doing any Hyprland stuff is a right pain to do in darkman, probably due to the systemd environment, so we do it here instead
               script = lib.getExe (
                 pkgs.writeShellApplication {
                   name = "noctalia-dark-mode-hook";
@@ -271,8 +278,26 @@
 
                     if [ "$1" = "true" ]; then
                       darkman set dark
+
+                      ${
+                        if !(builtins.isPath cfg.background) then
+                          "${ipc} call wallpaper set ${cfg.background.dark} ''"
+                        else
+                          ""
+                      }
+
+                      ${if is-hyprland then "hyprctl setcursors catppuccin-macchiato-light-cursors 24" else ""}
                     else
                       darkman set light
+
+                      ${
+                        if !(builtins.isPath cfg.background) then
+                          "${ipc} call wallpaper set ${cfg.background.light} ''"
+                        else
+                          ""
+                      }
+
+                      ${if is-hyprland then "hyprctl setcursors catppuccin-latte-dark-cursors 24" else ""}
                     fi
                   '';
                 }
@@ -295,11 +320,6 @@
 
     services.darkman =
       let
-        cfg = config.setup.desktopEnvironments;
-
-        ipc = "${lib.getExe config.programs.noctalia-shell.package} ipc";
-
-        is-hyprland = config.wayland.windowManager.hyprland.enable;
 
         is-zellij = config.programs.zellij.enable;
 
@@ -327,11 +347,21 @@
         # the mode has actually changed
 
         darkModeScripts = {
-          noctalia = "${ipc} call darkMode setDark";
+          noctalia = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "noctalia-dark";
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gawk
+                config.programs.noctalia-shell.package
+              ];
 
-          wallpaper = lib.mkIf (
-            !(builtins.isPath cfg.background)
-          ) "${ipc} call wallpaper set ${cfg.background.dark} ''";
+              text = ''
+                inst_id="$(noctalia-shell list | head -1 | awk '{print $2}' | tr -d ':')"
+                noctalia-shell ipc --id "$inst_id" call darkMode setDark
+              '';
+            }
+          );
 
           gtk-theme = ''
             ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
@@ -339,23 +369,6 @@
           '';
 
           xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"' '';
-
-          hyprcursor = lib.mkIf is-hyprland (
-            lib.getExe (
-              pkgs.writeShellApplication {
-                name = "hyprcursor-dark";
-                runtimeInputs = [
-                  pkgs.coreutils
-                  pkgs.findutils
-                  config.wayland.windowManager.hyprland.package
-                ];
-
-                text = ''
-                  HYPRLAND_INSTANCE_SIGNATURE="$(find /run/user/"$(id -u)"/hypr/ -type d | tail -1 | tr '/' '\n' | tail -1)" hyprctl setcursors catppuccin-macchiato-light-cursors 24
-                '';
-              }
-            )
-          );
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
@@ -367,11 +380,21 @@
         };
 
         lightModeScripts = {
-          noctalia = "${ipc} call darkMode setLight";
+          noctalia = lib.getExe (
+            pkgs.writeShellApplication {
+              name = "noctalia-light";
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.gawk
+                config.programs.noctalia-shell.package
+              ];
 
-          wallpaper = lib.mkIf (
-            !(builtins.isPath cfg.background)
-          ) "${ipc} call wallpaper set ${cfg.background.light} ''";
+              text = ''
+                inst_id="$(noctalia-shell list | head -1 | awk '{print $2}' | tr -d ':')"
+                noctalia-shell ipc --id "$inst_id" call darkMode setLight
+              '';
+            }
+          );
 
           gtk-theme = ''
             ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
@@ -379,23 +402,6 @@
           '';
 
           xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"' '';
-
-          hyprcursor = lib.mkIf is-hyprland (
-            lib.getExe (
-              pkgs.writeShellApplication {
-                name = "hyprcursor-light";
-                runtimeInputs = [
-                  pkgs.coreutils
-                  pkgs.findutils
-                  config.wayland.windowManager.hyprland.package
-                ];
-
-                text = ''
-                  HYPRLAND_INSTANCE_SIGNATURE="$(find /run/user/"$(id -u)"/hypr/ -type d | tail -1 | tr '/' '\n' | tail -1)" hyprctl setcursors catppuccin-latte-dark-cursors 24
-                '';
-              }
-            )
-          );
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
