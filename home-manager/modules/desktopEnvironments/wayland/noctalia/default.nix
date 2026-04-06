@@ -395,7 +395,7 @@ in
           bluetoothHideUnnamedDevices = false;
 
           panelsAttachedToBar = true;
-          panelBackgroundOpacity = 0.5;
+          panelBackgroundOpacity = 0.7;
           settingsPanelMode = "attached";
           boxBorderEnabled = true;
           tooltipsEnabled = true;
