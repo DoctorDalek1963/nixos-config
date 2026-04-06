@@ -359,7 +359,7 @@
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
-            ln -sf catppuccin-macchiato.tmTheme noctalia.tmTheme
+            ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-macchiato.tmTheme noctalia.tmTheme
             ${lib.getExe config.programs.bat.package} cache --build
           '';
 
@@ -399,7 +399,7 @@
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
-            ln -sf catppuccin-latte.tmTheme noctalia.tmTheme
+            ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-latte.tmTheme noctalia.tmTheme
             ${lib.getExe config.programs.bat.package} cache --build
           '';
 
