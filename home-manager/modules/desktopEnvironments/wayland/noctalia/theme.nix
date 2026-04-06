@@ -238,7 +238,7 @@
               name = "noctalia-startup-hook";
               runtimeInputs = [
                 pkgs.sunwait
-                config.services.darkman.package
+                config.programs.noctalia-shell.package
               ];
 
               bashOptions = [
@@ -248,14 +248,12 @@
               ];
 
               text = ''
-                export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_DIRS"
-
                 # Location is London, same as sunsetr
                 r="$(sunwait poll civil 51.51N 0.13W 2> /dev/null)"
                 if [[ "$r" == "DAY" ]]; then
-                  darkman set light
+                  noctalia-shell ipc call darkMode setLight
                 else
-                  darkman set dark
+                  noctalia-shell ipc call darkMode setDark
                 fi
               '';
             }
