@@ -199,9 +199,9 @@ in
           enabled = true;
           location = "top_right";
 
-          normalUrgencyDuration = 8;
           lowUrgencyDuration = 8;
-          criticalUrgencyDuration = 15;
+          normalUrgencyDuration = 15;
+          criticalUrgencyDuration = 30;
           respectExpireTimeout = false;
 
           overlayLayer = true;
