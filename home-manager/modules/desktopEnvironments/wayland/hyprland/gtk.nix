@@ -56,6 +56,8 @@ in
     gtk = {
       enable = true;
       inherit (theme-config.gtk) iconTheme;
+
+      gtk4.theme = config.gtk.theme;
     };
   };
 }

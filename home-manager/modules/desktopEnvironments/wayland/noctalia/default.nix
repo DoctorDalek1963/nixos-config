@@ -30,12 +30,11 @@ in
       package = pkgs.noctalia-shell.override {
         bluetoothSupport = osConfig.setup.isLaptop;
         brightnessctlSupport = true;
-        cavaSupport = false;
         cliphistSupport = true;
         ddcutilSupport = true;
         wlsunsetSupport = false;
         wl-clipboardSupport = true;
-        # wlr-randrSupport = true;
+        wlr-randrSupport = true;
         imagemagickSupport = true;
         calendarSupport = false;
       };

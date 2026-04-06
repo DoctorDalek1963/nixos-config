@@ -36,6 +36,7 @@
       {
         enable = osConfig.setup.isGraphical;
         createDirectories = true;
+        setSessionVariables = true;
 
         documents = "${home}/Documents";
         download = "${home}/Downloads";
