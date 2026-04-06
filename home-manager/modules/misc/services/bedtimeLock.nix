@@ -13,7 +13,13 @@
           Type = "oneshot";
         };
 
-        Service.ExecStart = lib.getExe pkgs.hyprlock;
+        Service.ExecStart =
+          if config.programs.noctalia-shell.enable then
+            "${lib.getExe config.programs.noctalia-shell.package} ipc call lockScreen lock"
+          else if config.programs.hyprlock.enable then
+            lib.getExe pkgs.hyprlock
+          else
+            (abort "No known locking program");
       };
 
       timers.bedtime-lock = {
