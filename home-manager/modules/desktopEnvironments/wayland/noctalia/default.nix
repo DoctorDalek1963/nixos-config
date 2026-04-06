@@ -132,6 +132,24 @@ in
           enabled = true;
 
           screenLock = "${ipc} media pause";
+
+          session =
+            let
+              script = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "noctalia-session-end";
+                  runtimeInputs = [ pkgs.hyprshutdown ];
+
+                  text = ''
+                    case "$1" in
+                      "shutdown") hyprshutdown -t 'Shutting down...' ;;
+                      "reboot") hyprshutdown -t 'Rebooting...' ;;
+                    esac
+                  '';
+                }
+              );
+            in
+            ''${script} "$1"'';
         };
 
         appLauncher =
