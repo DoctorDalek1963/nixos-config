@@ -301,13 +301,6 @@
 
         is-hyprland = config.wayland.windowManager.hyprland.enable;
 
-        hyprctl =
-          let
-            find = lib.getExe' pkgs.findutils "find";
-            hctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
-          in
-          "HYPRLAND_INSTANCE_SIGNATURE=$(${find} /run/user/$(id -u)/hypr/* -type d | head -1 | tr '/' '\\n' | tail -1) ${hctl}";
-
         is-zellij = config.programs.zellij.enable;
 
         zellij-themes = pkgs.runCommand "zellij-noctalia" { } ''
@@ -347,7 +340,22 @@
 
           xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"' '';
 
-          hyprcursor = lib.mkIf is-hyprland "${hyprctl} setcursors catppuccin-macchiato-light-cursors 24";
+          hyprcursor = lib.mkIf is-hyprland (
+            lib.getExe (
+              pkgs.writeShellApplication {
+                name = "hyprcursor-dark";
+                runtimeInputs = [
+                  pkgs.coreutils
+                  pkgs.findutils
+                  config.wayland.windowManager.hyprland.package
+                ];
+
+                text = ''
+                  HYPRLAND_INSTANCE_SIGNATURE="$(find /run/user/"$(id -u)"/hypr/ -type d | tail -1 | tr '/' '\n' | tail -1)" hyprctl setcursors catppuccin-macchiato-light-cursors 24
+                '';
+              }
+            )
+          );
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
@@ -372,7 +380,22 @@
 
           xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"' '';
 
-          hyprcursor = lib.mkIf is-hyprland "${hyprctl} setcursors catppuccin-latte-dark-cursors 24";
+          hyprcursor = lib.mkIf is-hyprland (
+            lib.getExe (
+              pkgs.writeShellApplication {
+                name = "hyprcursor-light";
+                runtimeInputs = [
+                  pkgs.coreutils
+                  pkgs.findutils
+                  config.wayland.windowManager.hyprland.package
+                ];
+
+                text = ''
+                  HYPRLAND_INSTANCE_SIGNATURE="$(find /run/user/"$(id -u)"/hypr/ -type d | tail -1 | tr '/' '\n' | tail -1)" hyprctl setcursors catppuccin-latte-dark-cursors 24
+                '';
+              }
+            )
+          );
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
