@@ -131,24 +131,6 @@ in
           enabled = true;
 
           screenLock = "${ipc} media pause";
-
-          session =
-            let
-              script = lib.getExe (
-                pkgs.writeShellApplication {
-                  name = "noctalia-session-end";
-                  runtimeInputs = [ pkgs.hyprshutdown ];
-
-                  text = ''
-                    case "$1" in
-                      "shutdown") hyprshutdown -t 'Shutting down...' ;;
-                      "reboot") hyprshutdown -t 'Rebooting...' ;;
-                    esac
-                  '';
-                }
-              );
-            in
-            ''${script} "$1"'';
         };
 
         appLauncher =
@@ -359,6 +341,12 @@ in
                 {
                   action = "reboot";
                   keybind = "4";
+
+                  command =
+                    if config.wayland.windowManager.hyprland.enable then
+                      "${lib.getExe pkgs.hyprshutdown} -t 'Rebooting...' -p '/run/current-system/sw/bin/systemctl reboot'"
+                    else
+                      "";
                 }
                 {
                   action = "logout";
@@ -368,17 +356,29 @@ in
                     if useUwsm then
                       "${lib.getExe osConfig.programs.uwsm.package} stop"
                     else if config.wayland.windowManager.hyprland.enable then
-                      "${config.wayland.windowManager.hyprland.package}/bin/hyprctl dispatch exit"
+                      "${lib.getExe pkgs.hyprshutdown} -t 'Logging out...'"
                     else
                       "";
                 }
                 {
                   action = "shutdown";
                   keybind = "6";
+
+                  command =
+                    if config.wayland.windowManager.hyprland.enable then
+                      "${lib.getExe pkgs.hyprshutdown} -t 'Shutting down...' -p '/run/current-system/sw/bin/systemctl poweroff'"
+                    else
+                      "";
                 }
                 {
                   action = "rebootToUefi";
                   keybind = "7";
+
+                  command =
+                    if config.wayland.windowManager.hyprland.enable then
+                      "${lib.getExe pkgs.hyprshutdown} -t 'Rebooting to UEFI...' -p '/run/current-system/sw/bin/systemctl reboot --firmware-setup'"
+                    else
+                      "";
                 }
               ];
         };
