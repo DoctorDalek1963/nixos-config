@@ -11,6 +11,8 @@
 
       thermald.enable = true;
 
+      upower.enable = true;
+
       tlp = {
         enable = true;
         settings = {

@@ -38,6 +38,7 @@ let
         wayback-machine
         zotero-connector
       ]
-    ));
+    ))
+    ++ lib.optional config.programs.noctalia-shell.enable addons.pywalfox;
 in
 if cfg.enableExtensions then { inherit packages; } else [ ]

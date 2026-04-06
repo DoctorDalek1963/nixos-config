@@ -14,7 +14,7 @@
         };
 
         Service.ExecStart = pkgs.writeShellScript "bedtime-reminder" ''
-          ${pkgs.dunst}/bin/dunstify "Bedtime" "Go to bed now" --urgency=critical
+          ${lib.getExe' pkgs.libnotify "notify-send"} --urgency=critical --app-name=Bedtime "Go to bed now"
         '';
       };
 
@@ -22,7 +22,7 @@
         Install.WantedBy = [ "timers.target" ];
 
         Timer = {
-          OnCalendar = "*-*-* 00..06:00/5:00";
+          OnCalendar = "*-*-* 00..06:00/2:00";
           Unit = "bedtime-reminders.service";
           Persistent = false;
         };

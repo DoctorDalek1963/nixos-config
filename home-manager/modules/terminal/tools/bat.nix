@@ -5,28 +5,45 @@
   ...
 }:
 let
+  catppuccin-src = pkgs.fetchFromGitHub {
+    owner = "catppuccin";
+    repo = "bat";
+    rev = "6810349b28055dce54076712fc05fc68da4b8ec0";
+    sha256 = "sha256-lJapSgRVENTrbmpVyn+UQabC9fpV1G1e+CdlJ090uvg=";
+  };
+
   theme =
-    {
-      onedark = {
-        name = "OneHalfDark";
-        pkgs = { }; # Built-in to bat
-      };
-      catppuccin-macchiato = {
-        name = "catppuccin-macchiato";
+    if config.programs.noctalia-shell.enable then
+      {
+        name = "noctalia";
         pkgs = {
           catppuccin-macchiato = {
-            src = pkgs.fetchFromGitHub {
-              owner = "catppuccin";
-              repo = "bat";
-              rev = "b19bea35a85a32294ac4732cad5b0dc6495bed32";
-              sha256 = "sha256-POoW2sEM6jiymbb+W/9DKIjDM1Buu1HAmrNP0yC2JPg=";
-            };
+            src = catppuccin-src;
             file = "themes/Catppuccin Macchiato.tmTheme";
           };
+          catppuccin-latte = {
+            src = catppuccin-src;
+            file = "themes/Catppuccin Latte.tmTheme";
+          };
         };
-      };
-    }
-    .${config.setup.terminal.theme};
+      }
+    else
+      {
+        onedark = {
+          name = "OneHalfDark";
+          pkgs = { }; # Built-in to bat
+        };
+        catppuccin-macchiato = {
+          name = "catppuccin-macchiato";
+          pkgs = {
+            catppuccin-macchiato = {
+              src = catppuccin-src;
+              file = "themes/Catppuccin Macchiato.tmTheme";
+            };
+          };
+        };
+      }
+      .${config.setup.terminal.theme};
 in
 {
   config = lib.mkIf config.setup.terminal.tools.bat {

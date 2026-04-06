@@ -15,12 +15,12 @@
       settings =
         let
           hyprctl = "${config.wayland.windowManager.hyprland.package}/bin/hyprctl";
-          hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
+          lock = "${lib.getExe config.programs.noctalia-shell.package} ipc call lockScreen lock";
         in
         {
           general = {
             after_sleep_cmd = "${hyprctl} dispatch dpms on";
-            lock_cmd = "${hyprlock}";
+            lock_cmd = "${lock}";
             ignore_dbus_inhibit = false;
             ignore_systemd_inhibit = false;
           };
@@ -32,7 +32,7 @@
             [
               {
                 timeout = lock-timeout;
-                on-timeout = "${hyprlock}";
+                on-timeout = "${lock}";
               }
               {
                 timeout = lock-timeout + 15;

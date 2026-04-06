@@ -10,11 +10,12 @@ let
   cfgTT = cfg.terminal.tools;
   cfgB = cfg.desktopEnvironments.hyprland.borderStyle;
 
+  noc-ipc = "${lib.getExe config.programs.noctalia-shell.package} ipc";
+
   hypr-gamemode-sh = pkgs.writeShellApplication {
     name = "hypr-gamemode.sh";
 
     runtimeInputs = [
-      pkgs.dunst
       pkgs.gawk
       pkgs.procps
       pkgs.sunsetr
@@ -35,16 +36,16 @@ let
               keyword decoration:rounding 0;\
               keyword decoration:dim_inactive 0;\
               keyword general:allow_tearing 1"
-          dunstctl set-paused true
-          pkill -USR1 waybar
+          ${noc-ipc} call bar hideBar
+          ${noc-ipc} call notifications enableDND
           sunsetr preset gaming
           ${
             if config.setup.misc.services.bedtimeLock then "systemctl --user stop bedtime-lock.timer" else ""
           }
       else
           hyprctl reload
-          dunstctl set-paused false
-          pkill -USR1 waybar
+          ${noc-ipc} call notifications disableDND
+          ${noc-ipc} call bar showBar
           sunsetr preset default
           ${
             if config.setup.misc.services.bedtimeLock then "systemctl --user start bedtime-lock.timer" else ""
@@ -85,35 +86,20 @@ let
 in
 {
   imports = [
-    ./waybar
-
-    ./clipboard.nix
-    ./dunst.nix
     ./gtk.nix
     ./hypridle.nix
-    ./hyprlock.nix
-    ./hyprpaper.nix
     ./sunsetr.nix
-    ./wofi.nix
   ];
 
   config = lib.mkIf osConfig.setup.desktopEnvironments.hyprland.enable {
     home = {
       # Hint Electron apps to use Wayland
       sessionVariables.NIXOS_OZONE_WL = "1";
-      packages = [ pkgs.hyprpolkitagent ];
+      packages = [
+        pkgs.hyprpolkitagent
+        pkgs.wl-clipboard
+      ];
     };
-
-    # Catppuccin macchiato (mauve), taken from https://github.com/SchweGELBin/catppuccin-hyprtoolkit
-    xdg.configFile."hypr/hyprtoolkit.conf".text = ''
-      background=0xff181926
-      base=0xff24273a
-      alternate_base=0xff1e2030
-      text=0xffcad3f5
-      bright_text=0xffb8c0e0
-      accent=0xffc6a0f6
-      accent_secondary=0xffb7bdf8
-    '';
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -125,67 +111,8 @@ in
 
       settings =
         let
-          playerctl = "${pkgs.playerctl}/bin/playerctl";
           hyprshot = "${pkgs.hyprshot}/bin/hyprshot";
           downloads = config.xdg.userDirs.download;
-
-          volume-adjust-pkg = pkgs.writeShellApplication {
-            name = "volume-adjust";
-
-            runtimeInputs = with pkgs; [
-              wireplumber
-              coreutils
-              bc
-              dunst
-            ];
-
-            text = ''
-              if [ "$1" = "mute" ]; then
-                wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-              else
-                wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ "$1"
-              fi
-
-              muted=""
-              if [ "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | tail -1)" = "[MUTED]" ]; then
-                muted=" [MUTED]"
-              fi
-
-              volume_float="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr ' ' '\n' | head -2 | tail -1)"
-              volume="$(bc <<< "($volume_float * 100) / 1")"
-
-              progress_hint_float="$(bc -l <<< "($volume / 150) * 100")"
-              progress_hint="$(bc <<< "$progress_hint_float / 1")"
-
-              dunstify "Volume$muted" "$volume / 150" --urgency=low --hints=int:value:"$progress_hint" --hints=string:x-dunst-stack-tag:volume-adjust
-            '';
-          };
-
-          volume-adjust = lib.getExe volume-adjust-pkg;
-
-          brightness-adjust-pkg = pkgs.writeShellApplication {
-            name = "brightness-adjust";
-
-            runtimeInputs = with pkgs; [
-              brightnessctl
-              bc
-              dunst
-            ];
-
-            text = ''
-              brightnessctl set "$1"
-
-              current="$(brightnessctl --machine-readable get)"
-              maximum="$(brightnessctl --machine-readable max)"
-
-              brightness_float="$(bc <<< "scale=5; ($current * 100) / $maximum + 0.5")"
-              brightness="$(bc <<< "$brightness_float / 1")"
-
-              dunstify "Brightness" "''${brightness}%" --urgency=low --hints=int:value:"$brightness" --hints=string:x-dunst-stack-tag:brightness-adjust
-            '';
-          };
-
-          brightness-adjust = lib.getExe brightness-adjust-pkg;
 
           zoom-change-pkg = pkgs.writeShellApplication {
             name = "zoom-change";
@@ -213,7 +140,10 @@ in
           zoom-change = lib.getExe zoom-change-pkg;
         in
         {
-          exec-once = [ "systemctl --user start hyprpolkitagent" ];
+          exec-once = [
+            "systemctl --user start hyprpolkitagent"
+            (lib.getExe config.programs.noctalia-shell.package)
+          ];
 
           monitorv2 =
             (
@@ -364,6 +294,18 @@ in
             }
           ];
 
+          layerrule = [
+            {
+              name = "noctalia";
+
+              "match:namespace" = "noctalia-background-.*$";
+
+              ignore_alpha = 0.1;
+              blur = true;
+              blur_popups = true;
+            }
+          ];
+
           bind =
             # General window management
             [
@@ -375,12 +317,15 @@ in
               "$mod, X, fullscreen, 1"
               "$mod SHIFT, X, fullscreen, 2"
               "$mod, down, fullscreenstate, 0"
+              "$mod, R, exec, ${noc-ipc} call launcher toggle"
               "$mod, F12, exec, ${hypr-gamemode-sh}/bin/hypr-gamemode.sh"
+              "$mod CTRL, L, exec, ${noc-ipc} call lockScreen lock"
             ]
             # Spawn new windows
             ++ [
               "$mod, T, exec, $launchPrefix $terminal"
               "$mod, E, exec, [float; center; size (monitor_w*0.6) (monitor_h*0.6)] $launchPrefix $fileManager"
+              "SUPER, V, exec, ${noc-ipc} call launcher clipboard"
             ]
             ++ lib.optional cfg.librewolf.enable "$mod, F, exec, $launchPrefix ${lib.getExe config.programs.librewolf.package}"
             ++ lib.optional cfg.misc.programs.anki "$mod, A, exec, $launchPrefix ${lib.getExe pkgs.anki}"
@@ -427,13 +372,6 @@ in
               "$mod, grave, togglespecialworkspace"
               "$mod SHIFT, grave, movetoworkspace, special"
             ]
-            # Mute button
-            ++ [
-              ", Xf86AudioMute, exec, ${volume-adjust} mute"
-              ", Xf86AudioPlay, exec, ${playerctl} play-pause"
-              ", Xf86AudioPrev, exec, ${playerctl} previous"
-              ", Xf86AudioNext, exec, ${playerctl} next"
-            ]
             # Screenshots
             ++ [
               ", print, exec, ${hyprshot} -o ${downloads} -m region"
@@ -454,19 +392,27 @@ in
               "CTRL, grave, sendshortcut, ,, class:^(.*?)$"
             ];
 
-          # Binds that repeat when held
-          binde =
+          # Binds that work when locked
+          bindl = [
+            ", Xf86AudioMute, exec, ${noc-ipc} call volume muteOutput"
+            ", Xf86AudioPlay, exec, ${noc-ipc} call media playPause"
+            ", Xf86AudioPrev, exec, ${noc-ipc} call media previous"
+            ", Xf86AudioNext, exec, ${noc-ipc} call media next"
+          ];
+
+          # Binds that repeat when held and work when locked
+          bindel =
             # Volume controls
             [
-              ", Xf86AudioRaiseVolume, exec, ${volume-adjust} .05+"
-              ", Xf86AudioLowerVolume, exec, ${volume-adjust} .05-"
-              "CTRL, up, exec, ${volume-adjust} .05+"
-              "CTRL, down, exec, ${volume-adjust} .05-"
+              ", Xf86AudioRaiseVolume, exec, ${noc-ipc} call volume increase"
+              ", Xf86AudioLowerVolume, exec, ${noc-ipc} call volume decrease"
+              "CTRL, up, exec, ${noc-ipc} call volume increase"
+              "CTRL, down, exec, ${noc-ipc} call volume decrease"
             ]
             # Brightness controls
             ++ [
-              ", XF86MonBrightnessUp, exec, ${brightness-adjust} +5%"
-              ", XF86MonBrightnessDown, exec, ${brightness-adjust} 5%-"
+              ", XF86MonBrightnessUp, exec, ${noc-ipc} call brightness increase"
+              ", XF86MonBrightnessDown, exec, ${noc-ipc} call brightness decrease"
             ];
 
           # Mouse binds
