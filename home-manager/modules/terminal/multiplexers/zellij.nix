@@ -14,7 +14,7 @@ in
 
       settings = {
         theme = if config.programs.noctalia-shell.enable then "noctalia" else "catppuccin-macchiato";
-        theme_dir = "${config.xdg.configHome}/zellij/themes";
+        theme_dir = lib.mkIf config.programs.noctalia-shell.enable "${config.xdg.configHome}/zellij/themes";
 
         default_mode = "locked";
         show_startup_tips = false;
