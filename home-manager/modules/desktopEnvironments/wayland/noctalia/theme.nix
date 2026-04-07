@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  osConfig,
   ...
 }:
 {
@@ -182,6 +183,7 @@
                 ]
                 ++ lib.optional config.wayland.windowManager.hyprland.enable "hyprtoolkit"
                 ++ lib.optional config.programs.librewolf.enable "pywalfox"
+                ++ lib.optional osConfig.programs.steam.enable "steam"
                 ++ lib.optional config.programs.btop.enable "btop"
                 ++ lib.optional config.programs.wezterm.enable "wezterm"
                 ++ lib.optional config.programs.yazi.enable "yazi"
