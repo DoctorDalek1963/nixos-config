@@ -185,15 +185,15 @@ let
             };
           };
         }
-        ++ lib.optional config.services.jellyseerr.enable {
-          "Jellyseerr" = {
-            icon = "jellyseerr.svg";
-            href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.jellyseerr}";
+        ++ lib.optional config.services.seerr.enable {
+          "Seerr" = {
+            icon = "seerr.svg";
+            href = "https://${cfg.domainName}:${toString cfg.ports.haproxy.mediaServer.seerr}";
             description = "Request movies and TV shows";
             widget = {
-              type = "jellyseerr";
-              url = "http://localhost:${toString cfg.ports.mediaServer.jellyseerr}";
-              key = "{{HOMEPAGE_VAR_JELLYSEERR_KEY}}";
+              type = "seerr";
+              url = "http://localhost:${toString cfg.ports.mediaServer.seerr}";
+              key = "{{HOMEPAGE_VAR_SEERR_KEY}}";
             };
           };
         }

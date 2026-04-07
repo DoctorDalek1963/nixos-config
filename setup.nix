@@ -182,7 +182,7 @@ in
 
             mediaServer = {
               audiobookshelf = port 8001;
-              jellyseerr = port 5056;
+              seerr = port 5056;
               fileflows = port 19201;
             };
           };
@@ -217,7 +217,7 @@ in
               http = port 8096;
               https = port 8920;
             };
-            jellyseerr = port 5055;
+            seerr = port 5055;
             navidrome = port 4533;
             stash = port 9999;
 

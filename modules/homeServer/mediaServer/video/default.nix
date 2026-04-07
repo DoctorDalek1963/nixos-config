@@ -3,7 +3,7 @@
     ./bazarr
 
     ./jellyfin.nix
-    ./jellyseerr.nix
+    ./seerr.nix
     ./radarr.nix
     ./sonarr.nix
   ];

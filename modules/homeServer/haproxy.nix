@@ -56,7 +56,7 @@ in
 
             ${optProxy (
               cfgMs.movies || cfgMs.telly
-            ) "jellyseerr" cfg.ports.haproxy.mediaServer.jellyseerr cfg.ports.mediaServer.jellyseerr ""}
+            ) "seerr" cfg.ports.haproxy.mediaServer.seerr cfg.ports.mediaServer.seerr ""}
 
             ${optProxy cfgMs.enable "fileflows" cfg.ports.haproxy.mediaServer.fileflows
               cfg.ports.mediaServer.fileflows
