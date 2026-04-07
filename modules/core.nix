@@ -29,6 +29,8 @@ in
         "root"
         "@wheel"
       ];
+
+      connect-timeout = 5;
     };
 
     # Garbage collect old packages every week
@@ -37,6 +39,26 @@ in
       dates = "weekly";
       options = "--delete-older-than 14d";
     };
+
+    buildMachines = lib.mkIf (cfg.hostname != "Alex-NixOS") [
+      {
+        hostName = "alex";
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+
+        maxJobs = 6;
+        speedFactor = 2;
+
+        supportedFeatures = [
+          "nixos-test"
+          "big-parallel"
+          "kvm"
+        ];
+        mandatoryFeatures = [ ];
+      }
+    ];
+
+    distributedBuilds = lib.mkIf (cfg.hostname != "Alex-NixOS") true;
 
     # Use unstable packages on the command line with `nix shell unstable#pkgName`
     # registry.unstable = {
