@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 let
@@ -9,6 +10,8 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && cfg.steam.enable) {
+    nixpkgs.overlays = [ inputs.millennium.overlays.default ];
+
     programs = {
       gamescope = {
         enable = true;
@@ -23,7 +26,7 @@ in
 
         extraCompatPackages = if cfg.steam.enableProtonGE then [ pkgs.proton-ge-bin ] else [ ];
 
-        package = pkgs.steam.override {
+        package = pkgs.millennium-steam.override {
           extraPkgs =
             p: with p; [
               libkrb5
