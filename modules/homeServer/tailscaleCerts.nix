@@ -68,6 +68,7 @@ in
           Type = "oneshot";
           ExecStart = "${bash-script}/bin/tailscale-certificates";
           Group = "certs";
+          Restart = "on-failure";
         };
 
         after = [
