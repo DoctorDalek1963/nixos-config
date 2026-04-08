@@ -88,7 +88,7 @@ Item {
       }
 
       Process {
-        // TODO: Timer to call every second
+        id: externalProgramProcess
         running: true
         command: [
           "/tmp/tmp.zONsZN2K2v/current-age/target/release/current-age", // "@EXTERNAL_PROGRAM@",
@@ -106,6 +106,15 @@ Item {
         font.weight: Font.Medium
       }
     }
+  }
+
+  Timer {
+    id: timer
+    interval: 1000
+    running: true
+    repeat: true
+
+    onTriggered: externalProgramProcess.running = true
   }
 
   // MouseArea at root level for extended click area
