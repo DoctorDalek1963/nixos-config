@@ -205,32 +205,6 @@
           ];
         };
       };
-
-      plugins = {
-        sources = [
-          {
-            enabled = true;
-            name = "Official Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }
-        ];
-        states = {
-          current-age = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-        };
-        version = 2;
-      };
-
-      pluginSettings = {
-        current-age = {
-          dateOfBirth = "2005-03-19T03:01:00";
-        };
-      };
     };
-
-    # xdg.configFile."noctalia/plugins/current-age".source = ./current-age;
-    # home.file.".config/noctalia/plugins/current-age".source = ./current-age;
   };
 }
