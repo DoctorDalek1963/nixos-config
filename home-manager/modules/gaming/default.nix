@@ -59,7 +59,12 @@ in
       ".config/ludusavi"
     ]
     ++ lib.optionals cfgGaming.steam.enable [
+      ".steam"
       ".local/share/Steam"
+
+      ".local/share/millennium"
+      ".config/millennium"
+
       ".local/share/doublefine"
       ".local/share/FasterThanLight"
       ".local/share/Euro Truck Simulator 2"
