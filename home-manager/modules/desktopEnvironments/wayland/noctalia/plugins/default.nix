@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  osConfig,
   ...
 }:
 let
@@ -28,11 +27,13 @@ in
         version = 2;
       };
 
-      pluginSettings = {
-        current-age = {
-          dateOfBirth = "2005-03-19T03:01:00";
-        };
-      };
+      # pluginSettings = {
+      #   current-age = {
+      #     dateOfBirth = "2005-03-19T03:01:00";
+      #   };
+      # };
     };
+
+    xdg.configFile."noctalia/plugins/current-age".source = current-age.outPath;
   };
 }

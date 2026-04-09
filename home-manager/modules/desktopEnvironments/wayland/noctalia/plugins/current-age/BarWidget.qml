@@ -91,7 +91,7 @@ Item {
         id: externalProgramProcess
         running: true
         command: [
-          "/tmp/tmp.zONsZN2K2v/current-age/target/release/current-age", // "@EXTERNAL_PROGRAM@",
+          "@EXTERNAL_PROGRAM@",
           root.dateOfBirth.toISOString()
         ]
         stdout: SplitParser {

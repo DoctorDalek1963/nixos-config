@@ -10,14 +10,17 @@ stdenvNoCC.mkDerivation {
   name = "noctalia-current-age";
 
   src = ./.;
-  dontUnpack = true;
+
+  buildInputs = [ external-program ];
 
   buildPhase = ''
-    # TODO: substitute in place with ${lib.getExe external-program}
+    substituteInPlace BarWidget.qml \
+      --replace-fail "@EXTERNAL_PROGRAM@" "${lib.getExe external-program}" \
   '';
 
   installPhase = ''
-    # TODO
+    mkdir -p $out
+    cp -rv *.qml manifest.json $out/
   '';
 
   meta = {
