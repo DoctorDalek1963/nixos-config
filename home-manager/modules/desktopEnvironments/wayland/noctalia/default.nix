@@ -17,6 +17,7 @@ in
 
     ./bar.nix
     ./theme.nix
+    ./plugins
   ];
 
   config = lib.mkIf config.wayland.windowManager.hyprland.enable {

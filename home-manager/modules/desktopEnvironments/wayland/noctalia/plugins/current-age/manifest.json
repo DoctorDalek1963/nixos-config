@@ -1,0 +1,21 @@
+{
+	"id": "current-age",
+	"name": "Current Age",
+	"version": "1.0.0",
+	"minNoctaliaVersion": "4.7.1",
+	"author": "Dyson Dyson",
+	"license": "GPLv3",
+	"description": "Display my current age in the bar",
+	"entryPoints": {
+		"barWidget": "BarWidget.qml",
+		"settings": "Settings.qml"
+	},
+	"dependencies": {
+		"plugins": []
+	},
+	"metadata": {
+		"defaultSettings": {
+			"dateOfBirth": "1970-01-01T00:00:00"
+		}
+	}
+}

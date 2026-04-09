@@ -1,0 +1,9 @@
+[package]
+name = "current-age"
+version = "0.1.0"
+edition = "2024"
+authors = ["Dyson Dyson <dyson.dyson@icloud.com>"]
+license = "GPL-3.0"
+
+[dependencies]
+chrono = { version = "0.4.44", default-features = false, features = ["clock", "std"] }
