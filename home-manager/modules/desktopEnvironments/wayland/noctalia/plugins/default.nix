@@ -27,13 +27,17 @@ in
         version = 2;
       };
 
-      # pluginSettings = {
-      #   current-age = {
-      #     dateOfBirth = "2005-03-19T03:01:00";
-      #   };
-      # };
+      pluginSettings = {
+        current-age = {
+          dateOfBirth = "2005-03-19T03:01:00";
+        };
+      };
     };
 
-    xdg.configFile."noctalia/plugins/current-age".source = current-age.outPath;
+    setup.impermanence.keepDirs = [ ".config/noctalia/plugins" ];
+
+    home.activation.noctalia-plugin-current-age = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run ${lib.getExe pkgs.rsync} -r ${current-age}/ ${config.xdg.configHome}/noctalia/plugins/current-age
+    '';
   };
 }

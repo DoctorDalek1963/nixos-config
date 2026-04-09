@@ -136,10 +136,6 @@
             }
             {
               id = "plugin:current-age";
-
-              defaultSettings = {
-                dateOfBirth = "2005-03-19T03:01:00";
-              };
             }
             {
               id = "NotificationHistory";
