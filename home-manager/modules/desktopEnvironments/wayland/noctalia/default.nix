@@ -336,8 +336,16 @@ in
                   keybind = "2";
                 }
                 {
-                  action = "hibernate";
+                  action = "logout";
                   keybind = "3";
+
+                  command =
+                    if useUwsm then
+                      "${lib.getExe osConfig.programs.uwsm.package} stop"
+                    else if config.wayland.windowManager.hyprland.enable then
+                      "${lib.getExe pkgs.hyprshutdown} -t 'Logging out...'"
+                    else
+                      "";
                 }
                 {
                   action = "reboot";
@@ -350,20 +358,8 @@ in
                       "";
                 }
                 {
-                  action = "logout";
-                  keybind = "5";
-
-                  command =
-                    if useUwsm then
-                      "${lib.getExe osConfig.programs.uwsm.package} stop"
-                    else if config.wayland.windowManager.hyprland.enable then
-                      "${lib.getExe pkgs.hyprshutdown} -t 'Logging out...'"
-                    else
-                      "";
-                }
-                {
                   action = "shutdown";
-                  keybind = "6";
+                  keybind = "5";
 
                   command =
                     if config.wayland.windowManager.hyprland.enable then
@@ -373,13 +369,22 @@ in
                 }
                 {
                   action = "rebootToUefi";
-                  keybind = "7";
+                  keybind = "6";
 
                   command =
                     if config.wayland.windowManager.hyprland.enable then
                       "${lib.getExe pkgs.hyprshutdown} -t 'Rebooting to UEFI...' -p '/run/current-system/sw/bin/systemctl reboot --firmware-setup'"
                     else
                       "";
+                }
+
+                {
+                  action = "hibernate";
+                  enabled = false;
+                }
+                {
+                  action = "userspaceReboot";
+                  enabled = false;
                 }
               ];
         };
