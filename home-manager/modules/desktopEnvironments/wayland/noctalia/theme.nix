@@ -348,10 +348,10 @@
         # changing the mode in Noctalia because it will only call the hook if
         # the mode has actually changed
 
-        darkModeScripts = {
+        scripts = {
           noctalia = lib.getExe (
             pkgs.writeShellApplication {
-              name = "noctalia-dark";
+              name = "noctalia-theme-switch";
               runtimeInputs = [
                 pkgs.coreutils
                 pkgs.gawk
@@ -360,58 +360,48 @@
 
               text = ''
                 inst_id="$(noctalia-shell list | head -1 | awk '{print $2}' | tr -d ':')"
-                noctalia-shell ipc --id "$inst_id" call darkMode setDark
+
+                case "$1" in
+                  light) noctalia-shell ipc --id "$inst_id" call darkMode setLight ;;
+                  dark) noctalia-shell ipc --id "$inst_id" call darkMode setDark ;;
+                esac
               '';
             }
           );
 
           gtk-theme = ''
             ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
-            ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme '"prefer-dark"'
+
+            case "$1" in
+              light) ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme '"prefer-light"' ;;
+              dark) ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme '"prefer-dark"' ;;
+            esac
           '';
 
-          xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"' '';
+          xcursor = ''
+            case "$1" in
+              light) ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"' ;;
+              dark) ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-macchiato-light-cursors"' ;;
+            esac
+          '';
 
           bat = lib.mkIf config.programs.bat.enable ''
             cd ${config.xdg.configHome}/bat/themes
-            ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-macchiato.tmTheme noctalia.tmTheme
+
+            case "$1" in
+              light) ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-latte.tmTheme noctalia.tmTheme ;;
+              dark) ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-macchiato.tmTheme noctalia.tmTheme ;;
+            esac
+
             ${lib.getExe config.programs.bat.package} cache --build
           '';
 
-          zellij = lib.mkIf is-zellij "${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
-        };
-
-        lightModeScripts = {
-          noctalia = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "noctalia-light";
-              runtimeInputs = [
-                pkgs.coreutils
-                pkgs.gawk
-                config.programs.noctalia-shell.package
-              ];
-
-              text = ''
-                inst_id="$(noctalia-shell list | head -1 | awk '{print $2}' | tr -d ':')"
-                noctalia-shell ipc --id "$inst_id" call darkMode setLight
-              '';
-            }
-          );
-
-          gtk-theme = ''
-            ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
-            ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/color-scheme '"prefer-light"'
+          zellij = lib.mkIf is-zellij ''
+            case "$1" in
+              light) ${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl ;;
+              dark) ${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/dark.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl ;;
+            esac
           '';
-
-          xcursor = ''${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/cursor-theme '"catppuccin-latte-dark-cursors"' '';
-
-          bat = lib.mkIf config.programs.bat.enable ''
-            cd ${config.xdg.configHome}/bat/themes
-            ${lib.getExe' pkgs.coreutils "ln"} -sf catppuccin-latte.tmTheme noctalia.tmTheme
-            ${lib.getExe config.programs.bat.package} cache --build
-          '';
-
-          zellij = lib.mkIf is-zellij "${lib.getExe' pkgs.coreutils "install"} -Dm444 ${zellij-themes}/light.kdl ${config.xdg.configHome}/zellij/themes/noctalia.kdl";
         };
       };
   };
