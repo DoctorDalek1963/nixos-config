@@ -4,7 +4,7 @@ _default:
 # build the ISO image for a bootable USB, without secrets
 [group("build")]
 build-iso:
-    nom build {{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage
+    nom build {{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage --show-trace
 
 # We include the secrets by using path:, which will include everything in this
 # directory, including all git artifacts and any other unstaged and uncommitted files
@@ -12,7 +12,7 @@ build-iso:
 # build the ISO image for a bootable USB, and include the necessary sops secrets
 [group("build")]
 build-iso-with-secrets:
-    nom build path:{{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage
+    nom build path:{{ justfile_directory() }}#nixosConfigurations.iso.config.system.build.isoImage --show-trace
 
 # We use `sudo true` so that just doesn't mkdir pi-mnt until we know the user
 # is present to sudo mount the image. It's annoying to need to rmdir this
@@ -24,7 +24,7 @@ build-iso-with-secrets:
 # build the image for the SD card for Bert-NixOS, my Raspberry Pi 4, and copy the secret key to the correct place
 [group("build")]
 build-raspi-sd:
-    nom build {{ justfile_directory() }}#nixosConfigurations.Bert-NixOS.config.system.build.sdImage
+    nom build {{ justfile_directory() }}#nixosConfigurations.Bert-NixOS.config.system.build.sdImage --show-trace
     cp {{ justfile_directory() }}/result/sd-image/pi.img pi.img
     chmod u+w pi.img
 
@@ -59,7 +59,7 @@ nixos-config-shell:
 # push store paths for the given system to Cachix
 [group("cache")]
 cachix-push-systems +names:
-    for name in {{ names }}; do nix build {{ justfile_directory() }}#nixosConfigurations."$name".config.system.build.toplevel --keep-going --print-build-logs; done
+    for name in {{ names }}; do nix build {{ justfile_directory() }}#nixosConfigurations."$name".config.system.build.toplevel --keep-going --print-build-logs --show-trace; done
     # Only push to Cachix when not in CI because it's broken in CI for some reason
     if [ -z "${CI:-}" ]; then RUST_LOG=debug {{ justfile_directory() }}/cachix_push_missing_paths.rs "{{ justfile_directory() }}" {{ names }}; fi
 
