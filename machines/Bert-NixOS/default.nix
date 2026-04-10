@@ -89,7 +89,7 @@
     ethtool
     libraspberrypi
     minicom
-    (python311.withPackages (
+    (python3.withPackages (
       p: with p; [
         gpiozero
         pyserial
