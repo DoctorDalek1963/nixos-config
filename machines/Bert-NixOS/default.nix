@@ -32,27 +32,37 @@
   # Don't build any docs locally
   documentation.enable = false;
 
-  # Keep this to make sure wifi works
-  hardware = {
-    enableRedistributableFirmware = lib.mkForce false;
-    firmware = [ pkgs.raspberrypiWirelessFirmware ];
-  };
-
   users.groups.gpio.members = [ "pi" ];
 
-  boot = {
-    loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = true;
-      timeout = 2;
+  hardware = {
+    # Keep this to make sure wifi works
+    enableRedistributableFirmware = lib.mkForce false;
+    firmware = [ pkgs.raspberrypiWirelessFirmware ];
+
+    raspberry-pi."4" = {
+      apply-overlays-dtmerge.enable = true;
+
+      gpio.enable = true;
+
+      leds = {
+        act.disable = true;
+        eth.disable = true;
+        pwr.disable = true;
+      };
+
+      fkms-3d.enable = config.setup.isGraphical;
     };
 
-    kernelPackages = pkgs.linuxPackages_rpi4;
+    deviceTree = {
+      enable = true;
 
-    # Disable strict checking of IO memory accesses. This allows the rpi_ws281x
-    # library used by Winter WonderLights to work properly
-    kernelParams = [ "iomem=relaxed" ];
+      # Force generic filter to avoid conflicts between modesetting and
+      # LEDs in nixos-hardware
+      filter = lib.mkForce "*-rpi-4*.dtb";
+    };
+  };
 
+  boot = {
     # Avoids warning: mdadm: Neither MAILADDR nor PROGRAM has been set.
     # This will cause the `mdmon` service to crash.
     # See: https://github.com/NixOS/nixpkgs/issues/254807
@@ -62,13 +72,6 @@
   services = {
     # dnsmasq.enable = true;
     getty.autologinUser = "pi";
-
-    # https://raspberrypi.stackexchange.com/questions/40105/access-gpio-pins-without-root-no-access-to-dev-mem-try-running-as-root
-    udev.extraRules = ''
-      KERNEL=="gpiomem", GROUP="gpio", MODE="0660"
-      SUBSYSTEM=="gpio", KERNEL=="gpiochip*", ACTION=="add", PROGRAM="${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chgrp -R gpio /sys/class/gpio && ${pkgs.coreutils}/bin/chmod -R g=u /sys/class/gpio'"
-      SUBSYSTEM=="gpio", ACTION=="add", PROGRAM="${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chgrp -R gpio /sys%p && ${pkgs.coreutils}/bin/chmod -R g=u /sys%p'"
-    '';
 
     zram-generator = {
       enable = true;
@@ -118,26 +121,6 @@
       # * See: https://elinux.org/RPi_Configuration
       hdmi_group = 2;
       hdmi_mode = 8;
-    };
-  };
-
-  hardware = {
-    raspberry-pi."4" = {
-      apply-overlays-dtmerge.enable = true;
-      leds = {
-        act.disable = true;
-        eth.disable = true;
-        pwr.disable = true;
-      };
-
-      fkms-3d.enable = config.setup.isGraphical;
-    };
-    deviceTree = {
-      enable = true;
-
-      # Force generic filter to avoid conflicts between modesetting and
-      # LEDs in nixos-hardware
-      filter = lib.mkForce "*-rpi-4*.dtb";
     };
   };
 }
