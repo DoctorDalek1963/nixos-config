@@ -349,25 +349,28 @@
         # the mode has actually changed
 
         scripts = {
-          noctalia = lib.getExe (
-            pkgs.writeShellApplication {
-              name = "noctalia-theme-switch";
-              runtimeInputs = [
-                pkgs.coreutils
-                pkgs.gawk
-                config.programs.noctalia-shell.package
-              ];
+          noctalia =
+            let
+              script = lib.getExe (
+                pkgs.writeShellApplication {
+                  name = "noctalia-theme-switch";
+                  runtimeInputs = [
+                    pkgs.gawk
+                    config.programs.noctalia-shell.package
+                  ];
 
-              text = ''
-                inst_id="$(noctalia-shell list | head -1 | awk '{print $2}' | tr -d ':')"
+                  text = ''
+                    pid="$(noctalia-shell list --all | awk -F": " '$1 ~ /\s*Process ID/ {print $2}')"
 
-                case "$1" in
-                  light) noctalia-shell ipc --id "$inst_id" call darkMode setLight ;;
-                  dark) noctalia-shell ipc --id "$inst_id" call darkMode setDark ;;
-                esac
-              '';
-            }
-          );
+                    case "$1" in
+                      light) noctalia-shell ipc --pid "$pid" call darkMode setLight ;;
+                      dark) noctalia-shell ipc --pid "$pid" call darkMode setDark ;;
+                    esac
+                  '';
+                }
+              );
+            in
+            ''${script} "$1"'';
 
           gtk-theme = ''
             ${lib.getExe pkgs.dconf} write /org/gnome/desktop/interface/gtk-theme '"adw-gtk3"'
