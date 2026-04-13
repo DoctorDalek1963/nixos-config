@@ -6,15 +6,15 @@ jobs:
   check-flake:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: wimpysworld/nothing-but-nix@main
+      - uses: wimpysworld/nothing-but-nix@v10
         with:
-          hatchet-protocol: 'carve' # Keep docker for qemu
+          hatchet-protocol: "carve" # Keep docker for qemu
 
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
 
-      - uses: DeterminateSystems/nix-installer-action@v17
+      - uses: DeterminateSystems/nix-installer-action@v22
         with:
           extra-conf: "extra-platforms = aarch64-linux"
 
