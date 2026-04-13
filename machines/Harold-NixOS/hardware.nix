@@ -18,7 +18,6 @@
 
   setup.impermanence.keepDirs = [
     "/var/lib/sbctl"
-    "/var/lib/systemd/backlight"
   ];
 
   boot = {
