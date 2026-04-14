@@ -19,6 +19,7 @@ in
         default_mode = "locked";
         show_startup_tips = false;
         advanced_mouse_actions = false; # Multiple pane select
+        mouse_hover_effects = false;
 
         layout_dir = "${config.xdg.configHome}/zellij/layouts";
         default_layout = "custom_default";
