@@ -398,7 +398,18 @@ in
             ", Xf86AudioPlay, exec, ${noc-ipc} call media playPause"
             ", Xf86AudioPrev, exec, ${noc-ipc} call media previous"
             ", Xf86AudioNext, exec, ${noc-ipc} call media next"
-          ];
+          ]
+          # Suspend on lid close
+          ++ (
+            {
+              "Harold-NixOS" = [
+                ", switch:Lid Switch, exec, ${noc-ipc} call sessionMenu lockAndSuspend"
+                '', switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"''
+                '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, 1920x1080@60, 0x0, 1"''
+              ];
+            }
+            .${osConfig.setup.hostname} or [ ]
+          );
 
           # Binds that repeat when held and work when locked
           bindel =
