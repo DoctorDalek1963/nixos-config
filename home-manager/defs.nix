@@ -7,7 +7,6 @@
         light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
-      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
       hyprland.theme = "catppuccin-macchiato-mauve";
     };
 
@@ -152,7 +151,6 @@
         light = ./files/desktop-backgrounds/nixos-catppuccin-latte-gay.png;
         dark = ./files/desktop-backgrounds/nixos-catppuccin-macchiato-gay.png;
       };
-      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
       hyprland.theme = "catppuccin-macchiato-mauve";
     };
 
@@ -206,7 +204,6 @@
 
     desktopEnvironments = {
       background = ./files/desktop-backgrounds/virtualbox.jpg;
-      gnome.theme = "catppuccin-adaptive-macchiato-mauve";
     };
 
     librewolf = {

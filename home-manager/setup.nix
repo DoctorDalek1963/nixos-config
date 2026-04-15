@@ -7,7 +7,6 @@
 let
   inherit (lib) mkOption types;
   inherit (config.consts)
-    valid-gnome-themes
     valid-hyprland-themes
     valid-terminal-themes
     valid-shells
@@ -160,12 +159,6 @@ in
           gtk = mkOption {
             type = types.nonEmptyStr;
           };
-        };
-      };
-      gnome = {
-        enableExtensions = defaultTrue;
-        theme = mkOption {
-          type = types.enum valid-gnome-themes;
         };
       };
       hyprland = {

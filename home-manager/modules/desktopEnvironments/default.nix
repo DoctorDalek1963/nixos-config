@@ -1,7 +1,6 @@
 {
   imports = [
     ./cinnamon
-    ./gnome
     ./wayland
   ];
 }

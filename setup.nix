@@ -93,10 +93,6 @@ in
       cinnamon = {
         enable = defaultFalse;
       };
-      gnome = {
-        enable = defaultFalse;
-        minimal = defaultTrue;
-      };
       hyprland.enable = defaultFalse;
     };
 

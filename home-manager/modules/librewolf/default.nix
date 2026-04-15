@@ -162,10 +162,6 @@ in
     programs.librewolf = {
       enable = true;
 
-      nativeMessagingHosts = lib.optional (
-        cfgFf.enableExtensions && osConfig.setup.desktopEnvironments.gnome.enable
-      ) pkgs.gnome-browser-connector;
-
       profiles = {
         "${cfg.username}" = lib.mkMerge [
           common-profile
