@@ -198,17 +198,4 @@
 
     office.onlyoffice = true;
   };
-
-  VirtualBox-NixOS.dyson.setup = {
-    username = "dyson";
-
-    desktopEnvironments = {
-      background = ./files/desktop-backgrounds/virtualbox.jpg;
-    };
-
-    librewolf = {
-      enable = true;
-      minimal = true;
-    };
-  };
 }

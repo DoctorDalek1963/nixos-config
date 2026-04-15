@@ -369,41 +369,4 @@
       }
     ];
   };
-
-  "VirtualBox-NixOS" = nixpkgs.lib.nixosSystem rec {
-    system = "x86_64-linux";
-    specialArgs = { inherit self inputs system; };
-    modules = [
-      ./setup.nix
-      ./machines/VirtualBox-NixOS
-      {
-        setup = {
-          hostname = "VirtualBox-NixOS";
-
-          impermanence = {
-            enable = true;
-            debug = true;
-            mainDriveDevice = "/dev/mapper/cryptroot";
-          };
-
-          virtualBox.guest.enable = true;
-
-          profilePictures.dyson = ./files/profile-pictures/dyson.png;
-
-          secrets = {
-            enable = true;
-            userPasswords.enable = true;
-            tailscale.enable = false;
-          };
-
-          uinput = {
-            enable = true;
-            users = [ "dyson" ];
-          };
-
-          displayManagers.gdm.enable = true;
-        };
-      }
-    ];
-  };
 }
