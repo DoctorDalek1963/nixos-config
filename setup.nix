@@ -97,10 +97,6 @@ in
     };
 
     displayManagers = {
-      gdm = {
-        enable = defaultFalse;
-      };
-
       sddm = {
         enable = defaultFalse;
         theme = mkOption {

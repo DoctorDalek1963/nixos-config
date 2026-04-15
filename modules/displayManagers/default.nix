@@ -1,6 +1,5 @@
 {
   imports = [
-    ./gdm
     ./sddm
     ./tuigreet
   ];
