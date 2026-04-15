@@ -132,7 +132,7 @@
 
         source "${pkgs.complete-alias}/bin/complete_alias"
         ${lib.strings.concatStringsSep "\n" (
-          builtins.map (alias: "complete -F _complete_alias ${alias}") (
+          map (alias: "complete -F _complete_alias ${alias}") (
             builtins.attrNames (
               lib.filterAttrs (_name: value: !(lib.strings.hasInfix "|" value)) config.setup.terminal.shellAliases
             )

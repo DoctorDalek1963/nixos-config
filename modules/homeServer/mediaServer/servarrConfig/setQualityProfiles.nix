@@ -11,7 +11,7 @@ let
   indent4 =
     code:
     builtins.concatStringsSep "\n" (
-      builtins.map (line: "    ${line}") (
+      map (line: "    ${line}") (
         builtins.filter (x: builtins.isString x && x != "") (lib.strings.split "\n" code)
       )
     );

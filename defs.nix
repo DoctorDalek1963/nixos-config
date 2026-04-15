@@ -25,7 +25,7 @@
                 hostname: users:
                 self.outputs.nixosConfigurations."${hostname}".config.environment.systemPackages
                 ++ (nixpkgs.lib.lists.flatten (
-                  builtins.map (
+                  map (
                     user:
                     self.outputs.nixosConfigurations."${hostname}".config.home-manager.users."${user}".home.packages
                   ) users

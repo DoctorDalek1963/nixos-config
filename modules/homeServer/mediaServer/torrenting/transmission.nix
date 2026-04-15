@@ -60,8 +60,8 @@ in
 
               jqExpr = builtins.concatStringsSep " | " [
                 ".WRAP_HEADER = true"
-                ''.COLUMNS = .COLUMNS + [${builtins.concatStringsSep ", " columns}]''
-                ".COMMON_PATH = [${builtins.concatStringsSep ", " (builtins.map (x: ''"${x}"'') downloadPaths)}]"
+                ".COLUMNS = .COLUMNS + [${builtins.concatStringsSep ", " columns}]"
+                ".COMMON_PATH = [${builtins.concatStringsSep ", " (map (x: ''"${x}"'') downloadPaths)}]"
                 ''.SORT_COLUMN = "Progress"''
                 ''.SORT_DIRECTION = "asc"''
               ];

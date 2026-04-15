@@ -16,7 +16,7 @@ let
 
   restartRcloneMounts = lib.optionalAttrs cfg.rclone.enable (
     builtins.listToAttrs (
-      builtins.map (
+      map (
         { remote, ... }:
         {
           name = "restartRcloneMount${remote}";
