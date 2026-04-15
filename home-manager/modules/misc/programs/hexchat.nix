@@ -206,7 +206,7 @@ in
           "writeBoundary"
           "sops-nix"
           "restartSopsNix"
-        ] "$DRY_RUN_CMD ${populate}/bin/populate-hexchat-passwords";
+        ] "run ${populate}/bin/populate-hexchat-passwords";
     };
   };
 }

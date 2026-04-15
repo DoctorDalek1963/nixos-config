@@ -11,7 +11,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.rclone ];
     systemd.user.services = builtins.listToAttrs (
       lib.imap0 (idx: opts: {
         name = "rclone-mount-${lib.strings.toLower opts.remote}";
@@ -54,6 +53,25 @@ in
         };
       }) cfg.automounts
     );
+
+    home = {
+      packages = [ pkgs.rclone ];
+
+      activation = builtins.listToAttrs (
+        map (
+          { remote, ... }:
+          {
+            name = "restartRcloneMount${remote}";
+            value =
+              lib.hm.dag.entryAfter
+                [
+                  "writeBoundary"
+                ]
+                "run /run/current-system/sw/bin/systemctl restart --user rclone-mount-${lib.strings.toLower remote}";
+          }
+        ) cfg.automounts
+      );
+    };
 
     setup = {
       terminal.shellAliases.rclone = ''${pkgs.rclone}/bin/rclone --progress --bwlimit="09:00,256 23:00,off"'';

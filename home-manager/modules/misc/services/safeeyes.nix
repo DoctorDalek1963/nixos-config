@@ -51,7 +51,7 @@ in
 
     home.activation.setSafeeyesConfig = lib.hm.dag.entryAfter [
       "writeBoundary"
-    ] "$DRY_RUN_CMD ${set-safeeyes-config}";
+    ] "run ${set-safeeyes-config}";
     setup.impermanence.keepDirs = ".config/safeeyes";
   };
 }

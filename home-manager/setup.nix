@@ -26,7 +26,6 @@ in
     ./consts.nix
 
     ./modules/core.nix
-    ./modules/activation.nix
     ./modules/fonts.nix
 
     ./modules/terminal

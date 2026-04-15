@@ -36,7 +36,7 @@ in
 
       activation.setFeishinConfig = lib.hm.dag.entryAfter [
         "writeBoundary"
-      ] "$DRY_RUN_CMD ${set-feishin-config}";
+      ] "run ${set-feishin-config}";
     };
 
     setup.impermanence.keepDirs = [ ".config/feishin" ];

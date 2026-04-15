@@ -58,7 +58,13 @@ let
 in
 {
   config = lib.mkIf cfg.secrets.enable {
-    home.packages = [ pkgs.openssh ];
+    home = {
+      packages = [ pkgs.openssh ];
+
+      activation.restartSopsNix = lib.hm.dag.entryAfter [
+        "writeBoundary"
+      ] "run /run/current-system/sw/bin/systemctl restart --user sops-nix.service";
+    };
 
     setup.impermanence.keepFiles = [
       ".config/sops/age/keys.txt"

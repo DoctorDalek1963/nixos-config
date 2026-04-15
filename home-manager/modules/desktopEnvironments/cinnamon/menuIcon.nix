@@ -32,6 +32,6 @@ in
           mv /tmp/insert-cinnamon-menu-icon.json "${jsonDir}/0.json"
         '';
       in
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''$DRY_RUN_CMD ${shell-script}'';
+      lib.hm.dag.entryAfter [ "writeBoundary" ] "run ${shell-script}";
   };
 }
