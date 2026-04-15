@@ -13,7 +13,7 @@
     # Repo management
     flake-parts.url = "github:hercules-ci/flake-parts";
     pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -130,7 +130,7 @@
             '';
           };
 
-          # See https://flake.parts/options/pre-commit-hooks-nix and
+          # See https://flake.parts/options/git-hooks-nix and
           # https://github.com/cachix/git-hooks.nix/blob/master/modules/hooks.nix
           # for all the available hooks and options
           pre-commit = {
