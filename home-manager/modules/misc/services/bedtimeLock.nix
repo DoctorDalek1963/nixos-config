@@ -15,9 +15,32 @@
 
         Service.ExecStart =
           if config.programs.noctalia-shell.enable then
-            "${lib.getExe config.programs.noctalia-shell.package} ipc call lockScreen lock"
+            lib.getExe (
+              pkgs.writeShellApplication {
+                name = "bedtime-lock-noctalia";
+                runtimeInputs = [ config.programs.noctalia-shell.package ];
+
+                text = ''
+                  noctalia-shell ipc call media pause
+                  noctalia-shell ipc call lockScreen lock
+                '';
+              }
+            )
           else if config.programs.hyprlock.enable then
-            lib.getExe pkgs.hyprlock
+            lib.getExe (
+              pkgs.writeShellApplication {
+                name = "bedtime-lock-hyprlock";
+                runtimeInputs = [
+                  pkgs.playerctl
+                  config.programs.hyprlock.package
+                ];
+
+                text = ''
+                  playerctl pause
+                  hyprlock
+                '';
+              }
+            )
           else
             (abort "No known locking program");
       };
