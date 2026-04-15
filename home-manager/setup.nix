@@ -244,7 +244,6 @@ in
         obsidian = defaultFalse;
         rustdesk = defaultFalse;
         vlc = defaultFalse;
-        xremap = defaultFalse;
         zathura = mkOption {
           default = osConfig.setup.isGraphical;
         };

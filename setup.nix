@@ -533,7 +533,7 @@ in
     };
 
     # === uinput
-    # We need uinput for xremap and weylus
+    # We need uinput for weylus
     uinput = {
       enable = defaultFalse;
       users = mkOption {

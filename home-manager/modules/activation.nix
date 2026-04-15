@@ -29,10 +29,7 @@ let
   restartSopsNix = lib.optionalAttrs cfg.secrets.enable {
     restartSopsNix = mkSystemdRestart "sops-nix";
   };
-  restartXremap = lib.optionalAttrs cfg.misc.programs.xremap {
-    restartXremap = mkSystemdRestart "xremap";
-  };
 in
 {
-  home.activation = restartRcloneMounts // restartSopsNix // restartXremap;
+  home.activation = restartRcloneMounts // restartSopsNix;
 }

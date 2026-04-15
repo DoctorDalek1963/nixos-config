@@ -9,17 +9,6 @@ let
   extraExtensions = [
     (pkgs.callPackage ./thanatophobia.nix { })
   ];
-
-  optionalExtensions = lib.optionals config.setup.misc.programs.xremap [
-    {
-      uuid = "activate-window-by-title@lucaswerkmeister.de";
-      pkg = pkgs.gnomeExtensions.activate-window-by-title;
-    }
-    {
-      uuid = "xremap@k0kubun.com";
-      pkg = pkgs.gnomeExtensions.xremap;
-    }
-  ];
 in
 {
   config =
@@ -40,15 +29,7 @@ in
             night-theme-switcher
             panel-date-format
           ])
-          ++ extraExtensions
-          ++ (map (
-            {
-              # deadnix: skip
-              uuid,
-              pkg,
-            }:
-            pkg
-          ) optionalExtensions);
+          ++ extraExtensions;
 
         dconf.settings = {
           "org/gnome/shell" = {
@@ -76,15 +57,7 @@ in
               "nightthemeswitcher@romainvigier.fr"
               "panel-date-format@keiii.github.com"
               "thanatophobia@yatx.one"
-            ]
-            ++ (map (
-              {
-                uuid,
-                # deadnix: skip
-                pkg,
-              }:
-              uuid
-            ) optionalExtensions);
+            ];
           };
 
           "org/gnome/shell/extensions/bedtime-mode" = {
