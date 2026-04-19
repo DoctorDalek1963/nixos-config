@@ -19,11 +19,6 @@ let
       priority = 2;
     }
     {
-      url = "https://hydra.nixos.org";
-      publicKey = "hydra.nixos.org-1:CNHJZBh9K4tP3EKF6FkkgeVYsS3ohTl+oS0Qa8bezVs=";
-      priority = 3;
-    }
-    {
       url = "https://numtide.cachix.org";
       publicKey = "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=";
       priority = 3;
