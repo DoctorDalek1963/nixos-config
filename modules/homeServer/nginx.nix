@@ -30,6 +30,8 @@ in
         "tailscale-certificates.service"
       ];
       requires = [ "tailscale-certificates.service" ];
+
+      serviceConfig.Restart = "always";
     };
 
     networking.firewall.allowedTCPPorts = [

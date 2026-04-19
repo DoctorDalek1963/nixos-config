@@ -42,6 +42,8 @@ in
 
         User = "ntfy-sh";
         Group = "certs";
+
+        Restart = "always";
       };
     };
   };
