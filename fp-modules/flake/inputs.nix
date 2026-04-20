@@ -1,23 +1,7 @@
 {
-  description = "DoctorDalek1963's NixOS flake";
+  # TODO: Move all of these to relevant places
 
-  inputs = {
-    # Core
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable"; # Useful when the system uses a stable branch
-    nur = {
-      url = "github:nix-community/nur";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Repo management
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    import-tree.url = "github:vic/import-tree";
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
+  flake-file.inputs = {
     # Hardware and device management
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -74,24 +58,4 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
-  outputs =
-    {
-      self,
-      nixpkgs,
-      flake-parts,
-      ...
-    }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (
-      (inputs.import-tree ./fp-modules)
-      // {
-        flake.nixosConfigurations = import ./defs.nix {
-          inherit
-            self
-            nixpkgs
-            inputs
-            ;
-        };
-      }
-    );
 }
