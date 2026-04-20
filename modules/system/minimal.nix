@@ -9,8 +9,17 @@
         ];
 
         nixos =
-          { lib, config, ... }:
           {
+            lib,
+            config,
+            modulesPath,
+            ...
+          }:
+          {
+            imports = [
+              (modulesPath + "/installer/scan/not-detected.nix")
+            ];
+
             time.timeZone = "Europe/London";
 
             i18n = {
