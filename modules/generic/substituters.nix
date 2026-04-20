@@ -23,7 +23,7 @@ let
   ];
 in
 {
-  flake.modules.generic.substituters = {
+  flake.aspects.substituters.generic = {
     nix.settings = {
       substituters = map (def: "${def.url}?priority=${toString def.priority}") subs;
 

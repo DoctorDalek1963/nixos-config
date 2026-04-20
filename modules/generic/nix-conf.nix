@@ -1,5 +1,5 @@
 {
-  flake.modules.generic.nix-conf = {
+  flake.aspects.nix-conf.generic = {
     nix = {
       settings = {
         # Keep the nix store optimised
