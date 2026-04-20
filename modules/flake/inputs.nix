@@ -3,16 +3,7 @@
 
   flake-file.inputs = {
     # Hardware and device management
-    # impermanence.url = "github:nix-community/impermanence";
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # disko = {
-    #   url = "github:nix-community/disko";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    # lanzaboote = {
-    #   url = "github:nix-community/lanzaboote/v1.0.0";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     # sops-nix = {
     #   url = "github:Mic92/sops-nix";
     #   inputs.nixpkgs.follows = "nixpkgs";
