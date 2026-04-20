@@ -103,6 +103,11 @@
             nixos = {
               disko.devices = disko-devices;
 
+              impermanence.drive = {
+                device = "/dev/mapper/cryptroot";
+                isEncrypted = true;
+              };
+
               fileSystems."/persist".neededForBoot = true;
             };
           };
