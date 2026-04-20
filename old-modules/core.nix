@@ -12,34 +12,6 @@ let
 in
 {
   nix = {
-    settings = {
-      # Keep the nix store optimised
-      auto-optimise-store = true;
-
-      # Default is 64 * 1024 * 1024
-      download-buffer-size = 256 * 1024 * 1024;
-
-      # Enable flakes
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-
-      trusted-users = [
-        "root"
-        "@wheel"
-      ];
-
-      connect-timeout = 5;
-    };
-
-    # Garbage collect old packages every week
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 14d";
-    };
-
     buildMachines = lib.mkIf (cfg.hostname != "Alex-NixOS") [
       {
         hostName = "alex";
@@ -59,78 +31,6 @@ in
     ];
 
     distributedBuilds = lib.mkIf (cfg.hostname != "Alex-NixOS") true;
-
-    # Use unstable packages on the command line with `nix shell unstable#pkgName`
-    # registry.unstable = {
-    #   from = {
-    #     type = "indirect";
-    #     id = "unstable";
-    #   };
-    #   flake = inputs.nixpkgs-unstable;
-    #   exact = true;
-    # };
-  };
-
-  nixpkgs = {
-    overlays = [
-      # Access unstable packages through pkgs.unstable
-      # (_final: _prev: {
-      #   unstable = inputs.nixpkgs-unstable.legacyPackages.${system};
-      # })
-      inputs.nur.overlays.default
-    ];
-
-    config = {
-      # These are lists of allowed unfree and insecure packages respectively.
-      # They are allowed on any host (since this is core.nix), but they're
-      # only actually installed by certain modules.
-      allowUnfreePredicate =
-        pkg:
-        builtins.elem (lib.getName pkg) [
-          # === System-wide
-          # Gaming
-          "steam"
-          "steam-unwrapped"
-          "xone-dongle-firmware" # Needed for xone driver
-
-          # Printing
-          "cnijfilter" # Canon Pixma driver
-
-          # Proprietary Nvidia drivers
-          "nvidia-x11"
-          "nvidia-settings"
-
-          # Automated transcoding on home server
-          "fileflows"
-
-          # === home-manager
-          "discord"
-          "geogebra"
-          "libsciter" # For RustDesk
-          "obsidian"
-          "zoom"
-
-          # Firefox extensions
-          "dashlane"
-          "enhancer-for-youtube"
-          "tweaks-for-youtube"
-          "youtube-recommended-videos" # Unhook
-
-          # Microsoft fonts
-          "corefonts"
-          "vista-fonts"
-        ];
-
-      permittedInsecurePackages = [
-        # Used by Eddie, the UI for AirVPN
-        "dotnet-sdk-6.0.428"
-        "dotnet-runtime-6.0.36"
-
-        # HTTP proxy used on home server. It's okay because it's only
-        # accessible to devices on my tailnet and not the public internet
-        "squid-7.0.1"
-      ];
-    };
   };
 
   programs.nix-ld = {
