@@ -9,7 +9,6 @@
 
   imports = [
     inputs.home-manager.flakeModules.home-manager
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   flake.aspects =
@@ -25,6 +24,10 @@
         nixos =
           { pkgs, config, ... }:
           {
+            imports = [
+              inputs.home-manager.nixosModules.home-manager
+            ];
+
             environment.systemPackages = with pkgs; [
               coreutils
               file
