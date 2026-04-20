@@ -10,6 +10,7 @@
         nixos =
           {
             pkgs,
+            lib,
             config,
             ...
           }:
@@ -50,8 +51,8 @@
             # to support Folding@home
             environment.variables.OCL_ICD_VENDORS = "${pkgs.rocmPackages.clr.icd}/etc/OpenCL/vendors/";
 
-            networking.useDHCP = true;
-            hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
+            networking.useDHCP = lib.mkDefault true;
+            hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
           };
       };
     };
