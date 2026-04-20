@@ -1,6 +1,11 @@
 _default:
     @just --list
 
+[group("maintenance")]
+write-flake:
+    nix run {{ justfile_directory() }}#write-flake
+    nix flake lock
+
 # build the ISO image for a bootable USB, without secrets
 [group("build")]
 build-iso:
