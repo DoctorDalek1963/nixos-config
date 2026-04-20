@@ -29,9 +29,6 @@
 
   nix.settings.max-jobs = 2;
 
-  # Don't build any docs locally
-  documentation.enable = false;
-
   users.groups.gpio.members = [ "pi" ];
 
   hardware = {

@@ -26,3 +26,12 @@ You'll also have to add any rclone remotes manually. Then add the names of the r
 ### Android TV
 
 For an Android TV installation, make sure the Tailscale key is set correctly before install so that you can SSH into the device immediately. Then run `just atv-init`, reboot, then run `just atv-register` and follow the instructions.
+
+## Structure
+
+### System profiles
+
+- **system-minimal** for something like a Raspberry Pi: no SSH, no home-manager, just the absolute essentials.
+- **system-core** for machines that I actually interact with: SSH, home-manaeger, secrets management.
+- **system-server** for home server machines: Nginx, homepage, etc.
+- **system-desktop** for desktop machines: XDG stuff, etc.

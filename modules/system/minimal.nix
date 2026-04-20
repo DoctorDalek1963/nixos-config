@@ -2,7 +2,7 @@
 {
   flake.aspects.system-minimal = {
     nixos =
-      { pkgs, config, ... }:
+      { lib, config, ... }:
       {
         time.timeZone = "Europe/London";
 
@@ -24,25 +24,8 @@
         # Use British keyboard in TTYs
         console.keyMap = "uk";
 
-        programs.nix-ld = {
-          enable = true;
-          libraries = with pkgs; [
-            icu
-            libz
-            stdenv.cc.cc.lib
-          ];
-        };
-
-        environment.systemPackages = with pkgs; [
-          coreutils
-          file
-          git
-          vim
-          wget
-        ];
-
-        # Show asterisks when typing password
-        security.sudo.extraConfig = "Defaults pwfeedback";
+        # Don't build any docs locally
+        documentation.enable = lib.mkDefault false;
 
         system =
           let
@@ -73,55 +56,6 @@
               ]
             );
           };
-      };
-
-    homeManager =
-      { lib, config, ... }:
-      {
-        home = {
-          # inherit (config.setup) username;
-          homeDirectory = "/home/${config.home.username}";
-
-          stateVersion = "25.11";
-
-          file = {
-            ".inputrc".text = ''
-              $include /etc/inputrc
-              "\C-H": backward-kill-word
-            '';
-            ".XCompose".text = ''
-              include "%L"
-              <Multi_key> <b> <c> : "∵" # because
-              <Multi_key> <t> <f> : "∴" # therefore
-            '';
-          };
-        };
-
-        targets.genericLinux.enable = lib.mkDefault false;
-
-        xdg = {
-          enable = true;
-
-          userDirs =
-            let
-              home = "${config.home.homeDirectory}";
-            in
-            {
-              enable = true; # TODO: Only when graphical?
-              createDirectories = true;
-              setSessionVariables = true;
-
-              documents = "${home}/Documents";
-              download = "${home}/Downloads";
-              music = "${home}/Music";
-              pictures = "${home}/Pictures";
-              videos = "${home}/Videos";
-
-              desktop = null;
-              publicShare = null;
-              templates = null;
-            };
-        };
       };
   };
 }

@@ -30,12 +30,6 @@
     # };
     # whisper-asr-webservice-flake.url = "github:DoctorDalek1963/whisper-asr-webservice-flake";
     #
-    # # home-manager stuff
-    # home-manager = {
-    #   url = "github:nix-community/home-manager/master";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-    #
     # lintrans.url = "github:DoctorDalek1963/lintrans";
     #
     # nix-index-database = {
