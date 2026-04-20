@@ -43,6 +43,11 @@
             # Don't build any docs locally
             documentation.enable = lib.mkDefault false;
 
+            networking = {
+              firewall.enable = true;
+              networkmanager.enable = true;
+            };
+
             system =
               let
                 nixosVersion = builtins.concatStringsSep "." [
