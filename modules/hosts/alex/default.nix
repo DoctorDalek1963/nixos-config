@@ -19,7 +19,6 @@
         {
           networking.hostName = "Alex-NixOS";
           nixpkgs.hostPlatform = system;
-          system.stateVersion = "25.05";
         }
       ];
     };
