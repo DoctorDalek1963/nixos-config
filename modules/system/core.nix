@@ -9,16 +9,21 @@
 
   imports = [
     inputs.home-manager.flakeModules.home-manager
+    inputs.home-manager.nixosModules.home-manager
   ];
 
   flake.aspects =
     { aspects, ... }:
     {
       system-core = {
-        includes = [ aspects.system-minimal ];
+        includes = [
+          aspects.system-minimal
+          # aspects.ssh
+          # aspects.secrets
+        ];
 
         nixos =
-          { pkgs, ... }:
+          { pkgs, config, ... }:
           {
             environment.systemPackages = with pkgs; [
               coreutils
@@ -41,6 +46,14 @@
 
             # Show asterisks when typing password
             security.sudo.extraConfig = "Defaults pwfeedback";
+
+            home-manager = {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              backupFileExtension = "hm-backup";
+
+              extraSpecialArgs.osConfig = config;
+            };
           };
 
         homeManager =
