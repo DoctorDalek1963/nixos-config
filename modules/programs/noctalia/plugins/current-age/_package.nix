@@ -4,7 +4,7 @@
   stdenvNoCC,
 }:
 let
-  external-program = callPackage ./external-program/package.nix { };
+  external-program = callPackage ./external-program/_package.nix { };
 in
 stdenvNoCC.mkDerivation {
   name = "noctalia-current-age";
