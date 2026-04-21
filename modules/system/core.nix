@@ -17,8 +17,7 @@
       system-core = {
         includes = [
           aspects.system-minimal
-          # aspects.ssh
-          # aspects.secrets
+          aspects.ssh
         ];
 
         nixos =
