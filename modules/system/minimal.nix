@@ -3,9 +3,12 @@
   flake.aspects =
     { aspects, ... }:
     {
+      global-options = { };
+
       system-minimal = {
         includes = [
           aspects.nixpkgs
+          aspects.global-options
         ];
 
         nixos =
