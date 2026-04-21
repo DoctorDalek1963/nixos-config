@@ -7,7 +7,12 @@
         host-alex = {
           includes = [
             aspects.system-desktop
+            aspects.gaming
           ];
+
+          homeManager = {
+            programs.mangohud.settings.gpu_text = "Radeon,Mendocino";
+          };
         };
       };
 

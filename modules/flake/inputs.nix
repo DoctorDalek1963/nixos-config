@@ -30,9 +30,5 @@
     #     flake-parts.follows = "flake-parts";
     #   };
     # };
-    # millennium = {
-    #   url = "github:SteamClientHomebrew/Millennium?dir=packages/nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 }
