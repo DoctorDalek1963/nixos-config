@@ -4,10 +4,6 @@
   flake-file.inputs = {
     # Hardware and device management
     # nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # sops-nix = {
-    #   url = "github:Mic92/sops-nix";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     #
     # # Personal projects for home server
     # tic-tac-toe.url = "github:DoctorDalek1963/tic-tac-toe";
