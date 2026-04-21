@@ -2,14 +2,11 @@
   pkgs,
   lib,
   config,
-  osConfig,
   ...
 }:
 let
   homedir = config.home.homeDirectory;
   cfg = config.setup;
-
-  inherit (osConfig.users.users.${config.home.username}) uid;
 
   isDyson = config.home.username == "dyson";
 
@@ -60,10 +57,6 @@ in
   config = lib.mkIf cfg.secrets.enable {
     home = {
       packages = [ pkgs.openssh ];
-
-      activation.restartSopsNix = lib.hm.dag.entryAfter [
-        "writeBoundary"
-      ] "run /run/current-system/sw/bin/systemctl restart --user sops-nix.service";
     };
 
     setup.impermanence.keepFiles = [
@@ -72,23 +65,9 @@ in
     ];
 
     sops = {
-      defaultSopsFile = ../../sops-secrets/secrets.yaml;
-
-      # This is suboptimal because we don't want to hardcode the UID, but
-      # sops-nix seems to have no way of knowing where it will link things at
-      # build time, so it can't reference paths to secrets which are not
-      # symlinked elsewhere, like SSH key passphrases. See ./keychain.nix for
-      # why we need this.
-      defaultSymlinkPath = "/run/user/${toString uid}/secrets";
-      defaultSecretsMountPoint = "/run/user/${toString uid}/secrets.d";
-
-      age = {
-        keyFile = "/etc/nixos/home-manager/sops-secrets/key.txt";
-        generateKey = false;
-      };
-
       secrets = {
         "nix/nixconf" = {
+          # Acces token, needed in system-core, not minimal
           path = "${homedir}/.config/nix/nix.conf";
           mode = "0600";
         };
