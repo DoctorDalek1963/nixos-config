@@ -14,7 +14,7 @@ in
   config = lib.mkIf (cfg.enable && cfgMs.enable && cfgMs.books) {
     assertions = [
       {
-        assertion = audiobookshelf.version == pkgs.audiobookshelf.version;
+        assertion = lib.versionAtLeast audiobookshelf.version pkgs.audiobookshelf.version;
         message = "You need to update your slightly modified audiobookshelf package (remember to patch twice)";
       }
     ];

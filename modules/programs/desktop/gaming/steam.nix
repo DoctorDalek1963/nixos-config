@@ -61,9 +61,11 @@
         ".local/share/millennium"
         ".config/millennium"
 
+        ".config/unity3d/tobspr Games/shapez 2"
         ".local/share/doublefine"
         ".local/share/FasterThanLight"
         ".local/share/Euro Truck Simulator 2"
+        ".local/share/Opus Magnum"
         ".factorio"
       ];
     };

@@ -158,51 +158,43 @@
               # NOTE: This option has broken boots before in VirtualBox-NixOS
               programs.fuse.userAllowOther = true;
 
-              boot = lib.mkMerge [
-                {
-                  postBootCommands =
-                    let
-                      commands = builtins.attrValues (
-                        builtins.mapAttrs (name: conf: ''
-                          mkdir -p /persist${conf.home.homeDirectory}
-                          chown ${name}:users /persist${conf.home.homeDirectory}
-                        '') config.home-manager.users
-                      );
-                    in
-                    lib.strings.concatStringsSep "\n" commands;
-                }
+              boot = {
+                postBootCommands =
+                  let
+                    commands = builtins.attrValues (
+                      builtins.mapAttrs (name: conf: ''
+                        mkdir -p /persist${conf.home.homeDirectory}
+                        chown ${name}:users /persist${conf.home.homeDirectory}
+                      '') config.home-manager.users
+                    );
+                  in
+                  lib.strings.concatStringsSep "\n" commands;
 
-                (lib.mkIf cfg.drive.isEncrypted {
-                  kernelParams = lib.optional cfg.debug "rd.systemd.debug_shell";
+                kernelParams = lib.optional cfg.debug "rd.systemd.debug_shell";
 
-                  initrd.systemd = {
-                    enable = true;
-                    emergencyAccess = cfg.debug;
+                initrd.systemd = {
+                  enable = true;
+                  emergencyAccess = cfg.debug;
 
-                    # This script does the actual wipe of the system
-                    # So if it doesn't run, the btrfs system effectively acts like a normal system
-                    # Originally taken from https://github.com/NotAShelf/nyx/blob/2a8273ed3f11a4b4ca027a68405d9eb35eba567b/modules/core/common/system/impermanence/default.nix
-                    services.wipe-btrfs-rootfs = {
-                      description = "Wipe BTRFS rootfs subvolume";
+                  # This script does the actual wipe of the system
+                  # So if it doesn't run, the btrfs system effectively acts like a normal system
+                  # Originally taken from https://github.com/NotAShelf/nyx/blob/2a8273ed3f11a4b4ca027a68405d9eb35eba567b/modules/core/common/system/impermanence/default.nix
+                  services.wipe-btrfs-rootfs = {
+                    description = "Wipe BTRFS rootfs subvolume";
 
-                      wantedBy = [ "initrd.target" ];
+                    wantedBy = [ "initrd.target" ];
 
-                      # We want to do this after we've setup LUKS, but before the system mounts /
-                      after = [ "systemd-cryptsetup@cryptroot.service" ];
-                      before = [ "sysroot.mount" ];
+                    # We want to do this after we've setup LUKS, but before the system mounts /
+                    after = lib.mkIf cfg.drive.isEncrypted [ "systemd-cryptsetup@cryptroot.service" ];
+                    before = [ "sysroot.mount" ];
 
-                      unitConfig.DefaultDependencies = "no";
-                      serviceConfig.Type = "oneshot";
+                    unitConfig.DefaultDependencies = "no";
+                    serviceConfig.Type = "oneshot";
 
-                      script = wipeScript;
-                    };
+                    script = wipeScript;
                   };
-                })
-
-                (lib.mkIf (!cfg.drive.isEncrypted) {
-                  initrd.postResumeCommands = lib.mkAfter wipeScript;
-                })
-              ];
+                };
+              };
             };
         };
     };
