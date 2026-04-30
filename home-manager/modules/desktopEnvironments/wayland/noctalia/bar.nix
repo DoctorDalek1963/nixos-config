@@ -99,7 +99,7 @@
               id = "Clock";
 
               clockColor = "primary";
-              formatHorizontal = "h:mm:ss ap, dddd dd MMMM 12,0yy";
+              formatHorizontal = "h:mm:ss ap, dddd d MMMM 12,0yy";
               formatVertical = "";
               tooltipFormat = "";
               useCustomFont = false;
