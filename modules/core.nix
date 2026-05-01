@@ -92,6 +92,7 @@ in
           "steam"
           "steam-unwrapped"
           "xone-dongle-firmware" # Needed for xone driver
+          "rpcs3"
 
           # Printing
           "cnijfilter" # Canon Pixma driver
