@@ -19,5 +19,16 @@ in
 {
   config = lib.mkIf (cfg.enable && cfg.lutris) {
     environment.systemPackages = [ lutris ];
+
+    # TODO: Remove this once Lutris is fixed
+    nixpkgs.overlays = [
+      # Skipping tests while upstream sorts it out, revert once
+      # Hydra consistently builds openldap green.
+      (_final: prev: {
+        openldap = prev.openldap.overrideAttrs {
+          doCheck = !prev.stdenv.hostPlatform.isi686;
+        };
+      })
+    ];
   };
 }
