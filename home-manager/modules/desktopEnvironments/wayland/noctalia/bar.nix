@@ -30,13 +30,6 @@
         widgets = {
           left = [
             {
-              id = "ControlCenter";
-
-              useDistroLogo = true;
-              enableColorization = true;
-              colorizeSystemIcon = "tertiary";
-            }
-            {
               id = "Workspace";
 
               showApplications = true;
