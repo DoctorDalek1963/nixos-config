@@ -28,17 +28,21 @@ in
     programs.noctalia-shell = {
       enable = true;
 
-      package = pkgs.noctalia-shell.override {
-        bluetoothSupport = osConfig.setup.isLaptop;
-        brightnessctlSupport = true;
-        cliphistSupport = true;
-        ddcutilSupport = true;
-        wlsunsetSupport = false;
-        wl-clipboardSupport = true;
-        wlr-randrSupport = true;
-        imagemagickSupport = true;
-        calendarSupport = false;
-      };
+      package =
+        (pkgs.noctalia-shell.override {
+          bluetoothSupport = osConfig.setup.isLaptop;
+          brightnessctlSupport = true;
+          cliphistSupport = true;
+          ddcutilSupport = true;
+          wlsunsetSupport = false;
+          wl-clipboardSupport = true;
+          wlr-randrSupport = true;
+          imagemagickSupport = true;
+          calendarSupport = false;
+        }).overrideAttrs
+          (oldAttrs: {
+            patches = (oldAttrs.patches or [ ]) ++ [ ./network-widget.patch ];
+          });
 
       settings = {
         desktopWidgets.enabled = false;

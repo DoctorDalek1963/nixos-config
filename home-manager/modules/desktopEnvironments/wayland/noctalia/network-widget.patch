@@ -1,0 +1,13 @@
+--- a/Services/Networking/NetworkService.qml
++++ b/Services/Networking/NetworkService.qml
+@@ -439,8 +439,9 @@ Singleton {
+     if (root.ethernetConnected) {
+       const eth = root.activeEthernetDetails;
+       const name = eth.connectionName || (root.ethernetInterfaces.length > 0 ? root.ethernetInterfaces[0].connectionName : "") || "";
++      const shortName = name.startsWith("Wired connection") ? "Wired" : name;
+       const speed = eth.speed || "";
+-      return (name + (showSpeed && speed ? " - " + speed : ""));
++      return (shortName + (showSpeed && speed ? " - " + speed : ""));
+     }
+ 
+     // Wi-Fi
