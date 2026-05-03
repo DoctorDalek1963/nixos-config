@@ -28,6 +28,8 @@
     #   inputs = {
     #     nixpkgs.follows = "nixpkgs"; # Only while nixvim-config uses the same nixpkgs branch
     #     flake-parts.follows = "flake-parts";
+    #     flake-file.follows = "flake-file";
+    #     import-tree.follows = "import-tree";
     #   };
     # };
   };
